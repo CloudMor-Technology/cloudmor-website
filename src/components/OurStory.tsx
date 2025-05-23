@@ -13,9 +13,7 @@ const OurStory = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
               Our Story
             </h2>
-            <p className="text-lg text-gray-700 mb-4">
-              Founded in 2019, GowithSupport began with a simple mission: to provide businesses with the strategic IT guidance and support they need to thrive in an increasingly digital world.
-            </p>
+            <p className="text-lg text-gray-700 mb-4">Founded in 2019, CloudMor began with a simple mission: to provide businesses with the strategic IT guidance and support they need to thrive in an increasingly digital world.</p>
             <p className="text-lg text-gray-700 mb-4">
               Our journey has been driven by a commitment to excellence and a deep understanding that technology should serve business objectives, not the other way around. As we've grown, we've expanded our team of professional IT specialists to serve clients globally.
             </p>
