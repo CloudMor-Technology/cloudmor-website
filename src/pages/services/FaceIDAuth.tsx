@@ -99,20 +99,14 @@ const FaceIDAuth = () => {
   return <>
       <Navbar />
       <main>
-        <ServiceHero 
-          title="Advanced Facial Authentication for Web & Mobile" 
-          subtitle="Secure, seamless user authentication using cutting-edge facial recognition technology" 
-          backgroundClass="from-gray-900 to-gowith-dark-blue" 
-        />
+        <ServiceHero title="Advanced Facial Authentication for Web & Mobile" subtitle="Secure, seamless user authentication using cutting-edge facial recognition technology" backgroundClass="from-gray-900 to-gowith-dark-blue" />
         
         {/* Overview Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-6">Technology Overview</h2>
-              <p className="text-lg text-gray-600 mb-8">
-                GowithSupport's Face ID Authentication solution brings enterprise-grade facial recognition capabilities to your web applications and mobile platforms. Our advanced biometric authentication system provides a frictionless user experience while delivering superior security compared to traditional password-based systems.
-              </p>
+              <p className="text-lg text-gray-600 mb-8">CloudMor's Face ID Authentication solution brings enterprise-grade facial recognition capabilities to your web applications and mobile platforms. Our advanced biometric authentication system provides a frictionless user experience while delivering superior security compared to traditional password-based systems.</p>
               <div className="mt-10 relative">
                 <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden shadow-lg">
                   <img alt="Face ID Authentication Technology" className="w-full h-full object-cover" src="/lovable-uploads/b695c5c9-2951-42e6-b1fa-8aca4db367e3.png" />
