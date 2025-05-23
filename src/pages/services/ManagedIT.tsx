@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -173,7 +172,15 @@ const ManagedIT = () => {
               </div>
               
               <div className="bg-white rounded-lg shadow-lg p-8">
-                <div className="calconic-calculator" data-calculatorid="5fca9eac0ff8010029aa0767"></div>
+                <iframe 
+                  src="https://app.calconic.com/api/embed/calculator/5fca9eac0ff8010029aa0767" 
+                  sandbox="allow-same-origin allow-forms allow-scripts allow-top-navigation allow-popups-to-escape-sandbox allow-popups" 
+                  title="Calconic_ Calculator" 
+                  name="Calconic_ Calculator" 
+                  height="996px" 
+                  scrolling="no" 
+                  style={{width: '100%', border: 0, outline: 'none'}}
+                />
               </div>
               
               <div className="mt-8 text-center">
@@ -214,14 +221,47 @@ const ManagedIT = () => {
         dangerouslySetInnerHTML={{
           __html: `
             (function() { 
-              var qs,j,q,s,d=document, gi=d.getElementById,
-              ce=d.createElement, gt=d.getElementsByTagName,
-              id="calconic_", b="https://cdn.calconic.com/static/js/";
-              if(!gi.call(d,id)) { 
-                j=ce.call(d,"script"); j.id=id; j.type="text/javascript"; j.async=true;
-                j.dataset.calconic=true;
-                j.src=b+"calconic.min.js"; q=gt.call(d,"script")[0]; q.parentNode.insertBefore(j,q) 
-              }
+              function inViewport(element) { 
+                var m = 100; 
+                var w = window; 
+                var r = element.getBoundingClientRect(); 
+                var wB = w.innerHeight; 
+                var wR = w.innerWidth; 
+                return ( 
+                  (0 <= r.top && wB -m >= r.top) || 
+                  (0 >= r.top && wB <= r.bottom) || 
+                  (m <= r.bottom && wB >= r.bottom) 
+                ) && ( 
+                  (0 <= r.left && wR -m >= r.left) || 
+                  (0 >= r.left && wR <= r.right) || 
+                  (m <= r.right && wR >= r.right) 
+                ); 
+              } 
+              var iframes = []; 
+              window.addEventListener("message",function(t){ 
+                var e="https://www.paypalobjects.com/api/checkout.4.0.141.js"; 
+                if(!document.querySelector('script[src="'+e+'"]')&&t.data&&"LOAD_PAYPAL"===t.data.action){ 
+                  var a=document.createElement("script");
+                  a.src=e,a.async=!0,a.dataset={paypalCheckout:!0,noBridge:!0,state:"ppxo_meta",env:"production"},
+                  document.body.append(a) 
+                }
+                if(t.data&&"CALCONIC_UPDATE_HEIGHT"===t.data.action){ 
+                  var l=document.querySelectorAll('iframe[src="https://app.calconic.com/api/embed/calculator/'+t.data.payload.id+'"]'); 
+                  for (let i in [...l]) { 
+                    l[i].height=t.data.payload.height; 
+                    if (!iframes.includes(l[i])) { 
+                      iframes.push(l[i]); 
+                      let intervalId = setInterval(function() { 
+                        l[i].contentWindow.postMessage({ action: 'IS_ACTIVE' }, '*'); 
+                        if (inViewport(l[i])) { 
+                          clearInterval(intervalId); 
+                          l[i].contentWindow.postMessage({ action: 'IN_VIEWPORT' }, '*'); 
+                        } 
+                      }, 200); 
+                    } 
+                  };
+                } 
+              }); 
             })();
           `
         }}
