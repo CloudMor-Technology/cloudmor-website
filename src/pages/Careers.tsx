@@ -1,11 +1,8 @@
-
 import React from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
 const Careers = () => {
-  return (
-    <>
+  return <>
       <Navbar />
       <main>
         <section className="pt-32 pb-20 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue">
@@ -24,9 +21,7 @@ const Careers = () => {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <p className="text-xl text-center mb-16">
-                At GowithSupport, we're more than just an IT service provider—we're a team of passionate professionals dedicated to helping businesses succeed through technology.
-              </p>
+              <p className="text-xl text-center mb-16">At CloudMor, we're more than just an IT service provider—we're a team of passionate professionals dedicated to helping businesses succeed through technology.</p>
               
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-8">Current Openings</h2>
               <p className="text-gray-600 mb-8">We're constantly growing and looking for talented individuals to join our team. Please check back soon for open positions.</p>
@@ -74,8 +69,6 @@ const Careers = () => {
         </section>
       </main>
       <Footer />
-    </>
-  );
+    </>;
 };
-
 export default Careers;
