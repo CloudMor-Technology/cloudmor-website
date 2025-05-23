@@ -49,13 +49,13 @@ const Contact = () => {
                 <div className="space-y-8">
                   <div>
                     <h3 className="text-xl font-bold text-gowith-medium-blue mb-2">Phone</h3>
-                    <p className="text-gray-600">Main: <a href="tel:9492885812" className="text-gowith-medium-blue hover:underline">(949) 288-5812</a></p>
+                    <p className="text-gray-600">Main: <a href="tel:8885546597" className="text-gowith-medium-blue hover:underline">(888) 554-6597</a></p>
                   </div>
                   
                   <div>
                     <h3 className="text-xl font-bold text-gowith-medium-blue mb-2">Email</h3>
-                    <p className="text-gray-600">General Inquiries: <a href="mailto:info@cloudmor.com" className="text-gowith-medium-blue hover:underline">info@cloudmor.com</a></p>
-                    <p className="text-gray-600">Support: <a href="mailto:help@cloudmor.com" className="text-gowith-medium-blue hover:underline">help@cloudmor.com</a></p>
+                    <p className="text-gray-600">General Inquiries: <a href="mailto:sales@cloudmor.com" className="text-gowith-medium-blue hover:underline">sales@cloudmor.com</a></p>
+                    <p className="text-gray-600">Support: <a href="mailto:Support@cloudmor.com" className="text-gowith-medium-blue hover:underline">Support@cloudmor.com</a></p>
                   </div>
                   
                   <div>
