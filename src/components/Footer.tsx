@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -153,9 +152,6 @@ const Footer = () => {
             <div className="flex space-x-6">
               <Link to="/privacy-policy" className="text-gowith-medium-blue hover:text-gowith-dark-blue text-sm transition-colors">
                 Privacy Policy
-              </Link>
-              <Link to="/terms-of-service" className="text-gowith-medium-blue hover:text-gowith-dark-blue text-sm transition-colors">
-                Terms of Service
               </Link>
               <Link to="/sitemap" className="text-gowith-medium-blue hover:text-gowith-dark-blue text-sm transition-colors">
                 Sitemap

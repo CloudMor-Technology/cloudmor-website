@@ -29,7 +29,7 @@ const ProfessionalServices = () => {
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-6 text-center">Overview</h2>
               <p className="text-lg text-gray-700 mb-8">
-                GowithSupport's Professional Services team delivers expert guidance and implementation for strategic IT initiatives. From technology assessments to complex migrations, our experienced consultants work closely with your team to plan and execute projects that drive business value. We combine technical expertise with business acumen to deliver solutions that meet your specific needs and objectives.
+                CloudMor's Professional Services team delivers expert guidance and implementation for strategic IT initiatives. From technology assessments to complex migrations, our experienced consultants work closely with your team to plan and execute projects that drive business value. We combine technical expertise with business acumen to deliver solutions that meet your specific needs and objectives.
               </p>
               
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-6 mt-14 text-center">Key Services</h2>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -29,7 +30,7 @@ const CloudServices = () => {
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-6 text-center">Overview</h2>
               <p className="text-lg text-gray-700 mb-8">
-                GowithSupport's Managed Cloud Services help businesses leverage the full potential of cloud computing. Whether you're considering migrating to the cloud, optimizing your current cloud environment, or implementing a hybrid solution, our team provides the expertise and support you need. We ensure your cloud infrastructure is secure, scalable, and aligned with your business objectives.
+                CloudMor's Managed Cloud Services help businesses leverage the full potential of cloud computing. Whether you're considering migrating to the cloud, optimizing your current cloud environment, or implementing a hybrid solution, our team provides the expertise and support you need. We ensure your cloud infrastructure is secure, scalable, and aligned with your business objectives.
               </p>
               
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-6 mt-14 text-center">Key Services</h2>

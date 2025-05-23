@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -62,7 +63,7 @@ const Careers = () => {
               
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-6">Interested in joining our team?</h2>
               <p className="text-gray-600 mb-8">
-                Even if we don't have any current openings that match your skills, we're always interested in connecting with talented professionals. Send your resume to <a href="mailto:careers@gowithsupport.com" className="text-gowith-medium-blue hover:underline">careers@gowithsupport.com</a>.
+                Even if we don't have any current openings that match your skills, we're always interested in connecting with talented professionals. Send your resume to <a href="mailto:careers@cloudmor.com" className="text-gowith-medium-blue hover:underline">careers@cloudmor.com</a>.
               </p>
             </div>
           </div>

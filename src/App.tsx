@@ -14,7 +14,6 @@ import CaseStudies from "./pages/CaseStudies";
 import Blog from "./pages/Blog";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsOfService from "./pages/TermsOfService";
 import Sitemap from "./pages/Sitemap";
 
 // Service Pages
@@ -54,7 +53,6 @@ const App = () => (
           <Route path="/insights/blog" element={<Blog />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/sitemap" element={<Sitemap />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

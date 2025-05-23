@@ -24,73 +24,62 @@ const PrivacyPolicy = () => {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto prose prose-lg">
+              <h2>Who We Are and the Scope of this Privacy Policy</h2>
+              
+              <h3>Privacy Policy for CloudMor Phone System App</h3>
+              
+              <p><strong>Effective Date: 01/01/2023</strong></p>
+              
+              <h2>1. Introduction</h2>
               <p>
-                This Privacy Policy explains how GowithSupport collects, uses, and protects your personal information. This policy was last updated on May 21, 2025.
+                Welcome to CloudMor's Phone System App! At CloudMor, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our phone system app, whether a customer or a user of our services.
               </p>
               
-              <h2>Information We Collect</h2>
-              <p>
-                We collect information that you provide directly to us, such as when you fill out a form on our website, subscribe to our newsletter, or contact us for support. This information may include:
-              </p>
+              <h2>2. Information We Collect</h2>
+              <p><strong>a. Personal Information:</strong> When you use our app, we may collect the following types of personal information:</p>
               <ul>
-                <li>Name and contact information</li>
-                <li>Company name and position</li>
-                <li>Service interests and requirements</li>
-                <li>Technical information about your IT environment</li>
+                <li><strong>Contact Information:</strong> This may include your name, email address, phone number, and company information.</li>
+                <li><strong>Device Information:</strong> We may collect information about your device to access our app, including device type, operating system, and unique device identifiers.</li>
+                <li><strong>Call Data:</strong> We may collect information about your calls, such as call duration, time and date of the call, and call participants.</li>
               </ul>
               
-              <h2>How We Use Your Information</h2>
-              <p>
-                We use the information we collect to:
-              </p>
+              <p><strong>b. Usage Information:</strong> We may collect information about how you use our app, such as the features you access and your interactions with our services.</p>
+              
+              <h2>3. How We Use Your Information</h2>
+              <p>We use the information we collect for the following purposes:</p>
               <ul>
-                <li>Provide, maintain, and improve our services</li>
-                <li>Respond to your inquiries and provide customer support</li>
-                <li>Communicate with you about services, promotions, and events</li>
-                <li>Monitor and analyze trends, usage, and activities</li>
-                <li>Prevent fraudulent transactions and enhance security</li>
+                <li>To provide and maintain our phone system services.</li>
+                <li>To communicate with you, including sending service-related notifications and updates.</li>
+                <li>To improve our app and services.</li>
+                <li>To analyze usage patterns and trends.</li>
+                <li>To comply with legal obligations.</li>
               </ul>
               
-              <h2>Information Sharing</h2>
+              <h2>4. Data Security</h2>
               <p>
-                We do not sell or rent your personal information to third parties. We may share your information with:
+                We take reasonable steps to protect your personal information from unauthorized access, use, or disclosure. However, no data transmission over the internet or storage system is completely secure. Please take precautions to protect your personal information.
               </p>
+              
+              <h2>5. Your Choices</h2>
+              <p>You have the following rights regarding your personal information:</p>
               <ul>
-                <li>Service providers who perform services on our behalf</li>
-                <li>Professional advisors, such as lawyers and accountants</li>
-                <li>Regulatory authorities, as required by law</li>
+                <li><strong>Access:</strong> You can request access to your personal information.</li>
+                <li><strong>Correction:</strong> You can request corrections to inaccurate or incomplete information.</li>
+                <li><strong>Deletion:</strong> You can request the deletion of your personal information.</li>
               </ul>
               
-              <h2>Data Security</h2>
+              <h2>7. Contact Us</h2>
               <p>
-                We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+                If you have questions, concerns, or requests regarding this Privacy Policy or your personal information, please get in touch with us at <a href="mailto:privacy@cloudmor.com">privacy@cloudmor.com</a>
               </p>
               
-              <h2>Your Rights</h2>
+              <h2>8. Changes to this Privacy Policy</h2>
               <p>
-                You have the right to:
-              </p>
-              <ul>
-                <li>Access the personal information we hold about you</li>
-                <li>Request correction of inaccurate information</li>
-                <li>Request deletion of your information</li>
-                <li>Opt out of marketing communications</li>
-                <li>Object to processing of your information</li>
-              </ul>
-              
-              <h2>Cookies and Tracking Technologies</h2>
-              <p>
-                Our website uses cookies and similar technologies to enhance your experience, analyze usage patterns, and deliver personalized content. You can control cookie settings through your browser preferences.
+                We may update this Privacy Policy to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any material changes by posting the revised Privacy Policy on our website or through other means.
               </p>
               
-              <h2>Updates to This Policy</h2>
               <p>
-                We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the effective date.
-              </p>
-              
-              <h2>Contact Us</h2>
-              <p>
-                If you have any questions about this Privacy Policy, please contact us at <a href="mailto:privacy@gowithsupport.com">privacy@gowithsupport.com</a>.
+                By using our phone system app, you agree to the terms of this Privacy Policy.
               </p>
             </div>
           </div>

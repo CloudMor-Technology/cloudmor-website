@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -29,7 +30,7 @@ const ITStrategy = () => {
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-6 text-center">Overview</h2>
               <p className="text-lg text-gray-700 mb-8">
-                GowithSupport's IT Strategy services help businesses develop a clear vision for their technology infrastructure that supports long-term objectives. We work closely with your leadership team to understand your business goals and create a roadmap that leverages technology as a strategic asset. Our approach ensures that your IT investments deliver maximum value and support your organization's growth and success.
+                CloudMor's IT Strategy services help businesses develop a clear vision for their technology infrastructure that supports long-term objectives. We work closely with your leadership team to understand your business goals and create a roadmap that leverages technology as a strategic asset. Our approach ensures that your IT investments deliver maximum value and support your organization's growth and success.
               </p>
               
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-6 mt-14 text-center">Key Components</h2>
