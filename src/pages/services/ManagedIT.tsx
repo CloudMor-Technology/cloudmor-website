@@ -1,27 +1,18 @@
 import React from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import ServiceHero from "../../components/ServiceHero";
 
 const ManagedIT = () => {
   return (
     <>
       <Navbar />
       <main>
-        <section className="pt-32 pb-20 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl font-bold text-white mb-6 md:text-2xl">
-                Comprehensive Managed IT Services
-              </h1>
-              <p className="text-xl text-gowith-light-blue mb-8">
-                Proactive technology management that drives business success
-              </p>
-              <p className="text-lg text-white mb-10 max-w-2xl mx-auto">
-                Let our team handle the day-to-day management of your technology, so you can focus on running your business.
-              </p>
-            </div>
-          </div>
-        </section>
+        <ServiceHero 
+          title="Comprehensive Managed IT Services" 
+          subtitle="Proactive technology management that drives business success"
+          description="Let our team handle the day-to-day management of your technology, so you can focus on running your business."
+        />
         
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">

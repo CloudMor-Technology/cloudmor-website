@@ -1,8 +1,8 @@
-
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ServiceCard from "../components/ServiceCard";
 import CtaSection from "../components/CtaSection";
+import ServiceHero from "../components/ServiceHero";
 import { 
   Server, 
   ShieldCheck, 
@@ -79,18 +79,10 @@ const Services = () => {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-20 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Comprehensive IT Services for Growing Businesses
-              </h1>
-              <p className="text-xl text-gowith-light-blue mb-8">
-                From day-to-day support to strategic planning, we provide the technology solutions your business needs to thrive in today's digital landscape.
-              </p>
-            </div>
-          </div>
-        </section>
+        <ServiceHero
+          title="Comprehensive IT Services for Growing Businesses"
+          subtitle="From day-to-day support to strategic planning, we provide the technology solutions your business needs to thrive in today's digital landscape."
+        />
 
         {/* Services Overview */}
         <section className="py-20 bg-gray-50">

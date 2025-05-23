@@ -1,29 +1,21 @@
-
 import React from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import ServiceHero from "../../components/ServiceHero";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Cloud, Shield, Server, Database, BarChart, Layers } from "lucide-react";
+
 const CloudServices = () => {
-  return <>
+  return (
+    <>
       <Navbar />
       <main>
-        <section className="pt-32 pb-20 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl font-bold text-white mb-6 md:text-2xl">
-                Secure & Scalable Cloud Solutions
-              </h1>
-              <p className="text-xl text-gowith-light-blue mb-8">
-                Harness the power of the cloud with expert migration, management, and optimization
-              </p>
-              <p className="text-lg text-white mb-10 max-w-2xl mx-auto">
-                Leverage the power of the cloud with expert migration, management, and optimization services.
-              </p>
-            </div>
-          </div>
-        </section>
+        <ServiceHero 
+          title="Secure & Scalable Cloud Solutions" 
+          subtitle="Harness the power of the cloud with expert migration, management, and optimization"
+          description="Leverage the power of the cloud with expert migration, management, and optimization services."
+        />
         
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
@@ -186,6 +178,8 @@ const CloudServices = () => {
         </section>
       </main>
       <Footer />
-    </>;
+    </>
+  );
 };
+
 export default CloudServices;

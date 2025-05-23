@@ -1,28 +1,21 @@
 import React from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import ServiceHero from "../../components/ServiceHero";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Shield, Lock, Server, Mail, Users, Clock, FileCheck } from "lucide-react";
+
 const Cybersecurity = () => {
-  return <>
+  return (
+    <>
       <Navbar />
       <main>
-        <section className="pt-32 pb-20 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl font-bold text-white mb-6 md:text-2xl">
-                Advanced Cybersecurity Protection
-              </h1>
-              <p className="text-xl text-gowith-light-blue mb-8">
-                Comprehensive security solutions to protect your business from evolving threats
-              </p>
-              <p className="text-lg text-white mb-10 max-w-2xl mx-auto">
-                Safeguard your data, systems, and reputation with enterprise-grade security tailored to your business needs.
-              </p>
-            </div>
-          </div>
-        </section>
+        <ServiceHero 
+          title="Advanced Cybersecurity Protection" 
+          subtitle="Comprehensive security solutions to protect your business from evolving threats"
+          description="Safeguard your data, systems, and reputation with enterprise-grade security tailored to your business needs."
+        />
         
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
@@ -169,6 +162,8 @@ const Cybersecurity = () => {
         </section>
       </main>
       <Footer />
-    </>;
+    </>
+  );
 };
+
 export default Cybersecurity;
