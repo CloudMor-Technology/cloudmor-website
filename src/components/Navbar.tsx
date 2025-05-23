@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake } from 'lucide-react';
+import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion } from 'lucide-react';
 import { Button } from './ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
@@ -222,6 +222,45 @@ const Navbar = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          
+          {/* New Support Dropdown Menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
+              Support
+              <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="p-3 min-w-[250px]">
+              <DropdownMenuItem className="font-medium text-base border-b pb-2 mb-2 text-gowith-dark-blue">
+                Support Resources
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/support/speed-test" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
+                  <Gauge className="h-5 w-5 text-gowith-medium-blue" />
+                  <div>Speed Test</div>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <a href="#" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
+                  <HelpCircle className="h-5 w-5 text-gowith-medium-blue" />
+                  <div>Help Center</div>
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <a href="#" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
+                  <FileQuestion className="h-5 w-5 text-gowith-medium-blue" />
+                  <div>FAQs</div>
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/contact" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
+                  <LifeBuoy className="h-5 w-5 text-gowith-medium-blue" />
+                  <div>Contact Support</div>
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <Link to="/about" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
             About Us
@@ -329,6 +368,25 @@ const Navbar = () => {
                 </Link>
                 <Link to="/industries/non-profits" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Non-Profits
+                </Link>
+              </div>
+            </div>
+            
+            {/* New Mobile Support Menu */}
+            <div className="px-4 py-2">
+              <div className="text-gowith-dark-blue font-medium mb-2">Support</div>
+              <div className="ml-4 flex flex-col space-y-2">
+                <Link to="/support/speed-test" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                  Speed Test
+                </Link>
+                <a href="#" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                  Help Center
+                </a>
+                <a href="#" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                  FAQs
+                </a>
+                <Link to="/contact" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                  Contact Support
                 </Link>
               </div>
             </div>
