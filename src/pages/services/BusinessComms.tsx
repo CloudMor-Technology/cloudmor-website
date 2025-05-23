@@ -429,7 +429,7 @@ const BusinessComms = () => {
                 <div className="flex flex-col md:flex-row items-center justify-between">
                   <div>
                     <span className="bg-gowith-orange text-white text-xs py-1 px-2 rounded mb-2 inline-block">Add-on</span>
-                    <h3 className="text-xl font-bold text-gowith-dark-blue">GowithSuppor Guide</h3>
+                    <h3 className="text-xl font-bold text-gowith-dark-blue">CloudMor Guide</h3>
                     <p className="text-gray-600">Self-service agent scripting, automated workflows, and analytics to optimize your call center.</p>
                   </div>
                   <div className="mt-4 md:mt-0">
@@ -446,12 +446,10 @@ const BusinessComms = () => {
                 <div className="space-y-4">
                   <div className="bg-white border border-gray-200 rounded-lg p-6">
                     
-                    <p className="text-gray-600">As an all-in-one virtual phone system, 
-GowithSuppor
- Voice can be used for customer support, as a contact center, or simply as a customer support tool. We also offer a solution that is suitable for companies operating remotely or with multiple locations at the same time.</p>
+                    <p className="text-gray-600">As an all-in-one virtual phone system,  CloudMor Voice can be used for customer support, as a contact center, or simply as a customer support tool. We also offer a solution that is suitable for companies operating remotely or with multiple locations at the same time.</p>
                   </div>
                   <div className="bg-white border border-gray-200 rounded-lg p-6">
-                    <h4 className="text-lg font-medium text-gowith-dark-blue mb-2">Does GowithSupport Voice offer free trials?</h4>
+                    <h4 className="text-lg font-medium text-gowith-dark-blue mb-2">Does CloudMor Voice offer free trials?</h4>
                     <p className="text-gray-600">Contact our sales department to take advantage of our limited time offer for a seven-day free trial. Start dialing immediately and enjoy all our features and integrations for two weeks.</p>
                   </div>
                   <div className="bg-white border border-gray-200 rounded-lg p-6">
@@ -459,7 +457,7 @@ GowithSuppor
                     <p className="text-gray-600">Plans billed annually can only be upgraded to a higher tier plan (e.g. From Essential to Standard). It's not possible to downgrade on annual billing.</p>
                   </div>
                   <div className="bg-white border border-gray-200 rounded-lg p-6">
-                    <h4 className="text-lg font-medium text-gowith-dark-blue mb-2">Does my GowithSupport Voice plan include unlimited calling?</h4>
+                    <h4 className="text-lg font-medium text-gowith-dark-blue mb-2">Does my CloudMor Voice plan include unlimited calling?</h4>
                     <p className="text-gray-600">With Voice, you can make unlimited VoIP calls and conference calls using the Voice app to anyone in your organization. Calls to the US and Canada are unlimited for external calls. Voice's international calling plans and bundles offer affordable rates when making international calls.</p>
                   </div>
                 </div>
@@ -489,9 +487,7 @@ GowithSuppor
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-6">Platform Overview</h2>
-              <p className="text-lg text-gray-600 mb-8">
-                GowithSupport's Business Communications Platform integrates voice, messaging, video, and collaboration tools into a single, secure environment. Designed for modern businesses, our solution eliminates the complexity of managing multiple communication systems while enhancing productivity, improving customer relationships, and reducing operational costs.
-              </p>
+              <p className="text-lg text-gray-600 mb-8">CloudMor's Business Communications Platform integrates voice, messaging, video, and collaboration tools into a single, secure environment. Designed for modern businesses, our solution eliminates the complexity of managing multiple communication systems while enhancing productivity, improving customer relationships, and reducing operational costs.</p>
             </div>
           </div>
         </section>
@@ -650,9 +646,7 @@ GowithSuppor
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl font-bold text-gowith-dark-blue mb-4">Unified Communications Platform</h2>
-                <p className="text-lg text-gray-600 mb-6">
-                  By centralizing global voice, and messaging into an all-in-one platform, LogixxVoice makes it easy for businesses to empower quality interactions without the complexity of traditional communication methods.
-                </p>
+                <p className="text-lg text-gray-600 mb-6">By centralizing global voice, and messaging into an all-in-one platform, CloudMor Voice makes it easy for businesses to empower quality interactions without the complexity of traditional communication methods.</p>
                 <p className="text-lg text-gray-600">
                   With our industry-leading tools and insights, you will be able to master every conversation quickly, cost-effectively, and without disrupting your business.
                 </p>
