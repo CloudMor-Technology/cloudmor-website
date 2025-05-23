@@ -32,9 +32,9 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img 
-            src="/lovable-uploads/3d2bb5de-6ddd-4565-abe0-84bf049d7d4b.png" 
+            src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
             alt="CloudMor Logo" 
-            className="h-28 w-auto brightness-0 invert" 
+            className="h-28 w-auto" 
           />
         </Link>
 
