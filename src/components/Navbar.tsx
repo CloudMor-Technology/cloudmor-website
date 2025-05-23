@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake } from 'lucide-react';
@@ -27,7 +26,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-gray-900 to-gray-800 shadow-md py-2' : 'bg-transparent py-4'}`}>
+    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-blue-100 to-blue-50 shadow-md py-2' : 'bg-blue-50/95 backdrop-blur-sm py-4'}`}>
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center">
@@ -40,12 +39,12 @@ const Navbar = () => {
 
         {/* Desktop Navigation with enhanced dropdown menus */}
         <nav className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="text-white hover:text-gowith-light-blue transition-colors font-medium">
+          <Link to="/" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
             Home
           </Link>
           
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-white font-medium hover:text-gowith-light-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
+            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
               Services
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
@@ -131,7 +130,7 @@ const Navbar = () => {
           </DropdownMenu>
           
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-white font-medium hover:text-gowith-light-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
+            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
               Insights
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
@@ -157,7 +156,7 @@ const Navbar = () => {
           </DropdownMenu>
           
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-white font-medium hover:text-gowith-light-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
+            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
               Industries
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
@@ -224,11 +223,11 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Link to="/about" className="text-white hover:text-gowith-light-blue transition-colors font-medium">
+          <Link to="/about" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
             About Us
           </Link>
 
-          <Link to="/contact" className="text-white hover:text-gowith-light-blue transition-colors font-medium">
+          <Link to="/contact" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
             Contact
           </Link>
         </nav>
@@ -244,7 +243,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-white" 
+          className="md:hidden text-gowith-dark-blue" 
           onClick={() => setIsOpen(!isOpen)} 
           aria-label="Toggle menu"
         >
@@ -253,14 +252,14 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navigation */}
-      {isOpen && <div className="md:hidden absolute top-full left-0 w-full bg-gowith-dark-blue shadow-md py-4 px-4 animate-fade-in">
+      {isOpen && <div className="md:hidden absolute top-full left-0 w-full bg-blue-50 shadow-md py-4 px-4 animate-fade-in">
           <div className="flex flex-col space-y-4">
-            <Link to="/" className="text-white font-medium px-4 py-2 hover:bg-gowith-medium-blue rounded-md" onClick={() => setIsOpen(false)}>
+            <Link to="/" className="text-gowith-dark-blue font-medium px-4 py-2 hover:bg-blue-100 rounded-md" onClick={() => setIsOpen(false)}>
               Home
             </Link>
             
             <div className="px-4 py-2">
-              <div className="text-white font-medium mb-2">Services</div>
+              <div className="text-gowith-dark-blue font-medium mb-2">Services</div>
               <div className="ml-4 flex flex-col space-y-2">
                 <Link to="/services/managed-it" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Managed IT Services
@@ -290,7 +289,7 @@ const Navbar = () => {
             </div>
             
             <div className="px-4 py-2">
-              <div className="text-white font-medium mb-2">Insights</div>
+              <div className="text-gowith-dark-blue font-medium mb-2">Insights</div>
               <div className="ml-4 flex flex-col space-y-2">
                 <Link to="/insights/case-studies" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Case Studies
@@ -302,7 +301,7 @@ const Navbar = () => {
             </div>
             
             <div className="px-4 py-2">
-              <div className="text-white font-medium mb-2">Industries</div>
+              <div className="text-gowith-dark-blue font-medium mb-2">Industries</div>
               <div className="ml-4 flex flex-col space-y-2">
                 <Link to="/industries/financial-services" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Financial Services
@@ -334,11 +333,11 @@ const Navbar = () => {
               </div>
             </div>
             
-            <Link to="/about" className="text-white font-medium px-4 py-2 hover:bg-gowith-medium-blue rounded-md" onClick={() => setIsOpen(false)}>
+            <Link to="/about" className="text-gowith-dark-blue font-medium px-4 py-2 hover:bg-blue-100 rounded-md" onClick={() => setIsOpen(false)}>
               About Us
             </Link>
             
-            <Link to="/contact" className="text-white font-medium px-4 py-2 hover:bg-gowith-medium-blue rounded-md" onClick={() => setIsOpen(false)}>
+            <Link to="/contact" className="text-gowith-dark-blue font-medium px-4 py-2 hover:bg-blue-100 rounded-md" onClick={() => setIsOpen(false)}>
               Contact
             </Link>
             
