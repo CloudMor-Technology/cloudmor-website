@@ -26,9 +26,6 @@ import BusinessComms from "./pages/services/BusinessComms";
 import FaceIDAuth from "./pages/services/FaceIDAuth";
 import WebDevAutomation from "./pages/services/WebDevAutomation";
 
-// Support Pages
-import SpeedTest from "./pages/support/SpeedTest";
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -57,9 +54,6 @@ const App = () => (
           <Route path="/careers" element={<Careers />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/sitemap" element={<Sitemap />} />
-          
-          {/* Support Pages */}
-          <Route path="/support/speed-test" element={<SpeedTest />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

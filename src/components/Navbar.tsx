@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink } from 'lucide-react';
@@ -223,7 +224,7 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           
-          {/* Support Dropdown Menu with Support Center Portal */}
+          {/* Support Dropdown Menu with direct Speed Test link */}
           <DropdownMenu>
             <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
               Support
@@ -236,10 +237,15 @@ const Navbar = () => {
                 Support Resources
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to="/support/speed-test" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
+                <a 
+                  href="https://cloudmor.dualstack.speedtestcustom.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue"
+                >
                   <Gauge className="h-5 w-5 text-gowith-medium-blue" />
                   <div>Speed Test</div>
-                </Link>
+                </a>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <a 
@@ -383,13 +389,19 @@ const Navbar = () => {
               </div>
             </div>
             
-            {/* Mobile Support Menu with Support Center Portal */}
+            {/* Mobile Support Menu with direct Speed Test link */}
             <div className="px-4 py-2">
               <div className="text-gowith-dark-blue font-medium mb-2">Support</div>
               <div className="ml-4 flex flex-col space-y-2">
-                <Link to="/support/speed-test" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <a 
+                  href="https://cloudmor.dualstack.speedtestcustom.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gowith-light-blue hover:text-white" 
+                  onClick={() => setIsOpen(false)}
+                >
                   Speed Test
-                </Link>
+                </a>
                 <a 
                   href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" 
                   target="_blank" 
