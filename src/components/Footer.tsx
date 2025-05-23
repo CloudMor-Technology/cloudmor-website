@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -45,42 +46,42 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-6 text-gowith-dark-blue">Services</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/services/managed-it" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/services/managed-it" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Managed IT Services
                 </Link>
               </li>
               <li>
-                <Link to="/services/cybersecurity" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/services/cybersecurity" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Cybersecurity Services
                 </Link>
               </li>
               <li>
-                <Link to="/services/cloud" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/services/cloud" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Managed Cloud Services
                 </Link>
               </li>
               <li>
-                <Link to="/services/professional" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/services/professional" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Professional Services
                 </Link>
               </li>
               <li>
-                <Link to="/services/it-strategy" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/services/it-strategy" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   IT Strategy
                 </Link>
               </li>
               <li>
-                <Link to="/services/business-comms" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/services/business-comms" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Business Comms Platform
                 </Link>
               </li>
               <li>
-                <Link to="/services/face-id-auth" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/services/face-id-auth" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Face ID Auth
                 </Link>
               </li>
               <li>
-                <Link to="/services/web-dev-automation" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/services/web-dev-automation" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Web Dev Automation
                 </Link>
               </li>
@@ -92,27 +93,27 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-6 text-gowith-dark-blue">Company</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/about" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/about" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/insights/case-studies" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/insights/case-studies" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Case Studies
                 </Link>
               </li>
               <li>
-                <Link to="/insights/blog" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/insights/blog" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link to="/careers" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/careers" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/contact" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors">
                   Contact
                 </Link>
               </li>
