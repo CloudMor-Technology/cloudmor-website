@@ -155,7 +155,47 @@ const ManagedIT = () => {
                 <li>Strategic guidance for technology investments</li>
                 <li>Focus on your core business while we manage the technology</li>
               </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing Wizard Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-gowith-dark-blue mb-4">
+                  Managed Services Pricing Calculator
+                </h2>
+                <p className="text-lg text-gray-600">
+                  Get an instant estimate for your managed IT services based on your specific requirements
+                </p>
+              </div>
               
+              <div className="bg-white rounded-lg shadow-lg p-8">
+                <div className="calconic-calculator" data-calculatorid="5fca9eac0ff8010029aa0767"></div>
+              </div>
+              
+              <div className="mt-8 text-center">
+                <p className="text-sm text-gray-500 mb-4">
+                  * This calculator provides an estimate based on standard configurations. Final pricing may vary based on specific requirements and customizations.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a href="/contact" className="inline-block bg-gowith-orange hover:bg-gowith-orange-hover text-white px-6 py-3 rounded-md transition-colors">
+                    Request Detailed Quote
+                  </a>
+                  <a href="tel:+18885546597" className="inline-block bg-gowith-medium-blue hover:bg-gowith-dark-blue text-white px-6 py-3 rounded-md transition-colors">
+                    Call (888) 554-6597
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
               <div className="bg-gowith-dark-blue text-white p-8 rounded-lg text-center">
                 <h2 className="text-2xl font-bold mb-4">Experience Reliable, Proactive IT Management</h2>
                 <p className="mb-6">Take the first step towards optimizing your technology infrastructure</p>
@@ -168,6 +208,24 @@ const ManagedIT = () => {
         </section>
       </main>
       <Footer />
+      
+      {/* Calconic Script */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() { 
+              var qs,j,q,s,d=document, gi=d.getElementById,
+              ce=d.createElement, gt=d.getElementsByTagName,
+              id="calconic_", b="https://cdn.calconic.com/static/js/";
+              if(!gi.call(d,id)) { 
+                j=ce.call(d,"script"); j.id=id; j.type="text/javascript"; j.async=true;
+                j.dataset.calconic=true;
+                j.src=b+"calconic.min.js"; q=gt.call(d,"script")[0]; q.parentNode.insertBefore(j,q) 
+              }
+            })();
+          `
+        }}
+      />
     </>
   );
 };
