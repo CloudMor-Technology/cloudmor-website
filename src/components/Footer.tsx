@@ -18,8 +18,8 @@ const Footer = () => {
               Enterprise-level technology and security solutions tailored for growing businesses.
             </p>
             <div className="text-gowith-medium-blue">
-              <p className="mb-1"><strong>Phone:</strong> <a href="tel:9492885812" className="hover:text-gowith-dark-blue">(949) 288-5812</a></p>
-              <p><strong>Email:</strong> <a href="mailto:info@cloudmor.com" className="hover:text-gowith-dark-blue">info@cloudmor.com</a></p>
+              <p className="mb-1"><strong>Phone:</strong> <a href="tel:8885546597" className="hover:text-gowith-dark-blue">(888) 554-6597</a></p>
+              <p><strong>Email:</strong> <a href="mailto:sales@cloudmor.com" className="hover:text-gowith-dark-blue">sales@cloudmor.com</a></p>
             </div>
             <div className="flex space-x-4 mt-6">
               <a href="#" className="text-gowith-medium-blue hover:text-gowith-dark-blue transition-colors" aria-label="LinkedIn">
