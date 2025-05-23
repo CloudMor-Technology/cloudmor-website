@@ -14,6 +14,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/ui/tabs";
 import { Button } from "../../components/ui/button";
 import { Link } from 'react-router-dom';
+
 const BusinessComms = () => {
   const features = [{
     icon: <Headphones className="h-6 w-6 text-white" />,
@@ -95,6 +96,7 @@ const BusinessComms = () => {
     title: "Professional Services",
     description: "Manage client communications efficiently with integrated messaging and tracking."
   }];
+
   return <>
       <Navbar />
       <main>
@@ -429,7 +431,7 @@ const BusinessComms = () => {
                 <div className="flex flex-col md:flex-row items-center justify-between">
                   <div>
                     <span className="bg-gowith-orange text-white text-xs py-1 px-2 rounded mb-2 inline-block">Add-on</span>
-                    <h3 className="text-xl font-bold text-gowith-dark-blue">CloudMor Guide</h3>
+                    <h3 className="text-xl font-bold text-gowith-dark-blue">CloudMor Guide</h3>
                     <p className="text-gray-600">Self-service agent scripting, automated workflows, and analytics to optimize your call center.</p>
                   </div>
                   <div className="mt-4 md:mt-0">
@@ -446,7 +448,7 @@ const BusinessComms = () => {
                 <div className="space-y-4">
                   <div className="bg-white border border-gray-200 rounded-lg p-6">
                     
-                    <p className="text-gray-600">As an all-in-one virtual phone system,  CloudMor Voice can be used for customer support, as a contact center, or simply as a customer support tool. We also offer a solution that is suitable for companies operating remotely or with multiple locations at the same time.</p>
+                    <p className="text-gray-600">As an all-in-one virtual phone system,  CloudMor Voice can be used for customer support, as a contact center, or simply as a customer support tool. We also offer a solution that is suitable for companies operating remotely or with multiple locations at the same time.</p>
                   </div>
                   <div className="bg-white border border-gray-200 rounded-lg p-6">
                     <h4 className="text-lg font-medium text-gowith-dark-blue mb-2">Does CloudMor Voice offer free trials?</h4>
@@ -717,7 +719,7 @@ const BusinessComms = () => {
                   </ul>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <PhoneButton phoneNumber="(949) 288-5812" className="flex-grow" />
+                  <PhoneButton phoneNumber="(888) 554-6597" className="flex-grow" />
                 </div>
               </div>
               
@@ -738,4 +740,5 @@ const BusinessComms = () => {
       <Footer />
     </>;
 };
+
 export default BusinessComms;
