@@ -3,12 +3,18 @@ import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
-  return <section className="relative bg-transparent min-h-[80vh] flex items-end justify-center">
+  return (
+    <section className="relative bg-transparent min-h-[80vh] flex items-end justify-center">
       <div className="absolute inset-0 z-0">
-        <img src="/lovable-uploads/330e0225-2310-4395-bbb5-72dddb56a591.png" alt="IT Business Meeting" className="w-full h-full object-cover" style={{
-        filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.2))',
-        backgroundColor: 'transparent'
-      }} />
+        <img 
+          src="/lovable-uploads/834d5c69-5070-4488-bc7a-7b19eeebae04.png" 
+          alt="CloudMor Business Meeting" 
+          className="w-full h-full object-cover" 
+          style={{
+            filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.2))',
+            backgroundColor: 'transparent'
+          }} 
+        />
       </div>
       <div className="container mx-auto px-4 relative z-10 pb-16">
         <div className="max-w-4xl mx-auto bg-transparent backdrop-blur-sm p-8 rounded-lg text-center">
@@ -19,7 +25,7 @@ const HeroSection = () => {
             Enterprise-level technology and security solutions tailored for growing businesses
           </p>
           <p className="text-lg text-white mb-10 max-w-2xl mx-auto drop-shadow-md">
-            Partner with GowithSupport to secure your data, optimize your infrastructure, and accelerate your growth
+            Partner with CloudMor to secure your data, optimize your infrastructure, and accelerate your growth
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="bg-gowith-orange hover:bg-gowith-orange-hover text-white px-8 py-6 text-lg">
@@ -31,6 +37,8 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;

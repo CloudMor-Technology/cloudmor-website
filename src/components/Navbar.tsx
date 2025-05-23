@@ -5,9 +5,11 @@ import { Button } from './ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -16,16 +18,23 @@ const Navbar = () => {
         setIsScrolled(false);
       }
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  return <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-gray-900 to-gray-800 shadow-md py-2' : 'bg-transparent py-4'}`}>
+
+  return (
+    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-gray-900 to-gray-800 shadow-md py-2' : 'bg-transparent py-4'}`}>
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <img src="/lovable-uploads/edb9dbfe-335c-4145-a6a2-f0e188e64fbb.png" alt="GowithSupport Logo" className="h-28 w-auto" />
+          <img 
+            src="/lovable-uploads/edb9dbfe-335c-4145-a6a2-f0e188e64fbb.png" 
+            alt="CloudMor Logo" 
+            className="h-28 w-auto" 
+          />
         </Link>
 
         {/* Desktop Navigation with enhanced dropdown menus */}
@@ -233,7 +242,11 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
+        <button 
+          className="md:hidden text-white" 
+          onClick={() => setIsOpen(!isOpen)} 
+          aria-label="Toggle menu"
+        >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -335,6 +348,8 @@ const Navbar = () => {
             </Button>
           </div>
         </div>}
-    </header>;
+    </header>
+  );
 };
+
 export default Navbar;

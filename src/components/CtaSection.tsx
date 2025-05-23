@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import PhoneButton from './ui/phone-button';
 
 const CtaSection = () => {
-  return <section className="py-20 bg-gowith-dark-blue">
+  return (
+    <section className="py-20 bg-gowith-dark-blue">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
@@ -27,6 +28,8 @@ const CtaSection = () => {
           </p>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default CtaSection;

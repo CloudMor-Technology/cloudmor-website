@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -11,7 +10,7 @@ const Footer = () => {
             <Link to="/" className="inline-block mb-6">
               <img 
                 src="/lovable-uploads/edb9dbfe-335c-4145-a6a2-f0e188e64fbb.png" 
-                alt="GowithSupport Logo" 
+                alt="CloudMor Logo" 
                 className="h-28 w-auto brightness-150"
               />
             </Link>
@@ -20,7 +19,7 @@ const Footer = () => {
             </p>
             <div className="text-gray-300">
               <p className="mb-1"><strong>Phone:</strong> <a href="tel:9492885812" className="hover:text-white">(949) 288-5812</a></p>
-              <p><strong>Email:</strong> <a href="mailto:info@gowithsupport.com" className="hover:text-white">info@gowithsupport.com</a></p>
+              <p><strong>Email:</strong> <a href="mailto:info@cloudmor.com" className="hover:text-white">info@cloudmor.com</a></p>
             </div>
             <div className="flex space-x-4 mt-6">
               <a href="#" className="text-white hover:text-gowith-light-blue transition-colors" aria-label="LinkedIn">
@@ -148,7 +147,7 @@ const Footer = () => {
         <div className="border-t border-gowith-medium-blue pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} GowithSupport. All rights reserved.
+              &copy; {new Date().getFullYear()} CloudMor. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <Link to="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition-colors">
