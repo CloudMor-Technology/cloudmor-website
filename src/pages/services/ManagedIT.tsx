@@ -1,8 +1,11 @@
+
 import React from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+
 const ManagedIT = () => {
-  return <>
+  return (
+    <>
       <Navbar />
       <main>
         <section className="pt-32 pb-20 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue">
@@ -26,7 +29,7 @@ const ManagedIT = () => {
             <div className="max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold text-gowith-dark-blue mb-6">Overview</h2>
               <p className="text-lg text-gray-600 mb-8">
-                GowithSupport's Managed IT Services provide comprehensive support for your entire technology infrastructure. We take a proactive approach to IT management, identifying and resolving issues before they impact your business. Our team becomes an extension of yours, providing the expertise and support you need to leverage technology for growth and success.
+                CloudMor's Managed IT Services provide comprehensive support for your entire technology infrastructure. We take a proactive approach to IT management, identifying and resolving issues before they impact your business. Our team becomes an extension of yours, providing the expertise and support you need to leverage technology for growth and success.
               </p>
               
               <div className="bg-gray-50 p-8 rounded-lg shadow-sm mb-12">
@@ -165,6 +168,8 @@ const ManagedIT = () => {
         </section>
       </main>
       <Footer />
-    </>;
+    </>
+  );
 };
+
 export default ManagedIT;

@@ -1,23 +1,26 @@
 import { Badge, Server, Award } from 'lucide-react';
 import { useState } from 'react';
+
 const WhyChooseUs = () => {
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
+  
   const testimonials = [{
-    quote: "GowithSupport transformed our IT infrastructure and gave us the security confidence we needed. Their team is responsive, knowledgeable, and truly cares about our business goals.",
+    quote: "CloudMor transformed our IT infrastructure and gave us the security confidence we needed. Their team is responsive, knowledgeable, and truly cares about our business goals.",
     author: "Sarah Johnson",
     position: "COO, FinTech Solutions Inc.",
     company: "FinTech Solutions Inc."
   }, {
-    quote: "We've tried other IT service providers before, but none matched the level of expertise and proactive approach that GowithSupport delivers. They're truly an extension of our team.",
+    quote: "We've tried other IT service providers before, but none matched the level of expertise and proactive approach that CloudMor delivers. They're truly an extension of our team.",
     author: "Michael Chen",
     position: "CTO, Healthcare Innovations",
     company: "Healthcare Innovations"
   }, {
-    quote: "Since partnering with GowithSupport, our downtime has been reduced by 98%. Their 24/7 monitoring and quick response to issues has been a game-changer for our operations.",
+    quote: "Since partnering with CloudMor, our downtime has been reduced by 98%. Their 24/7 monitoring and quick response to issues has been a game-changer for our operations.",
     author: "David Rodriguez",
     position: "IT Director, Legal Partners LLP",
     company: "Legal Partners LLP"
   }];
+
   const metrics = [{
     label: "Years Experience",
     value: "15+"
@@ -31,12 +34,15 @@ const WhyChooseUs = () => {
     label: "Certified Experts",
     value: "25+"
   }];
+
   const nextTestimonial = () => {
     setActiveTestimonialIndex(prevIndex => prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1);
   };
+
   const prevTestimonial = () => {
     setActiveTestimonialIndex(prevIndex => prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1);
   };
+
   return <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -149,4 +155,5 @@ const WhyChooseUs = () => {
       </div>
     </section>;
 };
+
 export default WhyChooseUs;
