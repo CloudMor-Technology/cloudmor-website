@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -11,7 +12,7 @@ const Footer = () => {
               <img 
                 src="/lovable-uploads/3d2bb5de-6ddd-4565-abe0-84bf049d7d4b.png" 
                 alt="CloudMor Logo" 
-                className="h-28 w-auto"
+                className="h-28 w-auto brightness-0 invert"
               />
             </Link>
             <p className="text-gray-300 mb-4">
