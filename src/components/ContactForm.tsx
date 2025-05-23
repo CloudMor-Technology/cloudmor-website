@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import emailjs from '@emailjs/browser';
+import { supabase } from "@/integrations/supabase/client";
 
 interface ContactFormProps {
   formTitle?: string;
@@ -66,33 +67,33 @@ const ContactForm: React.FC<ContactFormProps> = ({
     
     setIsSubmitting(true);
     
-    // Prepare data for email
-    const templateParams = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      fullName: `${formData.firstName} ${formData.lastName}`,
-      email: formData.email,
-      phone: formData.phone,
-      company: formData.company,
-      subject: formData.subject || `New ${formType} inquiry`,
-      message: formData.message,
-      formType: formType,
-      requestConsultation: formData.requestConsultation ? "Yes" : "No",
-      subscribeNewsletter: formData.subscribeNewsletter ? "Yes" : "No",
-      preferredDate: formData.preferredDate,
-      employeeCount: formData.employeeCount,
-      industry: formData.industry,
-    };
-
     try {
-      // Replace these with your actual EmailJS credentials
-      // You'll need to sign up at emailjs.com and create templates
-      await emailjs.send(
-        'YOUR_SERVICE_ID', // e.g., 'office365'
-        'YOUR_TEMPLATE_ID',
-        templateParams,
-        'YOUR_PUBLIC_KEY'
-      );
+      // Prepare data for Supabase
+      const submissionData = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        phone: formData.phone || null,
+        company: formData.company || null,
+        subject: formData.subject || `New ${formType} inquiry`,
+        message: formData.message,
+        form_type: formType,
+        request_consultation: formData.requestConsultation,
+        subscribe_newsletter: formData.subscribeNewsletter,
+        preferred_date: formData.preferredDate || null,
+        employee_count: formData.employeeCount || null,
+        industry: formData.industry || null,
+      };
+
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert([submissionData]);
+
+      if (error) {
+        console.error('Error submitting form:', error);
+        toast.error("Failed to submit your request. Please try again.");
+        return;
+      }
       
       toast.success("Thank you for contacting us! We'll be in touch soon.");
       
@@ -118,8 +119,8 @@ const ContactForm: React.FC<ContactFormProps> = ({
         onSubmitSuccess();
       }
     } catch (error) {
-      console.error('Failed to send email:', error);
-      toast.error("Failed to send your message. Please try again later.");
+      console.error('Failed to submit form:', error);
+      toast.error("Failed to submit your request. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
