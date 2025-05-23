@@ -32,7 +32,7 @@ const CtaSection = () => {
               </a>
             </Button>
             
-            <PhoneButton phoneNumber="(949) 288-5812" className="text-lg" />
+            <PhoneButton phoneNumber="(888) 554-6597" className="text-lg" />
           </div>
           
           <p className="text-white text-opacity-80 mt-8">
