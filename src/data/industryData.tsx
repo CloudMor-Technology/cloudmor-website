@@ -1,4 +1,3 @@
-
 import { Building2, Activity, Scale, Briefcase, HardDrive, Rocket, Film, Landmark, Heart } from 'lucide-react';
 
 export const industryData = [
@@ -9,7 +8,7 @@ export const industryData = [
     headline: "Secure, Compliant IT Solutions for Financial Services",
     subheadline: "Technology that protects your data, ensures compliance, and drives business growth",
     brief: "From strict regulatory requirements to the constant threat of cyber attacks, financial institutions require specialized IT solutions that balance security, compliance, and operational efficiency.",
-    overview: "GowithSupport understands the unique challenges facing financial services organizations. From strict regulatory requirements to the constant threat of cyber attacks, financial institutions require specialized IT solutions that balance security, compliance, and operational efficiency. Our team delivers comprehensive technology services tailored to the specific needs of banks, credit unions, investment firms, and insurance companies.",
+    overview: "CloudMor understands the unique challenges facing financial services organizations. From strict regulatory requirements to the constant threat of cyber attacks, financial institutions require specialized IT solutions that balance security, compliance, and operational efficiency. Our team delivers comprehensive technology services tailored to the specific needs of banks, credit unions, investment firms, and insurance companies.",
     challenges: [
       {
         title: "Regulatory Compliance",
@@ -58,7 +57,7 @@ export const industryData = [
       }
     ],
     whyChooseUs: "Our team includes specialists with extensive experience in the financial services sector. We understand the unique regulatory requirements, security considerations, and operational challenges you face. Our solutions are designed to address these specific needs while providing the reliability and support critical to financial organizations.",
-    caseStudy: "When a regional credit union needed to modernize their infrastructure while enhancing security, GowithSupport delivered a comprehensive solution that reduced operational costs by 30% while improving compliance posture and customer experience.",
+    caseStudy: "When a regional credit union needed to modernize their infrastructure while enhancing security, CloudMor delivered a comprehensive solution that reduced operational costs by 30% while improving compliance posture and customer experience.",
     ctaHeadline: "Enhance Your Financial Institution's Security and Efficiency",
     ctaButtonText: "Schedule a Financial Services IT Consultation"
   },
@@ -69,7 +68,7 @@ export const industryData = [
     headline: "HIPAA-Compliant IT Solutions for Healthcare",
     subheadline: "Secure, reliable technology that supports patient care and operational excellence",
     brief: "Healthcare organizations must protect patient data while ensuring it's available to authorized personnel. HIPAA violations can result in significant penalties and reputation damage.",
-    overview: "GowithSupport provides specialized IT solutions for healthcare organizations that address the unique challenges of managing patient data, ensuring compliance, and supporting quality care. Our healthcare IT experts understand the critical nature of your systems and the importance of maintaining both security and accessibility. We deliver technology services that help healthcare providers focus on what matters most—patient outcomes.",
+    overview: "CloudMor provides specialized IT solutions for healthcare organizations that address the unique challenges of managing patient data, ensuring compliance, and supporting quality care. Our healthcare IT experts understand the critical nature of your systems and the importance of maintaining both security and accessibility. We deliver technology services that help healthcare providers focus on what matters most—patient outcomes.",
     challenges: [
       {
         title: "HIPAA Compliance",
@@ -127,7 +126,7 @@ export const industryData = [
       }
     ],
     whyChooseUs: "Our healthcare IT specialists have extensive experience working with medical practices, hospitals, and other healthcare organizations. We understand the critical nature of healthcare technology and the importance of balancing security, compliance, and accessibility. Our proactive approach ensures your systems remain secure and operational, allowing your team to focus on patient care.",
-    caseStudy: "When a multi-location medical practice needed to implement a new EHR system while ensuring HIPAA compliance, GowithSupport managed the entire process—from system selection to implementation and training—resulting in improved patient care coordination and a 25% reduction in administrative time.",
+    caseStudy: "When a multi-location medical practice needed to implement a new EHR system while ensuring HIPAA compliance, CloudMor managed the entire process—from system selection to implementation and training—resulting in improved patient care coordination and a 25% reduction in administrative time.",
     ctaHeadline: "Enhance Patient Care with Secure, Reliable Healthcare IT",
     ctaButtonText: "Request a HIPAA Compliance Assessment"
   },
@@ -138,7 +137,7 @@ export const industryData = [
     headline: "Secure IT Solutions for Legal Professionals",
     subheadline: "Technology that protects client confidentiality while enhancing productivity",
     brief: "Law firms must maintain strict confidentiality for client information. Security breaches can result in ethical violations, malpractice claims, and reputational damage.",
-    overview: "GowithSupport understands the unique technology challenges facing law firms. From maintaining client confidentiality to managing complex document systems, legal professionals require specialized IT solutions that balance security, efficiency, and accessibility. Our team delivers comprehensive technology services tailored to the specific needs of law firms of all sizes.",
+    overview: "CloudMor understands the unique technology challenges facing law firms. From maintaining client confidentiality to managing complex document systems, legal professionals require specialized IT solutions that balance security, efficiency, and accessibility. Our team delivers comprehensive technology services tailored to the specific needs of law firms of all sizes.",
     challenges: [
       {
         title: "Client Confidentiality",
@@ -196,7 +195,7 @@ export const industryData = [
       }
     ],
     whyChooseUs: "Our team includes specialists with extensive experience working with law firms. We understand the ethical obligations, workflow requirements, and security considerations unique to legal professionals. Our solutions are designed to address these specific needs while providing the reliability and support critical to your practice.",
-    caseStudy: "When a growing law firm needed to implement a new document management system while ensuring client confidentiality, GowithSupport delivered a comprehensive solution that improved attorney productivity by 35% while strengthening security and compliance.",
+    caseStudy: "When a growing law firm needed to implement a new document management system while ensuring client confidentiality, CloudMor delivered a comprehensive solution that improved attorney productivity by 35% while strengthening security and compliance.",
     ctaHeadline: "Enhance Your Firm's Security and Efficiency",
     ctaButtonText: "Schedule a Legal IT Consultation"
   },
@@ -207,7 +206,7 @@ export const industryData = [
     headline: "Strategic IT Solutions for Private Equity Firms",
     subheadline: "Technology that supports due diligence, portfolio management, and firm operations",
     brief: "Private equity firms manage highly sensitive financial data that requires robust security measures to prevent unauthorized access or breaches.",
-    overview: "GowithSupport delivers specialized IT solutions designed for the unique needs of private equity firms. From supporting due diligence processes to securing sensitive financial data, our team provides technology services that enhance operational efficiency, protect critical information, and support your firm's growth strategies.",
+    overview: "CloudMor delivers specialized IT solutions designed for the unique needs of private equity firms. From supporting due diligence processes to securing sensitive financial data, our team provides technology services that enhance operational efficiency, protect critical information, and support your firm's growth strategies.",
     challenges: [
       {
         title: "Data Security",
@@ -265,7 +264,7 @@ export const industryData = [
       }
     ],
     whyChooseUs: "Our team understands the fast-paced, high-stakes environment of private equity. We deliver technology solutions that provide the security, reliability, and efficiency necessary for successful deal-making and portfolio management. Our experience working with financial services firms ensures we understand your unique requirements and priorities.",
-    caseStudy: "When a private equity firm needed to enhance its due diligence capabilities while strengthening data security, GowithSupport implemented a comprehensive solution that accelerated the deal review process by 40% while ensuring regulatory compliance and data protection.",
+    caseStudy: "When a private equity firm needed to enhance its due diligence capabilities while strengthening data security, CloudMor implemented a comprehensive solution that accelerated the deal review process by 40% while ensuring regulatory compliance and data protection.",
     ctaHeadline: "Enhance Your Firm's Due Diligence and Data Security",
     ctaButtonText: "Schedule a Private Equity IT Consultation"
   },
@@ -276,7 +275,7 @@ export const industryData = [
     headline: "Innovative IT Solutions for Manufacturing",
     subheadline: "Technology that optimizes production, enhances quality, and drives operational efficiency",
     brief: "Manufacturing environments require seamless integration between IT systems and operational technology (OT) on the production floor.",
-    overview: "GowithSupport provides specialized IT solutions that address the unique challenges facing modern manufacturers. From production floor systems to supply chain management, our team delivers technology services that improve operational efficiency, maintain quality standards, and support your competitive advantage in a rapidly evolving industry.",
+    overview: "CloudMor provides specialized IT solutions that address the unique challenges facing modern manufacturers. From production floor systems to supply chain management, our team delivers technology services that improve operational efficiency, maintain quality standards, and support your competitive advantage in a rapidly evolving industry.",
     challenges: [
       {
         title: "Operational Technology Integration",
@@ -334,7 +333,7 @@ export const industryData = [
       }
     ],
     whyChooseUs: "Our team includes specialists with extensive experience in manufacturing environments. We understand the unique challenges of integrating traditional IT with operational technology while maintaining security, reliability, and efficiency. Our solutions are designed to address these specific needs while providing the support critical to maintaining production schedules.",
-    caseStudy: "When a precision manufacturing company needed to modernize their production systems while improving cybersecurity, GowithSupport delivered a comprehensive solution that increased operational efficiency by 28% while enhancing protection for critical production systems.",
+    caseStudy: "When a precision manufacturing company needed to modernize their production systems while improving cybersecurity, CloudMor delivered a comprehensive solution that increased operational efficiency by 28% while enhancing protection for critical production systems.",
     ctaHeadline: "Optimize Your Manufacturing Operations with Strategic IT",
     ctaButtonText: "Request a Manufacturing Technology Assessment"
   },
@@ -345,7 +344,7 @@ export const industryData = [
     headline: "Scalable IT Solutions for Growing Tech Companies",
     subheadline: "Technology infrastructure that supports innovation, growth, and competitive advantage",
     brief: "Tech companies and startups need infrastructure that can scale rapidly to accommodate growth and changing demands.",
-    overview: "GowithSupport provides specialized IT solutions designed for the unique needs of technology companies and startups. From establishing scalable infrastructure to implementing robust security, our team delivers technology services that support your rapid growth, protect your intellectual property, and help you focus on your core business of innovation and market expansion.",
+    overview: "CloudMor provides specialized IT solutions designed for the unique needs of technology companies and startups. From establishing scalable infrastructure to implementing robust security, our team delivers technology services that support your rapid growth, protect your intellectual property, and help you focus on your core business of innovation and market expansion.",
     challenges: [
       {
         title: "Scalability Requirements",
@@ -403,7 +402,7 @@ export const industryData = [
       }
     ],
     whyChooseUs: "Our team understands the fast-paced, innovation-driven environment of technology companies. We deliver solutions that provide the agility, scalability, and security necessary for successful product development and market growth. Our experience working with startups and established tech firms ensures we understand your unique requirements and priorities.",
-    caseStudy: "When a rapidly growing SaaS company needed to scale their infrastructure while enhancing security, GowithSupport implemented a cloud-native solution that reduced deployment time by 65% while strengthening protection for customer data and intellectual property.",
+    caseStudy: "When a rapidly growing SaaS company needed to scale their infrastructure while enhancing security, CloudMor implemented a cloud-native solution that reduced deployment time by 65% while strengthening protection for customer data and intellectual property.",
     ctaHeadline: "Scale Your Tech Company with Strategic IT Infrastructure",
     ctaButtonText: "Schedule a Technology Scaling Consultation"
   },
@@ -414,7 +413,7 @@ export const industryData = [
     headline: "Specialized IT Solutions for Entertainment Companies",
     subheadline: "Technology that supports creative workflows, content management, and distribution",
     brief: "Entertainment companies must efficiently store, organize, and retrieve massive amounts of media content throughout the production lifecycle.",
-    overview: "GowithSupport provides specialized IT solutions designed for the unique needs of entertainment companies. From managing large media files to supporting collaborative creative processes, our team delivers technology services that enhance production efficiency, protect valuable content, and support your distribution channels.",
+    overview: "CloudMor provides specialized IT solutions designed for the unique needs of entertainment companies. From managing large media files to supporting collaborative creative processes, our team delivers technology services that enhance production efficiency, protect valuable content, and support your distribution channels.",
     challenges: [
       {
         title: "Content Management",
@@ -472,7 +471,7 @@ export const industryData = [
       }
     ],
     whyChooseUs: "Our team includes specialists with extensive experience in the entertainment industry. We understand the unique requirements of creative workflows, the importance of protecting intellectual property, and the technical demands of media production. Our solutions are designed to address these specific needs while providing the reliability and support critical to meeting production deadlines.",
-    caseStudy: "When a post-production studio needed to enhance their collaboration capabilities while strengthening content security, GowithSupport delivered a comprehensive solution that improved workflow efficiency by 45% while ensuring robust protection for client projects.",
+    caseStudy: "When a post-production studio needed to enhance their collaboration capabilities while strengthening content security, CloudMor delivered a comprehensive solution that improved workflow efficiency by 45% while ensuring robust protection for client projects.",
     ctaHeadline: "Optimize Your Creative Workflow with Strategic IT",
     ctaButtonText: "Schedule an Entertainment Technology Consultation"
   },
@@ -483,7 +482,7 @@ export const industryData = [
     headline: "Strategic IT Solutions for Professional Services Firms",
     subheadline: "Technology that enhances client service, team collaboration, and operational efficiency",
     brief: "Professional services firms handle sensitive client information that requires robust security measures and compliance with industry regulations.",
-    overview: "GowithSupport provides specialized IT solutions designed for professional services firms, including consulting, accounting, architecture, and engineering companies. From supporting client engagements to enabling remote collaboration, our team delivers technology services that enhance operational efficiency, protect sensitive information, and support your firm's growth and client service excellence.",
+    overview: "CloudMor provides specialized IT solutions designed for professional services firms, including consulting, accounting, architecture, and engineering companies. From supporting client engagements to enabling remote collaboration, our team delivers technology services that enhance operational efficiency, protect sensitive information, and support your firm's growth and client service excellence.",
     challenges: [
       {
         title: "Client Confidentiality",
@@ -541,7 +540,7 @@ export const industryData = [
       }
     ],
     whyChooseUs: "Our team includes specialists with extensive experience working with professional services firms. We understand the importance of client service, the value of your firm's intellectual capital, and the need for secure, efficient operations. Our solutions are designed to address these specific needs while providing the reliability and support critical to your practice.",
-    caseStudy: "When a growing consulting firm needed to enhance their knowledge management capabilities while improving client collaboration, GowithSupport delivered a comprehensive solution that increased consultant productivity by 32% while strengthening client engagement and satisfaction.",
+    caseStudy: "When a growing consulting firm needed to enhance their knowledge management capabilities while improving client collaboration, CloudMor delivered a comprehensive solution that increased consultant productivity by 32% while strengthening client engagement and satisfaction.",
     ctaHeadline: "Enhance Your Firm's Client Service and Efficiency",
     ctaButtonText: "Schedule a Professional Services IT Consultation"
   },
@@ -552,7 +551,7 @@ export const industryData = [
     headline: "Cost-Effective IT Solutions for Non-Profit Organizations",
     subheadline: "Technology that maximizes your impact, streamlines operations, and stretches your budget",
     brief: "Non-profits must maximize the impact of limited technology budgets while maintaining necessary capabilities.",
-    overview: "GowithSupport provides specialized IT solutions designed for the unique needs of non-profit organizations. From donor management to volunteer coordination, our team delivers cost-effective technology services that enhance your operational efficiency, protect sensitive data, and help you focus on your mission rather than IT challenges.",
+    overview: "CloudMor provides specialized IT solutions designed for the unique needs of non-profit organizations. From donor management to volunteer coordination, our team delivers cost-effective technology services that enhance your operational efficiency, protect sensitive data, and help you focus on your mission rather than IT challenges.",
     challenges: [
       {
         title: "Budget Constraints",
@@ -610,7 +609,7 @@ export const industryData = [
       }
     ],
     whyChooseUs: "Our team is passionate about supporting non-profit organizations. We understand the unique challenges you face, from budget constraints to the specialized systems needed for your mission. We're committed to providing cost-effective solutions that maximize your technology investment while minimizing the burden on your staff and resources.",
-    caseStudy: "When a community service organization needed to improve their donor management while enhancing remote operations, GowithSupport implemented a comprehensive solution that increased fundraising effectiveness by 28% while reducing administrative time by 35%.",
+    caseStudy: "When a community service organization needed to improve their donor management while enhancing remote operations, CloudMor implemented a comprehensive solution that increased fundraising effectiveness by 28% while reducing administrative time by 35%.",
     ctaHeadline: "Maximize Your Mission Impact with Strategic IT",
     ctaButtonText: "Schedule a Non-Profit Technology Consultation"
   }
