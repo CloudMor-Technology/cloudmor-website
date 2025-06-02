@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink } from 'lucide-react';
+import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User } from 'lucide-react';
 import { Button } from './ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
@@ -288,12 +287,24 @@ const Navbar = () => {
           </Link>
         </nav>
 
-        {/* CTA Button with updated phone number */}
-        <div className="hidden md:block">
-          <Button className="bg-gowith-orange hover:bg-gowith-orange-hover text-white transition-colors">
-            <a href="tel:9492885812" className="flex items-center">
-              <span className="mr-2 text-lg text-right">Contact us</span>
+        {/* Updated CTA Buttons */}
+        <div className="hidden md:flex items-center space-x-4">
+          <Button className="bg-[#007bff] hover:bg-[#0056b3] text-white font-bold transition-colors">
+            <a 
+              href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2"
+            >
+              <User size={18} />
+              Client Portal
             </a>
+          </Button>
+          
+          <Button className="bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold transition-colors">
+            <Link to="/contact" className="flex items-center">
+              Schedule a Consultation
+            </Link>
           </Button>
         </div>
 
@@ -431,10 +442,22 @@ const Navbar = () => {
               Contact
             </Link>
             
-            <Button className="bg-gowith-orange hover:bg-gowith-orange-hover text-white w-full" onClick={() => setIsOpen(false)}>
-              <a href="tel:9492885812" className="w-full flex items-center justify-center">
-                <span>(949) 288-5812</span>
+            <Button className="bg-[#007bff] hover:bg-[#0056b3] text-white font-bold w-full" onClick={() => setIsOpen(false)}>
+              <a 
+                href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center gap-2"
+              >
+                <User size={18} />
+                Client Portal
               </a>
+            </Button>
+            
+            <Button className="bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold w-full" onClick={() => setIsOpen(false)}>
+              <Link to="/contact" className="w-full flex items-center justify-center">
+                Schedule a Consultation
+              </Link>
             </Button>
           </div>
         </div>}
