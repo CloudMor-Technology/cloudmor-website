@@ -16,7 +16,7 @@ const HeroSection = () => {
           }} 
         />
       </div>
-      <div className="container mx-auto px-4 relative z-10 pb-16">
+      <div className="container mx-auto px-4 relative z-10 pb-20">
         <div className="max-w-4xl mx-auto bg-transparent backdrop-blur-sm p-8 rounded-lg text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
             Transforming Business Through Strategic IT Solutions
