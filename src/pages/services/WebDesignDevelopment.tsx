@@ -1,4 +1,3 @@
-
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ServiceHero from "../../components/ServiceHero";
@@ -15,7 +14,8 @@ import {
   Users,
   CheckCircle,
   ArrowRight,
-  Star
+  Star,
+  ExternalLink
 } from "lucide-react";
 
 const WebDesignDevelopment = () => {
@@ -130,6 +130,79 @@ const WebDesignDevelopment = () => {
     }
   ];
 
+  const websiteShowcase = [
+    {
+      title: "Financial Services Portal",
+      category: "Finance & Banking",
+      description: "Modern banking interface with secure dashboard and investment tracking",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Secure Login", "Real-time Analytics", "Mobile Banking"]
+    },
+    {
+      title: "Corporate Business Hub",
+      category: "Corporate",
+      description: "Professional corporate website with service showcase and team profiles",
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Service Catalog", "Team Directory", "Client Portal"]
+    },
+    {
+      title: "Investment Platform",
+      category: "Investment",
+      description: "Sophisticated platform for portfolio management and market analysis",
+      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Portfolio Tracking", "Market Data", "Risk Analysis"]
+    },
+    {
+      title: "Consulting Firm Website",
+      category: "Professional Services",
+      description: "Clean, trust-building design for management consulting firm",
+      image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Case Studies", "Expert Profiles", "Resource Library"]
+    },
+    {
+      title: "Fintech Startup",
+      category: "Technology",
+      description: "Modern fintech application with innovative payment solutions",
+      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["API Integration", "Real-time Payments", "Security Features"]
+    },
+    {
+      title: "Insurance Agency Portal",
+      category: "Insurance",
+      description: "Comprehensive insurance platform with quote generation and claims",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Quote Calculator", "Claims Portal", "Policy Management"]
+    },
+    {
+      title: "Accounting Firm Site",
+      category: "Accounting",
+      description: "Professional accounting services website with client management",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Service Booking", "Document Upload", "Tax Calculator"]
+    },
+    {
+      title: "Real Estate Platform",
+      category: "Real Estate",
+      description: "Interactive property listing platform with virtual tours",
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Property Search", "Virtual Tours", "Mortgage Calculator"]
+    },
+    {
+      title: "Wealth Management Hub",
+      category: "Wealth Management",
+      description: "Sophisticated platform for high-net-worth client management",
+      image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Portfolio Analysis", "Client Dashboard", "Reporting Tools"]
+    },
+    {
+      title: "Credit Union Website",
+      category: "Banking",
+      description: "Community-focused banking website with member services",
+      image: "https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Member Portal", "Loan Applications", "Online Banking"]
+    }
+  ];
+
   const themes = [
     {
       category: "Modern Business Themes",
@@ -228,6 +301,55 @@ const WebDesignDevelopment = () => {
           subtitle="Proven results for businesses worldwide"
           metrics={successMetrics}
         />
+
+        {/* Website Showcase */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
+                Our Website Portfolio Showcase
+              </h2>
+              <p className="text-lg text-gray-600">
+                Explore our collection of professionally designed websites across various industries
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {websiteShowcase.map((site, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                  <div className="relative h-48">
+                    <img 
+                      src={site.image} 
+                      alt={site.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-gowith-orange text-white px-3 py-1 rounded-full text-sm font-medium">
+                        {site.category}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">{site.title}</h3>
+                    <p className="text-gray-600 mb-4">{site.description}</p>
+                    <div className="space-y-2 mb-4">
+                      {site.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-gowith-orange" />
+                          <span className="text-sm text-gray-700">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <button className="flex items-center gap-2 text-gowith-orange hover:text-gowith-orange-hover font-medium">
+                      View Case Study
+                      <ExternalLink className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Client Testimonials */}
         <section className="py-20 bg-gray-50">
