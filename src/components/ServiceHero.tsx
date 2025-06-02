@@ -15,22 +15,20 @@ const ServiceHero: React.FC<ServiceHeroProps> = ({
   backgroundClass = "from-gowith-dark-blue to-gowith-medium-blue"
 }) => {
   return (
-    <section className={`h-[25vh] bg-gradient-to-r ${backgroundClass} relative`}>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
-              {title}
-            </h1>
-            <p className="text-lg md:text-xl text-gowith-light-blue mb-6">
-              {subtitle}
+    <section className={`h-[25vh] bg-gradient-to-r ${backgroundClass} flex items-center justify-center`}>
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+            {title}
+          </h1>
+          <p className="text-lg md:text-xl text-gowith-light-blue mb-6">
+            {subtitle}
+          </p>
+          {description && (
+            <p className="text-base md:text-lg text-white max-w-3xl mx-auto leading-relaxed">
+              {description}
             </p>
-            {description && (
-              <p className="text-base md:text-lg text-white max-w-3xl mx-auto leading-relaxed">
-                {description}
-              </p>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </section>
