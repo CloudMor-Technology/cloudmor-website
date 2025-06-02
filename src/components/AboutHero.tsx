@@ -1,8 +1,8 @@
 
 const AboutHero = () => {
   return (
-    <section className="pt-24 pb-16 min-h-[25vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center justify-center">
-      <div className="container mx-auto px-4">
+    <section className="pt-24 pb-16 min-h-[25vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue">
+      <div className="container mx-auto px-4 h-full flex items-center justify-center">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
             About CloudMor
