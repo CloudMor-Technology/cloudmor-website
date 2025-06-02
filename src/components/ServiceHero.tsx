@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 
 interface ServiceHeroProps {
@@ -16,9 +15,9 @@ const ServiceHero: React.FC<ServiceHeroProps> = ({
   backgroundClass = "from-gowith-dark-blue to-gowith-medium-blue"
 }) => {
   return (
-    <section className={`h-[30vh] bg-gradient-to-r ${backgroundClass} flex items-center justify-center`}>
+    <section className={`h-[40vh] bg-gradient-to-r ${backgroundClass} flex items-center justify-center`}>
       <div className="container mx-auto px-4 h-full flex items-center justify-center">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center flex flex-col justify-center h-full">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
             {title}
           </h1>
@@ -37,4 +36,3 @@ const ServiceHero: React.FC<ServiceHeroProps> = ({
 };
 
 export default ServiceHero;
-
