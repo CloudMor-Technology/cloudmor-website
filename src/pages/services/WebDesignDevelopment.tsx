@@ -620,7 +620,7 @@ const WebDesignDevelopment = () => {
           </div>
         </section>
 
-        {/* FAQ Section */}
+        {/* FAQ Section - Shortened */}
         <section className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
@@ -629,7 +629,7 @@ const WebDesignDevelopment = () => {
                   Frequently Asked Questions
                 </h2>
                 <p className="text-lg text-gray-600">
-                  Get answers to common questions about our web design and development services
+                  Quick answers to common questions about our web services
                 </p>
               </div>
 
@@ -639,16 +639,7 @@ const WebDesignDevelopment = () => {
                     How long does it take to build a website?
                   </h3>
                   <p className="text-gray-600">
-                    Development timelines vary based on complexity. Simple websites can be completed in 1-2 weeks, while more complex projects may take 4-8 weeks.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">
-                    What platforms do you build websites on?
-                  </h3>
-                  <p className="text-gray-600">
-                    We build on all major platforms including WordPress, Shopify, WooCommerce, and custom solutions depending on your needs.
+                    Simple websites: 1-2 weeks. Complex projects: 4-8 weeks depending on requirements.
                   </p>
                 </div>
 
@@ -657,25 +648,16 @@ const WebDesignDevelopment = () => {
                     Will my website be mobile-friendly?
                   </h3>
                   <p className="text-gray-600">
-                    Absolutely! All our websites are built with responsive design to ensure they look and function perfectly on all devices.
+                    Yes! All our websites are built with responsive design for perfect display on all devices.
                   </p>
                 </div>
 
                 <div className="bg-white rounded-lg shadow-md p-6">
                   <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">
-                    Do you help with website content?
+                    What happens after launch?
                   </h3>
                   <p className="text-gray-600">
-                    Yes, we offer content creation services to help craft compelling messaging for your website.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">
-                    What happens after my website launches?
-                  </h3>
-                  <p className="text-gray-600">
-                    We provide ongoing support and maintenance to ensure your website continues to perform optimally, including security updates and performance monitoring.
+                    We provide ongoing support, maintenance, security updates, and performance monitoring.
                   </p>
                 </div>
               </div>
