@@ -1,48 +1,67 @@
 import React from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
 const CaseStudies = () => {
-  const caseStudies = [{
-    id: 1,
-    title: "Manufacturing Company Transformation",
-    client: "Mid-sized manufacturing company with 150 employees",
-    industry: "Manufacturing",
-    challenge: "Outdated infrastructure causing frequent downtime and security vulnerabilities",
-    solution: "Complete technology transformation with hybrid cloud solution and advanced security measures",
-    results: ["99.9% system uptime, eliminating production disruptions", "78% reduction in security incidents", "40% decrease in overall IT costs through operational efficiencies"],
-    image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-  }, {
-    id: 2,
-    title: "Law Firm Security Enhancement",
-    client: "Established law firm with 75 attorneys and staff",
-    industry: "Legal Services",
-    challenge: "Increasing cybersecurity threats and compliance requirements",
-    solution: "Comprehensive security program with multi-layered protection and staff training",
-    results: ["Successfully blocked over 1,200 potential security threats in the first year", "100% compliance with industry regulations and client security requirements", "90% reduction in successful phishing attempts through employee training"],
-    image: "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-  }, {
-    id: 3,
-    title: "Healthcare Provider Cloud Migration",
-    client: "Regional healthcare provider with multiple locations",
-    industry: "Healthcare",
-    challenge: "Fragmented systems and limited accessibility of patient information",
-    solution: "Strategic cloud migration with HIPAA-compliant infrastructure",
-    results: ["Seamless access to patient information across all locations", "35% reduction in IT operational costs", "60% faster deployment of new applications and services"],
-    image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-  }];
-  return <>
+  const caseStudies = [
+    {
+      id: 1,
+      title: "Manufacturing Company Transformation",
+      client: "Mid-sized manufacturing company with 150 employees",
+      industry: "Manufacturing",
+      challenge: "Outdated infrastructure causing frequent downtime and security vulnerabilities",
+      solution: "Complete technology transformation with hybrid cloud solution and advanced security measures",
+      results: [
+        "99.9% system uptime, eliminating production disruptions",
+        "78% reduction in security incidents",
+        "40% decrease in overall IT costs through operational efficiencies"
+      ],
+      image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      id: 2,
+      title: "Law Firm Security Enhancement",
+      client: "Established law firm with 75 attorneys and staff",
+      industry: "Legal Services",
+      challenge: "Increasing cybersecurity threats and compliance requirements",
+      solution: "Comprehensive security program with multi-layered protection and staff training",
+      results: [
+        "Successfully blocked over 1,200 potential security threats in the first year",
+        "100% compliance with industry regulations and client security requirements",
+        "90% reduction in successful phishing attempts through employee training"
+      ],
+      image: "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    },
+    {
+      id: 3,
+      title: "Healthcare Provider Cloud Migration",
+      client: "Regional healthcare provider with multiple locations",
+      industry: "Healthcare",
+      challenge: "Fragmented systems and limited accessibility of patient information",
+      solution: "Strategic cloud migration with HIPAA-compliant infrastructure",
+      results: [
+        "Seamless access to patient information across all locations",
+        "35% reduction in IT operational costs",
+        "60% faster deployment of new applications and services"
+      ],
+      image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    }
+  ];
+
+  return (
+    <>
       <Navbar />
       <main>
-        <section className="pt-32 pb-20 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue">
-          <div className="container mx-auto px-4">
+        <section className="h-[35vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center justify-center">
+          <div className="container mx-auto px-[16px] my-[50px]">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl font-bold text-white mb-6 md:text-2xl">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
                 Case Studies
               </h1>
-              <p className="text-xl text-gowith-light-blue mb-8">
+              <p className="text-lg md:text-xl text-gowith-light-blue mb-6">
                 Real results for real businesses
               </p>
-              <p className="text-lg text-white mb-10 max-w-2xl mx-auto">
+              <p className="text-base md:text-lg text-white max-w-2xl mx-auto leading-relaxed">
                 Explore how we've helped organizations across diverse industries overcome technology challenges and achieve their business objectives
               </p>
             </div>
@@ -69,7 +88,8 @@ const CaseStudies = () => {
             </div>
             
             <div className="space-y-16">
-              {caseStudies.map((study, index) => <div key={study.id} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+              {caseStudies.map((study, index) => (
+                <div key={study.id} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
                   <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                     <img src={study.image} alt={study.title} className="rounded-lg shadow-md w-full h-full object-cover" />
                   </div>
@@ -91,7 +111,9 @@ const CaseStudies = () => {
                     <div>
                       <h3 className="text-xl font-bold text-gowith-medium-blue mb-2">Results</h3>
                       <ul className="list-disc list-outside ml-5 text-gray-600">
-                        {study.results.map((result, i) => <li key={i} className="mb-1">{result}</li>)}
+                        {study.results.map((result, i) => (
+                          <li key={i} className="mb-1">{result}</li>
+                        ))}
                       </ul>
                     </div>
                     
@@ -104,7 +126,8 @@ const CaseStudies = () => {
                       </a>
                     </div>
                   </div>
-                </div>)}
+                </div>
+              ))}
             </div>
             
             <div className="mt-16 text-center">
@@ -116,6 +139,8 @@ const CaseStudies = () => {
         </section>
       </main>
       <Footer />
-    </>;
+    </>
+  );
 };
+
 export default CaseStudies;

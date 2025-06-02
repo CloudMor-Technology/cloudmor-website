@@ -1,28 +1,21 @@
 import React from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import ServiceHero from "../../components/ServiceHero";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Lightbulb, Users, PenTool, ArrowUpCircle, BriefcaseBusiness, FileSearch } from "lucide-react";
+
 const ProfessionalServices = () => {
-  return <>
+  return (
+    <>
       <Navbar />
       <main>
-        <section className="pt-32 pb-20 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl font-bold text-white mb-6 md:text-2xl">
-                Expert IT Professional Services
-              </h1>
-              <p className="text-xl text-gowith-light-blue mb-8">
-                Strategic guidance and implementation for your most important technology initiatives
-              </p>
-              <p className="text-lg text-white mb-10 max-w-2xl mx-auto">
-                From technology assessments to complex migrations, our team delivers projects on time and on budget.
-              </p>
-            </div>
-          </div>
-        </section>
+        <ServiceHero 
+          title="Expert IT Professional Services"
+          subtitle="Strategic guidance and implementation for your most important technology initiatives"
+          description="From technology assessments to complex migrations, our team delivers projects on time and on budget."
+        />
         
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
@@ -175,6 +168,8 @@ const ProfessionalServices = () => {
         </section>
       </main>
       <Footer />
-    </>;
+    </>
+  );
 };
+
 export default ProfessionalServices;
