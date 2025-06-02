@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ServiceHero from "../../components/ServiceHero";
 import FinalCTA from "../../components/FinalCTA";
+import SuccessMetrics from "../../components/SuccessMetrics";
 import { 
   Palette, 
   Code, 
@@ -13,7 +14,8 @@ import {
   Zap,
   Users,
   CheckCircle,
-  ArrowRight
+  ArrowRight,
+  Star
 } from "lucide-react";
 
 const WebDesignDevelopment = () => {
@@ -99,9 +101,39 @@ const WebDesignDevelopment = () => {
     }
   ];
 
+  const successMetrics = [
+    { value: "3,200+", label: "Websites Built" },
+    { value: "98%", label: "Client Satisfaction" },
+    { value: "145%", label: "Average Traffic Increase" },
+    { value: "24/7", label: "Support Available" },
+    { value: "99.9%", label: "Uptime Guarantee" }
+  ];
+
+  const testimonials = [
+    {
+      quote: "GowithSupport transformed our online presence completely. Their team's expertise and dedication are unmatched. We've seen a 200% increase in leads since launching our new website.",
+      author: "John Martinez",
+      title: "CEO",
+      company: "TechFlow Solutions"
+    },
+    {
+      quote: "The website GowithSupport created for us is not only stunning but incredibly effective. We've experienced a significant boost in conversions and customer engagement.",
+      author: "Sarah Chen",
+      title: "Marketing Director",
+      company: "InnovateCorp"
+    },
+    {
+      quote: "Working with GowithSupport was seamless from start to finish. They delivered exactly what we envisioned and exceeded our expectations in every way.",
+      author: "Michael Rodriguez",
+      title: "Founder",
+      company: "GreenTech Ventures"
+    }
+  ];
+
   const themes = [
     {
       category: "Modern Business Themes",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80",
       items: [
         "Minimalist Corporate - Clean lines and strategic typography",
         "Bold Typography-Driven - Impactful headlines with visual hierarchy",
@@ -112,6 +144,7 @@ const WebDesignDevelopment = () => {
     },
     {
       category: "E-Commerce Excellence",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
       items: [
         "Product Showcase - High-quality imagery with minimal distractions",
         "Service Catalog - Organized grid layouts with clear categorization",
@@ -120,6 +153,7 @@ const WebDesignDevelopment = () => {
     },
     {
       category: "Creative Portfolio Styles",
+      image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2364&q=80",
       items: [
         "Interactive Storytelling - Narrative-driven scrolling experiences",
         "Creative Agency Showcase - Bold visuals with interactive elements",
@@ -129,6 +163,7 @@ const WebDesignDevelopment = () => {
     },
     {
       category: "Industry-Specific Excellence",
+      image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
       items: [
         "Professional Services - Clean, trust-building design",
         "Healthcare & Wellness - Calming palettes with accessible architecture",
@@ -138,6 +173,7 @@ const WebDesignDevelopment = () => {
     },
     {
       category: "Cutting-Edge Approaches",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
       items: [
         "AI-Enhanced Experience - Personalized content delivery",
         "Sustainability Showcase - Eco-conscious design elements",
@@ -185,6 +221,46 @@ const WebDesignDevelopment = () => {
           description="We create stunning, functional websites that engage visitors, drive conversions, and reflect your brand's unique identity using cutting-edge design trends and proven development practices."
           backgroundClass="from-gowith-dark-blue via-gowith-medium-blue to-gowith-light-blue"
         />
+
+        {/* Success Metrics */}
+        <SuccessMetrics
+          title="Our Web Development Success Story"
+          subtitle="Proven results for businesses worldwide"
+          metrics={successMetrics}
+        />
+
+        {/* Client Testimonials */}
+        <section className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
+                What Our Clients Say
+              </h2>
+              <p className="text-lg text-gray-600">
+                Hear from business leaders who've transformed their online presence with our services
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-lg p-8">
+                  <div className="flex mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 text-gowith-orange fill-current" />
+                    ))}
+                  </div>
+                  <blockquote className="text-gray-600 mb-6 italic">
+                    "{testimonial.quote}"
+                  </blockquote>
+                  <div>
+                    <div className="font-bold text-gowith-dark-blue">{testimonial.author}</div>
+                    <div className="text-sm text-gray-500">{testimonial.title}, {testimonial.company}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Services Overview */}
         <section className="py-20 bg-white">
@@ -348,26 +424,36 @@ const WebDesignDevelopment = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
-                20 Professional Website Themes We Offer
+                Professional Website Themes We Offer
               </h2>
               <p className="text-lg text-gray-600">
                 Choose from our collection of professional themes, each designed for specific business needs and objectives
               </p>
             </div>
 
-            <div className="space-y-12">
+            <div className="space-y-16">
               {themes.map((category, index) => (
-                <div key={index}>
-                  <h3 className="text-2xl font-bold text-gowith-dark-blue mb-6">{category.category}</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {category.items.map((item, itemIndex) => (
-                      <div key={itemIndex} className="bg-white p-6 rounded-lg border border-gray-200 hover:border-gowith-orange transition-colors">
-                        <div className="flex items-start gap-3">
-                          <ArrowRight className="w-5 h-5 text-gowith-orange mt-1 shrink-0" />
-                          <p className="text-gray-700">{item}</p>
-                        </div>
+                <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                    <div className="relative h-64 lg:h-auto">
+                      <img 
+                        src={category.image} 
+                        alt={category.category}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gowith-dark-blue bg-opacity-20"></div>
+                    </div>
+                    <div className="p-8">
+                      <h3 className="text-2xl font-bold text-gowith-dark-blue mb-6">{category.category}</h3>
+                      <div className="space-y-4">
+                        {category.items.map((item, itemIndex) => (
+                          <div key={itemIndex} className="flex items-start gap-3">
+                            <ArrowRight className="w-5 h-5 text-gowith-orange mt-1 shrink-0" />
+                            <p className="text-gray-700">{item}</p>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
               ))}
