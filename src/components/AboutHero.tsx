@@ -1,16 +1,16 @@
 
 const AboutHero = () => {
   return (
-    <section className="pt-32 pb-20 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-white mb-6 md:text-2xl">
+    <section className="pt-24 pb-16 min-h-[40vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center">
+      <div className="container mx-auto px-4 w-full">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
             About CloudMor
           </h1>
-          <p className="text-xl text-gowith-light-blue mb-8">
+          <p className="text-lg md:text-xl text-gowith-light-blue mb-6">
             Your trusted technology partner for over 15 years
           </p>
-          <p className="text-lg text-white mb-10 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-white mb-6 max-w-3xl mx-auto leading-relaxed">
             We combine technical expertise with business acumen to deliver IT solutions that drive real results for organizations of all sizes.
           </p>
         </div>
