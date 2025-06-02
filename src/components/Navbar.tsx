@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User } from 'lucide-react';
+import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette } from 'lucide-react';
 import { Button } from './ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
@@ -123,6 +123,15 @@ const Navbar = () => {
                   <div>
                     <div>Web Dev Automation</div>
                     <div className="text-xs text-gray-500">AI-powered development tools</div>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/services/web-design-development" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
+                  <Palette className="h-5 w-5 text-gowith-medium-blue" />
+                  <div>
+                    <div>Web Design & Development</div>
+                    <div className="text-xs text-gray-500">Professional website solutions</div>
                   </div>
                 </Link>
               </DropdownMenuItem>
@@ -351,6 +360,9 @@ const Navbar = () => {
                 </Link>
                 <Link to="/services/web-dev-automation" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Web Dev Automation
+                </Link>
+                <Link to="/services/web-design-development" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                  Web Design & Development
                 </Link>
               </div>
             </div>

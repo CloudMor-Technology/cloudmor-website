@@ -1,3 +1,4 @@
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ServiceCard from "../components/ServiceCard";
@@ -11,7 +12,8 @@ import {
   LineChart, 
   Headphones, 
   Fingerprint, 
-  Code 
+  Code,
+  Palette
 } from "lucide-react";
 
 const Services = () => {
@@ -71,6 +73,13 @@ const Services = () => {
       description: "AI-powered development acceleration",
       link: "/services/web-dev-automation",
       features: ["AI code generation", "No-code visual development", "Automated testing and deployment", "Intelligent project management", "Development process optimization"]
+    },
+    {
+      icon: <Palette className="w-6 h-6 text-white" />,
+      title: "Web Design & Development",
+      description: "Professional websites that drive business growth",
+      link: "/services/web-design-development",
+      features: ["Custom responsive design", "E-commerce solutions", "Content management systems", "SEO optimization", "Ongoing maintenance and support"]
     }
   ];
 

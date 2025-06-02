@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
-import { Server, ShieldCheck, Cloud, Briefcase, LineChart } from 'lucide-react';
+import { Server, ShieldCheck, Cloud, Briefcase, LineChart, Palette } from 'lucide-react';
 
 const ServicesOverview = () => {
   const services = [
@@ -39,6 +39,13 @@ const ServicesOverview = () => {
       description: "Aligning technology with business goals for sustainable growth and competitive advantage.",
       link: "/services/it-strategy",
       bgColor: "bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue"
+    },
+    {
+      icon: <Palette className="w-12 h-12 text-white" />,
+      title: "Web Design & Development",
+      description: "Professional websites that engage visitors, drive conversions, and reflect your brand identity.",
+      link: "/services/web-design-development",
+      bgColor: "bg-gradient-to-br from-gowith-medium-blue to-gowith-light-blue"
     }
   ];
 

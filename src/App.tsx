@@ -25,6 +25,7 @@ import ITStrategy from "./pages/services/ITStrategy";
 import BusinessComms from "./pages/services/BusinessComms";
 import FaceIDAuth from "./pages/services/FaceIDAuth";
 import WebDevAutomation from "./pages/services/WebDevAutomation";
+import WebDesignDevelopment from "./pages/services/WebDesignDevelopment";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/services/business-comms" element={<BusinessComms />} />
           <Route path="/services/face-id-auth" element={<FaceIDAuth />} />
           <Route path="/services/web-dev-automation" element={<WebDevAutomation />} />
+          <Route path="/services/web-design-development" element={<WebDesignDevelopment />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/industries" element={<Industries />} />
