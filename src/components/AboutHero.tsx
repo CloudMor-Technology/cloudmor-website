@@ -1,7 +1,8 @@
 
+
 const AboutHero = () => {
   return (
-    <section className="pt-24 pb-16 min-h-[40vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center">
+    <section className="pt-24 pb-16 min-h-[25vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center">
       <div className="container mx-auto px-4 w-full">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
@@ -20,3 +21,4 @@ const AboutHero = () => {
 };
 
 export default AboutHero;
+
