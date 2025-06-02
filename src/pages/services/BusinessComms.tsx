@@ -100,22 +100,18 @@ const BusinessComms = () => {
   return <>
       <Navbar />
       <main>
-        {/* Merged Hero Section */}
-        <section className="py-16 bg-gradient-to-b from-gowith-dark-blue to-blue-900 text-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center mb-8">
-              <h1 className="text-4xl font-bold mb-4 md:text-2xl mx-0 my-[50px]">Unified Business Communications Platform</h1>
-              <p className="text-xl text-gowith-light-blue mb-6">
+        {/* Updated Hero Section */}
+        <section className="h-[35vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center justify-center">
+          <div className="container mx-auto px-[16px] my-[50px]">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+                Unified Business Communications Platform
+              </h1>
+              <p className="text-lg md:text-xl text-gowith-light-blue mb-6">
                 Streamline your team collaboration and customer communications with an all-in-one solution
               </p>
-              
-              
-              
-            </div>
-            <div className="max-w-4xl mx-auto text-center mt-12">
-              <h3 className="text-2xl font-bold mb-4">All the features of a world-class cloud phone system in one app</h3>
-              <p className="text-lg text-gowith-light-blue">
-                Utilize one simple platform for all your important conversations and empower your business.
+              <p className="text-base md:text-lg text-white max-w-3xl mx-auto leading-relaxed">
+                All the features of a world-class cloud phone system in one app. Utilize one simple platform for all your important conversations and empower your business.
               </p>
             </div>
           </div>
