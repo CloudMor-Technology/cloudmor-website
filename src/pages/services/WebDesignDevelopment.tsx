@@ -1,6 +1,5 @@
 import React from 'react';
-import { FaCheckCircle } from 'react-icons/fa';
-import { MdDesignServices, MdCode, MdDevices, MdSpeed, MdSecurity, MdTrendingUp } from 'react-icons/md';
+import { CheckCircle, Palette, Code, Smartphone, Zap, Shield, TrendingUp } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 
 const WebDesignDevelopment = () => {
@@ -32,7 +31,7 @@ const WebDesignDevelopment = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Web Design */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdDesignServices className="text-4xl text-blue-600 mb-4" />
+              <Palette className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Web Design</h3>
               <p className="text-gray-700">
                 Visually appealing and user-friendly designs that capture your brand identity.
@@ -41,7 +40,7 @@ const WebDesignDevelopment = () => {
 
             {/* Web Development */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdCode className="text-4xl text-blue-600 mb-4" />
+              <Code className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Web Development</h3>
               <p className="text-gray-700">
                 Robust and scalable web solutions using the latest technologies.
@@ -50,7 +49,7 @@ const WebDesignDevelopment = () => {
 
             {/* Responsive Design */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdDevices className="text-4xl text-blue-600 mb-4" />
+              <Smartphone className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Responsive Design</h3>
               <p className="text-gray-700">
                 Websites that adapt seamlessly to any device, ensuring a consistent user experience.
@@ -59,7 +58,7 @@ const WebDesignDevelopment = () => {
 
             {/* Performance Optimization */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdSpeed className="text-4xl text-blue-600 mb-4" />
+              <Zap className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Performance Optimization</h3>
               <p className="text-gray-700">
                 Fast-loading websites that provide a smooth and engaging user experience.
@@ -68,7 +67,7 @@ const WebDesignDevelopment = () => {
 
             {/* Security */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdSecurity className="text-4xl text-blue-600 mb-4" />
+              <Shield className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Security</h3>
               <p className="text-gray-700">
                 Protecting your website and users with the latest security measures.
@@ -77,7 +76,7 @@ const WebDesignDevelopment = () => {
 
             {/* SEO Friendly */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdTrendingUp className="text-4xl text-blue-600 mb-4" />
+              <TrendingUp className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">SEO Friendly</h3>
               <p className="text-gray-700">
                 Optimizing your website for search engines to drive more organic traffic.
@@ -102,7 +101,7 @@ const WebDesignDevelopment = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Feature 1 */}
             <div className="flex items-start">
-              <FaCheckCircle className="text-green-500 text-2xl mr-4" />
+              <CheckCircle className="text-green-500 text-2xl mr-4" size={32} />
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Custom Design</h3>
                 <p className="text-gray-700">
@@ -113,7 +112,7 @@ const WebDesignDevelopment = () => {
 
             {/* Feature 2 */}
             <div className="flex items-start">
-              <FaCheckCircle className="text-green-500 text-2xl mr-4" />
+              <CheckCircle className="text-green-500 text-2xl mr-4" size={32} />
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">User-Friendly Interface</h3>
                 <p className="text-gray-700">
@@ -124,7 +123,7 @@ const WebDesignDevelopment = () => {
 
             {/* Feature 3 */}
             <div className="flex items-start">
-              <FaCheckCircle className="text-green-500 text-2xl mr-4" />
+              <CheckCircle className="text-green-500 text-2xl mr-4" size={32} />
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Mobile Optimization</h3>
                 <p className="text-gray-700">
@@ -135,7 +134,7 @@ const WebDesignDevelopment = () => {
 
             {/* Feature 4 */}
             <div className="flex items-start">
-              <FaCheckCircle className="text-green-500 text-2xl mr-4" />
+              <CheckCircle className="text-green-500 text-2xl mr-4" size={32} />
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">SEO Optimization</h3>
                 <p className="text-gray-700">
@@ -147,339 +146,339 @@ const WebDesignDevelopment = () => {
         </div>
       </section>
 
-        {/* Industry Portfolio Showcase */}
-        <section className="py-20 bg-gray-50">
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Industry Portfolio Showcase
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Discover how we've helped businesses across various industries build stunning, high-performing websites that drive results.
-              </p>
-            </div>
+      {/* Industry Portfolio Showcase */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Industry Portfolio Showcase
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Discover how we've helped businesses across various industries build stunning, high-performing websites that drive results.
+            </p>
+          </div>
 
-            {/* Finance Industry */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Finance Industry</h3>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="/lovable-uploads/b54dbedd-701e-4c03-9e4c-32de14604d6a.png" 
-                    alt="Maxwell Locke & Ritter Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Maxwell Locke & Ritter LLP</h4>
-                    <p className="text-gray-600 text-sm mt-2">Austin's largest locally-owned accounting firm</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1551838449-2429e8be8625?w=500&h=300&fit=crop" 
-                    alt="Baleen Specialty Insurance Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Baleen Specialty Insurance</h4>
-                    <p className="text-gray-600 text-sm mt-2">Technology-powered underwriting operation</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop" 
-                    alt="Coalition Inc Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Coalition Inc.</h4>
-                    <p className="text-gray-600 text-sm mt-2">Leading provider of cyber insurance and security</p>
-                  </div>
+          {/* Finance Industry */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Finance Industry</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="/lovable-uploads/b54dbedd-701e-4c03-9e4c-32de14604d6a.png" 
+                  alt="Maxwell Locke & Ritter Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Maxwell Locke & Ritter LLP</h4>
+                  <p className="text-gray-600 text-sm mt-2">Austin's largest locally-owned accounting firm</p>
                 </div>
               </div>
-            </div>
-
-            {/* Healthcare Industry */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Healthcare Industry</h3>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop" 
-                    alt="Medical Center Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Premier Medical Center</h4>
-                    <p className="text-gray-600 text-sm mt-2">Comprehensive healthcare services</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=500&h=300&fit=crop" 
-                    alt="Dental Practice Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Advanced Dental Care</h4>
-                    <p className="text-gray-600 text-sm mt-2">Modern dental practice with advanced technology</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1551038247-3d9af20df552?w=500&h=300&fit=crop" 
-                    alt="Specialty Clinic Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Cardiology Specialists</h4>
-                    <p className="text-gray-600 text-sm mt-2">Specialized cardiac care center</p>
-                  </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1551838449-2429e8be8625?w=500&h=300&fit=crop" 
+                  alt="Baleen Specialty Insurance Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Baleen Specialty Insurance</h4>
+                  <p className="text-gray-600 text-sm mt-2">Technology-powered underwriting operation</p>
                 </div>
               </div>
-            </div>
-
-            {/* Technology Industry */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Technology Industry</h3>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1466442929976-97f336a657be?w=500&h=300&fit=crop" 
-                    alt="Tech Startup Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">InnovaTech Solutions</h4>
-                    <p className="text-gray-600 text-sm mt-2">Software development and consulting</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=500&h=300&fit=crop" 
-                    alt="SaaS Platform Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">CloudFlow Platform</h4>
-                    <p className="text-gray-600 text-sm mt-2">Enterprise cloud management solution</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop" 
-                    alt="AI Company Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">AI Dynamics</h4>
-                    <p className="text-gray-600 text-sm mt-2">Artificial intelligence and machine learning</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Real Estate Industry */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Real Estate Industry</h3>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop" 
-                    alt="Luxury Realty Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Luxury Realty Group</h4>
-                    <p className="text-gray-600 text-sm mt-2">Premium real estate services</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=500&h=300&fit=crop" 
-                    alt="Commercial Properties Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Metro Commercial Properties</h4>
-                    <p className="text-gray-600 text-sm mt-2">Commercial real estate specialists</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1551038247-3d9af20df552?w=500&h=300&fit=crop" 
-                    alt="Property Management Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Premier Property Management</h4>
-                    <p className="text-gray-600 text-sm mt-2">Full-service property management</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Mortgage Industry */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Mortgage Industry</h3>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1466442929976-97f336a657be?w=500&h=300&fit=crop" 
-                    alt="Home Loans Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">First Home Mortgage</h4>
-                    <p className="text-gray-600 text-sm mt-2">Residential mortgage specialists</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=500&h=300&fit=crop" 
-                    alt="Mortgage Broker Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Capital Mortgage Brokers</h4>
-                    <p className="text-gray-600 text-sm mt-2">Independent mortgage brokerage</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop" 
-                    alt="Refinancing Services Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Elite Refinancing Solutions</h4>
-                    <p className="text-gray-600 text-sm mt-2">Mortgage refinancing experts</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Nonprofit Organizations */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Nonprofit Organizations</h3>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop" 
-                    alt="Community Foundation Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Community Hope Foundation</h4>
-                    <p className="text-gray-600 text-sm mt-2">Supporting local communities</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=500&h=300&fit=crop" 
-                    alt="Educational Nonprofit Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Future Leaders Education</h4>
-                    <p className="text-gray-600 text-sm mt-2">Youth education and development</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1551038247-3d9af20df552?w=500&h=300&fit=crop" 
-                    alt="Health Nonprofit Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Wellness for All</h4>
-                    <p className="text-gray-600 text-sm mt-2">Community health initiatives</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* HOA Associations */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">HOA Associations</h3>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1466442929976-97f336a657be?w=500&h=300&fit=crop" 
-                    alt="Residential HOA Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Oakwood Estates HOA</h4>
-                    <p className="text-gray-600 text-sm mt-2">Residential community management</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=500&h=300&fit=crop" 
-                    alt="Luxury Community HOA Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Riverside Luxury Community</h4>
-                    <p className="text-gray-600 text-sm mt-2">Premium gated community</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop" 
-                    alt="Townhome HOA Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Maple Grove Townhomes</h4>
-                    <p className="text-gray-600 text-sm mt-2">Modern townhome community</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* E-commerce Industry */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">E-commerce Industry</h3>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop" 
-                    alt="Fashion Store Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Urban Style Boutique</h4>
-                    <p className="text-gray-600 text-sm mt-2">Contemporary fashion retailer</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=500&h=300&fit=crop" 
-                    alt="Electronics Store Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">TechGear Pro</h4>
-                    <p className="text-gray-600 text-sm mt-2">Professional electronics and gadgets</p>
-                  </div>
-                </div>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1551038247-3d9af20df552?w=500&h=300&fit=crop" 
-                    alt="Home Goods Website" 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Modern Living Essentials</h4>
-                    <p className="text-gray-600 text-sm mt-2">Home decor and furniture</p>
-                  </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop" 
+                  alt="Coalition Inc Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Coalition Inc.</h4>
+                  <p className="text-gray-600 text-sm mt-2">Leading provider of cyber insurance and security</p>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+
+          {/* Healthcare Industry */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Healthcare Industry</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop" 
+                  alt="Medical Center Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Premier Medical Center</h4>
+                  <p className="text-gray-600 text-sm mt-2">Comprehensive healthcare services</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=500&h=300&fit=crop" 
+                  alt="Dental Practice Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Advanced Dental Care</h4>
+                  <p className="text-gray-600 text-sm mt-2">Modern dental practice with advanced technology</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1551038247-3d9af20df552?w=500&h=300&fit=crop" 
+                  alt="Specialty Clinic Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Cardiology Specialists</h4>
+                  <p className="text-gray-600 text-sm mt-2">Specialized cardiac care center</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Technology Industry */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Technology Industry</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1466442929976-97f336a657be?w=500&h=300&fit=crop" 
+                  alt="Tech Startup Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">InnovaTech Solutions</h4>
+                  <p className="text-gray-600 text-sm mt-2">Software development and consulting</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=500&h=300&fit=crop" 
+                  alt="SaaS Platform Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">CloudFlow Platform</h4>
+                  <p className="text-gray-600 text-sm mt-2">Enterprise cloud management solution</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop" 
+                  alt="AI Company Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">AI Dynamics</h4>
+                  <p className="text-gray-600 text-sm mt-2">Artificial intelligence and machine learning</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Real Estate Industry */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Real Estate Industry</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop" 
+                  alt="Luxury Realty Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Luxury Realty Group</h4>
+                  <p className="text-gray-600 text-sm mt-2">Premium real estate services</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=500&h=300&fit=crop" 
+                  alt="Commercial Properties Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Metro Commercial Properties</h4>
+                  <p className="text-gray-600 text-sm mt-2">Commercial real estate specialists</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1551038247-3d9af20df552?w=500&h=300&fit=crop" 
+                  alt="Property Management Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Premier Property Management</h4>
+                  <p className="text-gray-600 text-sm mt-2">Full-service property management</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mortgage Industry */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Mortgage Industry</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1466442929976-97f336a657be?w=500&h=300&fit=crop" 
+                  alt="Home Loans Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">First Home Mortgage</h4>
+                  <p className="text-gray-600 text-sm mt-2">Residential mortgage specialists</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=500&h=300&fit=crop" 
+                  alt="Mortgage Broker Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Capital Mortgage Brokers</h4>
+                  <p className="text-gray-600 text-sm mt-2">Independent mortgage brokerage</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop" 
+                  alt="Refinancing Services Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Elite Refinancing Solutions</h4>
+                  <p className="text-gray-600 text-sm mt-2">Mortgage refinancing experts</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Nonprofit Organizations */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Nonprofit Organizations</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop" 
+                  alt="Community Foundation Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Community Hope Foundation</h4>
+                  <p className="text-gray-600 text-sm mt-2">Supporting local communities</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=500&h=300&fit=crop" 
+                  alt="Educational Nonprofit Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Future Leaders Education</h4>
+                  <p className="text-gray-600 text-sm mt-2">Youth education and development</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1551038247-3d9af20df552?w=500&h=300&fit=crop" 
+                  alt="Health Nonprofit Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Wellness for All</h4>
+                  <p className="text-gray-600 text-sm mt-2">Community health initiatives</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* HOA Associations */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">HOA Associations</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1466442929976-97f336a657be?w=500&h=300&fit=crop" 
+                  alt="Residential HOA Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Oakwood Estates HOA</h4>
+                  <p className="text-gray-600 text-sm mt-2">Residential community management</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=500&h=300&fit=crop" 
+                  alt="Luxury Community HOA Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Riverside Luxury Community</h4>
+                  <p className="text-gray-600 text-sm mt-2">Premium gated community</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=500&h=300&fit=crop" 
+                  alt="Townhome HOA Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Maple Grove Townhomes</h4>
+                  <p className="text-gray-600 text-sm mt-2">Modern townhome community</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* E-commerce Industry */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">E-commerce Industry</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1524230572899-a752b3835840?w=500&h=300&fit=crop" 
+                  alt="Fashion Store Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Urban Style Boutique</h4>
+                  <p className="text-gray-600 text-sm mt-2">Contemporary fashion retailer</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=500&h=300&fit=crop" 
+                  alt="Electronics Store Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">TechGear Pro</h4>
+                  <p className="text-gray-600 text-sm mt-2">Professional electronics and gadgets</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1551038247-3d9af20df552?w=500&h=300&fit=crop" 
+                  alt="Home Goods Website" 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-semibold text-gray-900">Modern Living Essentials</h4>
+                  <p className="text-gray-600 text-sm mt-2">Home decor and furniture</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Testimonials Section */}
       <section className="py-16 bg-blue-50">
