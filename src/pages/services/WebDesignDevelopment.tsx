@@ -236,7 +236,7 @@ const WebDesignDevelopment = () => {
       title: "Maxwell Locke & Ritter LLP",
       category: "Accounting & Tax Services",
       description: "Austin's largest locally-owned accounting firm providing comprehensive financial guidance and accounting services to nonprofit, government, business, and high-net-worth clients since 1991.",
-      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      image: "/lovable-uploads/b54dbedd-701e-4c03-9e4c-32de14604d6a.png",
       features: ["Tax Preparation & Planning", "Audit & Assurance Services", "Wealth Management", "Transaction Advisory"],
       websiteUrl: "https://www.mlrpc.com/",
       caseStudyLink: "/case-studies/maxwell-locke-ritter",
@@ -326,7 +326,7 @@ const WebDesignDevelopment = () => {
       title: "Premier Investment Management",
       category: "Investment Services",
       description: "Sophisticated investment platform providing portfolio analysis, market insights, and wealth management tools for high-net-worth individuals and institutions.",
-      image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
       features: ["Portfolio Analysis", "Market Research", "Investment Tools", "Risk Assessment"],
       websiteUrl: "#",
       caseStudyLink: "/case-studies/premier-investment",
@@ -942,7 +942,7 @@ const WebDesignDevelopment = () => {
                     )}
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-gowith-dark-blue mb-3">{project.title}</h3>
+                    <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">{project.title}</h3>
                     <p className="text-gray-600 mb-4 text-sm leading-relaxed">{project.description}</p>
                     
                     <div className="mb-4">
