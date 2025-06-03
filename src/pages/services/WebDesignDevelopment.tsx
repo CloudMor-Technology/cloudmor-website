@@ -22,7 +22,10 @@ import {
   CheckCircle,
   ArrowRight,
   Star,
-  ExternalLink
+  ExternalLink,
+  Building2,
+  Shield,
+  TrendingUp
 } from "lucide-react";
 
 const WebDesignDevelopment = () => {
@@ -224,6 +227,160 @@ const WebDesignDevelopment = () => {
       author: "Nicole Adams",
       title: "Risk Manager",
       company: "Adams Insurance"
+    }
+  ];
+
+  // Financial Industry Portfolio
+  const financialPortfolio = [
+    {
+      title: "Maxwell Locke & Ritter LLP",
+      category: "Accounting & Tax Services",
+      description: "Austin's largest locally-owned accounting firm providing comprehensive financial guidance and accounting services to nonprofit, government, business, and high-net-worth clients since 1991.",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Tax Preparation & Planning", "Audit & Assurance Services", "Wealth Management", "Transaction Advisory"],
+      websiteUrl: "https://www.mlrpc.com/",
+      caseStudyLink: "/case-studies/maxwell-locke-ritter",
+      services: [
+        "Complete website redesign",
+        "Professional branding",
+        "SEO optimization", 
+        "Mobile-responsive design"
+      ]
+    },
+    {
+      title: "Baleen Specialty Insurance",
+      category: "Specialty Insurance",
+      description: "Technology-powered underwriting operation specializing in small to mid-sized risks not eligible in the admitted market. Division of Bowhead Specialty, affiliate of American Family Insurance.",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Excess & Surplus Lines", "Technology-Powered Underwriting", "Digital Claims Processing", "Broker Portal"],
+      websiteUrl: "https://www.baleenspecialty.com/",
+      caseStudyLink: "/case-studies/baleen-specialty",
+      services: [
+        "Modern website design",
+        "Broker portal integration",
+        "Mobile optimization",
+        "Insurance industry branding"
+      ]
+    },
+    {
+      title: "Coalition Inc. Cyber Insurance",
+      category: "Cyber Insurance & Security",
+      description: "Leading provider of cyber insurance and security, combining comprehensive coverage with proactive cybersecurity tools. Serves over 42,000 customers from small businesses to Fortune 500 companies.",
+      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Active Cyber Insurance", "Risk Management Platform", "Managed Detection & Response", "Security Training"],
+      websiteUrl: "https://www.coalitioninc.com/",
+      caseStudyLink: "/case-studies/coalition-cyber",
+      services: [
+        "Security-focused website development",
+        "Risk assessment integration",
+        "B2B optimization",
+        "Cybersecurity content strategy"
+      ]
+    },
+    {
+      title: "Crisil Coalition Greenwich",
+      category: "Financial Analytics",
+      description: "Leading global provider of strategic benchmarking, analytics, and insights to the financial services industry. Nearly all leading banks globally rely on their services.",
+      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Strategic Benchmarking", "Market Analytics", "Performance Measurement", "Technology Impact Analysis"],
+      websiteUrl: "https://www.greenwich.com/",
+      caseStudyLink: "/case-studies/crisil-greenwich",
+      services: [
+        "Financial services optimization",
+        "Data presentation platforms",
+        "Industry-specific content strategy",
+        "Performance analytics integration"
+      ]
+    },
+    {
+      title: "Allied Wallet Payment Gateway",
+      category: "Payment Processing",
+      description: "Secure payment processing platform with multi-currency support and advanced fraud protection for global e-commerce transactions.",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Multi-Currency Processing", "Fraud Detection", "Global Payment Solutions", "Merchant Dashboard"],
+      websiteUrl: "#",
+      caseStudyLink: "/case-studies/allied-wallet",
+      services: [
+        "E-commerce platform development",
+        "Payment gateway integration",
+        "Security implementation",
+        "Multi-currency support"
+      ]
+    },
+    {
+      title: "SecureBank Digital Banking",
+      category: "Digital Banking",
+      description: "Modern banking platform with advanced security features and mobile-first design, serving community banks and credit unions nationwide.",
+      image: "https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Online Banking", "Mobile App Integration", "Advanced Security", "Account Management"],
+      websiteUrl: "#",
+      caseStudyLink: "/case-studies/securebank",
+      services: [
+        "Banking platform development",
+        "Mobile app integration",
+        "Security implementation",
+        "User experience optimization"
+      ]
+    },
+    {
+      title: "Premier Investment Management",
+      category: "Investment Services",
+      description: "Sophisticated investment platform providing portfolio analysis, market insights, and wealth management tools for high-net-worth individuals and institutions.",
+      image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Portfolio Analysis", "Market Research", "Investment Tools", "Risk Assessment"],
+      websiteUrl: "#",
+      caseStudyLink: "/case-studies/premier-investment",
+      services: [
+        "Investment platform development",
+        "Portfolio tracking systems",
+        "Market data integration",
+        "Risk analysis tools"
+      ]
+    },
+    {
+      title: "FinTech Innovations Hub",
+      category: "Financial Technology",
+      description: "Cutting-edge fintech platform with AI-powered financial insights, serving modern businesses with innovative financial solutions and real-time analytics.",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["AI Analytics", "API Integration", "Real-time Data", "Financial Insights"],
+      websiteUrl: "#",
+      caseStudyLink: "/case-studies/fintech-innovations",
+      services: [
+        "AI-powered platform development",
+        "API integration services",
+        "Real-time data processing",
+        "Financial analytics dashboard"
+      ]
+    },
+    {
+      title: "Credit Union Services Portal",
+      category: "Credit Union Banking",
+      description: "Member-focused banking platform with community features, loan services, and comprehensive financial tools designed specifically for credit union operations.",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Member Services", "Loan Applications", "Community Features", "Financial Planning"],
+      websiteUrl: "#",
+      caseStudyLink: "/case-studies/credit-union",
+      services: [
+        "Member portal development",
+        "Loan application systems",
+        "Community platform integration",
+        "Financial planning tools"
+      ]
+    },
+    {
+      title: "Insurance Brokers Network",
+      category: "Insurance Brokerage",
+      description: "Comprehensive platform connecting insurance brokers with clients and carriers, featuring quote comparison tools and streamlined policy management systems.",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Broker Network", "Quote Comparison", "Client Matching", "Policy Management"],
+      websiteUrl: "#",
+      caseStudyLink: "/case-studies/insurance-brokers",
+      services: [
+        "Broker network platform",
+        "Quote comparison engine",
+        "Client matching algorithms",
+        "Policy management systems"
+      ]
     }
   ];
 
@@ -719,7 +876,132 @@ const WebDesignDevelopment = () => {
           </div>
         </section>
 
-        {/* Website Showcase */}
+        {/* Financial Industry Portfolio Showcase */}
+        <section className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <Building2 className="w-10 h-10 text-gowith-orange" />
+                <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue">
+                  Financial Industry Portfolio Showcase
+                </h2>
+              </div>
+              <p className="text-lg text-gray-600 mb-8">
+                Discover our specialized expertise in creating powerful digital solutions for the financial services industry
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div className="text-center">
+                  <div className="bg-white rounded-lg p-6 shadow-lg">
+                    <Shield className="w-12 h-12 text-gowith-orange mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">Security First</h3>
+                    <p className="text-gray-600">Bank-level security and compliance standards</p>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="bg-white rounded-lg p-6 shadow-lg">
+                    <TrendingUp className="w-12 h-12 text-gowith-orange mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">ROI Focused</h3>
+                    <p className="text-gray-600">Proven track record of increasing conversions</p>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="bg-white rounded-lg p-6 shadow-lg">
+                    <Users className="w-12 h-12 text-gowith-orange mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">Industry Expertise</h3>
+                    <p className="text-gray-600">Deep understanding of financial services</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {financialPortfolio.map((project, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                  <div className="relative h-48">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-gowith-orange text-white px-3 py-1 rounded-full text-sm font-medium">
+                        {project.category}
+                      </span>
+                    </div>
+                    {project.websiteUrl !== "#" && (
+                      <div className="absolute top-4 right-4">
+                        <a 
+                          href={project.websiteUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-white bg-opacity-90 hover:bg-opacity-100 text-gowith-dark-blue p-2 rounded-full transition-all"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gowith-dark-blue mb-3">{project.title}</h3>
+                    <p className="text-gray-600 mb-4 text-sm leading-relaxed">{project.description}</p>
+                    
+                    <div className="mb-4">
+                      <h4 className="font-semibold text-gowith-medium-blue mb-2">Key Features:</h4>
+                      <div className="space-y-1">
+                        {project.features.map((feature, featureIndex) => (
+                          <div key={featureIndex} className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-gowith-orange shrink-0" />
+                            <span className="text-sm text-gray-700">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mb-4">
+                      <h4 className="font-semibold text-gowith-medium-blue mb-2">Our Services:</h4>
+                      <div className="space-y-1">
+                        {project.services.map((service, serviceIndex) => (
+                          <div key={serviceIndex} className="flex items-center gap-2">
+                            <ArrowRight className="w-3 h-3 text-gowith-orange shrink-0" />
+                            <span className="text-sm text-gray-600">{service}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <a 
+                      href={project.caseStudyLink}
+                      className="inline-flex items-center gap-2 text-gowith-orange hover:text-gowith-orange-hover font-medium transition-colors"
+                    >
+                      View Case Study
+                      <ArrowRight className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <div className="bg-white rounded-lg p-8 shadow-lg max-w-2xl mx-auto">
+                <h3 className="text-2xl font-bold text-gowith-dark-blue mb-4">
+                  Ready to Transform Your Financial Services Business?
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  Join the growing list of financial institutions that trust us with their digital presence
+                </p>
+                <a 
+                  href="/contact"
+                  className="bg-gowith-orange hover:bg-gowith-orange-hover text-white px-8 py-3 rounded-md font-medium transition-colors inline-flex items-center gap-2"
+                >
+                  Start Your Project
+                  <ArrowRight className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Our Website Portfolio Showcase */}
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-16">
@@ -727,12 +1009,62 @@ const WebDesignDevelopment = () => {
                 Our Website Portfolio Showcase
               </h2>
               <p className="text-lg text-gray-600">
-                Explore our collection of professionally designed websites across various industries
+                Explore our diverse collection of professionally designed websites across various industries
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {websiteShowcase.map((site, index) => (
+              {/* Corporate Business websites from previous showcase */}
+              {[
+                {
+                  title: "TechFlow Solutions Corporate",
+                  category: "Technology Consulting",
+                  description: "Professional consulting firm website with service showcase and team profiles",
+                  image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+                  features: ["Service Catalog", "Team Profiles", "Client Testimonials"],
+                  caseStudyLink: "/case-studies/techflow-solutions"
+                },
+                {
+                  title: "InnovateCorp Enterprise Hub",
+                  category: "Innovation & Strategy",
+                  description: "Corporate innovation platform with project management and collaboration tools",
+                  image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+                  features: ["Project Management", "Team Collaboration", "Innovation Tracking"],
+                  caseStudyLink: "/case-studies/innovatecorp"
+                },
+                {
+                  title: "GreenTech Ventures Platform",
+                  category: "Sustainable Technology",
+                  description: "Environmental technology showcase with sustainability reporting and green solutions",
+                  image: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+                  features: ["Sustainability Reports", "Green Solutions", "Environmental Impact"],
+                  caseStudyLink: "/case-studies/greentech-ventures"
+                },
+                {
+                  title: "Digital Dynamics Agency",
+                  category: "Digital Marketing",
+                  description: "Full-service digital marketing agency with campaign management and analytics",
+                  image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+                  features: ["Campaign Management", "Analytics Dashboard", "Client Reporting"],
+                  caseStudyLink: "/case-studies/digital-dynamics"
+                },
+                {
+                  title: "TechAdvantage Solutions",
+                  category: "IT Services",
+                  description: "Comprehensive IT services platform with support ticketing and service management",
+                  image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+                  features: ["Support Ticketing", "Service Management", "IT Solutions"],
+                  caseStudyLink: "/case-studies/techadvantage"
+                },
+                {
+                  title: "Anderson Consulting Group",
+                  category: "Management Consulting",
+                  description: "Strategic consulting firm with case study library and expertise showcase",
+                  image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+                  features: ["Case Studies", "Expertise Areas", "Consultant Profiles"],
+                  caseStudyLink: "/case-studies/anderson-consulting"
+                }
+              ].map((site, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                   <div className="relative h-48">
                     <img 
@@ -741,7 +1073,7 @@ const WebDesignDevelopment = () => {
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-4 left-4">
-                      <span className="bg-gowith-orange text-white px-3 py-1 rounded-full text-sm font-medium">
+                      <span className="bg-gowith-medium-blue text-white px-3 py-1 rounded-full text-sm font-medium">
                         {site.category}
                       </span>
                     </div>
@@ -772,7 +1104,7 @@ const WebDesignDevelopment = () => {
         </section>
 
         {/* Client Testimonials with Carousel */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
@@ -813,7 +1145,7 @@ const WebDesignDevelopment = () => {
         </section>
 
         {/* Professional Website Themes */}
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
@@ -855,7 +1187,7 @@ const WebDesignDevelopment = () => {
         </section>
 
         {/* Why Choose Us */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
@@ -891,8 +1223,8 @@ const WebDesignDevelopment = () => {
           </div>
         </section>
 
-        {/* FAQ Section - Shortened */}
-        <section className="py-20 bg-gray-50">
+        {/* FAQ Section */}
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-12">
