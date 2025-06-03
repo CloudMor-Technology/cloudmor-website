@@ -302,88 +302,6 @@ const WebDesignDevelopment = () => {
           metrics={successMetrics}
         />
 
-        {/* Website Showcase */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
-                Our Website Portfolio Showcase
-              </h2>
-              <p className="text-lg text-gray-600">
-                Explore our collection of professionally designed websites across various industries
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {websiteShowcase.map((site, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                  <div className="relative h-48">
-                    <img 
-                      src={site.image} 
-                      alt={site.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-gowith-orange text-white px-3 py-1 rounded-full text-sm font-medium">
-                        {site.category}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">{site.title}</h3>
-                    <p className="text-gray-600 mb-4">{site.description}</p>
-                    <div className="space-y-2 mb-4">
-                      {site.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-gowith-orange" />
-                          <span className="text-sm text-gray-700">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <button className="flex items-center gap-2 text-gowith-orange hover:text-gowith-orange-hover font-medium">
-                      View Case Study
-                      <ExternalLink className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Client Testimonials */}
-        <section className="py-20 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
-                What Our Clients Say
-              </h2>
-              <p className="text-lg text-gray-600">
-                Hear from business leaders who've transformed their online presence with our services
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-lg p-8">
-                  <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-gowith-orange fill-current" />
-                    ))}
-                  </div>
-                  <blockquote className="text-gray-600 mb-6 italic">
-                    "{testimonial.quote}"
-                  </blockquote>
-                  <div>
-                    <div className="font-bold text-gowith-dark-blue">{testimonial.author}</div>
-                    <div className="text-sm text-gray-500">{testimonial.title}, {testimonial.company}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Services Overview */}
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
@@ -534,6 +452,88 @@ const WebDesignDevelopment = () => {
                     <button className="w-full bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold py-3 px-6 rounded-md transition-colors">
                       Request a Quote
                     </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Website Showcase */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
+                Our Website Portfolio Showcase
+              </h2>
+              <p className="text-lg text-gray-600">
+                Explore our collection of professionally designed websites across various industries
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {websiteShowcase.map((site, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                  <div className="relative h-48">
+                    <img 
+                      src={site.image} 
+                      alt={site.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-gowith-orange text-white px-3 py-1 rounded-full text-sm font-medium">
+                        {site.category}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">{site.title}</h3>
+                    <p className="text-gray-600 mb-4">{site.description}</p>
+                    <div className="space-y-2 mb-4">
+                      {site.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-gowith-orange" />
+                          <span className="text-sm text-gray-700">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <button className="flex items-center gap-2 text-gowith-orange hover:text-gowith-orange-hover font-medium">
+                      View Case Study
+                      <ExternalLink className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Client Testimonials */}
+        <section className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
+                What Our Clients Say
+              </h2>
+              <p className="text-lg text-gray-600">
+                Hear from business leaders who've transformed their online presence with our services
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-lg p-8">
+                  <div className="flex mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 text-gowith-orange fill-current" />
+                    ))}
+                  </div>
+                  <blockquote className="text-gray-600 mb-6 italic">
+                    "{testimonial.quote}"
+                  </blockquote>
+                  <div>
+                    <div className="font-bold text-gowith-dark-blue">{testimonial.author}</div>
+                    <div className="text-sm text-gray-500">{testimonial.title}, {testimonial.company}</div>
                   </div>
                 </div>
               ))}
