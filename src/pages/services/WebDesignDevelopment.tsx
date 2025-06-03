@@ -4,6 +4,13 @@ import ServiceHero from "../../components/ServiceHero";
 import FinalCTA from "../../components/FinalCTA";
 import SuccessMetrics from "../../components/SuccessMetrics";
 import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../../components/ui/carousel";
+import { 
   Palette, 
   Code, 
   Search, 
@@ -127,6 +134,96 @@ const WebDesignDevelopment = () => {
       author: "Michael Rodriguez",
       title: "Founder",
       company: "GreenTech Ventures"
+    },
+    {
+      quote: "The financial portal they built for us has revolutionized how we serve our clients. The security features and user experience are exceptional.",
+      author: "Emily Johnson",
+      title: "VP of Technology",
+      company: "Baleen Specialty Insurance"
+    },
+    {
+      quote: "Our accounting firm's new website has attracted more high-value clients than ever before. The professional design speaks volumes about our expertise.",
+      author: "David Wilson",
+      title: "Managing Partner",
+      company: "Maxwell Locke & Ritter LLP"
+    },
+    {
+      quote: "The e-commerce platform exceeded our expectations. Sales have increased by 180% since the launch, and customer feedback has been overwhelmingly positive.",
+      author: "Lisa Thompson",
+      title: "Operations Manager",
+      company: "Allied Wallet"
+    },
+    {
+      quote: "GowithSupport's attention to detail and understanding of our industry needs made all the difference. The website perfectly captures our brand identity.",
+      author: "Robert Kim",
+      title: "Creative Director",
+      company: "Digital Dynamics"
+    },
+    {
+      quote: "The mobile-responsive design has improved our user engagement significantly. We're seeing more conversions from mobile traffic than ever before.",
+      author: "Jennifer Davis",
+      title: "Marketing Manager",
+      company: "TechAdvantage"
+    },
+    {
+      quote: "From concept to launch, the team maintained excellent communication and delivered on every promise. Our new site is a powerful business tool.",
+      author: "Mark Anderson",
+      title: "Business Owner",
+      company: "Anderson Consulting"
+    },
+    {
+      quote: "The SEO optimization has been incredible. We've moved from page 3 to the top 3 results for our main keywords within just 6 months.",
+      author: "Patricia Brown",
+      title: "CEO",
+      company: "Brown & Associates"
+    },
+    {
+      quote: "The custom CMS they developed allows us to update content easily while maintaining the professional design. It's exactly what we needed.",
+      author: "Thomas Lee",
+      title: "Content Manager",
+      company: "Lee Financial Group"
+    },
+    {
+      quote: "Security was our top priority, and they delivered a robust, secure platform that gives us and our clients complete peace of mind.",
+      author: "Amanda White",
+      title: "Security Officer",
+      company: "SecureBank"
+    },
+    {
+      quote: "The integration with our existing systems was flawless. The website works seamlessly with our CRM and accounting software.",
+      author: "Christopher Garcia",
+      title: "IT Director",
+      company: "Garcia Industries"
+    },
+    {
+      quote: "Their ongoing support and maintenance service ensures our website stays current and performs optimally. Truly a partnership we value.",
+      author: "Michelle Taylor",
+      title: "Operations Director",
+      company: "Taylor Enterprises"
+    },
+    {
+      quote: "The analytics and reporting features help us understand our customers better and make data-driven decisions for our business growth.",
+      author: "Steven Clark",
+      title: "Data Analyst",
+      company: "Clark Analytics"
+    },
+    {
+      quote: "The website's loading speed and performance optimization have significantly improved our search rankings and user satisfaction.",
+      author: "Rachel Martinez",
+      title: "Digital Marketing Specialist",
+      company: "Martinez Media"
+    },
+    {
+      quote: "They turned our vision into reality while suggesting improvements we hadn't considered. The result exceeded our highest expectations.",
+      author: "Kevin Wright",
+      title: "Founder",
+      company: "Wright Solutions"
+    },
+    {
+      quote: "The backup and disaster recovery features give us confidence that our business continuity is protected at all times.",
+      author: "Nicole Adams",
+      title: "Risk Manager",
+      company: "Adams Insurance"
     }
   ];
 
@@ -200,6 +297,169 @@ const WebDesignDevelopment = () => {
       description: "Community-focused banking website with member services",
       image: "https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
       features: ["Member Portal", "Loan Applications", "Online Banking"]
+    },
+    // Financial Services (10 websites)
+    {
+      title: "Baleen Specialty Insurance Portal",
+      category: "Insurance & Risk Management",
+      description: "Comprehensive insurance platform for high-risk clients with advanced underwriting tools",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Risk Assessment", "Policy Management", "Claims Processing"],
+      caseStudyLink: "/case-studies/baleen-specialty"
+    },
+    {
+      title: "Maxwell Locke & Ritter Financial Hub",
+      category: "Accounting & Financial Services",
+      description: "Professional accounting firm platform with client management and financial reporting",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Client Portal", "Financial Reports", "Tax Management"],
+      caseStudyLink: "/case-studies/maxwell-locke-ritter"
+    },
+    {
+      title: "Allied Wallet Payment Gateway",
+      category: "Payment Processing",
+      description: "Secure payment processing platform with multi-currency support and fraud protection",
+      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Payment Processing", "Fraud Detection", "Multi-Currency"],
+      caseStudyLink: "/case-studies/allied-wallet"
+    },
+    {
+      title: "Premier Investment Management",
+      category: "Investment Services",
+      description: "Sophisticated investment platform with portfolio analysis and market insights",
+      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Portfolio Analysis", "Market Research", "Investment Tools"],
+      caseStudyLink: "/case-studies/premier-investment"
+    },
+    {
+      title: "SecureBank Online Banking",
+      category: "Digital Banking",
+      description: "Modern banking platform with advanced security and mobile-first design",
+      image: "https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Online Banking", "Mobile App", "Security Features"],
+      caseStudyLink: "/case-studies/securebank"
+    },
+    {
+      title: "Wealth Advisors Platform",
+      category: "Wealth Management",
+      description: "Comprehensive wealth management system for high-net-worth clients",
+      image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Wealth Planning", "Client Management", "Performance Tracking"],
+      caseStudyLink: "/case-studies/wealth-advisors"
+    },
+    {
+      title: "FinTech Innovations Hub",
+      category: "Financial Technology",
+      description: "Cutting-edge fintech platform with AI-powered financial insights",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["AI Analytics", "API Integration", "Real-time Data"],
+      caseStudyLink: "/case-studies/fintech-innovations"
+    },
+    {
+      title: "Credit Union Services Portal",
+      category: "Credit Union",
+      description: "Member-focused banking platform with community features and loan services",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Member Services", "Loan Applications", "Community Features"],
+      caseStudyLink: "/case-studies/credit-union"
+    },
+    {
+      title: "Insurance Brokers Network",
+      category: "Insurance Brokerage",
+      description: "Comprehensive platform connecting insurance brokers with clients and carriers",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Broker Network", "Quote Comparison", "Client Matching"],
+      caseStudyLink: "/case-studies/insurance-brokers"
+    },
+    {
+      title: "Real Estate Investment Trust",
+      category: "Real Estate Finance",
+      description: "Professional REIT platform with property management and investor relations",
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Property Management", "Investor Portal", "Financial Reporting"],
+      caseStudyLink: "/case-studies/reit-platform"
+    },
+
+    // Corporate Business (10 websites)
+    {
+      title: "TechFlow Solutions Corporate",
+      category: "Technology Consulting",
+      description: "Professional consulting firm website with service showcase and team profiles",
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Service Catalog", "Team Profiles", "Client Testimonials"],
+      caseStudyLink: "/case-studies/techflow-solutions"
+    },
+    {
+      title: "InnovateCorp Enterprise Hub",
+      category: "Innovation & Strategy",
+      description: "Corporate innovation platform with project management and collaboration tools",
+      image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Project Management", "Team Collaboration", "Innovation Tracking"],
+      caseStudyLink: "/case-studies/innovatecorp"
+    },
+    {
+      title: "GreenTech Ventures Platform",
+      category: "Sustainable Technology",
+      description: "Environmental technology showcase with sustainability reporting and green solutions",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Sustainability Reports", "Green Solutions", "Environmental Impact"],
+      caseStudyLink: "/case-studies/greentech-ventures"
+    },
+    {
+      title: "Digital Dynamics Agency",
+      category: "Digital Marketing",
+      description: "Full-service digital marketing agency with campaign management and analytics",
+      image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Campaign Management", "Analytics Dashboard", "Client Reporting"],
+      caseStudyLink: "/case-studies/digital-dynamics"
+    },
+    {
+      title: "TechAdvantage Solutions",
+      category: "IT Services",
+      description: "Comprehensive IT services platform with support ticketing and service management",
+      image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Support Ticketing", "Service Management", "IT Solutions"],
+      caseStudyLink: "/case-studies/techadvantage"
+    },
+    {
+      title: "Anderson Consulting Group",
+      category: "Management Consulting",
+      description: "Strategic consulting firm with case study library and expertise showcase",
+      image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Case Studies", "Expertise Areas", "Consultant Profiles"],
+      caseStudyLink: "/case-studies/anderson-consulting"
+    },
+    {
+      title: "Brown & Associates Legal",
+      category: "Legal Services",
+      description: "Law firm platform with practice area information and attorney profiles",
+      image: "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Practice Areas", "Attorney Profiles", "Legal Resources"],
+      caseStudyLink: "/case-studies/brown-associates"
+    },
+    {
+      title: "Garcia Industries Manufacturing",
+      category: "Manufacturing",
+      description: "Industrial manufacturing platform with product catalog and capabilities showcase",
+      image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Product Catalog", "Manufacturing Capabilities", "Quality Standards"],
+      caseStudyLink: "/case-studies/garcia-industries"
+    },
+    {
+      title: "Taylor Enterprises Operations",
+      category: "Operations Management",
+      description: "Operations management platform with workflow optimization and performance tracking",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Workflow Management", "Performance Analytics", "Operations Dashboard"],
+      caseStudyLink: "/case-studies/taylor-enterprises"
+    },
+    {
+      title: "Wright Solutions Engineering",
+      category: "Engineering Services",
+      description: "Engineering consultancy with project portfolio and technical expertise showcase",
+      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
+      features: ["Project Portfolio", "Technical Expertise", "Engineering Solutions"],
+      caseStudyLink: "/case-studies/wright-solutions"
     }
   ];
 
@@ -497,10 +757,13 @@ const WebDesignDevelopment = () => {
                         </div>
                       ))}
                     </div>
-                    <button className="flex items-center gap-2 text-gowith-orange hover:text-gowith-orange-hover font-medium">
+                    <a 
+                      href={site.caseStudyLink}
+                      className="flex items-center gap-2 text-gowith-orange hover:text-gowith-orange-hover font-medium"
+                    >
                       View Case Study
                       <ExternalLink className="w-4 h-4" />
-                    </button>
+                    </a>
                   </div>
                 </div>
               ))}
@@ -508,8 +771,8 @@ const WebDesignDevelopment = () => {
           </div>
         </section>
 
-        {/* Client Testimonials */}
-        <section className="py-20 bg-gray-50">
+        {/* Client Testimonials with Carousel */}
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
@@ -520,23 +783,31 @@ const WebDesignDevelopment = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-lg p-8">
-                  <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-gowith-orange fill-current" />
-                    ))}
-                  </div>
-                  <blockquote className="text-gray-600 mb-6 italic">
-                    "{testimonial.quote}"
-                  </blockquote>
-                  <div>
-                    <div className="font-bold text-gowith-dark-blue">{testimonial.author}</div>
-                    <div className="text-sm text-gray-500">{testimonial.title}, {testimonial.company}</div>
-                  </div>
-                </div>
-              ))}
+            <div className="max-w-6xl mx-auto">
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {testimonials.map((testimonial, index) => (
+                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                      <div className="bg-gray-50 rounded-lg shadow-lg p-8 h-full">
+                        <div className="flex mb-4">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="w-5 h-5 text-gowith-orange fill-current" />
+                          ))}
+                        </div>
+                        <blockquote className="text-gray-600 mb-6 italic">
+                          "{testimonial.quote}"
+                        </blockquote>
+                        <div>
+                          <div className="font-bold text-gowith-dark-blue">{testimonial.author}</div>
+                          <div className="text-sm text-gray-500">{testimonial.title}, {testimonial.company}</div>
+                        </div>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
             </div>
           </div>
         </section>
