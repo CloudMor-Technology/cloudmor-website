@@ -1,6 +1,6 @@
+
 import React from 'react';
-import { FaCheckCircle } from 'react-icons/fa';
-import { MdDesignServices, MdCode, MdDevices, MdSpeed, MdSecurity, MdTrendingUp } from 'react-icons/md';
+import { CheckCircle, Palette, Code, Smartphone, Zap, Shield, TrendingUp } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 
 const WebDesignDevelopment = () => {
@@ -32,7 +32,7 @@ const WebDesignDevelopment = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Web Design */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdDesignServices className="text-4xl text-blue-600 mb-4" />
+              <Palette className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Web Design</h3>
               <p className="text-gray-700">
                 Visually appealing and user-friendly designs that capture your brand identity.
@@ -41,7 +41,7 @@ const WebDesignDevelopment = () => {
 
             {/* Web Development */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdCode className="text-4xl text-blue-600 mb-4" />
+              <Code className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Web Development</h3>
               <p className="text-gray-700">
                 Robust and scalable web solutions using the latest technologies.
@@ -50,7 +50,7 @@ const WebDesignDevelopment = () => {
 
             {/* Responsive Design */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdDevices className="text-4xl text-blue-600 mb-4" />
+              <Smartphone className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Responsive Design</h3>
               <p className="text-gray-700">
                 Websites that adapt seamlessly to any device, ensuring a consistent user experience.
@@ -59,7 +59,7 @@ const WebDesignDevelopment = () => {
 
             {/* Performance Optimization */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdSpeed className="text-4xl text-blue-600 mb-4" />
+              <Zap className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Performance Optimization</h3>
               <p className="text-gray-700">
                 Fast-loading websites that provide a smooth and engaging user experience.
@@ -68,7 +68,7 @@ const WebDesignDevelopment = () => {
 
             {/* Security */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdSecurity className="text-4xl text-blue-600 mb-4" />
+              <Shield className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Security</h3>
               <p className="text-gray-700">
                 Protecting your website and users with the latest security measures.
@@ -77,7 +77,7 @@ const WebDesignDevelopment = () => {
 
             {/* SEO Friendly */}
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <MdTrendingUp className="text-4xl text-blue-600 mb-4" />
+              <TrendingUp className="text-4xl text-blue-600 mb-4" size={48} />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">SEO Friendly</h3>
               <p className="text-gray-700">
                 Optimizing your website for search engines to drive more organic traffic.
@@ -102,7 +102,7 @@ const WebDesignDevelopment = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Feature 1 */}
             <div className="flex items-start">
-              <FaCheckCircle className="text-green-500 text-2xl mr-4" />
+              <CheckCircle className="text-green-500 text-2xl mr-4" size={24} />
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Custom Design</h3>
                 <p className="text-gray-700">
@@ -113,7 +113,7 @@ const WebDesignDevelopment = () => {
 
             {/* Feature 2 */}
             <div className="flex items-start">
-              <FaCheckCircle className="text-green-500 text-2xl mr-4" />
+              <CheckCircle className="text-green-500 text-2xl mr-4" size={24} />
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">User-Friendly Interface</h3>
                 <p className="text-gray-700">
@@ -124,7 +124,7 @@ const WebDesignDevelopment = () => {
 
             {/* Feature 3 */}
             <div className="flex items-start">
-              <FaCheckCircle className="text-green-500 text-2xl mr-4" />
+              <CheckCircle className="text-green-500 text-2xl mr-4" size={24} />
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Mobile Optimization</h3>
                 <p className="text-gray-700">
@@ -135,7 +135,7 @@ const WebDesignDevelopment = () => {
 
             {/* Feature 4 */}
             <div className="flex items-start">
-              <FaCheckCircle className="text-green-500 text-2xl mr-4" />
+              <CheckCircle className="text-green-500 text-2xl mr-4" size={24} />
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">SEO Optimization</h3>
                 <p className="text-gray-700">
