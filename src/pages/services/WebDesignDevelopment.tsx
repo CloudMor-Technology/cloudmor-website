@@ -25,7 +25,12 @@ import {
   ExternalLink,
   Building2,
   Shield,
-  TrendingUp
+  TrendingUp,
+  Activity,
+  Scale,
+  HardDrive,
+  Rocket,
+  Briefcase
 } from "lucide-react";
 
 const WebDesignDevelopment = () => {
@@ -585,38 +590,6 @@ const WebDesignDevelopment = () => {
       image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
       features: ["Case Studies", "Expertise Areas", "Consultant Profiles"],
       caseStudyLink: "/case-studies/anderson-consulting"
-    },
-    {
-      title: "Brown & Associates Legal",
-      category: "Legal Services",
-      description: "Law firm platform with practice area information and attorney profiles",
-      image: "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
-      features: ["Practice Areas", "Attorney Profiles", "Legal Resources"],
-      caseStudyLink: "/case-studies/brown-associates"
-    },
-    {
-      title: "Garcia Industries Manufacturing",
-      category: "Manufacturing",
-      description: "Industrial manufacturing platform with product catalog and capabilities showcase",
-      image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
-      features: ["Product Catalog", "Manufacturing Capabilities", "Quality Standards"],
-      caseStudyLink: "/case-studies/garcia-industries"
-    },
-    {
-      title: "Taylor Enterprises Operations",
-      category: "Operations Management",
-      description: "Operations management platform with workflow optimization and performance tracking",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
-      features: ["Workflow Management", "Performance Analytics", "Operations Dashboard"],
-      caseStudyLink: "/case-studies/taylor-enterprises"
-    },
-    {
-      title: "Wright Solutions Engineering",
-      category: "Engineering Services",
-      description: "Engineering consultancy with project portfolio and technical expertise showcase",
-      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80",
-      features: ["Project Portfolio", "Technical Expertise", "Engineering Solutions"],
-      caseStudyLink: "/case-studies/wright-solutions"
     }
   ];
 
@@ -872,6 +845,310 @@ const WebDesignDevelopment = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Industry Portfolio Showcase */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gowith-dark-blue mb-6">
+                Industry Portfolio Showcase
+              </h2>
+              <p className="text-lg text-gray-600">
+                Discover our specialized expertise across various industries with real client examples
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {/* Financial Services */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6 border-b border-gray-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Building2 className="w-8 h-8 text-gowith-medium-blue" />
+                    <h3 className="text-xl font-bold text-gowith-dark-blue">Financial Services</h3>
+                  </div>
+                </div>
+                <div className="space-y-4 p-6">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="/lovable-uploads/b54dbedd-701e-4c03-9e4c-32de14604d6a.png" 
+                      alt="Maxwell Locke & Ritter"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Maxwell Locke & Ritter LLP</h4>
+                      <p className="text-sm text-gray-600">Accounting & Tax Services</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Baleen Specialty Insurance"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Baleen Specialty Insurance</h4>
+                      <p className="text-sm text-gray-600">Specialty Insurance</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Coalition Inc"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Coalition Inc.</h4>
+                      <p className="text-sm text-gray-600">Cyber Insurance</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Healthcare */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6 border-b border-gray-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Activity className="w-8 h-8 text-gowith-medium-blue" />
+                    <h3 className="text-xl font-bold text-gowith-dark-blue">Healthcare</h3>
+                  </div>
+                </div>
+                <div className="space-y-4 p-6">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="MedTech Solutions"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">MedTech Solutions</h4>
+                      <p className="text-sm text-gray-600">Medical Technology</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="HealthCare Partners"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">HealthCare Partners</h4>
+                      <p className="text-sm text-gray-600">Medical Practice</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Wellness Center"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Wellness Center</h4>
+                      <p className="text-sm text-gray-600">Preventive Care</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Law Firms */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6 border-b border-gray-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Scale className="w-8 h-8 text-gowith-medium-blue" />
+                    <h3 className="text-xl font-bold text-gowith-dark-blue">Law Firms</h3>
+                  </div>
+                </div>
+                <div className="space-y-4 p-6">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Brown & Associates"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Brown & Associates</h4>
+                      <p className="text-sm text-gray-600">Corporate Law</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1479142506502-19b3a3b7ff33?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Legal Partners LLP"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Legal Partners LLP</h4>
+                      <p className="text-sm text-gray-600">Business Law</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Justice Law Group"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Justice Law Group</h4>
+                      <p className="text-sm text-gray-600">Civil Litigation</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Manufacturing */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6 border-b border-gray-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <HardDrive className="w-8 h-8 text-gowith-medium-blue" />
+                    <h3 className="text-xl font-bold text-gowith-dark-blue">Manufacturing</h3>
+                  </div>
+                </div>
+                <div className="space-y-4 p-6">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Garcia Industries"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Garcia Industries</h4>
+                      <p className="text-sm text-gray-600">Industrial Manufacturing</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Precision Parts Co"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Precision Parts Co.</h4>
+                      <p className="text-sm text-gray-600">Precision Manufacturing</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="TechManufacturing Inc"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">TechManufacturing Inc.</h4>
+                      <p className="text-sm text-gray-600">Tech Components</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Technology & Startups */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6 border-b border-gray-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Rocket className="w-8 h-8 text-gowith-medium-blue" />
+                    <h3 className="text-xl font-bold text-gowith-dark-blue">Technology & Startups</h3>
+                  </div>
+                </div>
+                <div className="space-y-4 p-6">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="GreenTech Ventures"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">GreenTech Ventures</h4>
+                      <p className="text-sm text-gray-600">Sustainable Technology</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="TechFlow Solutions"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">TechFlow Solutions</h4>
+                      <p className="text-sm text-gray-600">Tech Consulting</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="InnovateCorp"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">InnovateCorp</h4>
+                      <p className="text-sm text-gray-600">Innovation Platform</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Professional Services */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="p-6 border-b border-gray-100">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Briefcase className="w-8 h-8 text-gowith-medium-blue" />
+                    <h3 className="text-xl font-bold text-gowith-dark-blue">Professional Services</h3>
+                  </div>
+                </div>
+                <div className="space-y-4 p-6">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Anderson Consulting"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Anderson Consulting</h4>
+                      <p className="text-sm text-gray-600">Management Consulting</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Wright Solutions"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Wright Solutions</h4>
+                      <p className="text-sm text-gray-600">Engineering Services</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                      alt="Taylor Enterprises"
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gowith-dark-blue">Taylor Enterprises</h4>
+                      <p className="text-sm text-gray-600">Operations Management</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <div className="bg-gowith-light-blue bg-opacity-10 rounded-lg p-8 max-w-3xl mx-auto">
+                <h3 className="text-2xl font-bold text-gowith-dark-blue mb-4">
+                  Your Industry Not Listed?
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  We've successfully delivered projects across dozens of industries. Our adaptable approach ensures we understand your unique challenges and requirements.
+                </p>
+                <a 
+                  href="/contact"
+                  className="bg-gowith-orange hover:bg-gowith-orange-hover text-white px-8 py-3 rounded-md font-medium transition-colors inline-flex items-center gap-2"
+                >
+                  Discuss Your Project
+                  <ArrowRight className="w-5 h-5" />
+                </a>
+              </div>
             </div>
           </div>
         </section>
