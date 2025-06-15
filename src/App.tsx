@@ -1,3 +1,4 @@
+
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -15,6 +16,7 @@ import Blog from "./pages/Blog";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Sitemap from "./pages/Sitemap";
+import WebLanding from "./pages/WebLanding";
 
 // Service Pages
 import ManagedIT from "./pages/services/ManagedIT";
@@ -40,6 +42,7 @@ const App = () => (
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/web" element={<WebLanding />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/managed-it" element={<ManagedIT />} />
             <Route path="/services/cybersecurity" element={<Cybersecurity />} />
