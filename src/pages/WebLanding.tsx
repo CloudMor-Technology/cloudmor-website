@@ -49,7 +49,7 @@ const WebLanding = () => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
                 </span>
-                <span>LIMITED TIME - Only 50 Spots Available This Quarter</span>
+                <span>LIMITED TIME - Only 50 Spots Available Each Month</span>
               </div>
               
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
@@ -62,9 +62,18 @@ const WebLanding = () => {
                 Professional, mobile-optimized websites built with cutting-edge technology for California businesses
               </p>
               
-              <p className="text-lg mb-12 max-w-3xl mx-auto text-slate-400">
-                Join 23,435+ successful businesses. Complete website delivered in 2 weeks - no hidden costs, no monthly fees.
+              <p className="text-lg mb-8 max-w-3xl mx-auto text-slate-400">
+                Join 23,435+ successful businesses. Complete website delivered in 2 weeks.
               </p>
+
+              {/* Community Empowerment Message */}
+              <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-green-500/30 rounded-2xl p-6 mb-12 max-w-4xl mx-auto">
+                <h2 className="text-2xl md:text-3xl font-bold text-green-300 mb-4">Empowering Communities to Thrive</h2>
+                <p className="text-lg text-slate-300 leading-relaxed">
+                  We believe every business deserves success online. That's why we're investing in communities 
+                  across California with our exclusive support program.
+                </p>
+              </div>
 
               {/* Stats Grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 max-w-4xl mx-auto">
@@ -147,7 +156,7 @@ const WebLanding = () => {
                 { icon: Zap, title: "Lightning Fast", desc: "Load in under 2 seconds" },
                 { icon: Shield, title: "Bank-Level Security", desc: "Advanced protection included" },
                 { icon: Star, title: "Premium Design", desc: "Award-winning aesthetics" },
-                { icon: Users, title: "Easy Management", desc: "Update content yourself" }
+                { icon: Users, title: "Content Support", desc: "Professional support for updates and changes as needed" }
               ].map((feature, index) => (
                 <div key={index} className="group">
                   <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 hover:border-blue-200 transform hover:-translate-y-2">
@@ -206,7 +215,7 @@ const WebLanding = () => {
               <div className="bg-orange-100 border border-orange-200 rounded-xl p-4">
                 <p className="text-lg font-semibold text-orange-800 flex items-center">
                   <Clock className="h-5 w-5 mr-2" />
-                  Only 50 businesses selected each quarter - Apply now!
+                  Only 50 businesses selected each month - Apply now!
                 </p>
               </div>
             </div>
@@ -220,7 +229,7 @@ const WebLanding = () => {
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                What Others Charge vs. <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">What You Pay</span>
+                What Others Charge vs. <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">What We Charge</span>
               </h2>
             </div>
             
@@ -319,7 +328,7 @@ const WebLanding = () => {
               <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-orange-200 rounded-2xl p-6">
                 <p className="text-lg font-semibold text-orange-800 flex items-center justify-center">
                   <Clock className="h-6 w-6 mr-2" />
-                  Limited Time: Only 50 spots available this quarter
+                  Limited Time: Only 50 spots available each month
                 </p>
               </div>
             </div>
@@ -392,7 +401,42 @@ const WebLanding = () => {
         </div>
       </section>
 
-      <Footer />
+      {/* Updated Footer with California message */}
+      <footer className="bg-slate-900 text-white py-16">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="mb-8">
+              <img 
+                src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
+                alt="CloudMor Logo" 
+                className="h-16 mx-auto mb-6"
+              />
+              <p className="text-xl text-slate-300 mb-4">
+                Technology experts from the heart of California
+              </p>
+              <p className="text-slate-400">
+                Made with ❤️ helping businesses from California
+              </p>
+            </div>
+            
+            <div className="border-t border-slate-700 pt-8">
+              <div className="flex flex-col md:flex-row justify-between items-center">
+                <p className="text-slate-400 text-sm mb-4 md:mb-0">
+                  &copy; {new Date().getFullYear()} CloudMor. All rights reserved.
+                </p>
+                <div className="flex space-x-6">
+                  <a href="/privacy-policy" className="text-slate-400 hover:text-white text-sm transition-colors">
+                    Privacy Policy
+                  </a>
+                  <a href="/contact" className="text-slate-400 hover:text-white text-sm transition-colors">
+                    Contact Us
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
