@@ -109,7 +109,7 @@ const WebLanding = () => {
 
             {/* Website Showcase - Modern Card Design */}
             <div className="relative max-w-5xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl shadow-2xl border border-white/20 py-[49px]">
+              <div className="bg-white/10 backdrop-blur-md p-6 shadow-2xl border border-white/20 py-[49px] rounded-2xl px-[34px]">
                 <div className="relative h-64 md:h-96 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200">
                   <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full transition-opacity duration-500 object-contain" />
                   <div className="absolute bottom-4 left-4 bg-black/75 backdrop-blur-sm text-white px-4 py-2 rounded-lg">
