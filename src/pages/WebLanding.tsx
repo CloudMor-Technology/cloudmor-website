@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail } from 'lucide-react';
@@ -10,23 +9,35 @@ const WebLanding = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   
   const websiteShowcase = [{
-    name: "Restaurant Website",
-    image: "/lovable-uploads/834d5c69-5070-4488-bc7a-7b19eeebae04.png"
+    name: "IT Services & Development",
+    image: "/lovable-uploads/456f6b18-a26b-4d1c-8b81-c7b162c2f167.png"
   }, {
-    name: "Healthcare Website",
-    image: "/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png"
+    name: "Healthcare & Medical",
+    image: "/lovable-uploads/41e70552-cf4f-4074-b3d0-dd02c146962f.png"
   }, {
-    name: "Legal Services",
-    image: "/lovable-uploads/b54dbedd-701e-4c03-9e4c-32de14604d6a.png"
+    name: "Technology Solutions",
+    image: "/lovable-uploads/e3c1f94a-bff4-49f3-8000-6fe0f80f5a61.png"
+  }, {
+    name: "Transportation Services",
+    image: "/lovable-uploads/3b4cdc1a-9058-4f24-a018-ae75a5a4d8bf.png"
+  }, {
+    name: "Software Development",
+    image: "/lovable-uploads/c3b6701b-bb4c-4250-9533-f896f4d0c424.png"
+  }, {
+    name: "Healthcare Services",
+    image: "/lovable-uploads/36b35cef-110d-4025-b2c7-f8219ef17bb4.png"
   }, {
     name: "Real Estate",
-    image: "/lovable-uploads/c98e8d7b-612c-4375-b9d1-af212401e6dc.png"
+    image: "/lovable-uploads/94922800-f71e-41a6-a160-922825f92499.png"
   }, {
-    name: "Retail Store",
-    image: "/lovable-uploads/d14591a0-5690-4ddf-99ca-b2144172f86c.png"
+    name: "HR & Recruitment",
+    image: "/lovable-uploads/1ed34d30-a7db-45b5-a053-691203089abe.png"
   }, {
-    name: "Construction",
-    image: "/lovable-uploads/edb9dbfe-335c-4145-a6a2-f0e188e64fbb.png"
+    name: "Business Consulting",
+    image: "/lovable-uploads/ca9c6590-6839-4e4f-b1fc-ba0d637c2506.png"
+  }, {
+    name: "Property Management",
+    image: "/lovable-uploads/9d1728c1-5d1f-48ff-a52f-48a80ffca7ea.png"
   }];
 
   const testimonials = [
@@ -373,14 +384,14 @@ const WebLanding = () => {
                 {[
                   ["Professional Website Design", "$3,000"],
                   ["Custom Logo Design", "$400"],
-                  ["Content Management", "$400"],
-                  ["Blog or News Section", "$250"],
-                  ["Mobile Optimization", "$200"],
-                  ["Speed Optimization", "$200"],
-                  ["Accessibility Compliance", "$300"],
+                  ["Content Management", "$200"],
+                  ["Blog or News Section", "$150"],
+                  ["Mobile Optimization", "$100"],
+                  ["Speed Optimization", "$100"],
+                  ["Accessibility Compliance", "$200"],
                   ["SEO & Analytics Setup", "$900"],
                   ["Social Media Integration", "$200"],
-                  ["Advanced Security & Threat Protection", "$300"],
+                  ["Advanced Security & Threat Protection", "$100"],
                   ["Privacy Policy & Cookie Consent", "$200"],
                   ["Backup & Restore Setup", "$150"]
                 ].map(([service, price], index) => (
