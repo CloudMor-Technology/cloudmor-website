@@ -3,11 +3,9 @@ import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail } from 'lucide-react';
 import WebApplicationForm from '@/components/WebApplicationForm';
 import Footer from '@/components/Footer';
-
 const WebLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-
   const websiteShowcase = [{
     name: "IT Services & Development",
     image: "/lovable-uploads/456f6b18-a26b-4d1c-8b81-c7b162c2f167.png"
@@ -92,14 +90,14 @@ const WebLanding = () => {
     author: "Carlos Mendoza",
     business: "Mendoza Landscaping, Bakersfield"
   }];
-
   const scrollToForm = () => {
     const formElement = document.getElementById('application');
     if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth' });
+      formElement.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   };
-
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % websiteShowcase.length);
@@ -112,9 +110,7 @@ const WebLanding = () => {
     }, 4000);
     return () => clearInterval(testimonialInterval);
   }, []);
-
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <Helmet>
         <title>FREE $6,800 Professional Website - CloudMor | web.cloudmor.com</title>
         <meta name="description" content="Get a $6,800 professional website absolutely FREE for selected California businesses. Fast, mobile-optimized, SEO-ready websites delivered in 2 weeks." />
@@ -127,11 +123,7 @@ const WebLanding = () => {
           <div className="flex items-center justify-center">
             {/* Larger Centered Logo */}
             <div className="flex items-center">
-              <img 
-                src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
-                alt="CloudMor Logo" 
-                className="h-32 w-auto" 
-              />
+              <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-32 w-auto" />
             </div>
           </div>
         </div>
@@ -141,9 +133,9 @@ const WebLanding = () => {
       <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden pt-44">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[length:50px_50px]"></div>
         
-        <div className="relative container mx-auto px-6 py-16 lg:py-24">
+        <div className="relative container mx-auto px-6 lg:py-24 py-[30px]">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 py-0">
               {/* Limited Time Badge */}
               <div className="inline-flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-full text-xs font-bold mb-6 shadow-lg">
                 <span className="relative flex h-2 w-2">
@@ -185,15 +177,11 @@ const WebLanding = () => {
               </div>
 
               {/* Enhanced Primary CTA with Flashing Effect */}
-              <button 
-                onClick={scrollToForm}
-                className="inline-flex items-center space-x-3 text-white text-lg font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-2xl relative overflow-hidden"
-                style={{
-                  background: 'linear-gradient(45deg, #ff6b35, #f7931e, #22c55e, #ff6b35)',
-                  backgroundSize: '400% 400%',
-                  animation: 'gradient-flash 2s ease-in-out infinite, pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                }}
-              >
+              <button onClick={scrollToForm} className="inline-flex items-center space-x-3 text-white text-lg font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-2xl relative overflow-hidden" style={{
+              background: 'linear-gradient(45deg, #ff6b35, #f7931e, #22c55e, #ff6b35)',
+              backgroundSize: '400% 400%',
+              animation: 'gradient-flash 2s ease-in-out infinite, pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+            }}>
                 <span>🎯 Get My FREE Website Now</span>
                 <ArrowRight className="h-5 w-5" />
               </button>
@@ -209,15 +197,7 @@ const WebLanding = () => {
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-4 space-x-2">
-                  {websiteShowcase.map((_, index) => (
-                    <div 
-                      key={index} 
-                      className={`w-2 h-2 rounded-full transition-all duration-500 cursor-pointer ${
-                        index === currentSlide ? 'bg-blue-400 scale-150' : 'bg-white/50 hover:bg-white/80'
-                      }`} 
-                      onClick={() => setCurrentSlide(index)} 
-                    />
-                  ))}
+                  {websiteShowcase.map((_, index) => <div key={index} className={`w-2 h-2 rounded-full transition-all duration-500 cursor-pointer ${index === currentSlide ? 'bg-blue-400 scale-150' : 'bg-white/50 hover:bg-white/80'}`} onClick={() => setCurrentSlide(index)} />)}
                 </div>
               </div>
             </div>
@@ -599,8 +579,6 @@ const WebLanding = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default WebLanding;
