@@ -130,7 +130,7 @@ const WebLanding = () => {
               <img 
                 src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
                 alt="CloudMor Logo" 
-                className="h-24 w-auto" 
+                className="h-32 w-auto" 
               />
             </div>
           </div>
@@ -138,7 +138,7 @@ const WebLanding = () => {
       </header>
 
       {/* Hero Section - Updated slide container size */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden pt-36">
+      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden pt-44">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[length:50px_50px]"></div>
         
         <div className="relative container mx-auto px-6 py-16 lg:py-24">
@@ -187,7 +187,7 @@ const WebLanding = () => {
               {/* Enhanced Primary CTA with Flashing Effect */}
               <button 
                 onClick={scrollToForm}
-                className="inline-flex items-center space-x-3 text-white text-lg font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-2xl relative overflow-hidden animate-pulse"
+                className="inline-flex items-center space-x-3 text-white text-lg font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-2xl relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(45deg, #ff6b35, #f7931e, #22c55e, #ff6b35)',
                   backgroundSize: '400% 400%',
@@ -197,20 +197,12 @@ const WebLanding = () => {
                 <span>🎯 Get My FREE Website Now</span>
                 <ArrowRight className="h-5 w-5" />
               </button>
-
-              {/* Add CSS for gradient flash animation */}
-              <style jsx>{`
-                @keyframes gradient-flash {
-                  0%, 100% { background-position: 0% 50%; }
-                  50% { background-position: 100% 50%; }
-                }
-              `}</style>
             </div>
 
             {/* Website Showcase - Larger to show headers */}
-            <div className="relative max-w-5xl mx-auto">
+            <div className="relative max-w-6xl mx-auto">
               <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-                <div className="relative h-80 md:h-[500px] overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
+                <div className="relative h-96 md:h-[600px] overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 border-8 border-slate-700">
                   <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full transition-all duration-700 object-cover object-top" />
                   <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm text-white px-4 py-2 rounded-lg">
                     <span className="font-semibold text-sm">{websiteShowcase[currentSlide].name}</span>
@@ -232,6 +224,16 @@ const WebLanding = () => {
           </div>
         </div>
       </section>
+
+      {/* Add CSS for gradient flash animation in the head */}
+      <style>
+        {`
+          @keyframes gradient-flash {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+          }
+        `}
+      </style>
 
       {/* What's Included - Value Proposition */}
       <section className="py-16 bg-slate-50">
