@@ -1,9 +1,11 @@
+
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play } from 'lucide-react';
 import WebApplicationForm from '@/components/WebApplicationForm';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+
 const WebLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const websiteShowcase = [{
@@ -25,13 +27,16 @@ const WebLanding = () => {
     name: "Construction",
     image: "/lovable-uploads/edb9dbfe-335c-4145-a6a2-f0e188e64fbb.png"
   }];
+
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % websiteShowcase.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
-  return <div className="min-h-screen bg-white">
+
+  return (
+    <div className="min-h-screen bg-white">
       <Helmet>
         <title>FREE $6,300 Professional Website - CloudMor | web.cloudmor.com</title>
         <meta name="description" content="Get a $6,300 professional website absolutely FREE for selected California businesses. Fast, mobile-optimized, SEO-ready websites delivered in 2 weeks." />
@@ -40,84 +45,103 @@ const WebLanding = () => {
 
       <Navbar />
 
-      {/* Hero Section - Modern Gradient with Better Typography */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[length:40px_40px]"></div>
+      {/* Hero Section - Dynamic Gradient with Powerful Content */}
+      <section className="relative bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white overflow-hidden">
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:40px_40px] animate-pulse"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10"></div>
         
         <div className="relative container mx-auto px-6 py-24 lg:py-32">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              {/* Limited Time Badge */}
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-full text-sm font-semibold mb-8 animate-pulse">
-                <span className="relative flex h-2 w-2">
+              {/* Dynamic Limited Time Badge */}
+              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-pink-500 via-red-500 to-orange-500 text-white px-8 py-4 rounded-full text-sm font-bold mb-8 animate-bounce shadow-2xl">
+                <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
                 </span>
-                <span>LIMITED TIME - Only 50 Spots Available Each Month</span>
+                <span>⚡ EXCLUSIVE: Only 50 Spots Available This Month ⚡</span>
               </div>
               
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
-                Get a <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">$6,300 Website</span>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
+                Transform Your Business with a 
                 <br />
-                <span className="text-3xl md:text-5xl lg:text-6xl text-blue-300">Absolutely FREE</span>
+                <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent animate-pulse">$6,300 Website</span>
+                <br />
+                <span className="text-4xl md:text-6xl lg:text-7xl bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">100% FREE</span>
               </h1>
               
-              <p className="text-xl md:text-2xl mb-6 text-slate-300 max-w-4xl mx-auto leading-relaxed">
-                Professional, mobile-optimized websites built with cutting-edge technology for California businesses
+              <p className="text-2xl md:text-3xl mb-8 text-cyan-200 max-w-5xl mx-auto leading-relaxed font-semibold">
+                🚀 Professional websites that convert visitors into customers
+                <br />
+                <span className="text-xl text-purple-200">Built with cutting-edge technology for California businesses ready to dominate online</span>
               </p>
               
-              <p className="text-lg mb-8 max-w-3xl mx-auto text-slate-400">
-                Join 23,435+ successful businesses. Complete website delivered in 2 weeks.
+              <p className="text-xl mb-8 max-w-4xl mx-auto text-blue-200 font-medium">
+                Join 23,435+ thriving businesses. Complete website delivered in just 14 days.
               </p>
 
-              {/* Community Empowerment Message */}
-              <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-green-500/30 rounded-2xl p-6 mb-12 max-w-4xl mx-auto">
-                <h2 className="text-2xl md:text-3xl font-bold text-green-300 mb-4">Empowering Communities to Thrive</h2>
-                <p className="text-lg text-slate-300 leading-relaxed">
+              {/* Community Message */}
+              <div className="bg-gradient-to-r from-emerald-500/30 to-teal-500/30 backdrop-blur-lg border border-emerald-400/50 rounded-3xl p-8 mb-12 max-w-5xl mx-auto shadow-2xl">
+                <h2 className="text-3xl md:text-4xl font-bold text-emerald-300 mb-6">Communities to Thrive</h2>
+                <p className="text-xl text-white leading-relaxed">
                   We believe every business deserves success online. That's why we're investing in communities 
-                  across California with our exclusive support program.
+                  across California with our exclusive support program - turning dreams into digital reality.
                 </p>
               </div>
 
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 max-w-4xl mx-auto">
-                <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-                  <div className="text-3xl md:text-4xl font-bold text-yellow-400 mb-2">23,435</div>
-                  <div className="text-slate-300 text-sm">Websites Built</div>
+              {/* Dynamic Stats Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 max-w-5xl mx-auto">
+                <div className="text-center p-6 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-lg rounded-3xl border border-purple-400/30 hover:scale-105 transition-transform duration-300">
+                  <div className="text-4xl md:text-5xl font-black text-yellow-400 mb-2">23,435</div>
+                  <div className="text-purple-200 font-semibold">Success Stories</div>
                 </div>
-                <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-                  <div className="text-3xl md:text-4xl font-bold text-green-400 mb-2">$6,300</div>
-                  <div className="text-slate-300 text-sm">Website Value</div>
+                <div className="text-center p-6 bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-lg rounded-3xl border border-green-400/30 hover:scale-105 transition-transform duration-300">
+                  <div className="text-4xl md:text-5xl font-black text-green-400 mb-2">$6,300</div>
+                  <div className="text-green-200 font-semibold">Total Value</div>
                 </div>
-                <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-                  <div className="text-3xl md:text-4xl font-bold text-blue-400 mb-2">$0</div>
-                  <div className="text-slate-300 text-sm">What You Pay</div>
+                <div className="text-center p-6 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 backdrop-blur-lg rounded-3xl border border-blue-400/30 hover:scale-105 transition-transform duration-300">
+                  <div className="text-4xl md:text-5xl font-black text-cyan-400 mb-2">$0</div>
+                  <div className="text-cyan-200 font-semibold">Your Investment</div>
                 </div>
-                <div className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-                  <div className="text-3xl md:text-4xl font-bold text-purple-400 mb-2">2 Weeks</div>
-                  <div className="text-slate-300 text-sm">Delivery Time</div>
+                <div className="text-center p-6 bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-lg rounded-3xl border border-orange-400/30 hover:scale-105 transition-transform duration-300">
+                  <div className="text-4xl md:text-5xl font-black text-orange-400 mb-2">14</div>
+                  <div className="text-orange-200 font-semibold">Days to Launch</div>
                 </div>
               </div>
 
-              {/* CTA Button */}
-              <a href="#application" className="inline-flex items-center space-x-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white text-xl font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-green-500/25">
-                <span>Get My FREE $6,300 Website</span>
-                <ArrowRight className="h-6 w-6" />
+              {/* Dynamic CTA Button */}
+              <a href="#application" className="inline-flex items-center space-x-4 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white text-2xl font-black py-6 px-12 rounded-full transition-all duration-300 transform hover:scale-110 shadow-2xl hover:shadow-green-500/50 animate-pulse">
+                <span>🎯 Claim My FREE $6,300 Website</span>
+                <ArrowRight className="h-8 w-8" />
               </a>
             </div>
 
-            {/* Website Showcase - Modern Card Design */}
-            <div className="relative max-w-5xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-md p-6 shadow-2xl border border-white/20 py-[49px] rounded-2xl px-[34px]">
-                <div className="relative h-64 md:h-96 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200">
-                  <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full transition-opacity duration-500 object-contain" />
-                  <div className="absolute bottom-4 left-4 bg-black/75 backdrop-blur-sm text-white px-4 py-2 rounded-lg">
-                    {websiteShowcase[currentSlide].name}
+            {/* Website Showcase */}
+            <div className="relative max-w-6xl mx-auto">
+              <div className="bg-gradient-to-r from-white/10 to-purple-500/10 backdrop-blur-xl p-8 shadow-2xl border border-white/20 rounded-3xl">
+                <div className="relative h-80 md:h-96 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 shadow-inner">
+                  <img 
+                    src={websiteShowcase[currentSlide].image} 
+                    alt={websiteShowcase[currentSlide].name} 
+                    className="w-full h-full transition-all duration-700 object-contain hover:scale-105" 
+                  />
+                  <div className="absolute bottom-6 left-6 bg-gradient-to-r from-black/90 to-purple-900/90 backdrop-blur-sm text-white px-6 py-3 rounded-xl shadow-lg">
+                    <span className="font-bold text-lg">{websiteShowcase[currentSlide].name}</span>
                   </div>
                 </div>
-                <div className="flex justify-center mt-6 space-x-3">
-                  {websiteShowcase.map((_, index) => <div key={index} className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-blue-400 scale-125' : 'bg-white/40'}`} />)}
+                <div className="flex justify-center mt-8 space-x-4">
+                  {websiteShowcase.map((_, index) => (
+                    <div 
+                      key={index} 
+                      className={`w-4 h-4 rounded-full transition-all duration-500 cursor-pointer ${
+                        index === currentSlide 
+                          ? 'bg-gradient-to-r from-cyan-400 to-purple-400 scale-150 shadow-lg' 
+                          : 'bg-white/50 hover:bg-white/80'
+                      }`}
+                      onClick={() => setCurrentSlide(index)}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -125,108 +149,143 @@ const WebLanding = () => {
         </div>
       </section>
 
-      {/* Value Proposition - Modern Grid Layout */}
-      <section className="py-24 bg-gradient-to-b from-slate-50 to-white">
+      {/* Value Proposition - Dynamic Color Design */}
+      <section className="py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+              <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-8">
                 Why Your Business Needs a 
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Digital Storefront</span>
+                <br />
+                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Digital Powerhouse</span>
               </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-                Your website works 24/7 to showcase your business, build trust, and drive sales. 
-                It's not just a website—it's your most powerful business tool.
+              <p className="text-2xl text-slate-700 max-w-4xl mx-auto leading-relaxed font-medium">
+                Your website is your 24/7 sales machine. It builds trust, showcases your expertise, 
+                and converts visitors into loyal customers while you sleep.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[{
-              icon: Smartphone,
-              title: "Mobile-First Design",
-              desc: "Perfect on every device"
-            }, {
-              icon: TrendingUp,
-              title: "SEO Optimized",
-              desc: "Rank higher on Google"
-            }, {
-              icon: Zap,
-              title: "Lightning Fast",
-              desc: "Load in under 2 seconds"
-            }, {
-              icon: Shield,
-              title: "Bank-Level Security",
-              desc: "Advanced protection included"
-            }, {
-              icon: Star,
-              title: "Premium Design",
-              desc: "Award-winning aesthetics"
-            }, {
-              icon: Users,
-              title: "Content Support",
-              desc: "Professional support for updates and changes as needed"
-            }].map((feature, index) => <div key={index} className="group">
-                  <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 hover:border-blue-200 transform hover:-translate-y-2">
-                    <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                      <feature.icon className="h-7 w-7 text-white" />
+              {[
+                {
+                  icon: Smartphone,
+                  title: "Mobile-First Design",
+                  desc: "Perfect on every device",
+                  gradient: "from-blue-500 to-cyan-500"
+                },
+                {
+                  icon: TrendingUp,
+                  title: "SEO Optimized", 
+                  desc: "Rank higher on Google",
+                  gradient: "from-green-500 to-emerald-500"
+                },
+                {
+                  icon: Zap,
+                  title: "Lightning Fast",
+                  desc: "Load in under 2 seconds", 
+                  gradient: "from-yellow-500 to-orange-500"
+                },
+                {
+                  icon: Shield,
+                  title: "Premium Level Security",
+                  desc: "Advanced protection included",
+                  gradient: "from-purple-500 to-pink-500"
+                },
+                {
+                  icon: Star,
+                  title: "Premium Design",
+                  desc: "Award-winning aesthetics",
+                  gradient: "from-indigo-500 to-blue-500"
+                },
+                {
+                  icon: Users,
+                  title: "Content Support",
+                  desc: "Professional support for updates and changes as needed",
+                  gradient: "from-teal-500 to-cyan-500",
+                  isLarge: true
+                }
+              ].map((feature, index) => (
+                <div 
+                  key={index} 
+                  className={`group ${feature.isLarge ? 'md:col-span-2 lg:col-span-1' : ''}`}
+                >
+                  <div className={`bg-white p-8 ${feature.isLarge ? 'md:p-12' : ''} rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 hover:border-purple-200 transform hover:-translate-y-3 hover:scale-105`}>
+                    <div className={`w-16 h-16 ${feature.isLarge ? 'w-20 h-20' : ''} bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <feature.icon className={`${feature.isLarge ? 'h-10 w-10' : 'h-8 w-8'} text-white`} />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-                    <p className="text-slate-600">{feature.desc}</p>
+                    <h3 className={`${feature.isLarge ? 'text-2xl' : 'text-xl'} font-bold text-slate-900 mb-4`}>
+                      {feature.title}
+                    </h3>
+                    <p className={`text-slate-600 ${feature.isLarge ? 'text-lg' : ''} leading-relaxed`}>
+                      {feature.desc}
+                    </p>
                   </div>
-                </div>)}
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Community Support - Modern Two-Column Layout */}
-      <section className="py-24 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      {/* Community Support - Vibrant Design */}
+      <section className="py-24 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                Empowering <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">Communities</span> to Thrive
+              <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-8">
+                <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">Communities</span> to Thrive
               </h2>
-              <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+              <p className="text-2xl text-slate-700 max-w-5xl mx-auto leading-relaxed font-medium">
                 We believe every business deserves success online. That's why we're investing in communities 
                 across California with our exclusive support program.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-              {[{
-              title: "New Entrepreneurs",
-              desc: "Launch with professional foundation"
-            }, {
-              title: "Growing Businesses",
-              desc: "Scale your digital presence"
-            }, {
-              title: "Community Organizations",
-              desc: "Amplify your mission online"
-            }, {
-              title: "Local Service Providers",
-              desc: "Compete with big corporations"
-            }].map((item, index) => <div key={index} className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-6 w-6 text-white" />
+              {[
+                {
+                  title: "New Entrepreneurs",
+                  desc: "Launch with professional foundation",
+                  gradient: "from-blue-500 to-purple-500"
+                },
+                {
+                  title: "Growing Businesses", 
+                  desc: "Scale your digital presence",
+                  gradient: "from-green-500 to-teal-500"
+                },
+                {
+                  title: "Community Organizations",
+                  desc: "Amplify your mission online", 
+                  gradient: "from-orange-500 to-red-500"
+                },
+                {
+                  title: "Local Service Providers",
+                  desc: "Compete with big corporations",
+                  gradient: "from-purple-500 to-pink-500"
+                }
+              ].map((item, index) => (
+                <div key={index} className="flex items-start space-x-6">
+                  <div className={`w-14 h-14 bg-gradient-to-br ${item.gradient} rounded-full flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                    <CheckCircle className="h-7 w-7 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
-                    <p className="text-slate-600">{item.desc}</p>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-3">{item.title}</h3>
+                    <p className="text-slate-600 text-lg">{item.desc}</p>
                   </div>
-                </div>)}
+                </div>
+              ))}
             </div>
 
-            <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-8 rounded-2xl border-l-4 border-orange-500">
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Our Mission</h3>
-              <p className="text-lg text-slate-700 mb-6">
+            <div className="bg-gradient-to-r from-amber-100 via-orange-100 to-red-100 p-10 rounded-3xl border-l-8 border-orange-500 shadow-xl">
+              <h3 className="text-3xl font-black text-slate-900 mb-6">🎯 Our Mission</h3>
+              <p className="text-xl text-slate-800 mb-8 leading-relaxed">
                 Every free website we create helps a business owner support their family, hire employees, 
-                and strengthen their local community. We're not just building websites—we're building dreams.
+                and strengthen their local community. We're not just building websites—we're building dreams and futures.
               </p>
-              <div className="bg-orange-100 border border-orange-200 rounded-xl p-4">
-                <p className="text-lg font-semibold text-orange-800 flex items-center">
-                  <Clock className="h-5 w-5 mr-2" />
-                  Only 50 businesses selected each month - Apply now!
+              <div className="bg-gradient-to-r from-orange-200 to-red-200 border-2 border-orange-300 rounded-2xl p-6 shadow-inner">
+                <p className="text-xl font-bold text-orange-900 flex items-center">
+                  <Clock className="h-6 w-6 mr-3" />
+                  ⚡ Only 50 businesses selected each month - Apply now before spots fill up!
                 </p>
               </div>
             </div>
@@ -234,14 +293,17 @@ const WebLanding = () => {
         </div>
       </section>
 
-      {/* Pricing Comparison - Modern Table Design */}
+      {/* Pricing Comparison - Updated Title */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                What Others Charge vs. <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">What We Charge</span>
+              <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-8">
+                Market Value vs. <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Your Investment</span>
               </h2>
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                See the incredible value you're getting with our community support program
+              </p>
             </div>
             
             <div className="bg-gradient-to-br from-slate-50 to-white rounded-3xl p-8 shadow-2xl border border-slate-200">
@@ -250,16 +312,25 @@ const WebLanding = () => {
                   <thead>
                     <tr className="border-b-2 border-slate-200">
                       <th className="py-6 text-xl font-bold text-slate-900">Service</th>
-                      <th className="py-6 text-xl font-bold text-center text-slate-900">Other Agencies</th>
+                      <th className="py-6 text-xl font-bold text-center text-slate-900">Market Rate</th>
                       <th className="py-6 text-xl font-bold text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">CloudMor</th>
                     </tr>
                   </thead>
                   <tbody className="text-lg">
-                    {[["Professional Design", "$3,000"], ["Custom Logo Design", "$500"], ["Mobile Optimization", "$800"], ["SEO Setup", "$1,200"], ["Security Features", "$500"], ["Content Management", "$800"]].map(([service, price], index) => <tr key={index} className="border-b border-slate-100">
+                    {[
+                      ["Professional Design", "$3,000"],
+                      ["Custom Logo Design", "$500"], 
+                      ["Mobile Optimization", "$800"],
+                      ["SEO Setup", "$1,200"],
+                      ["Security Features", "$500"],
+                      ["Content Management", "$800"]
+                    ].map(([service, price], index) => (
+                      <tr key={index} className="border-b border-slate-100">
                         <td className="py-4 text-slate-700">{service}</td>
                         <td className="py-4 text-center text-red-600 font-semibold">{price}</td>
                         <td className="py-4 text-center text-green-600 font-bold text-xl">FREE</td>
-                      </tr>)}
+                      </tr>
+                    ))}
                     <tr className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200">
                       <td className="py-6 text-xl font-bold text-slate-900">TOTAL VALUE</td>
                       <td className="py-6 text-center text-2xl font-bold text-red-600">$6,800+</td>
@@ -273,7 +344,7 @@ const WebLanding = () => {
         </div>
       </section>
 
-      {/* Process Timeline - Modern Step Design */}
+      {/* Process Timeline */}
       <section className="py-24 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
@@ -284,37 +355,45 @@ const WebLanding = () => {
             </div>
 
             <div className="space-y-8">
-              {[{
-              step: 1,
-              title: "Submit Application",
-              desc: "Tell us about your business and vision",
-              days: "Day 1"
-            }, {
-              step: 2,
-              title: "24-Hour Review",
-              desc: "Our team reviews and confirms selection",
-              days: "Day 1-2"
-            }, {
-              step: 3,
-              title: "Design Planning",
-              desc: "Custom design based on your brand",
-              days: "Day 2-3"
-            }, {
-              step: 4,
-              title: "Content Creation",
-              desc: "Professional copywriting included",
-              days: "Day 4-7"
-            }, {
-              step: 5,
-              title: "Development",
-              desc: "Building your custom website",
-              days: "Day 8-12"
-            }, {
-              step: 6,
-              title: "Launch",
-              desc: "Final testing and go-live",
-              days: "Day 13-14"
-            }].map((item, index) => <div key={index} className="flex items-start space-x-6">
+              {[
+                {
+                  step: 1,
+                  title: "Submit Application",
+                  desc: "Tell us about your business and vision",
+                  days: "Day 1"
+                },
+                {
+                  step: 2,
+                  title: "24-Hour Review", 
+                  desc: "Our team reviews and confirms selection",
+                  days: "Day 1-2"
+                },
+                {
+                  step: 3,
+                  title: "Design Planning",
+                  desc: "Custom design based on your brand", 
+                  days: "Day 2-3"
+                },
+                {
+                  step: 4,
+                  title: "Content Creation",
+                  desc: "Professional copywriting included",
+                  days: "Day 4-7"
+                },
+                {
+                  step: 5,
+                  title: "Development", 
+                  desc: "Building your custom website",
+                  days: "Day 8-12"
+                },
+                {
+                  step: 6,
+                  title: "Launch",
+                  desc: "Final testing and go-live",
+                  days: "Day 13-14"
+                }
+              ].map((item, index) => (
+                <div key={index} className="flex items-start space-x-6">
                   <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
                     <span className="text-white font-bold text-xl">{item.step}</span>
                   </div>
@@ -325,7 +404,8 @@ const WebLanding = () => {
                     </div>
                     <p className="text-slate-600">{item.desc}</p>
                   </div>
-                </div>)}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -359,7 +439,7 @@ const WebLanding = () => {
         </div>
       </section>
 
-      {/* Testimonials - Modern Card Grid */}
+      {/* Testimonials */}
       <section className="py-24 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
@@ -370,21 +450,28 @@ const WebLanding = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              {[{
-              quote: "CloudMor transformed our small bakery into a thriving online business. Our sales increased 300% in just 3 months!",
-              author: "Maria Rodriguez",
-              business: "Sweet Dreams Bakery, Los Angeles"
-            }, {
-              quote: "I couldn't believe they built our entire website for free. The quality is better than what we paid $5,000 for before.",
-              author: "David Chen",
-              business: "Chen's Auto Repair, San Francisco"
-            }, {
-              quote: "The team at CloudMor didn't just build us a website—they gave us a complete business solution.",
-              author: "Sarah Johnson",
-              business: "Johnson Consulting, San Diego"
-            }].map((testimonial, index) => <div key={index} className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+              {[
+                {
+                  quote: "CloudMor transformed our small bakery into a thriving online business. Our sales increased 300% in just 3 months!",
+                  author: "Maria Rodriguez", 
+                  business: "Sweet Dreams Bakery, Los Angeles"
+                },
+                {
+                  quote: "I couldn't believe they built our entire website for free. The quality is better than what we paid $5,000 for before.",
+                  author: "David Chen",
+                  business: "Chen's Auto Repair, San Francisco"
+                },
+                {
+                  quote: "The team at CloudMor didn't just build us a website—they gave us a complete business solution.",
+                  author: "Sarah Johnson",
+                  business: "Johnson Consulting, San Diego"
+                }
+              ].map((testimonial, index) => (
+                <div key={index} className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
                   <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />)}
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                    ))}
                   </div>
                   <blockquote className="text-slate-700 mb-6 text-lg leading-relaxed">
                     "{testimonial.quote}"
@@ -393,7 +480,8 @@ const WebLanding = () => {
                     <div className="font-semibold text-slate-900">{testimonial.author}</div>
                     <div className="text-slate-600 text-sm">{testimonial.business}</div>
                   </footer>
-                </div>)}
+                </div>
+              ))}
             </div>
 
             <div className="text-center">
@@ -416,7 +504,7 @@ const WebLanding = () => {
         </div>
       </section>
 
-      {/* Updated Footer with California message */}
+      {/* Footer with California message */}
       <footer className="bg-slate-900 text-white py-16">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto text-center">
@@ -448,6 +536,8 @@ const WebLanding = () => {
           </div>
         </div>
       </footer>
-    </div>;
+    </div>
+  );
 };
+
 export default WebLanding;
