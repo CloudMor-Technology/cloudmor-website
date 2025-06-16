@@ -1,11 +1,9 @@
-
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play } from 'lucide-react';
 import WebApplicationForm from '@/components/WebApplicationForm';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-
 const WebLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const websiteShowcase = [{
@@ -27,16 +25,13 @@ const WebLanding = () => {
     name: "Construction",
     image: "/lovable-uploads/edb9dbfe-335c-4145-a6a2-f0e188e64fbb.png"
   }];
-
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % websiteShowcase.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
-
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <Helmet>
         <title>FREE $6,300 Professional Website - CloudMor | web.cloudmor.com</title>
         <meta name="description" content="Get a $6,300 professional website absolutely FREE for selected California businesses. Fast, mobile-optimized, SEO-ready websites delivered in 2 weeks." />
@@ -53,7 +48,7 @@ const WebLanding = () => {
         
         <div className="relative container mx-auto px-6 py-24 lg:py-32">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 my-[70px]">
               {/* Dynamic Limited Time Badge */}
               <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-pink-500 via-red-500 to-orange-500 text-white px-8 py-4 rounded-full text-sm font-bold mb-8 animate-bounce shadow-2xl">
                 <span className="relative flex h-3 w-3">
@@ -63,18 +58,18 @@ const WebLanding = () => {
                 <span>⚡ EXCLUSIVE: Only 50 Spots Available This Month ⚡</span>
               </div>
               
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
+              <h1 className="text-5xl md:text-7xl mb-8 leading-tight font-extrabold lg:text-5xl">
                 Transform Your Business with a 
                 <br />
                 <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent animate-pulse">$6,300 Website</span>
                 <br />
-                <span className="text-4xl md:text-6xl lg:text-7xl bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">100% FREE</span>
+                <span className="text-4xl md:text-6xl bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent my-0 py-0 mx-0 lg:text-4xl">100% FREE</span>
               </h1>
               
               <p className="text-2xl md:text-3xl mb-8 text-cyan-200 max-w-5xl mx-auto leading-relaxed font-semibold">
                 🚀 Professional websites that convert visitors into customers
                 <br />
-                <span className="text-xl text-purple-200">Built with cutting-edge technology for California businesses ready to dominate online</span>
+                <span className="text-xl text-purple-200 font-extrabold">Built with cutting-edge tech for ambitious businesses ready to own the digital space</span>
               </p>
               
               <p className="text-xl mb-8 max-w-4xl mx-auto text-blue-200 font-medium">
@@ -121,27 +116,13 @@ const WebLanding = () => {
             <div className="relative max-w-6xl mx-auto">
               <div className="bg-gradient-to-r from-white/10 to-purple-500/10 backdrop-blur-xl p-8 shadow-2xl border border-white/20 rounded-3xl">
                 <div className="relative h-80 md:h-96 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 shadow-inner">
-                  <img 
-                    src={websiteShowcase[currentSlide].image} 
-                    alt={websiteShowcase[currentSlide].name} 
-                    className="w-full h-full transition-all duration-700 object-contain hover:scale-105" 
-                  />
+                  <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full transition-all duration-700 object-contain hover:scale-105" />
                   <div className="absolute bottom-6 left-6 bg-gradient-to-r from-black/90 to-purple-900/90 backdrop-blur-sm text-white px-6 py-3 rounded-xl shadow-lg">
                     <span className="font-bold text-lg">{websiteShowcase[currentSlide].name}</span>
                   </div>
                 </div>
                 <div className="flex justify-center mt-8 space-x-4">
-                  {websiteShowcase.map((_, index) => (
-                    <div 
-                      key={index} 
-                      className={`w-4 h-4 rounded-full transition-all duration-500 cursor-pointer ${
-                        index === currentSlide 
-                          ? 'bg-gradient-to-r from-cyan-400 to-purple-400 scale-150 shadow-lg' 
-                          : 'bg-white/50 hover:bg-white/80'
-                      }`}
-                      onClick={() => setCurrentSlide(index)}
-                    />
-                  ))}
+                  {websiteShowcase.map((_, index) => <div key={index} className={`w-4 h-4 rounded-full transition-all duration-500 cursor-pointer ${index === currentSlide ? 'bg-gradient-to-r from-cyan-400 to-purple-400 scale-150 shadow-lg' : 'bg-white/50 hover:bg-white/80'}`} onClick={() => setCurrentSlide(index)} />)}
                 </div>
               </div>
             </div>
@@ -166,49 +147,38 @@ const WebLanding = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  icon: Smartphone,
-                  title: "Mobile-First Design",
-                  desc: "Perfect on every device",
-                  gradient: "from-blue-500 to-cyan-500"
-                },
-                {
-                  icon: TrendingUp,
-                  title: "SEO Optimized", 
-                  desc: "Rank higher on Google",
-                  gradient: "from-green-500 to-emerald-500"
-                },
-                {
-                  icon: Zap,
-                  title: "Lightning Fast",
-                  desc: "Load in under 2 seconds", 
-                  gradient: "from-yellow-500 to-orange-500"
-                },
-                {
-                  icon: Shield,
-                  title: "Premium Level Security",
-                  desc: "Advanced protection included",
-                  gradient: "from-purple-500 to-pink-500"
-                },
-                {
-                  icon: Star,
-                  title: "Premium Design",
-                  desc: "Award-winning aesthetics",
-                  gradient: "from-indigo-500 to-blue-500"
-                },
-                {
-                  icon: Users,
-                  title: "Content Support",
-                  desc: "Professional support for updates and changes as needed",
-                  gradient: "from-teal-500 to-cyan-500",
-                  isLarge: true
-                }
-              ].map((feature, index) => (
-                <div 
-                  key={index} 
-                  className={`group ${feature.isLarge ? 'md:col-span-2 lg:col-span-1' : ''}`}
-                >
+              {[{
+              icon: Smartphone,
+              title: "Mobile-First Design",
+              desc: "Perfect on every device",
+              gradient: "from-blue-500 to-cyan-500"
+            }, {
+              icon: TrendingUp,
+              title: "SEO Optimized",
+              desc: "Rank higher on Google",
+              gradient: "from-green-500 to-emerald-500"
+            }, {
+              icon: Zap,
+              title: "Lightning Fast",
+              desc: "Load in under 2 seconds",
+              gradient: "from-yellow-500 to-orange-500"
+            }, {
+              icon: Shield,
+              title: "Premium Level Security",
+              desc: "Advanced protection included",
+              gradient: "from-purple-500 to-pink-500"
+            }, {
+              icon: Star,
+              title: "Premium Design",
+              desc: "Award-winning aesthetics",
+              gradient: "from-indigo-500 to-blue-500"
+            }, {
+              icon: Users,
+              title: "Content Support",
+              desc: "Professional support for updates and changes as needed",
+              gradient: "from-teal-500 to-cyan-500",
+              isLarge: true
+            }].map((feature, index) => <div key={index} className={`group ${feature.isLarge ? 'md:col-span-2 lg:col-span-1' : ''}`}>
                   <div className={`bg-white p-8 ${feature.isLarge ? 'md:p-12' : ''} rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 hover:border-purple-200 transform hover:-translate-y-3 hover:scale-105`}>
                     <div className={`w-16 h-16 ${feature.isLarge ? 'w-20 h-20' : ''} bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                       <feature.icon className={`${feature.isLarge ? 'h-10 w-10' : 'h-8 w-8'} text-white`} />
@@ -220,8 +190,7 @@ const WebLanding = () => {
                       {feature.desc}
                     </p>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </div>
@@ -242,29 +211,23 @@ const WebLanding = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-              {[
-                {
-                  title: "New Entrepreneurs",
-                  desc: "Launch with professional foundation",
-                  gradient: "from-blue-500 to-purple-500"
-                },
-                {
-                  title: "Growing Businesses", 
-                  desc: "Scale your digital presence",
-                  gradient: "from-green-500 to-teal-500"
-                },
-                {
-                  title: "Community Organizations",
-                  desc: "Amplify your mission online", 
-                  gradient: "from-orange-500 to-red-500"
-                },
-                {
-                  title: "Local Service Providers",
-                  desc: "Compete with big corporations",
-                  gradient: "from-purple-500 to-pink-500"
-                }
-              ].map((item, index) => (
-                <div key={index} className="flex items-start space-x-6">
+              {[{
+              title: "New Entrepreneurs",
+              desc: "Launch with professional foundation",
+              gradient: "from-blue-500 to-purple-500"
+            }, {
+              title: "Growing Businesses",
+              desc: "Scale your digital presence",
+              gradient: "from-green-500 to-teal-500"
+            }, {
+              title: "Community Organizations",
+              desc: "Amplify your mission online",
+              gradient: "from-orange-500 to-red-500"
+            }, {
+              title: "Local Service Providers",
+              desc: "Compete with big corporations",
+              gradient: "from-purple-500 to-pink-500"
+            }].map((item, index) => <div key={index} className="flex items-start space-x-6">
                   <div className={`w-14 h-14 bg-gradient-to-br ${item.gradient} rounded-full flex items-center justify-center flex-shrink-0 shadow-lg`}>
                     <CheckCircle className="h-7 w-7 text-white" />
                   </div>
@@ -272,8 +235,7 @@ const WebLanding = () => {
                     <h3 className="text-2xl font-bold text-slate-900 mb-3">{item.title}</h3>
                     <p className="text-slate-600 text-lg">{item.desc}</p>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
 
             <div className="bg-gradient-to-r from-amber-100 via-orange-100 to-red-100 p-10 rounded-3xl border-l-8 border-orange-500 shadow-xl">
@@ -317,20 +279,11 @@ const WebLanding = () => {
                     </tr>
                   </thead>
                   <tbody className="text-lg">
-                    {[
-                      ["Professional Design", "$3,000"],
-                      ["Custom Logo Design", "$500"], 
-                      ["Mobile Optimization", "$800"],
-                      ["SEO Setup", "$1,200"],
-                      ["Security Features", "$500"],
-                      ["Content Management", "$800"]
-                    ].map(([service, price], index) => (
-                      <tr key={index} className="border-b border-slate-100">
+                    {[["Professional Design", "$3,000"], ["Custom Logo Design", "$500"], ["Mobile Optimization", "$800"], ["SEO Setup", "$1,200"], ["Security Features", "$500"], ["Content Management", "$800"]].map(([service, price], index) => <tr key={index} className="border-b border-slate-100">
                         <td className="py-4 text-slate-700">{service}</td>
                         <td className="py-4 text-center text-red-600 font-semibold">{price}</td>
                         <td className="py-4 text-center text-green-600 font-bold text-xl">FREE</td>
-                      </tr>
-                    ))}
+                      </tr>)}
                     <tr className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200">
                       <td className="py-6 text-xl font-bold text-slate-900">TOTAL VALUE</td>
                       <td className="py-6 text-center text-2xl font-bold text-red-600">$6,800+</td>
@@ -355,45 +308,37 @@ const WebLanding = () => {
             </div>
 
             <div className="space-y-8">
-              {[
-                {
-                  step: 1,
-                  title: "Submit Application",
-                  desc: "Tell us about your business and vision",
-                  days: "Day 1"
-                },
-                {
-                  step: 2,
-                  title: "24-Hour Review", 
-                  desc: "Our team reviews and confirms selection",
-                  days: "Day 1-2"
-                },
-                {
-                  step: 3,
-                  title: "Design Planning",
-                  desc: "Custom design based on your brand", 
-                  days: "Day 2-3"
-                },
-                {
-                  step: 4,
-                  title: "Content Creation",
-                  desc: "Professional copywriting included",
-                  days: "Day 4-7"
-                },
-                {
-                  step: 5,
-                  title: "Development", 
-                  desc: "Building your custom website",
-                  days: "Day 8-12"
-                },
-                {
-                  step: 6,
-                  title: "Launch",
-                  desc: "Final testing and go-live",
-                  days: "Day 13-14"
-                }
-              ].map((item, index) => (
-                <div key={index} className="flex items-start space-x-6">
+              {[{
+              step: 1,
+              title: "Submit Application",
+              desc: "Tell us about your business and vision",
+              days: "Day 1"
+            }, {
+              step: 2,
+              title: "24-Hour Review",
+              desc: "Our team reviews and confirms selection",
+              days: "Day 1-2"
+            }, {
+              step: 3,
+              title: "Design Planning",
+              desc: "Custom design based on your brand",
+              days: "Day 2-3"
+            }, {
+              step: 4,
+              title: "Content Creation",
+              desc: "Professional copywriting included",
+              days: "Day 4-7"
+            }, {
+              step: 5,
+              title: "Development",
+              desc: "Building your custom website",
+              days: "Day 8-12"
+            }, {
+              step: 6,
+              title: "Launch",
+              desc: "Final testing and go-live",
+              days: "Day 13-14"
+            }].map((item, index) => <div key={index} className="flex items-start space-x-6">
                   <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
                     <span className="text-white font-bold text-xl">{item.step}</span>
                   </div>
@@ -404,8 +349,7 @@ const WebLanding = () => {
                     </div>
                     <p className="text-slate-600">{item.desc}</p>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </div>
@@ -450,28 +394,21 @@ const WebLanding = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              {[
-                {
-                  quote: "CloudMor transformed our small bakery into a thriving online business. Our sales increased 300% in just 3 months!",
-                  author: "Maria Rodriguez", 
-                  business: "Sweet Dreams Bakery, Los Angeles"
-                },
-                {
-                  quote: "I couldn't believe they built our entire website for free. The quality is better than what we paid $5,000 for before.",
-                  author: "David Chen",
-                  business: "Chen's Auto Repair, San Francisco"
-                },
-                {
-                  quote: "The team at CloudMor didn't just build us a website—they gave us a complete business solution.",
-                  author: "Sarah Johnson",
-                  business: "Johnson Consulting, San Diego"
-                }
-              ].map((testimonial, index) => (
-                <div key={index} className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+              {[{
+              quote: "CloudMor transformed our small bakery into a thriving online business. Our sales increased 300% in just 3 months!",
+              author: "Maria Rodriguez",
+              business: "Sweet Dreams Bakery, Los Angeles"
+            }, {
+              quote: "I couldn't believe they built our entire website for free. The quality is better than what we paid $5,000 for before.",
+              author: "David Chen",
+              business: "Chen's Auto Repair, San Francisco"
+            }, {
+              quote: "The team at CloudMor didn't just build us a website—they gave us a complete business solution.",
+              author: "Sarah Johnson",
+              business: "Johnson Consulting, San Diego"
+            }].map((testimonial, index) => <div key={index} className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
                   <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-                    ))}
+                    {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />)}
                   </div>
                   <blockquote className="text-slate-700 mb-6 text-lg leading-relaxed">
                     "{testimonial.quote}"
@@ -480,8 +417,7 @@ const WebLanding = () => {
                     <div className="font-semibold text-slate-900">{testimonial.author}</div>
                     <div className="text-slate-600 text-sm">{testimonial.business}</div>
                   </footer>
-                </div>
-              ))}
+                </div>)}
             </div>
 
             <div className="text-center">
@@ -536,8 +472,6 @@ const WebLanding = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default WebLanding;
