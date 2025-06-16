@@ -121,16 +121,16 @@ const WebLanding = () => {
       <header className="w-full fixed top-0 left-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-100">
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-center">
-            {/* Larger Centered Logo */}
+            {/* Even Larger Centered Logo */}
             <div className="flex items-center">
-              <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-32 w-auto" />
+              <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-40 w-auto" />
             </div>
           </div>
         </div>
       </header>
 
       {/* Hero Section - Updated slide container size */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden pt-44">
+      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden pt-52">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[length:50px_50px]"></div>
         
         <div className="relative container mx-auto px-6 lg:py-24 py-[30px]">
