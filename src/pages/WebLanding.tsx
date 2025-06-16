@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail } from 'lucide-react';
@@ -96,56 +95,6 @@ const WebLanding = () => {
       quote: "CloudMor's team made the entire process stress-free. From concept to launch, everything was handled professionally.",
       author: "Carlos Mendoza",
       business: "Mendoza Landscaping, Bakersfield"
-    },
-    {
-      quote: "The website they built for our tech startup helped us secure $2M in funding. Investors were impressed by our professional presence.",
-      author: "Alex Kim",
-      business: "TechFlow Solutions, Mountain View"
-    },
-    {
-      quote: "Our e-commerce sales tripled within the first month. The checkout process is so smooth and user-friendly.",
-      author: "Rachel Martinez",
-      business: "Artisan Jewelry Co., Berkeley"
-    },
-    {
-      quote: "The blog section they added has become our main lead generation tool. We get 50+ inquiries per week now.",
-      author: "Tom Rodriguez",
-      business: "Digital Marketing Pro, Santa Clara"
-    },
-    {
-      quote: "CloudMor's team went above and beyond. They even helped us with our social media integration and email marketing setup.",
-      author: "Diana Chen",
-      business: "Wellness Center Plus, Walnut Creek"
-    },
-    {
-      quote: "The mobile experience is flawless. Our customers love booking appointments directly from their phones.",
-      author: "Mark Johnson",
-      business: "Premier Auto Service, Concord"
-    },
-    {
-      quote: "We've received countless compliments on our website design. It perfectly captures our brand personality.",
-      author: "Sophie Williams",
-      business: "Creative Photography Studio, Napa"
-    },
-    {
-      quote: "The speed optimization they included made our site lightning fast. Google PageSpeed score went from 45 to 98!",
-      author: "James Liu",
-      business: "Import Export Solutions, Fremont"
-    },
-    {
-      quote: "Our appointment booking system handles everything automatically. It's saved us 10+ hours per week on admin work.",
-      author: "Dr. Maria Gonzalez",
-      business: "Family Health Clinic, Stockton"
-    },
-    {
-      quote: "The contact forms are converting 40% better than our old website. The design really guides visitors to take action.",
-      author: "Kevin Brown",
-      business: "Home Renovation Experts, San Mateo"
-    },
-    {
-      quote: "CloudMor delivered a website that looks like it cost $50,000. Our competitors are asking who designed it!",
-      author: "Amanda Davis",
-      business: "Luxury Event Planning, Sonoma"
     }
   ];
 
@@ -166,8 +115,8 @@ const WebLanding = () => {
   return (
     <div className="min-h-screen bg-white">
       <Helmet>
-        <title>FREE $8,350 Professional Website - CloudMor | web.cloudmor.com</title>
-        <meta name="description" content="Get a $8,350 professional website absolutely FREE for selected California businesses. Fast, mobile-optimized, SEO-ready websites delivered in 2 weeks." />
+        <title>FREE $8,400 Professional Website - CloudMor | web.cloudmor.com</title>
+        <meta name="description" content="Get a $8,400 professional website absolutely FREE for selected California businesses. Fast, mobile-optimized, SEO-ready websites delivered in 2 weeks." />
         <meta name="keywords" content="free website, professional website design, California business, CloudMor, web design" />
       </Helmet>
 
@@ -194,7 +143,7 @@ const WebLanding = () => {
               <h1 className="text-5xl md:text-7xl mb-8 leading-tight font-extrabold lg:text-5xl">
                 Transform Your Business with a 
                 <br />
-                <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent animate-pulse">$8,350 Website</span>
+                <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent animate-pulse">$8,400 Website</span>
                 <br />
                 <span className="text-4xl md:text-6xl bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent my-0 py-0 mx-0 lg:text-4xl">100% FREE</span>
               </h1>
@@ -221,7 +170,7 @@ const WebLanding = () => {
               {/* Dynamic Stats Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
                 <div className="text-center p-6 bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-lg rounded-3xl border border-green-400/30 hover:scale-105 transition-transform duration-300">
-                  <div className="text-4xl md:text-5xl font-black text-green-400 mb-2">$8,350</div>
+                  <div className="text-4xl md:text-5xl font-black text-green-400 mb-2">$8,400</div>
                   <div className="text-green-200 font-semibold">Total Value</div>
                 </div>
                 <div className="text-center p-6 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 backdrop-blur-lg rounded-3xl border border-blue-400/30 hover:scale-105 transition-transform duration-300">
@@ -236,7 +185,7 @@ const WebLanding = () => {
 
               {/* Dynamic CTA Button */}
               <a href="#application" className="inline-flex items-center space-x-4 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white text-2xl font-black py-6 px-12 rounded-full transition-all duration-300 transform hover:scale-110 shadow-2xl hover:shadow-green-500/50 animate-pulse">
-                <span>🎯 Claim My FREE $8,350 Website</span>
+                <span>🎯 Claim My FREE $8,400 Website</span>
                 <ArrowRight className="h-8 w-8" />
               </a>
             </div>
@@ -325,16 +274,18 @@ const WebLanding = () => {
                 }
               ].map((feature, index) => (
                 <div key={index} className="group">
-                  <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 hover:border-purple-200 transform hover:-translate-y-3 hover:scale-105">
+                  <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 hover:border-purple-200 transform hover:-translate-y-3 hover:scale-105 h-80 flex flex-col justify-between">
                     <div className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                       <feature.icon className="h-8 w-8 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-4">
-                      {feature.title}
-                    </h3>
-                    <p className="text-slate-600 leading-relaxed">
-                      {feature.desc}
-                    </p>
+                    <div className="flex-1 flex flex-col justify-center">
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">
+                        {feature.title}
+                      </h3>
+                      <p className="text-slate-600 leading-relaxed">
+                        {feature.desc}
+                      </p>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -402,7 +353,7 @@ const WebLanding = () => {
         </div>
       </section>
 
-      {/* Modern Market Value Comparison Section */}
+      {/* Updated Market Value Comparison Section */}
       <section className="py-24 bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
@@ -441,18 +392,14 @@ const WebLanding = () => {
                   ["Professional Website Design", "$3,000"],
                   ["Custom Logo Design", "$500"],
                   ["Mobile Optimization", "$300"],
-                  ["SEO Setup & Optimization", "$1,200"],
-                  ["Premium Level Security", "$500"],
-                  ["Content Management System", "$800"],
+                  ["SEO & Analytics Setup", "$1,300"],
+                  ["Advanced Security & Threat Protection", "$500"],
+                  ["Content Management", "$800"],
                   ["Blog or News Section", "$350"],
                   ["Privacy Policy & Cookie Consent", "$200"],
-                  ["Firewall/Threat Monitoring Setup", "$100"],
-                  ["Contact or Quote Forms", "$250"],
                   ["Speed Optimization", "$300"],
                   ["Accessibility Compliance", "$400"],
                   ["Backup & Restore Setup", "$150"],
-                  ["SSL Certificate", "$50"],
-                  ["Analytics Integration", "$400"],
                   ["Social Media Integration", "$300"]
                 ].map(([service, price], index) => (
                   <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 hover:bg-white/5 transition-all duration-300 group">
@@ -476,7 +423,7 @@ const WebLanding = () => {
                     TOTAL VALUE
                   </div>
                   <div className="text-center">
-                    <span className="text-4xl font-black text-red-400 bg-red-400/10 px-6 py-3 rounded-full">$8,350+</span>
+                    <span className="text-4xl font-black text-red-400 bg-red-400/10 px-6 py-3 rounded-full">$8,400</span>
                   </div>
                   <div className="text-center">
                     <span className="text-5xl font-black text-green-400 bg-green-400/10 px-8 py-4 rounded-full shadow-2xl animate-pulse">$0</span>
@@ -572,13 +519,13 @@ const WebLanding = () => {
                       <span className="text-white font-bold text-2xl">{item.step}</span>
                     </div>
                     
-                    {/* Content Card - Fixed height and larger */}
-                    <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 h-56 flex flex-col justify-between">
+                    {/* Content Card - Fixed height and larger with smaller font */}
+                    <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 h-64 flex flex-col justify-between">
                       <div>
-                        <div className="text-sm font-semibold text-cyan-300 mb-3 bg-cyan-400/10 px-3 py-1 rounded-full">{item.days}</div>
-                        <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
+                        <div className="text-xs font-semibold text-cyan-300 mb-3 bg-cyan-400/10 px-3 py-1 rounded-full">{item.days}</div>
+                        <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
                       </div>
-                      <p className="text-purple-200 text-base leading-relaxed">{item.desc}</p>
+                      <p className="text-purple-200 text-sm leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -594,7 +541,7 @@ const WebLanding = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                Apply for Your <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">FREE $8,350 Website</span>
+                Apply for Your <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">FREE $8,400 Website</span>
               </h2>
               <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
                 Tell us about your business so our team can understand your needs. Every application 
@@ -616,7 +563,7 @@ const WebLanding = () => {
         </div>
       </section>
 
-      {/* Testimonials - Updated with 6 reviews showing (2 rows) */}
+      {/* Testimonials - Two rows with 6 reviews showing */}
       <section className="py-24 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
@@ -693,7 +640,7 @@ const WebLanding = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-lg border border-green-400/30 rounded-3xl p-8 text-center hover:scale-105 transition-transform duration-300">
-                <div className="text-5xl font-black text-green-400 mb-3">$8,350</div>
+                <div className="text-5xl font-black text-green-400 mb-3">$8,400</div>
                 <div className="text-green-200 font-semibold text-lg">Total Value</div>
               </div>
               
