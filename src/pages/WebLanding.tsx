@@ -136,14 +136,6 @@ const WebLanding = () => {
         <div className="relative container mx-auto px-6 lg:py-24 py-[30px]">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12 py-0">
-              {/* Limited Time Badge */}
-              <div className="inline-flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-full text-xs font-bold mb-6 shadow-lg">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                </span>
-                <span>⚡ LIMITED: Only 50 Spots Available This Month</span>
-              </div>
               
               <h1 className="text-4xl md:text-5xl mb-6 leading-tight font-bold lg:text-6xl">
                 Get Your Professional Website
@@ -157,7 +149,7 @@ const WebLanding = () => {
               </p>
               
               <p className="text-lg mb-8 max-w-2xl mx-auto text-blue-200">
-                Delivered in just 14 days. No hidden fees. No ongoing costs.
+                Delivered in just 14 days.
               </p>
 
               {/* Value Stats */}
