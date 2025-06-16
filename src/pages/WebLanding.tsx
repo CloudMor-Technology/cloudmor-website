@@ -109,17 +109,17 @@ const WebLanding = () => {
         <meta name="keywords" content="free website, professional website design, California business, CloudMor, web design" />
       </Helmet>
 
-      {/* Centered Header for Web Landing Page */}
+      {/* Updated Header - Centered Logo and CTA */}
       <header className="w-full fixed top-0 left-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-100">
-        <div className="container mx-auto px-6 py-3">
-          <div className="flex items-center justify-center max-w-4xl mx-auto">
-            <div className="flex items-center justify-between w-full">
-              {/* Logo */}
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center space-x-8">
+              {/* Larger Centered Logo */}
               <div className="flex items-center">
-                <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-16 w-auto" />
+                <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-20 w-auto" />
               </div>
 
-              {/* CTA Button */}
+              {/* Centered CTA Button */}
               <div className="flex items-center">
                 <a href="#application" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl text-sm">
                   Claim My Free Website
@@ -130,8 +130,8 @@ const WebLanding = () => {
         </div>
       </header>
 
-      {/* Hero Section - Clean and Professional */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden pt-24">
+      {/* Hero Section - Updated slide container size */}
+      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden pt-32">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[length:50px_50px]"></div>
         
         <div className="relative container mx-auto px-6 py-16 lg:py-24">
@@ -184,11 +184,11 @@ const WebLanding = () => {
               </a>
             </div>
 
-            {/* Website Showcase - Updated to remove white background */}
-            <div className="relative max-w-4xl mx-auto">
+            {/* Website Showcase - Larger to show headers */}
+            <div className="relative max-w-5xl mx-auto">
               <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-                <div className="relative h-64 md:h-96 overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
-                  <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full transition-all duration-700 object-cover" />
+                <div className="relative h-80 md:h-[500px] overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
+                  <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full transition-all duration-700 object-cover object-top" />
                   <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm text-white px-4 py-2 rounded-lg">
                     <span className="font-semibold text-sm">{websiteShowcase[currentSlide].name}</span>
                   </div>
