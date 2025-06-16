@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail } from 'lucide-react';
@@ -212,16 +213,20 @@ const WebLanding = () => {
               </a>
             </div>
 
-            {/* Website Showcase */}
+            {/* Website Showcase - Updated to remove white background */}
             <div className="relative max-w-4xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-xl p-6 shadow-2xl border border-white/20 rounded-2xl">
-                <div className="relative h-64 md:h-96 overflow-hidden rounded-xl bg-gradient-to-br from-slate-100 to-slate-200">
-                  <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full object-contain transition-all duration-700" />
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                <div className="relative h-64 md:h-96 overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
+                  <img 
+                    src={websiteShowcase[currentSlide].image} 
+                    alt={websiteShowcase[currentSlide].name} 
+                    className="w-full h-full object-contain transition-all duration-700" 
+                  />
                   <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm text-white px-4 py-2 rounded-lg">
                     <span className="font-semibold text-sm">{websiteShowcase[currentSlide].name}</span>
                   </div>
                 </div>
-                <div className="flex justify-center mt-4 space-x-2">
+                <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-4 space-x-2">
                   {websiteShowcase.map((_, index) => (
                     <div
                       key={index}
