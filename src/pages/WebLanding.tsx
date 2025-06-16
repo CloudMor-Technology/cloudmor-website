@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play } from 'lucide-react';
@@ -7,6 +8,8 @@ import Footer from '@/components/Footer';
 
 const WebLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  
   const websiteShowcase = [{
     name: "Restaurant Website",
     image: "/lovable-uploads/834d5c69-5070-4488-bc7a-7b19eeebae04.png"
@@ -27,11 +30,87 @@ const WebLanding = () => {
     image: "/lovable-uploads/edb9dbfe-335c-4145-a6a2-f0e188e64fbb.png"
   }];
 
+  // Expanded testimonials array with 13 reviews
+  const testimonials = [
+    {
+      quote: "CloudMor transformed our small bakery into a thriving online business. Our sales increased 300% in just 3 months!",
+      author: "Maria Rodriguez",
+      business: "Sweet Dreams Bakery, Los Angeles"
+    },
+    {
+      quote: "I couldn't believe they built our entire website for free. The quality is better than what we paid $5,000 for before.",
+      author: "David Chen",
+      business: "Chen's Auto Repair, San Francisco"
+    },
+    {
+      quote: "The team at CloudMor didn't just build us a website—they gave us a complete business solution.",
+      author: "Sarah Johnson",
+      business: "Johnson Consulting, San Diego"
+    },
+    {
+      quote: "Our restaurant bookings doubled after getting our new website. The mobile design is absolutely perfect!",
+      author: "Antonio Martinez",
+      business: "Casa Bella Restaurant, Sacramento"
+    },
+    {
+      quote: "CloudMor's team understood our vision perfectly. They delivered exactly what we needed for our law firm.",
+      author: "Jennifer Walsh",
+      business: "Walsh & Associates Law, Oakland"
+    },
+    {
+      quote: "The SEO optimization they included helped us rank #1 on Google for our main keywords within 2 months.",
+      author: "Michael Thompson",
+      business: "Thompson Plumbing Services, Fresno"
+    },
+    {
+      quote: "As a startup, getting a professional website for free was a game-changer. We look like a million-dollar company now!",
+      author: "Lisa Chang",
+      business: "InnovateTech Solutions, Palo Alto"
+    },
+    {
+      quote: "The customer support is incredible. They helped us update our content and made changes whenever we needed them.",
+      author: "Robert Garcia",
+      business: "Garcia Construction, San Jose"
+    },
+    {
+      quote: "Our online sales went from zero to $10,000 per month after launching our new website. Absolutely amazing!",
+      author: "Emma Wilson",
+      business: "Wilson Handmade Crafts, Santa Barbara"
+    },
+    {
+      quote: "CloudMor delivered everything they promised and more. The security features give us complete peace of mind.",
+      author: "Dr. James Park",
+      business: "Park Family Dental, Riverside"
+    },
+    {
+      quote: "The design is stunning and loads incredibly fast. Our bounce rate dropped by 60% after the new site launch.",
+      author: "Nicole Adams",
+      business: "Adams Real Estate Group, Long Beach"
+    },
+    {
+      quote: "Getting our veterinary clinic online was seamless. The appointment booking system works perfectly!",
+      author: "Dr. Amanda Foster",
+      business: "Foster Animal Hospital, Modesto"
+    },
+    {
+      quote: "CloudMor's team made the entire process stress-free. From concept to launch, everything was handled professionally.",
+      author: "Carlos Mendoza",
+      business: "Mendoza Landscaping, Bakersfield"
+    }
+  ];
+
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % websiteShowcase.length);
     }, 3000);
     return () => clearInterval(interval);
+  }, []);
+
+  React.useEffect(() => {
+    const testimonialInterval = setInterval(() => {
+      setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
+    }, 4000);
+    return () => clearInterval(testimonialInterval);
   }, []);
 
   return (
@@ -89,7 +168,7 @@ const WebLanding = () => {
                 </p>
               </div>
 
-              {/* Dynamic Stats Grid - Removed 23,435 number */}
+              {/* Dynamic Stats Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
                 <div className="text-center p-6 bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-lg rounded-3xl border border-green-400/30 hover:scale-105 transition-transform duration-300">
                   <div className="text-4xl md:text-5xl font-black text-green-400 mb-2">$6,300</div>
@@ -273,7 +352,7 @@ const WebLanding = () => {
         </div>
       </section>
 
-      {/* Market Value Comparison - New Design */}
+      {/* Market Value Comparison - Updated Design */}
       <section className="py-24 bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
@@ -286,7 +365,7 @@ const WebLanding = () => {
               </p>
             </div>
             
-            {/* New Table Design */}
+            {/* Updated Table Design */}
             <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden mb-12">
               <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
                 <div className="grid grid-cols-3 gap-4 font-bold text-lg">
@@ -300,12 +379,11 @@ const WebLanding = () => {
                 {[
                   ["Professional Design", "$3,000"],
                   ["Custom Logo Design", "$500"],
-                  ["Mobile Optimization", "$800"],
+                  ["Mobile Optimization", "$300"],
                   ["SEO Setup", "$1,200"],
                   ["Security Features", "$500"],
                   ["Content Management", "$800"],
-                  ["Domain & Hosting Setup", "$300"],
-                  ["SSL Certificate", "$200"],
+                  ["SSL Certificate", "$50"],
                   ["Analytics Integration", "$400"],
                   ["Social Media Integration", "$300"]
                 ].map(([service, price], index) => (
@@ -318,56 +396,16 @@ const WebLanding = () => {
                 
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-t-4 border-green-400 grid grid-cols-3 gap-4 p-8">
                   <div className="text-xl font-bold text-slate-900">TOTAL VALUE</div>
-                  <div className="text-center text-3xl font-bold text-red-600">$6,800+</div>
+                  <div className="text-center text-3xl font-bold text-red-600">$6,300+</div>
                   <div className="text-center text-4xl font-bold text-green-600">$0</div>
                 </div>
               </div>
-            </div>
-
-            {/* Additional Value Items */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  icon: Shield,
-                  title: "Premium Security",
-                  value: "$500",
-                  gradient: "from-purple-500 to-pink-500"
-                },
-                {
-                  icon: Zap,
-                  title: "Speed Optimization",
-                  value: "$400",
-                  gradient: "from-yellow-500 to-orange-500"
-                },
-                {
-                  icon: TrendingUp,
-                  title: "SEO Foundation",
-                  value: "$1,200",
-                  gradient: "from-green-500 to-emerald-500"
-                },
-                {
-                  icon: Users,
-                  title: "Ongoing Support",
-                  value: "$800",
-                  gradient: "from-blue-500 to-cyan-500"
-                }
-              ].map((item, index) => (
-                <div key={index} className="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">
-                  <div className={`w-12 h-12 bg-gradient-to-br ${item.gradient} rounded-xl flex items-center justify-center mb-4`}>
-                    <item.icon className="h-6 w-6 text-white" />
-                  </div>
-                  <h3 className="font-bold text-slate-900 mb-2">{item.title}</h3>
-                  <div className="text-sm text-slate-600 mb-2">Market Value:</div>
-                  <div className="text-2xl font-bold text-red-600">{item.value}</div>
-                  <div className="text-lg font-bold text-green-600 mt-1">FREE</div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* New Process Timeline Design */}
+      {/* New Process Timeline Design - Fixed sizes */}
       <section className="py-24 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
@@ -435,10 +473,12 @@ const WebLanding = () => {
                       <span className="text-white font-bold text-xl">{item.step}</span>
                     </div>
                     
-                    {/* Content Card */}
-                    <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-                      <div className="text-sm font-semibold text-cyan-300 mb-2">{item.days}</div>
-                      <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+                    {/* Content Card - Fixed height for consistency */}
+                    <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 h-48 flex flex-col justify-between">
+                      <div>
+                        <div className="text-sm font-semibold text-cyan-300 mb-2">{item.days}</div>
+                        <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+                      </div>
                       <p className="text-purple-200 text-sm leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
@@ -477,7 +517,7 @@ const WebLanding = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials - Updated with rotation */}
       <section className="py-24 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
@@ -487,20 +527,10 @@ const WebLanding = () => {
               </h2>
             </div>
 
+            {/* Rotating testimonials - showing 3 at a time */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              {[{
-                quote: "CloudMor transformed our small bakery into a thriving online business. Our sales increased 300% in just 3 months!",
-                author: "Maria Rodriguez",
-                business: "Sweet Dreams Bakery, Los Angeles"
-              }, {
-                quote: "I couldn't believe they built our entire website for free. The quality is better than what we paid $5,000 for before.",
-                author: "David Chen",
-                business: "Chen's Auto Repair, San Francisco"
-              }, {
-                quote: "The team at CloudMor didn't just build us a website—they gave us a complete business solution.",
-                author: "Sarah Johnson",
-                business: "Johnson Consulting, San Diego"
-              }].map((testimonial, index) => <div key={index} className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+              {testimonials.slice(currentTestimonial, currentTestimonial + 3).map((testimonial, index) => (
+                <div key={index} className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
                   <div className="flex mb-4">
                     {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />)}
                   </div>
@@ -511,7 +541,8 @@ const WebLanding = () => {
                     <div className="font-semibold text-slate-900">{testimonial.author}</div>
                     <div className="text-slate-600 text-sm">{testimonial.business}</div>
                   </footer>
-                </div>)}
+                </div>
+              ))}
             </div>
 
             <div className="text-center">
