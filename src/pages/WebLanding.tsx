@@ -178,7 +178,7 @@ const WebLanding = () => {
 
               {/* Enhanced Primary CTA with Flashing Effect */}
               <button onClick={scrollToForm} className="inline-flex items-center space-x-3 text-white text-lg font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-2xl relative overflow-hidden" style={{
-              background: 'linear-gradient(45deg, #ff6b35, #f7931e, #22c55e, #ff6b35)',
+              background: 'linear-gradient(45deg, #ff6b35, #f7931e, #ff8c00, #ff6b35)',
               backgroundSize: '400% 400%',
               animation: 'gradient-flash 2s ease-in-out infinite, pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
             }}>
@@ -435,7 +435,7 @@ const WebLanding = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                Ready to Get Your <span className="text-blue-600">FREE $6,800 Website?</span>
+                Apply if you are Ready to Get Your <span className="text-blue-600">FREE $6,800 Website?</span>
               </h2>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto">
                 Tell us about your business and we'll create a professional website that helps you succeed online.
