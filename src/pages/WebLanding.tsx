@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, Globe, Monitor, Code, Palette } from 'lucide-react';
+import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, Globe, Monitor, Code, Palette, Rocket } from 'lucide-react';
 import WebApplicationForm from '@/components/WebApplicationForm';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -34,48 +34,50 @@ const WebLanding = () => {
 
       <Navbar />
 
-      {/* Hero Section - Blue Gradient Theme */}
-      <section className="relative bg-gradient-to-br from-blue-900 via-blue-700 to-blue-800 text-white overflow-hidden min-h-screen">
-        {/* Floating Elements */}
+      {/* Hero Section - Modern Blue Design with Rocket */}
+      <section className="relative bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 text-white overflow-hidden min-h-screen">
+        {/* Cloud Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-16 h-16 bg-green-400 rounded-full opacity-20 animate-bounce"></div>
-          <div className="absolute top-32 right-20 w-8 h-8 bg-yellow-400 rounded-full opacity-30 animate-pulse"></div>
-          <div className="absolute bottom-40 left-1/4 w-12 h-12 bg-pink-400 rounded-full opacity-25 animate-bounce delay-1000"></div>
-          <div className="absolute top-1/2 right-10 w-6 h-6 bg-purple-400 rounded-full opacity-20 animate-pulse delay-500"></div>
+          {/* Background clouds */}
+          <div className="absolute top-20 left-10 w-24 h-12 bg-white/10 rounded-full"></div>
+          <div className="absolute top-32 right-20 w-32 h-16 bg-white/15 rounded-full"></div>
+          <div className="absolute bottom-40 left-1/4 w-20 h-10 bg-white/10 rounded-full"></div>
+          <div className="absolute top-1/2 right-10 w-16 h-8 bg-white/10 rounded-full"></div>
+          <div className="absolute bottom-20 right-1/3 w-28 h-14 bg-white/15 rounded-full"></div>
+          
+          {/* Floating plus signs */}
+          <div className="absolute top-24 left-1/3 text-white/20 text-2xl">+</div>
+          <div className="absolute bottom-32 right-1/4 text-white/20 text-2xl">+</div>
+          <div className="absolute top-1/3 right-20 text-white/20 text-xl">+</div>
         </div>
         
         <div className="relative container mx-auto px-6 py-24 lg:py-32">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              {/* Left Content */}
-              <div>
-                {/* Limited Time Badge */}
-                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-full text-sm font-semibold mb-8 animate-pulse">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left Content - Narrower */}
+              <div className="max-w-xl">
+                {/* Top Badge */}
+                <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
                   </span>
-                  <span>LIMITED TIME - Only 50 Spots Available Each Month</span>
+                  <span>WE ARE ON FIRE</span>
                 </div>
                 
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
-                  BEAUTIFUL<br />
-                  WEBSITES FOR THE<br />
-                  <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">BEST IDEAS</span>, YOURS.
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                  DIGITAL DOMINATION<br />
+                  <span className="text-yellow-300">STARTS HERE</span>
                 </h1>
                 
-                <p className="text-xl md:text-2xl mb-6 text-blue-100 max-w-2xl leading-relaxed">
-                  Ready to get a professional website for your business and work with CloudMor's website design team?
-                </p>
-                
-                <p className="text-lg mb-8 text-blue-200">
-                  We'll create your best website in less than 2 weeks and launch.
+                <p className="text-lg md:text-xl mb-8 text-blue-100 leading-relaxed">
+                  Turn the heat up and let's heat your digital sizzle with a FREE personalized marketing Campaign!!
                 </p>
 
                 {/* Community Empowerment Message */}
-                <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-green-400/30 rounded-2xl p-6 mb-12">
-                  <h2 className="text-2xl md:text-3xl font-bold text-green-300 mb-4">Empowering Communities to Thrive</h2>
-                  <p className="text-lg text-blue-100 leading-relaxed">
+                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 mb-8">
+                  <h2 className="text-xl md:text-2xl font-bold text-yellow-300 mb-3">Empowering Communities to Thrive</h2>
+                  <p className="text-blue-100 leading-relaxed">
                     We believe every business deserves success online. That's why we're investing in communities 
                     across California with our exclusive support program.
                   </p>
@@ -84,79 +86,61 @@ const WebLanding = () => {
                 {/* CTA Button */}
                 <a 
                   href="#application" 
-                  className="inline-flex items-center space-x-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white text-xl font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-green-500/25"
+                  className="inline-flex items-center space-x-3 bg-white text-blue-600 hover:bg-blue-50 text-lg font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl"
                 >
-                  <span>JOIN THE REVOLUTION</span>
-                  <ArrowRight className="h-6 w-6" />
+                  <span>GET STARTED</span>
+                  <ArrowRight className="h-5 w-5" />
                 </a>
-
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-green-400 mb-1">23,435</div>
-                    <div className="text-blue-200 text-sm">Websites Built</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-yellow-400 mb-1">$6,300</div>
-                    <div className="text-blue-200 text-sm">Website Value</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-pink-400 mb-1">$0</div>
-                    <div className="text-blue-200 text-sm">What You Pay</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-purple-400 mb-1">2 Weeks</div>
-                    <div className="text-blue-200 text-sm">Delivery Time</div>
-                  </div>
-                </div>
               </div>
 
-              {/* Right Content - Illustration Area */}
-              <div className="relative">
-                <div className="relative z-10">
-                  {/* Main illustration area with floating elements */}
-                  <div className="relative bg-white/10 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-white/20">
-                    <div className="relative h-80 overflow-hidden rounded-2xl bg-gradient-to-br from-blue-100 to-white">
-                      <img 
-                        src={websiteShowcase[currentSlide].image} 
-                        alt={websiteShowcase[currentSlide].name}
-                        className="w-full h-full object-cover transition-opacity duration-500"
-                      />
-                      <div className="absolute bottom-4 left-4 bg-black/75 backdrop-blur-sm text-white px-4 py-2 rounded-lg">
-                        {websiteShowcase[currentSlide].name}
-                      </div>
-                    </div>
-                    <div className="flex justify-center mt-6 space-x-3">
-                      {websiteShowcase.map((_, index) => (
-                        <div 
-                          key={index}
-                          className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                            index === currentSlide ? 'bg-green-400 scale-125' : 'bg-white/40'
-                          }`}
-                        />
-                      ))}
-                    </div>
+              {/* Right Content - Rocket Illustration */}
+              <div className="relative flex justify-center">
+                <div className="relative">
+                  {/* Main Rocket */}
+                  <div className="relative z-10 transform hover:scale-105 transition-transform duration-300">
+                    <svg width="300" height="400" viewBox="0 0 300 400" className="animate-bounce">
+                      {/* Rocket Body */}
+                      <ellipse cx="150" cy="200" rx="50" ry="120" fill="#E53E3E" />
+                      <ellipse cx="150" cy="200" rx="35" ry="100" fill="#FC8181" />
+                      
+                      {/* Rocket Nose */}
+                      <path d="M 115 80 Q 150 50 185 80 L 185 120 L 115 120 Z" fill="#E53E3E" />
+                      
+                      {/* Window */}
+                      <circle cx="150" cy="150" r="25" fill="#4FD1C7" stroke="#319795" strokeWidth="3" />
+                      <circle cx="150" cy="150" r="15" fill="#B2F5EA" />
+                      
+                      {/* Fins */}
+                      <path d="M 100 280 L 80 320 L 115 300 Z" fill="#9B2C2C" />
+                      <path d="M 200 280 L 220 320 L 185 300 Z" fill="#9B2C2C" />
+                      
+                      {/* Flames */}
+                      <ellipse cx="130" cy="340" rx="8" ry="25" fill="#FBD38D" />
+                      <ellipse cx="150" cy="350" rx="10" ry="30" fill="#F6AD55" />
+                      <ellipse cx="170" cy="340" rx="8" ry="25" fill="#FBD38D" />
+                    </svg>
                   </div>
                   
-                  {/* Floating icons */}
-                  <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center animate-bounce">
-                    <Monitor className="h-8 w-8 text-white" />
-                  </div>
-                  <div className="absolute -bottom-6 -left-6 w-14 h-14 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center animate-pulse">
-                    <Code className="h-7 w-7 text-white" />
-                  </div>
-                  <div className="absolute top-1/2 -right-8 w-12 h-12 bg-gradient-to-br from-pink-400 to-red-500 rounded-2xl flex items-center justify-center animate-bounce delay-500">
-                    <Palette className="h-6 w-6 text-white" />
-                  </div>
+                  {/* Background clouds around rocket */}
+                  <div className="absolute top-10 -left-10 w-20 h-10 bg-white/20 rounded-full animate-pulse"></div>
+                  <div className="absolute bottom-20 -right-10 w-24 h-12 bg-white/20 rounded-full animate-pulse delay-1000"></div>
+                  <div className="absolute top-1/2 -left-20 w-16 h-8 bg-white/20 rounded-full animate-pulse delay-500"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Bottom curved section */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1200 120" fill="none" className="w-full h-auto">
+            <path d="M0 120L50 110C100 100 200 80 300 70C400 60 500 60 600 65C700 70 800 80 900 85C1000 90 1100 90 1150 90L1200 90V120H1150C1100 120 1000 120 900 120C800 120 700 120 600 120C500 120 400 120 300 120C200 120 100 120 50 120H0Z" fill="white"/>
+          </svg>
+        </div>
       </section>
 
       {/* Contact Form Section - Modern Design */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white relative">
+      <section className="py-20 bg-white relative">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
@@ -212,7 +196,7 @@ const WebLanding = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
@@ -271,7 +255,7 @@ const WebLanding = () => {
       </section>
 
       {/* Community Support - Modern Two-Column Layout */}
-      <section className="py-24 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
@@ -321,7 +305,7 @@ const WebLanding = () => {
       </section>
 
       {/* Pricing Comparison - Updated Title */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
@@ -369,7 +353,7 @@ const WebLanding = () => {
       </section>
 
       {/* Process Timeline - Modern Step Design */}
-      <section className="py-24 bg-gradient-to-b from-slate-50 to-white">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
@@ -406,7 +390,7 @@ const WebLanding = () => {
       </section>
 
       {/* Application Form Section */}
-      <section id="application" className="py-24 bg-white">
+      <section id="application" className="py-24 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
@@ -434,7 +418,7 @@ const WebLanding = () => {
       </section>
 
       {/* Testimonials - Modern Card Grid */}
-      <section className="py-24 bg-gradient-to-b from-slate-50 to-white">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
