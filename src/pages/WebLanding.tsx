@@ -427,16 +427,27 @@ const WebLanding = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                Apply if you are Ready to Get Your <span className="text-blue-600">FREE $6,800 Website?</span>
+                🚀 Get Your <span className="text-blue-600">FREE $6,800 Website</span> – Apply Now!
               </h2>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                Tell us about your business and we'll create a professional website that helps you succeed online.
+                We review all submissions within 24 hours. If you're selected, we'll assign a Team lead to coordinate and start building your website — completely free.
               </p>
+              <div className="mt-6">
+                <p className="text-xl font-bold text-orange-600">
+                  ⚡ Spots Are Limited – Submit Your Request Today!
+                </p>
+              </div>
             </div>
 
             <WebApplicationForm />
 
             <div className="text-center mt-6">
+              <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-4">
+                <p className="text-sm font-semibold text-orange-800 flex items-center justify-center">
+                  <Clock className="h-4 w-4 mr-2" />
+                  ⚡ We're Giving Away 50 FREE Websites This Month – Secure Yours Before They're All Taken!
+                </p>
+              </div>
               <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
                 <p className="text-sm font-semibold text-orange-800 flex items-center justify-center">
                   <Clock className="h-4 w-4 mr-2" />
