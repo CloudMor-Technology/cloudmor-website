@@ -183,7 +183,7 @@ const WebLanding = () => {
             {/* Attention-Grabbing Badge */}
             <div className="inline-flex items-center bg-gradient-to-r from-green-400 to-green-500 text-white px-6 py-3 rounded-full text-sm font-bold mb-8 animate-bounce shadow-lg">
               <Zap className="w-4 h-4 mr-2" />
-              🔥 BREAKING: Only 27 FREE Websites Left This Month!
+              🔥 BREAKING: Only 40 FREE Websites Left This Month!
             </div>
             
             {/* Eye-Catching Headlines */}
@@ -537,7 +537,7 @@ const WebLanding = () => {
                 🚀 GET YOUR <span className="text-yellow-400 animate-pulse">FREE $6,800 WEBSITE</span>
               </h2>
               <h3 className="text-2xl md:text-3xl font-bold mb-6">
-                Apply Now – Only 27 Spots Left This Month!
+                Apply Now – Only 40 Spots Left This Month!
               </h3>
               <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8">
                 We review all submissions within 24 hours. If you're selected, we'll assign a Team lead to coordinate and start building your website — completely free.
@@ -547,7 +547,7 @@ const WebLanding = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <div className="bg-red-500 text-white px-6 py-3 rounded-full font-bold text-lg animate-pulse flex items-center">
                   <Clock className="h-5 w-5 mr-2" />
-                  ⚡ 27 Spots Remaining
+                  ⚡ 40 Spots Remaining
                 </div>
                 <div className="bg-green-500 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center">
                   <CheckCircle className="h-5 w-5 mr-2" />
