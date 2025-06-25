@@ -307,9 +307,11 @@ const WebLanding = () => {
         </div>
       </section>
 
-      {/* Value Breakdown - Cleaner pricing table */}
-      <section className="py-16 bg-slate-900 text-white">
-        <div className="container mx-auto px-6">
+      {/* Value Breakdown - Modern Card Design */}
+      <section className="py-16 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[length:50px_50px]"></div>
+        
+        <div className="container mx-auto px-6 relative">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -320,49 +322,58 @@ const WebLanding = () => {
               </p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
-              {/* Header */}
-              <div className="bg-blue-600 p-4">
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <h3 className="font-bold text-white">Professional Service</h3>
+            {/* Modern Card Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {[
+                { service: "Professional Website Design", price: "$3,000", icon: "🎨" },
+                { service: "Custom Logo Design", price: "$400", icon: "🎯" },
+                { service: "Content Management", price: "$200", icon: "📝" },
+                { service: "Blog or News Section", price: "$150", icon: "📰" },
+                { service: "Mobile Optimization", price: "$100", icon: "📱" },
+                { service: "Speed Optimization", price: "$100", icon: "⚡" },
+                { service: "Accessibility Compliance", price: "$200", icon: "♿" },
+                { service: "SEO & Analytics Setup", price: "$900", icon: "📊" },
+                { service: "Social Media Integration", price: "$200", icon: "🔗" },
+                { service: "Advanced Security & Threat Protection", price: "$100", icon: "🔒" },
+                { service: "Privacy Policy & Cookie Consent", price: "$200", icon: "📋" },
+                { service: "Backup & Restore Setup", price: "$150", icon: "💾" }
+              ].map((item, index) => (
+                <div key={index} className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 hover:bg-white/15 transition-all duration-300 hover:scale-105">
+                  <div className="text-3xl mb-3">{item.icon}</div>
+                  <h3 className="text-white font-semibold text-sm mb-2 leading-tight">{item.service}</h3>
+                  <div className="text-right">
+                    <span className="text-green-400 font-bold text-lg">{item.price}</span>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-white">Market Value</h3>
-                  </div>
                 </div>
+              ))}
+            </div>
+
+            {/* Total Value Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              {/* Total Value Card */}
+              <div className="bg-gradient-to-r from-green-600 to-green-500 rounded-2xl p-8 text-center shadow-2xl border border-green-400/30">
+                <div className="text-4xl mb-4">💰</div>
+                <h3 className="text-xl font-bold text-white mb-2">TOTAL VALUE</h3>
+                <div className="text-4xl font-bold text-white">$6,800</div>
+                <p className="text-green-100 text-sm mt-2">Professional Website Package</p>
               </div>
 
-              {/* Services */}
-              <div className="divide-y divide-white/10">
-                {[["Professional Website Design", "$3,000"], ["Custom Logo Design", "$400"], ["Content Management", "$200"], ["Blog or News Section", "$150"], ["Mobile Optimization", "$100"], ["Speed Optimization", "$100"], ["Accessibility Compliance", "$200"], ["SEO & Analytics Setup", "$900"], ["Social Media Integration", "$200"], ["Advanced Security & Threat Protection", "$100"], ["Privacy Policy & Cookie Consent", "$200"], ["Backup & Restore Setup", "$150"]].map(([service, price], index) => <div key={index} className="grid grid-cols-2 gap-4 p-4 hover:bg-white/5 transition-colors">
-                    <div className="text-white flex items-center text-sm">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
-                      {service}
-                    </div>
-                    <div className="text-center">
-                      <span className="text-green-400 font-bold text-sm">{price}</span>
-                    </div>
-                  </div>)}
+              {/* Your Investment Card */}
+              <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-8 text-center shadow-2xl border border-blue-400/30">
+                <div className="text-4xl mb-4">🎯</div>
+                <h3 className="text-xl font-bold text-white mb-2">YOUR INVESTMENT</h3>
+                <div className="text-5xl font-bold text-white">FREE</div>
+                <p className="text-blue-100 text-sm mt-2">Limited Time Offer</p>
               </div>
+            </div>
 
-              {/* Total */}
-              <div className="bg-green-600 grid grid-cols-2 gap-4 p-6">
-                <div className="text-lg font-bold text-white">
-                  💰 TOTAL VALUE
-                </div>
-                <div className="text-center">
-                  <span className="text-2xl font-bold text-white">$6,800</span>
-                </div>
-              </div>
-
-              {/* Your Investment */}
-              <div className="bg-blue-600 grid grid-cols-2 gap-4 p-6">
-                <div className="text-lg font-bold text-white">
-                  🎯 YOUR INVESTMENT
-                </div>
-                <div className="text-center">
-                  <span className="text-3xl font-bold text-white">FREE</span>
+            {/* Savings Highlight */}
+            <div className="text-center mt-8">
+              <div className="inline-flex items-center bg-gradient-to-r from-orange-500 to-red-500 rounded-full px-8 py-4 shadow-lg">
+                <span className="text-2xl mr-3">🔥</span>
+                <div className="text-white">
+                  <div className="font-bold text-lg">YOU SAVE $6,800</div>
+                  <div className="text-sm opacity-90">With This Limited Offer</div>
                 </div>
               </div>
             </div>
