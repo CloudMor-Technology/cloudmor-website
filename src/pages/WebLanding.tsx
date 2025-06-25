@@ -187,7 +187,7 @@ const WebLanding = () => {
             </div>
             
             {/* Eye-Catching Headlines */}
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight animate-fade-in">
+            <h1 className="text-5xl font-black text-white mb-6 leading-tight animate-fade-in md:text-6xl">
               GET YOUR
               <span className="block bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent animate-pulse">
                 $6,800 WEBSITE
@@ -233,10 +233,7 @@ const WebLanding = () => {
                 <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </button>
               
-              <button onClick={scrollToForm} className="inline-flex items-center bg-white/20 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-blue-600 text-lg font-bold px-8 py-5 rounded-xl transition-all duration-300 transform hover:scale-105">
-                <Eye className="mr-2 h-5 w-5" />
-                See Live Examples
-              </button>
+              
             </div>
 
             {/* Website Showcase with Enhanced Animation */}
@@ -248,9 +245,7 @@ const WebLanding = () => {
                     <span className="font-bold text-lg">{websiteShowcase[currentSlide].name}</span>
                     <div className="text-green-400 text-sm font-medium">✓ Built in 14 days</div>
                   </div>
-                  <div className="absolute top-6 right-6 bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm animate-pulse">
-                    FREE VALUE: $6,800
-                  </div>
+                  
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-6 space-x-3">
                   {websiteShowcase.map((_, index) => <div key={index} className={`w-3 h-3 rounded-full transition-all duration-500 cursor-pointer ${index === currentSlide ? 'bg-white scale-150 shadow-lg' : 'bg-white/50 hover:bg-white/80'}`} onClick={() => setCurrentSlide(index)} />)}
