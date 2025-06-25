@@ -117,7 +117,7 @@ const WebLanding = () => {
     avatar: "🌱"
   }];
   const socialProof = [{
-    metric: "500+",
+    metric: "3451+",
     label: "Websites Built",
     icon: "🚀"
   }, {
