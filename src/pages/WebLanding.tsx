@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign } from 'lucide-react';
@@ -168,16 +167,16 @@ const WebLanding = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-center">
             <img 
-              src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
+              src="/lovable-uploads/00436355-e891-4698-a6af-6e31111733e9.png" 
               alt="CloudMor Logo" 
-              className="h-16 w-auto animate-fade-in" 
+              className="h-32 w-auto animate-fade-in" 
             />
           </div>
         </div>
       </header>
 
       {/* Enhanced Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 pt-28 pb-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 pt-44 pb-20 overflow-hidden">
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
@@ -654,7 +653,7 @@ const WebLanding = () => {
               <div>
                 <div className="mb-8">
                   <img 
-                    src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
+                    src="/lovable-uploads/00436355-e891-4698-a6af-6e31111733e9.png" 
                     alt="CloudMor Logo" 
                     className="h-20 mb-4" 
                   />
