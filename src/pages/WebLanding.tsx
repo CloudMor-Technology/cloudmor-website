@@ -448,12 +448,7 @@ const WebLanding = () => {
                   ⚡ We're Giving Away 50 FREE Websites This Month – Secure Yours Before They're All Taken!
                 </p>
               </div>
-              <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-                <p className="text-sm font-semibold text-orange-800 flex items-center justify-center">
-                  <Clock className="h-4 w-4 mr-2" />
-                  ⚡ Only 50 websites available this month - Apply now before spots fill up!
-                </p>
-              </div>
+              
             </div>
           </div>
         </div>
