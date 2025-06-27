@@ -20,8 +20,8 @@ const RequestsForm = () => {
                 className="clickup-embed clickup-dynamic-height" 
                 src="https://forms.clickup.com/90131765044/f/2ky4b5tm-553/327M1C3WST6X3R4VFO" 
                 width="100%" 
-                height="100%" 
-                style={{ background: 'transparent', border: '1px solid #ccc', minHeight: '600px' }}
+                height="1200px" 
+                style={{ background: 'transparent', border: '1px solid #ccc' }}
                 title="ClickUp Requests Form"
               />
             </div>
