@@ -16,22 +16,15 @@ const RequestsForm = () => {
             </h1>
             
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <iframe 
-                className="clickup-embed clickup-dynamic-height" 
-                src="https://forms.clickup.com/90131765044/f/2ky4b5tm-553/327M1C3WST6X3R4VFO" 
-                width="100%" 
-                height="1200px" 
-                style={{ background: 'transparent', border: '1px solid #ccc' }}
-                title="ClickUp Requests Form"
-              />
+              <div className="cognito-form-container">
+                <script src="https://www.cognitoforms.com/f/seamless.js" data-key="l70xnNH5hUGhN-ww4M78Xg" data-form="4"></script>
+              </div>
             </div>
           </div>
         </div>
       </main>
 
       <Footer />
-      
-      <script async src="https://app-cdn.clickup.com/assets/js/forms-embed/v1.js"></script>
     </div>
   );
 };
