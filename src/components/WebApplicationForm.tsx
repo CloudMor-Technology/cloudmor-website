@@ -127,6 +127,7 @@ const WebApplicationForm = () => {
     setIsSubmitting(true);
     
     try {
+      // First, save to Supabase as before
       const submissionData = {
         first_name: formData.fullName.split(' ')[0] || '',
         last_name: formData.fullName.split(' ').slice(1).join(' ') || '',
@@ -151,17 +152,39 @@ Additional Info: ${formData.additionalInfo}
         industry: formData.businessIndustry || null,
       };
 
-      const { error } = await supabase
+      const { error: supabaseError } = await supabase
         .from('contact_submissions')
         .insert([submissionData]);
 
-      if (error) {
-        console.error('Error submitting form:', error);
+      if (supabaseError) {
+        console.error('Error submitting to Supabase:', supabaseError);
         toast.error("Failed to submit your application. Please try again.");
         return;
       }
-      
-      toast.success("Thank you! Your application has been submitted successfully. We'll review it within 24 hours.");
+
+      console.log('Form submitted to Supabase successfully');
+
+      // Then, create Jira ticket
+      try {
+        console.log('Creating Jira ticket...');
+        
+        const jiraResponse = await supabase.functions.invoke('create-jira-ticket', {
+          body: { formData }
+        });
+
+        if (jiraResponse.error) {
+          console.error('Jira integration error:', jiraResponse.error);
+          // Still show success for Supabase submission, but mention Jira issue
+          toast.success("Application submitted successfully! (Note: Jira ticket creation had an issue - our team will be notified)");
+        } else {
+          console.log('Jira ticket created:', jiraResponse.data);
+          toast.success(`Application submitted successfully! Jira ticket ${jiraResponse.data.ticketKey} has been created for your request.`);
+        }
+      } catch (jiraError) {
+        console.error('Failed to create Jira ticket:', jiraError);
+        // Still show success for Supabase submission
+        toast.success("Application submitted successfully! Our team will be notified to create your project ticket.");
+      }
       
       // Reset form
       setFormData({
