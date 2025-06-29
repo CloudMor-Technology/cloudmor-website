@@ -1,1201 +1,322 @@
+
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { useToast } from '@/hooks/use-toast';
+import { Loader2, Send, CheckCircle } from 'lucide-react';
+
+const formSchema = z.object({
+  businessName: z.string().min(1, 'Business name is required'),
+  contactName: z.string().min(1, 'Contact name is required'),
+  email: z.string().email('Please enter a valid email address'),
+  phone: z.string().min(10, 'Please enter a valid phone number'),
+  businessType: z.string().min(1, 'Please select a business type'),
+  websiteGoals: z.string().min(10, 'Please describe your website goals'),
+  currentWebsite: z.string().optional(),
+  timeline: z.string().min(1, 'Please select a timeline'),
+  budget: z.string().min(1, 'Please select a budget range'),
+  additionalInfo: z.string().optional(),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 const WebApplicationForm = () => {
-  const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  const steps = [
-    { title: "Personal Info", icon: "👤" },
-    { title: "Business Details", icon: "🏢" },
-    { title: "Design Preferences", icon: "🎨" },
-    { title: "Website Goals", icon: "🎯" },
-    { title: "Additional Info", icon: "📋" },
-    { title: "Optional IT Services", icon: "🛠️" },
-    { title: "Review & Submit", icon: "✅" }
-  ];
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { toast } = useToast();
 
-  const [formData, setFormData] = useState({
-    // Personal Information
-    fullName: '',
-    email: '',
-    phone: '',
-    bestTimeToContact: '',
-    
-    // Business Information
-    businessName: '',
-    businessIndustry: '',
-    businessDescription: '',
-    productsServices: '',
-    targetAudience: '',
-    
-    // Domain Information
-    hasDomain: '',
-    domainName: '',
-    hostingProvider: '',
-    otherHostingProvider: '',
-    domainAccess: '',
-    
-    // Design Preferences
-    colorPreferences: [],
-    specificColors: '',
-    hasLogo: '',
-    canProvideLogo: '',
-    logoStyle: '',
-    
-    // Website Features
-    websitePages: [],
-    specialFeatures: [],
-    existingContent: '',
-    
-    // Current Online Presence
-    hasWebsite: '',
-    currentWebsite: '',
-    socialMediaAccounts: [],
-    
-    // Project Goals
-    mainGoals: [],
-    biggestChallenge: '',
-    
-    // How did you hear about us
-    hearAboutUs: '',
-    referralName: '',
-    
-    // Additional Information
-    additionalInfo: '',
-    previousExperience: '',
-    competitorWebsites: '',
-    
-    // Updated IT Services fields
-    itServices: [],
-    isNewBusiness: '',
-    employeeCount: '',
-    hasDomainName: '',
-    currentDomainName: '',
-    hasBusinessPhone: '',
-    businessEmailAccounts: '',
-    wantsTechFollowUp: '',
-    
-    // Agreement
-    understandsOffer: false,
-    agreesToProvideContent: false,
-    preferredContact: ''
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      businessName: '',
+      contactName: '',
+      email: '',
+      phone: '',
+      businessType: '',
+      websiteGoals: '',
+      currentWebsite: '',
+      timeline: '',
+      budget: '',
+      additionalInfo: '',
+    },
   });
 
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    
-    if (type === 'checkbox') {
-      if (name.includes('[]')) {
-        const fieldName = name.replace('[]', '');
-        setFormData(prev => ({
-          ...prev,
-          [fieldName]: checked 
-            ? [...prev[fieldName], value]
-            : prev[fieldName].filter(item => item !== value)
-        }));
-      } else {
-        setFormData(prev => ({
-          ...prev,
-          [name]: checked
-        }));
-      }
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    }
-  };
-
-  const nextStep = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-
-  const prevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!formData.understandsOffer || !formData.agreesToProvideContent) {
-      toast.error("Please agree to the terms before submitting.");
-      return;
-    }
-    
+  const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     
     try {
-      // First, save to Supabase as before
-      const submissionData = {
-        first_name: formData.fullName.split(' ')[0] || '',
-        last_name: formData.fullName.split(' ').slice(1).join(' ') || '',
-        email: formData.email,
-        phone: formData.phone || null,
-        company: formData.businessName || null,
-        subject: "FREE $6,300 Website Application",
-        message: `
-Business Industry: ${formData.businessIndustry}
-Business Description: ${formData.businessDescription}
-Products/Services: ${formData.productsServices}
-Target Audience: ${formData.targetAudience}
-Color Preferences: ${formData.colorPreferences.join(', ')}
-Main Goals: ${formData.mainGoals.join(', ')}
-IT Services Needed: ${formData.itServices.join(', ')}
-Employee Count: ${formData.employeeCount}
-Is New Business: ${formData.isNewBusiness}
-Has Domain: ${formData.hasDomainName}
-Current Domain: ${formData.currentDomainName}
-Has Business Phone: ${formData.hasBusinessPhone}
-Business Email Accounts: ${formData.businessEmailAccounts}
-Wants Tech Follow Up: ${formData.wantsTechFollowUp}
-Additional Info: ${formData.additionalInfo}
-        `,
-        form_type: 'web_application',
-        request_consultation: true,
-        subscribe_newsletter: false,
-        preferred_date: null,
-        employee_count: formData.employeeCount || null,
-        industry: formData.businessIndustry || null,
-      };
-
-      const { error: supabaseError } = await supabase
-        .from('contact_submissions')
-        .insert([submissionData]);
-
-      if (supabaseError) {
-        console.error('Error submitting to Supabase:', supabaseError);
-        toast.error("Failed to submit your application. Please try again.");
-        return;
-      }
-
-      console.log('Form submitted to Supabase successfully');
-
-      // Then, create Jira ticket
-      try {
-        console.log('Creating Jira ticket...');
-        
-        const jiraResponse = await supabase.functions.invoke('create-jira-ticket', {
-          body: { formData }
-        });
-
-        if (jiraResponse.error) {
-          console.error('Jira integration error:', jiraResponse.error);
-          // Still show success for Supabase submission, but mention Jira issue
-          toast.success("Application submitted successfully! (Note: Jira ticket creation had an issue - our team will be notified)");
-        } else {
-          console.log('Jira ticket created:', jiraResponse.data);
-          toast.success(`Application submitted successfully! Jira ticket ${jiraResponse.data.ticketKey} has been created for your request.`);
-        }
-      } catch (jiraError) {
-        console.error('Failed to create Jira ticket:', jiraError);
-        // Still show success for Supabase submission
-        toast.success("Application submitted successfully! Our team will be notified to create your project ticket.");
-      }
-      
-      // Reset form
-      setFormData({
-        fullName: '', email: '', phone: '', bestTimeToContact: '',
-        businessName: '', businessIndustry: '', businessDescription: '',
-        productsServices: '', targetAudience: '', hasDomain: '',
-        domainName: '', hostingProvider: '', otherHostingProvider: '',
-        domainAccess: '', colorPreferences: [], specificColors: '',
-        hasLogo: '', canProvideLogo: '', logoStyle: '',
-        websitePages: [], specialFeatures: [], existingContent: '',
-        hasWebsite: '', currentWebsite: '', socialMediaAccounts: [],
-        mainGoals: [], biggestChallenge: '', hearAboutUs: '',
-        referralName: '', additionalInfo: '', previousExperience: '',
-        competitorWebsites: '', itServices: [], isNewBusiness: '',
-        employeeCount: '', hasDomainName: '', currentDomainName: '',
-        hasBusinessPhone: '', businessEmailAccounts: '', wantsTechFollowUp: '',
-        understandsOffer: false, agreesToProvideContent: false, preferredContact: ''
+      const response = await fetch('/api/submit-web-design-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
-      setCurrentStep(0);
-      
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      setIsSubmitted(true);
+      toast({
+        title: "Application Submitted!",
+        description: "Thank you for your interest. We'll contact you within 24 hours.",
+      });
+
+      form.reset();
     } catch (error) {
-      console.error('Failed to submit form:', error);
-      toast.error("Failed to submit your application. Please try again.");
+      console.error('Form submission error:', error);
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your application. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 0: // Personal Information
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Personal Information</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="fullName" className="text-lg font-semibold">Your Full Name *</Label>
-                <Input
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Enter your full name"
-                  className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-                />
-              </div>
-              <div>
-                <Label htmlFor="email" className="text-lg font-semibold">Email Address *</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="your.email@example.com"
-                  className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="phone" className="text-lg font-semibold">Phone Number *</Label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="(123) 456-7890"
-                  className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-                />
-              </div>
-              <div>
-                <Label htmlFor="bestTimeToContact" className="text-lg font-semibold">Best Time to Contact You *</Label>
-                <select
-                  id="bestTimeToContact"
-                  name="bestTimeToContact"
-                  value={formData.bestTimeToContact}
-                  onChange={handleInputChange}
-                  required
-                  className="mt-2 w-full p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-                >
-                  <option value="">Select time</option>
-                  <option value="morning">Morning (9 AM - 12 PM)</option>
-                  <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
-                  <option value="evening">Evening (5 PM - 8 PM)</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 1: // Business Information
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Business Information</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="businessName" className="text-lg font-semibold">Business Name *</Label>
-                <Input
-                  id="businessName"
-                  name="businessName"
-                  value={formData.businessName}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Your business name"
-                  className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-                />
-              </div>
-              <div>
-                <Label htmlFor="businessIndustry" className="text-lg font-semibold">Business Industry/Category *</Label>
-                <select
-                  id="businessIndustry"
-                  name="businessIndustry"
-                  value={formData.businessIndustry}
-                  onChange={handleInputChange}
-                  required
-                  className="mt-2 w-full p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-                >
-                  <option value="">Select industry</option>
-                  <option value="Restaurant/Food Service">Restaurant/Food Service</option>
-                  <option value="Healthcare/Medical">Healthcare/Medical</option>
-                  <option value="Legal Services">Legal Services</option>
-                  <option value="Real Estate">Real Estate</option>
-                  <option value="Retail/E-commerce">Retail/E-commerce</option>
-                  <option value="Construction/Contracting">Construction/Contracting</option>
-                  <option value="Beauty/Salon">Beauty/Salon</option>
-                  <option value="Automotive">Automotive</option>
-                  <option value="Technology/IT">Technology/IT</option>
-                  <option value="Consulting">Consulting</option>
-                  <option value="Education/Training">Education/Training</option>
-                  <option value="Non-Profit">Non-Profit</option>
-                  <option value="Photography/Creative">Photography/Creative</option>
-                  <option value="Fitness/Wellness">Fitness/Wellness</option>
-                  <option value="Professional Services">Professional Services</option>
-                  <option value="Other">Other (Please Specify)</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="businessDescription" className="text-lg font-semibold">Tell Us About Your Business *</Label>
-              <Textarea
-                id="businessDescription"
-                name="businessDescription"
-                value={formData.businessDescription}
-                onChange={handleInputChange}
-                required
-                rows={4}
-                placeholder="Please write about your business - what you do, how long you've been in business, your location, and what makes you different from competitors."
-                className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="productsServices" className="text-lg font-semibold">What Products or Services Do You Offer? *</Label>
-              <Textarea
-                id="productsServices"
-                name="productsServices"
-                value={formData.productsServices}
-                onChange={handleInputChange}
-                required
-                rows={4}
-                placeholder="Please list and describe all the products or services you provide to your customers."
-                className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="targetAudience" className="text-lg font-semibold">Who Is Your Target Audience? *</Label>
-              <Textarea
-                id="targetAudience"
-                name="targetAudience"
-                value={formData.targetAudience}
-                onChange={handleInputChange}
-                required
-                rows={3}
-                placeholder="Describe your ideal customers (age, location, interests, needs, etc.)"
-                className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-              />
-            </div>
-          </div>
-        );
-
-      case 2: // Design Preferences
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Design Preferences</h3>
-            
-            <div>
-              <Label className="text-lg font-semibold mb-4 block">What colors would you like for your website design? *</Label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[
-                  { value: 'Blue (Professional, Trustworthy)', color: 'bg-blue-500' },
-                  { value: 'Green (Natural, Growth, Health)', color: 'bg-green-500' },
-                  { value: 'Red (Bold, Energetic, Urgent)', color: 'bg-red-500' },
-                  { value: 'Black (Elegant, Sophisticated)', color: 'bg-black' },
-                  { value: 'White/Gray (Clean, Modern, Minimal)', color: 'bg-gray-400' },
-                  { value: 'Orange (Creative, Friendly, Energetic)', color: 'bg-orange-500' },
-                  { value: 'Purple (Luxury, Creative, Unique)', color: 'bg-purple-500' },
-                  { value: 'Yellow (Happy, Optimistic)', color: 'bg-yellow-500' },
-                  { value: 'Pink (Feminine, Caring, Creative)', color: 'bg-pink-500' },
-                  { value: 'Brown (Reliable, Natural, Earthy)', color: 'bg-amber-700' },
-                  { value: "I'm not sure - please recommend colors", color: 'bg-gradient-to-r from-blue-500 to-purple-500' }
-                ].map((color) => (
-                  <label key={color.value} className="flex items-center space-x-3 p-3 border-2 border-gray-200 rounded-xl hover:border-blue-300 cursor-pointer transition-colors">
-                    <input
-                      type="checkbox"
-                      name="colorPreferences[]"
-                      value={color.value}
-                      checked={formData.colorPreferences.includes(color.value)}
-                      onChange={handleInputChange}
-                      className="w-5 h-5 rounded"
-                    />
-                    <div className={`w-6 h-6 rounded-full ${color.color}`}></div>
-                    <span className="text-sm font-medium">{color.value}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="specificColors" className="text-lg font-semibold">Do you have any specific color preferences or brand colors?</Label>
-              <Input
-                id="specificColors"
-                name="specificColors"
-                value={formData.specificColors}
-                onChange={handleInputChange}
-                placeholder="If you have specific colors (like hex codes #000000) or color combinations, please list them here."
-                className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-              />
-            </div>
-          </div>
-        );
-
-      case 3: // Website Goals
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Website Goals</h3>
-            
-            <div>
-              <Label className="text-lg font-semibold mb-4 block">What is your main goal for this website? *</Label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[
-                  { value: 'Generate more leads/customers', icon: '🎯' },
-                  { value: 'Establish professional online presence', icon: '🏢' },
-                  { value: 'Sell products online', icon: '🛒' },
-                  { value: 'Provide information to customers', icon: 'ℹ️' },
-                  { value: 'Build brand awareness', icon: '📢' },
-                  { value: 'Replace outdated website', icon: '🔄' },
-                  { value: 'Compete with competitors online', icon: '⚡' },
-                  { value: 'Other (Please Specify)', icon: '📝' }
-                ].map((goal) => (
-                  <label key={goal.value} className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-xl hover:border-blue-300 cursor-pointer transition-colors">
-                    <input
-                      type="checkbox"
-                      name="mainGoals[]"
-                      value={goal.value}
-                      checked={formData.mainGoals.includes(goal.value)}
-                      onChange={handleInputChange}
-                      className="w-5 h-5 rounded"
-                    />
-                    <span className="text-xl">{goal.icon}</span>
-                    <span className="text-sm font-medium">{goal.value}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="biggestChallenge" className="text-lg font-semibold">What is your biggest challenge with your current online presence?</Label>
-              <Textarea
-                id="biggestChallenge"
-                name="biggestChallenge"
-                value={formData.biggestChallenge}
-                onChange={handleInputChange}
-                rows={4}
-                placeholder="Please explain any problems with your current website, lack of online presence, or digital marketing challenges you're facing."
-                className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="hearAboutUs" className="text-lg font-semibold">Where did you first learn about CloudMor? *</Label>
-              <select
-                id="hearAboutUs"
-                name="hearAboutUs"
-                value={formData.hearAboutUs}
-                onChange={handleInputChange}
-                required
-                className="mt-2 w-full p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-              >
-                <option value="">Select source</option>
-                <option value="Facebook">Facebook</option>
-                <option value="Instagram">Instagram</option>
-                <option value="Google Search">Google Search</option>
-                <option value="Referral from friend/family">Referral from friend/family</option>
-                <option value="Referral from another business">Referral from another business</option>
-                <option value="LinkedIn">LinkedIn</option>
-                <option value="YouTube">YouTube</option>
-                <option value="Advertisement">Advertisement</option>
-                <option value="Local directory/listing">Local directory/listing</option>
-                <option value="Other">Other (Please Specify)</option>
-              </select>
-            </div>
-          </div>
-        );
-
-      case 4: // Additional Information
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Additional Information</h3>
-            
-            <div>
-              <Label htmlFor="additionalInfo" className="text-lg font-semibold">Is there anything specific you want us to know about your business or website needs?</Label>
-              <Textarea
-                id="additionalInfo"
-                name="additionalInfo"
-                value={formData.additionalInfo}
-                onChange={handleInputChange}
-                rows={4}
-                placeholder="Please share any specific requirements, special features you need, concerns you have, or anything else you want us to know about your business or website project."
-                className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="previousExperience" className="text-lg font-semibold">Have you worked with web designers/developers before?</Label>
-              <select
-                id="previousExperience"
-                name="previousExperience"
-                value={formData.previousExperience}
-                onChange={handleInputChange}
-                className="mt-2 w-full p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-              >
-                <option value="">Select experience</option>
-                <option value="Yes, good experience">Yes, good experience</option>
-                <option value="Yes, bad experience">Yes, bad experience</option>
-                <option value="No, this is my first time">No, this is my first time</option>
-              </select>
-            </div>
-
-            <div>
-              <Label htmlFor="competitorWebsites" className="text-lg font-semibold">Do you have any competitor websites you like or want to reference?</Label>
-              <Textarea
-                id="competitorWebsites"
-                name="competitorWebsites"
-                value={formData.competitorWebsites}
-                onChange={handleInputChange}
-                rows={3}
-                placeholder="Share any website URLs that you like the design or functionality of."
-                className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="referralName" className="text-lg font-semibold">If referred by someone, who can we thank?</Label>
-              <Input
-                id="referralName"
-                name="referralName"
-                value={formData.referralName}
-                onChange={handleInputChange}
-                placeholder="Optional - help us thank the person who referred you!"
-                className="mt-2 p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-              />
-            </div>
-          </div>
-        );
-
-      case 5: // Optional IT Services & Support
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center flex items-center justify-center">
-              <span className="text-3xl mr-3">🛠️</span>
-              Optional IT Services & Support
-            </h3>
-            <p className="text-gray-600 text-center mb-8">
-              Help us understand your current setup and explore additional services to support your business growth.
-            </p>
-            
-            <div className="space-y-8">
-              {/* Business Information */}
-              <div className="border-2 border-gray-200 rounded-xl p-6">
-                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                  <span className="text-2xl mr-3">🏢</span>
-                  Business Information
-                </h4>
-                <div className="space-y-4">
-                  <div>
-                    <Label className="text-lg font-semibold mb-3 block">1. Are you a new business?</Label>
-                    <div className="flex flex-col space-y-2">
-                      <label className="flex items-center space-x-3">
-                        <input
-                          type="radio"
-                          name="isNewBusiness"
-                          value="Yes, we're just getting started"
-                          checked={formData.isNewBusiness === "Yes, we're just getting started"}
-                          onChange={handleInputChange}
-                          className="w-5 h-5"
-                        />
-                        <span>Yes, we're just getting started</span>
-                      </label>
-                      <label className="flex items-center space-x-3">
-                        <input
-                          type="radio"
-                          name="isNewBusiness"
-                          value="No, we're already operating"
-                          checked={formData.isNewBusiness === "No, we're already operating"}
-                          onChange={handleInputChange}
-                          className="w-5 h-5"
-                        />
-                        <span>No, we're already operating</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="employeeCount" className="text-lg font-semibold">2. How many employees do you currently have?</Label>
-                    <select
-                      id="employeeCount"
-                      name="employeeCount"
-                      value={formData.employeeCount}
-                      onChange={handleInputChange}
-                      className="mt-2 w-full p-3 border-2 border-gray-200 focus:border-blue-500 rounded-lg"
-                    >
-                      <option value="">Select employee count</option>
-                      <option value="1-5">1-5 employees</option>
-                      <option value="6-10">6-10 employees</option>
-                      <option value="11-25">11-25 employees</option>
-                      <option value="26-50">26-50 employees</option>
-                      <option value="51-100">51-100 employees</option>
-                      <option value="100+">100+ employees</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <Label className="text-lg font-semibold mb-3 block">3. Do you already have a domain name?</Label>
-                    <div className="flex space-x-6 mb-3">
-                      <label className="flex items-center space-x-3">
-                        <input
-                          type="radio"
-                          name="hasDomainName"
-                          value="Yes"
-                          checked={formData.hasDomainName === "Yes"}
-                          onChange={handleInputChange}
-                          className="w-5 h-5"
-                        />
-                        <span>Yes</span>
-                      </label>
-                      <label className="flex items-center space-x-3">
-                        <input
-                          type="radio"
-                          name="hasDomainName"
-                          value="No"
-                          checked={formData.hasDomainName === "No"}
-                          onChange={handleInputChange}
-                          className="w-5 h-5"
-                        />
-                        <span>No</span>
-                      </label>
-                    </div>
-                    {formData.hasDomainName === "Yes" && (
-                      <div>
-                        <Label htmlFor="currentDomainName" className="text-base font-medium">If yes, please enter it:</Label>
-                        <Input
-                          id="currentDomainName"
-                          name="currentDomainName"
-                          value={formData.currentDomainName}
-                          onChange={handleInputChange}
-                          placeholder="www.yourwebsite.com"
-                          className="mt-2 p-3 border-2 border-gray-200 focus:border-blue-500 rounded-lg"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  <div>
-                    <Label className="text-lg font-semibold mb-3 block">4. Do you have a business phone number or phone system?</Label>
-                    <div className="flex space-x-6">
-                      <label className="flex items-center space-x-3">
-                        <input
-                          type="radio"
-                          name="hasBusinessPhone"
-                          value="Yes"
-                          checked={formData.hasBusinessPhone === "Yes"}
-                          onChange={handleInputChange}
-                          className="w-5 h-5"
-                        />
-                        <span>Yes</span>
-                      </label>
-                      <label className="flex items-center space-x-3">
-                        <input
-                          type="radio"
-                          name="hasBusinessPhone"
-                          value="No"
-                          checked={formData.hasBusinessPhone === "No"}
-                          onChange={handleInputChange}
-                          className="w-5 h-5"
-                        />
-                        <span>No</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="businessEmailAccounts" className="text-lg font-semibold">5. How many business email accounts do you currently use or need?</Label>
-                    <Input
-                      id="businessEmailAccounts"
-                      name="businessEmailAccounts"
-                      value={formData.businessEmailAccounts}
-                      onChange={handleInputChange}
-                      placeholder="e.g., 3 accounts"
-                      className="mt-2 p-3 border-2 border-gray-200 focus:border-blue-500 rounded-lg"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* IT Services */}
-              <div className="border-2 border-gray-200 rounded-xl p-6">
-                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                  <span className="text-2xl mr-3">💼</span>
-                  Which IT Services Would You Like Help With?
-                </h4>
-                <p className="text-gray-600 mb-4">(Check all that apply or leave blank if not needed)</p>
-
-                {/* Domain & Website */}
-                <div className="mb-6">
-                  <h5 className="font-semibold mb-3 flex items-center">
-                    <span className="text-xl mr-2">🌐</span>
-                    Domain & Website
-                  </h5>
-                  <div className="grid grid-cols-1 gap-2 ml-6">
-                    {[
-                      'Domain registration and DNS setup',
-                      'Website design and development',
-                      'Custom email setup using domain (e.g., info@yourcompany.com)'
-                    ].map((service) => (
-                      <label key={service} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="itServices[]"
-                          value={service}
-                          checked={formData.itServices.includes(service)}
-                          onChange={handleInputChange}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Business Communication */}
-                <div className="mb-6">
-                  <h5 className="font-semibold mb-3 flex items-center">
-                    <span className="text-xl mr-2">☎️</span>
-                    Business Communication
-                  </h5>
-                  <div className="grid grid-cols-1 gap-2 ml-6">
-                    {[
-                      'Set up a new business phone number or VoIP system',
-                      'Call routing and voicemail setup',
-                      'Remote or multi-location call system'
-                    ].map((service) => (
-                      <label key={service} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="itServices[]"
-                          value={service}
-                          checked={formData.itServices.includes(service)}
-                          onChange={handleInputChange}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Email & Productivity Tools */}
-                <div className="mb-6">
-                  <h5 className="font-semibold mb-3 flex items-center">
-                    <span className="text-xl mr-2">📧</span>
-                    Email & Productivity Tools
-                  </h5>
-                  <div className="grid grid-cols-1 gap-2 ml-6">
-                    {[
-                      'Google Workspace or Microsoft 365 setup',
-                      'Team calendars, file sharing, and collaboration tools',
-                      'Email security and user access management'
-                    ].map((service) => (
-                      <label key={service} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="itServices[]"
-                          value={service}
-                          checked={formData.itServices.includes(service)}
-                          onChange={handleInputChange}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* CRM & Business Software */}
-                <div className="mb-6">
-                  <h5 className="font-semibold mb-3 flex items-center">
-                    <span className="text-xl mr-2">📊</span>
-                    CRM & Business Software
-                  </h5>
-                  <div className="grid grid-cols-1 gap-2 ml-6">
-                    {[
-                      'CRM system setup (HubSpot, Zoho, Salesforce, etc.)',
-                      'Lead tracking and automation tools',
-                      'CRM and website integration'
-                    ].map((service) => (
-                      <label key={service} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="itServices[]"
-                          value={service}
-                          checked={formData.itServices.includes(service)}
-                          onChange={handleInputChange}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* IT Infrastructure & Office Setup */}
-                <div className="mb-6">
-                  <h5 className="font-semibold mb-3 flex items-center">
-                    <span className="text-xl mr-2">🧑‍💻</span>
-                    IT Infrastructure & Office Setup
-                  </h5>
-                  <div className="grid grid-cols-1 gap-2 ml-6">
-                    {[
-                      'Network setup (Wi-Fi, LAN, firewall, cabling)',
-                      'Computer/workstation configuration',
-                      'Printer and shared device setup',
-                      'VPN and remote access setup'
-                    ].map((service) => (
-                      <label key={service} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="itServices[]"
-                          value={service}
-                          checked={formData.itServices.includes(service)}
-                          onChange={handleInputChange}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Cybersecurity & Data Protection */}
-                <div className="mb-6">
-                  <h5 className="font-semibold mb-3 flex items-center">
-                    <span className="text-xl mr-2">🔐</span>
-                    Cybersecurity & Data Protection
-                  </h5>
-                  <div className="grid grid-cols-1 gap-2 ml-6">
-                    {[
-                      'Antivirus and endpoint protection',
-                      'Data backup and recovery solutions',
-                      'Firewall and network security',
-                      'Cybersecurity training for staff'
-                    ].map((service) => (
-                      <label key={service} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="itServices[]"
-                          value={service}
-                          checked={formData.itServices.includes(service)}
-                          onChange={handleInputChange}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Cloud & Hosting Services */}
-                <div className="mb-6">
-                  <h5 className="font-semibold mb-3 flex items-center">
-                    <span className="text-xl mr-2">☁️</span>
-                    Cloud & Hosting Services
-                  </h5>
-                  <div className="grid grid-cols-1 gap-2 ml-6">
-                    {[
-                      'Cloud file storage (Google Drive, OneDrive, etc.)',
-                      'Cloud server setup or migration',
-                      'Internal app or website hosting'
-                    ].map((service) => (
-                      <label key={service} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="itServices[]"
-                          value={service}
-                          checked={formData.itServices.includes(service)}
-                          onChange={handleInputChange}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* IT Support & Maintenance */}
-                <div className="mb-6">
-                  <h5 className="font-semibold mb-3 flex items-center">
-                    <span className="text-xl mr-2">🛠️</span>
-                    IT Support & Maintenance
-                  </h5>
-                  <div className="grid grid-cols-1 gap-2 ml-6">
-                    {[
-                      'Monthly tech support plan',
-                      'Remote or onsite IT support',
-                      'System monitoring and updates'
-                    ].map((service) => (
-                      <label key={service} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="itServices[]"
-                          value={service}
-                          checked={formData.itServices.includes(service)}
-                          onChange={handleInputChange}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Business Tools */}
-                <div className="mb-6">
-                  <h5 className="font-semibold mb-3 flex items-center">
-                    <span className="text-xl mr-2">💳</span>
-                    Business Tools
-                  </h5>
-                  <div className="grid grid-cols-1 gap-2 ml-6">
-                    {[
-                      'Payment processing (Stripe, PayPal, Square)',
-                      'POS system setup',
-                      'Online booking/scheduling tool'
-                    ].map((service) => (
-                      <label key={service} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="itServices[]"
-                          value={service}
-                          checked={formData.itServices.includes(service)}
-                          onChange={handleInputChange}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tech Consulting & Strategy */}
-                <div className="mb-6">
-                  <h5 className="font-semibold mb-3 flex items-center">
-                    <span className="text-xl mr-2">🧠</span>
-                    Tech Consulting & Strategy
-                  </h5>
-                  <div className="grid grid-cols-1 gap-2 ml-6">
-                    {[
-                      'Free IT assessment for growth planning',
-                      'Help choosing software and tools',
-                      'Scalable IT and digital roadmap'
-                    ].map((service) => (
-                      <label key={service} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="itServices[]"
-                          value={service}
-                          checked={formData.itServices.includes(service)}
-                          onChange={handleInputChange}
-                          className="w-4 h-4"
-                        />
-                        <span className="text-sm">{service}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Tech Follow Up */}
-              <div className="border-2 border-gray-200 rounded-xl p-6">
-                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                  <span className="text-2xl mr-3">📞</span>
-                  Follow Up
-                </h4>
-                <Label className="text-lg font-semibold mb-3 block">Would you like us to follow up with IT recommendations tailored to your business?</Label>
-                <div className="flex flex-col space-y-2">
-                  <label className="flex items-center space-x-3">
-                    <input
-                      type="radio"
-                      name="wantsTechFollowUp"
-                      value="Yes, please contact me"
-                      checked={formData.wantsTechFollowUp === "Yes, please contact me"}
-                      onChange={handleInputChange}
-                      className="w-5 h-5"
-                    />
-                    <span>Yes, please contact me</span>
-                  </label>
-                  <label className="flex items-center space-x-3">
-                    <input
-                      type="radio"
-                      name="wantsTechFollowUp"
-                      value="No, not at this time"
-                      checked={formData.wantsTechFollowUp === "No, not at this time"}
-                      onChange={handleInputChange}
-                      className="w-5 h-5"
-                    />
-                    <span>No, not at this time</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 6: // Review & Submit
-        return (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Review & Submit</h3>
-            
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-2xl border border-blue-200">
-              <h4 className="text-xl font-bold text-gray-900 mb-4">Application Summary</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p><strong>Name:</strong> {formData.fullName}</p>
-                  <p><strong>Email:</strong> {formData.email}</p>
-                  <p><strong>Phone:</strong> {formData.phone}</p>
-                </div>
-                <div>
-                  <p><strong>Business:</strong> {formData.businessName}</p>
-                  <p><strong>Industry:</strong> {formData.businessIndustry}</p>
-                  <p><strong>Goals:</strong> {formData.mainGoals.slice(0, 2).join(', ')}</p>
-                </div>
-              </div>
-              {formData.itServices.length > 0 && (
-                <div className="mt-4">
-                  <p><strong>IT Services:</strong> {formData.itServices.slice(0, 3).join(', ')}{formData.itServices.length > 3 && '...'}</p>
-                </div>
-              )}
-            </div>
-
-            <div className="space-y-4">
-              <label className="flex items-start space-x-3 p-4 border-2 border-gray-200 rounded-xl">
-                <input
-                  type="checkbox"
-                  name="understandsOffer"
-                  checked={formData.understandsOffer}
-                  onChange={handleInputChange}
-                  required
-                  className="mt-1 w-5 h-5 rounded"
-                />
-                <span className="text-lg font-medium">I understand this is a limited-time offer for selected businesses *</span>
-              </label>
-
-              <label className="flex items-start space-x-3 p-4 border-2 border-gray-200 rounded-xl">
-                <input
-                  type="checkbox"
-                  name="agreesToProvideContent"
-                  checked={formData.agreesToProvideContent}
-                  onChange={handleInputChange}
-                  required
-                  className="mt-1 w-5 h-5 rounded"
-                />
-                <span className="text-lg font-medium">I agree to provide necessary content and feedback during the design process *</span>
-              </label>
-
-              <div>
-                <Label htmlFor="preferredContact" className="text-lg font-semibold">Best way to contact me for updates *</Label>
-                <select
-                  id="preferredContact"
-                  name="preferredContact"
-                  value={formData.preferredContact}
-                  onChange={handleInputChange}
-                  required
-                  className="mt-2 w-full p-4 text-lg border-2 border-gray-200 focus:border-blue-500 rounded-xl"
-                >
-                  <option value="">Select contact method</option>
-                  <option value="Email">Email</option>
-                  <option value="Phone Call">Phone Call</option>
-                  <option value="Text Message">Text Message</option>
-                  <option value="WhatsApp">WhatsApp</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
+  if (isSubmitted) {
+    return (
+      <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
+        <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
+        <h3 className="text-2xl font-bold text-green-800 mb-2">Application Submitted!</h3>
+        <p className="text-green-700 mb-4">
+          Thank you for your interest in our web design services. We'll review your application and contact you within 24 hours.
+        </p>
+        <Button 
+          onClick={() => setIsSubmitted(false)}
+          className="bg-green-600 hover:bg-green-700 text-white"
+        >
+          Submit Another Application
+        </Button>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 via-white to-purple-50 p-8 rounded-3xl shadow-2xl border border-blue-100">
-      {/* Progress Steps */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          {steps.map((step, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold border-2 transition-all duration-300 ${
-                index < currentStep 
-                  ? 'bg-green-500 border-green-500 text-white' 
-                  : index === currentStep 
-                    ? 'bg-blue-500 border-blue-500 text-white animate-pulse' 
-                    : 'bg-gray-200 border-gray-300 text-gray-500'
-              }`}>
-                {index < currentStep ? <Check className="h-6 w-6" /> : step.icon}
-              </div>
-              <span className={`text-xs mt-2 font-medium ${
-                index <= currentStep ? 'text-gray-900' : 'text-gray-500'
-              }`}>
-                {step.title}
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div 
-            className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500"
-            style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-          ></div>
-        </div>
-      </div>
+    <div className="max-w-2xl mx-auto">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="businessName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gowith-dark-blue font-semibold">Business Name *</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your Business Name" {...field} className="border-gray-300 focus:border-gowith-orange" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {/* Dynamic Content */}
-        <div className="min-h-[500px]">
-          {renderStepContent()}
-        </div>
+            <FormField
+              control={form.control}
+              name="contactName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gowith-dark-blue font-semibold">Contact Name *</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your Full Name" {...field} className="border-gray-300 focus:border-gowith-orange" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex justify-between pt-8 border-t border-gray-200">
-          <Button
-            type="button"
-            onClick={prevStep}
-            disabled={currentStep === 0}
-            className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-              currentStep === 0 
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                : 'bg-gray-500 hover:bg-gray-600 text-white'
-            }`}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gowith-dark-blue font-semibold">Email Address *</FormLabel>
+                  <FormControl>
+                    <Input type="email" placeholder="your@email.com" {...field} className="border-gray-300 focus:border-gowith-orange" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gowith-dark-blue font-semibold">Phone Number *</FormLabel>
+                  <FormControl>
+                    <Input placeholder="(555) 123-4567" {...field} className="border-gray-300 focus:border-gowith-orange" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <FormField
+            control={form.control}
+            name="businessType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gowith-dark-blue font-semibold">Business Type *</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger className="border-gray-300 focus:border-gowith-orange">
+                      <SelectValue placeholder="Select your business type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="retail">Retail/E-commerce</SelectItem>
+                    <SelectItem value="restaurant">Restaurant/Food Service</SelectItem>
+                    <SelectItem value="professional">Professional Services</SelectItem>
+                    <SelectItem value="healthcare">Healthcare</SelectItem>
+                    <SelectItem value="real-estate">Real Estate</SelectItem>
+                    <SelectItem value="nonprofit">Non-profit</SelectItem>
+                    <SelectItem value="technology">Technology</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="websiteGoals"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gowith-dark-blue font-semibold">Website Goals & Requirements *</FormLabel>
+                <FormControl>
+                  <Textarea 
+                    placeholder="Please describe what you want to achieve with your website (e.g., increase sales, showcase services, generate leads, etc.)"
+                    className="border-gray-300 focus:border-gowith-orange min-h-[100px]"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="currentWebsite"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gowith-dark-blue font-semibold">Current Website (if any)</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://yourwebsite.com" {...field} className="border-gray-300 focus:border-gowith-orange" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="timeline"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gowith-dark-blue font-semibold">Project Timeline *</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="border-gray-300 focus:border-gowith-orange">
+                        <SelectValue placeholder="Select timeline" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="asap">ASAP (Rush)</SelectItem>
+                      <SelectItem value="1-2-weeks">1-2 weeks</SelectItem>
+                      <SelectItem value="3-4-weeks">3-4 weeks</SelectItem>
+                      <SelectItem value="1-2-months">1-2 months</SelectItem>
+                      <SelectItem value="flexible">Flexible</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="budget"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gowith-dark-blue font-semibold">Budget Range *</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="border-gray-300 focus:border-gowith-orange">
+                        <SelectValue placeholder="Select budget range" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="free">FREE (Qualifying Projects)</SelectItem>
+                      <SelectItem value="under-1000">Under $1,000</SelectItem>
+                      <SelectItem value="1000-3000">$1,000 - $3,000</SelectItem>
+                      <SelectItem value="3000-5000">$3,000 - $5,000</SelectItem>
+                      <SelectItem value="5000-plus">$5,000+</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <FormField
+            control={form.control}
+            name="additionalInfo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gowith-dark-blue font-semibold">Additional Information</FormLabel>
+                <FormControl>
+                  <Textarea 
+                    placeholder="Any additional details, special requirements, or questions you'd like us to know..."
+                    className="border-gray-300 focus:border-gowith-orange min-h-[80px]"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="w-full bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
           >
-            <ChevronLeft className="h-5 w-5" />
-            <span>Previous</span>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+                Submitting Application...
+              </>
+            ) : (
+              <>
+                <Send className="mr-3 h-5 w-5" />
+                Submit My FREE Website Application
+              </>
+            )}
           </Button>
 
-          {currentStep === steps.length - 1 ? (
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="flex items-center space-x-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-8 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-105"
-            >
-              {isSubmitting ? "Submitting..." : "Submit Application"}
-              <Check className="h-5 w-5" />
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              onClick={nextStep}
-              className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
-            >
-              <span>Next</span>
-              <ChevronRight className="h-5 w-5" />
-            </Button>
-          )}
-        </div>
-      </form>
+          <div className="text-center text-sm text-gray-600 mt-4">
+            <p>🔒 Your information is secure and will only be used to contact you about your website project.</p>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };
