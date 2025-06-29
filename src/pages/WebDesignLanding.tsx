@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import WebApplicationForm from '@/components/WebApplicationForm';
 
 const WebDesignLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -778,21 +778,8 @@ const WebDesignLanding = () => {
               </div>
             </div>
 
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/50">
-              <div className="text-center">
-                <h3 className="text-2xl font-bold text-gowith-dark-blue mb-6">Free Web Design Request Form</h3>
-                <div className="bg-gray-100 rounded-lg p-6">
-                  <iframe
-                    src="https://form.jotform.com/243666980284061"
-                    width="100%"
-                    height="800"
-                    frameBorder="0"
-                    scrolling="yes"
-                    title="Free Web Design Request Form"
-                    className="w-full"
-                  />
-                </div>
-              </div>
+            <div className="max-w-6xl mx-auto">
+              <WebApplicationForm />
             </div>
 
             <div className="text-center mt-8">
