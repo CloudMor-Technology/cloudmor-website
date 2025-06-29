@@ -17,6 +17,7 @@ import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Sitemap from "./pages/Sitemap";
 import WebLanding from "./pages/WebLanding";
+import WebDesignLanding from "./pages/WebDesignLanding";
 import RequestsForm from "./pages/RequestsForm";
 
 // Service Pages
@@ -44,6 +45,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/web" element={<WebLanding />} />
+            <Route path="/web-design" element={<WebDesignLanding />} />
             <Route path="/requests-form" element={<RequestsForm />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/managed-it" element={<ManagedIT />} />
