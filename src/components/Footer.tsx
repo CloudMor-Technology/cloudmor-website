@@ -41,7 +41,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Services Links */}
           <div>
             <h3 className="text-xl font-bold mb-6 text-blue-100">Services</h3>
             <ul className="space-y-3">
