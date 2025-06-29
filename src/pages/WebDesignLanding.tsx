@@ -7,7 +7,7 @@ import WebApplicationForm from '@/components/WebApplicationForm';
 
 const WebDesignLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [currentTestimonialGroup, setCurrentTestimonialGroup] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const websiteShowcase = [{
@@ -27,167 +27,92 @@ const WebDesignLanding = () => {
     image: "/lovable-uploads/c3b6701b-bb4c-4250-9533-f896f4d0c424.png"
   }];
 
-  const testimonials = [
-    {
-      quote: "Our website went from invisible to the top of Google searches. We're getting 5x more leads now!",
-      author: "Sarah Chen",
-      business: "Chen Marketing Solutions, San Francisco",
-      result: "5x More Leads",
-      avatar: "📈",
-      savings: "$7,200"
-    },
-    {
-      quote: "CloudMor made our complex services so easy to understand. New clients book appointments online daily!",
-      author: "Dr. Michael Rodriguez",
-      business: "Rodriguez Medical Center, Los Angeles",
-      result: "Daily Bookings",
-      avatar: "👨‍⚕️",
-      savings: "$6,800"
-    },
-    {
-      quote: "The mobile-friendly design brought us younger customers we never reached before. Revenue up 300%!",
-      author: "Amanda Foster",
-      business: "Foster's Boutique, Beverly Hills",
-      result: "300% Revenue Up",
-      avatar: "👗",
-      savings: "$6,400"
-    },
-    {
-      quote: "Our competitors still look outdated while we appear cutting-edge. We're winning every proposal now!",
-      author: "James Liu",
-      business: "Liu Construction Group, San Diego",
-      result: "Winning Proposals",
-      avatar: "🏗️",
-      savings: "$7,000"
-    },
-    {
-      quote: "24/7 online presence means customers find us even when we're closed. Night inquiries increased 400%!",
-      author: "Maria Gonzalez",
-      business: "Gonzalez Auto Repair, Fresno",
-      result: "400% Night Leads",
-      avatar: "🔧",
-      savings: "$5,800"
-    },
-    {
-      quote: "The professional credibility boost helped us attract Fortune 500 clients. Our biggest year ever!",
-      author: "Robert Kim",
-      business: "Kim Digital Consulting, Palo Alto",
-      result: "Fortune 500 Clients",
-      avatar: "💼",
-      savings: "$6,900"
-    },
-    {
-      quote: "Online appointment system eliminated phone tag. Client satisfaction scores hit all-time highs!",
-      author: "Dr. Jennifer Park",
-      business: "Park Dental Practice, Oakland",
-      result: "Perfect Satisfaction",
-      avatar: "🦷",
-      savings: "$6,200"
-    },
-    {
-      quote: "The SEO magic worked! We outrank competitors who've been around 20 years longer than us.",
-      author: "Carlos Mendez",
-      business: "Mendez Digital Agency, Sacramento",
-      result: "Outrank Veterans",
-      avatar: "🎯",
-      savings: "$6,600"
-    },
-    {
-      quote: "Customer testimonials on our new site convert visitors instantly. Trust factor went through the roof!",
-      author: "Lisa Wang",
-      business: "Wang Interior Design, San Jose",
-      result: "Instant Trust",
-      avatar: "🏡",
-      savings: "$6,300"
-    },
-    {
-      quote: "The contact forms capture leads we used to lose. Follow-up automation does the heavy lifting for us!",
-      author: "Anthony Davis",
-      business: "Davis Legal Services, Long Beach",
-      result: "Zero Lost Leads",
-      avatar: "⚖️",
-      savings: "$7,100"
-    },
-    {
-      quote: "Our e-commerce integration turned browsers into buyers. Online sales now match our physical store!",
-      author: "Rachel Green",
-      business: "Green Home Goods, Santa Monica",
-      result: "Equal Online Sales",
-      avatar: "🛍️",
-      savings: "$6,500"
-    },
-    {
-      quote: "The multilingual support opened doors to entire communities we couldn't serve before. Amazing growth!",
-      author: "Diego Hernandez",
-      business: "Hernandez Construction, East LA",
-      result: "New Communities",
-      avatar: "🔨",
-      savings: "$7,000"
-    },
-    {
-      quote: "Analytics dashboard shows exactly where our best customers come from. Marketing became so much smarter!",
-      author: "Kelly Robinson",
-      business: "Robinson Catering Services, Ventura",
-      result: "Smart Marketing",
-      avatar: "🍽️",
-      savings: "$6,100"
-    },
-    {
-      quote: "The speed optimization made our site lightning fast. Bounce rate dropped 70% and engagement soared!",
-      author: "Steve Martinez",
-      business: "Martinez Tech Solutions, Riverside",
-      result: "70% Less Bounce",
-      avatar: "⚡",
-      savings: "$6,700"
-    },
-    {
-      quote: "Social proof features showcase our work beautifully. Prospects convert before even calling us!",
-      author: "Patricia Brown",
-      business: "Brown Photography Studio, Pasadena",
-      result: "Pre-Call Conversions",
-      avatar: "📸",
-      savings: "$6,000"
-    },
-    {
-      quote: "The CRM integration tracks every interaction. We never miss a follow-up opportunity anymore!",
-      author: "Kevin Wong",
-      business: "Wong Financial Services, Fremont",
-      result: "Perfect Follow-up",
-      avatar: "💰",
-      savings: "$6,800"
-    },
-    {
-      quote: "Local SEO put us on the map literally! 'Near me' searches bring 80% of our new customers now.",
-      author: "Emma Wilson",
-      business: "Wilson Pet Grooming, Santa Barbara",
-      result: "80% Local Traffic",
-      avatar: "🐕",
-      savings: "$5,900"
-    },
-    {
-      quote: "The security features protect our client data perfectly. Peace of mind for both us and our customers!",
-      author: "Thomas Chen",
-      business: "Chen Accounting Firm, Stockton",
-      result: "Complete Security",
-      avatar: "🛡️",
-      savings: "$6,400"
-    },
-    {
-      quote: "Portfolio showcase feature turns every visitor into a potential client. Our closing rate doubled!",
-      author: "Jessica Kim",
-      business: "Kim Architecture Studio, Newport Beach",
-      result: "Double Closing Rate",
-      avatar: "🏢",
-      savings: "$7,200"
-    },
-    {
-      quote: "The backup system saved us during a server crash. Zero downtime means zero lost business!",
-      author: "Marcus Johnson",
-      business: "Johnson IT Support, Modesto",
-      result: "Zero Downtime",
-      avatar: "💻",
-      savings: "$6,600"
-    }
+  // 12 diverse testimonials grouped in sets of 3
+  const testimonialGroups = [
+    // Group 1
+    [
+      {
+        quote: "Our website went from invisible to the top of Google searches. We're getting 5x more leads now!",
+        author: "Sarah Chen",
+        business: "Chen Marketing Solutions, San Francisco",
+        avatar: "📈"
+      },
+      {
+        quote: "CloudMor made our complex services so easy to understand. New clients book appointments online daily!",
+        author: "Dr. Michael Rodriguez",
+        business: "Rodriguez Medical Center, Los Angeles",
+        avatar: "👨‍⚕️"
+      },
+      {
+        quote: "The mobile-friendly design brought us younger customers we never reached before. Revenue up 300%!",
+        author: "Amanda Foster",
+        business: "Foster's Boutique, Beverly Hills",
+        avatar: "👗"
+      }
+    ],
+    // Group 2
+    [
+      {
+        quote: "Our competitors still look outdated while we appear cutting-edge. We're winning every proposal now!",
+        author: "James Liu",
+        business: "Liu Construction Group, San Diego",
+        avatar: "🏗️"
+      },
+      {
+        quote: "24/7 online presence means customers find us even when we're closed. Night inquiries increased 400%!",
+        author: "Maria Gonzalez",
+        business: "Gonzalez Auto Repair, Fresno",
+        avatar: "🔧"
+      },
+      {
+        quote: "The professional credibility boost helped us attract Fortune 500 clients. Our biggest year ever!",
+        author: "Robert Kim",
+        business: "Kim Digital Consulting, Palo Alto",
+        avatar: "💼"
+      }
+    ],
+    // Group 3
+    [
+      {
+        quote: "Online appointment system eliminated phone tag. Client satisfaction scores hit all-time highs!",
+        author: "Dr. Jennifer Park",
+        business: "Park Dental Practice, Oakland",
+        avatar: "🦷"
+      },
+      {
+        quote: "The SEO magic worked! We outrank competitors who've been around 20 years longer than us.",
+        author: "Carlos Mendez",
+        business: "Mendez Digital Agency, Sacramento",
+        avatar: "🎯"
+      },
+      {
+        quote: "Customer testimonials on our new site convert visitors instantly. Trust factor went through the roof!",
+        author: "Lisa Wang",
+        business: "Wang Interior Design, San Jose",
+        avatar: "🏡"
+      }
+    ],
+    // Group 4
+    [
+      {
+        quote: "The contact forms capture leads we used to lose. Follow-up automation does the heavy lifting for us!",
+        author: "Anthony Davis",
+        business: "Davis Legal Services, Long Beach",
+        avatar: "⚖️"
+      },
+      {
+        quote: "Our e-commerce integration turned browsers into buyers. Online sales now match our physical store!",
+        author: "Rachel Green",
+        business: "Green Home Goods, Santa Monica",
+        avatar: "🛍️"
+      },
+      {
+        quote: "The backup system saved us during a server crash. Zero downtime means zero lost business!",
+        author: "Marcus Johnson",
+        business: "Johnson IT Support, Modesto",
+        avatar: "💻"
+      }
+    ]
   ];
 
   const socialProof = [{
@@ -236,7 +161,7 @@ const WebDesignLanding = () => {
 
   React.useEffect(() => {
     const testimonialInterval = setInterval(() => {
-      setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
+      setCurrentTestimonialGroup(prev => (prev + 1) % testimonialGroups.length);
     }, 3000);
     return () => clearInterval(testimonialInterval);
   }, []);
@@ -546,14 +471,14 @@ const WebDesignLanding = () => {
                   step: 1,
                   title: "Application Submission",
                   desc: "Clients submit their website request through our application form with details about their needs, goals, and preferred features.",
-                  timeline: "",
+                  timeline: "Day 1",
                   icon: FileText,
                   color: "from-gowith-medium-blue to-gowith-light-blue"
                 }, {
                   step: 2,
                   title: "Review Process",
                   desc: "Our team reviews the application, clarifies requirements if needed, and confirms the scope of the project.",
-                  timeline: "Days 1–2",
+                  timeline: "Day 2",
                   icon: Search,
                   color: "from-gowith-orange to-gowith-orange-hover"
                 }, {
@@ -592,12 +517,10 @@ const WebDesignLanding = () => {
 
                     {/* Content Card */}
                     <div className="bg-white p-6 rounded-2xl shadow-lg group-hover:shadow-xl transition-all duration-300 border border-gray-100 h-full">
-                      {item.timeline && (
-                        <div className="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold mb-4">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {item.timeline}
-                        </div>
-                      )}
+                      <div className="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                        <Clock className="w-3 h-3 mr-1" />
+                        {item.timeline}
+                      </div>
                       
                       <h3 className="text-lg font-bold text-gowith-dark-blue mb-3 leading-tight">
                         {item.title}
@@ -738,7 +661,7 @@ const WebDesignLanding = () => {
         </div>
       </section>
 
-      {/* Reviews Section with Carousel */}
+      {/* Reviews Section with Rotating Groups */}
       <section id="reviews" className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
@@ -753,129 +676,102 @@ const WebDesignLanding = () => {
               </div>
             </div>
 
-            {/* Auto-rotating testimonial display */}
-            <div className="max-w-4xl mx-auto mb-8">
-              <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-xl transform transition-all duration-500 hover:scale-105">
-                <div className="flex justify-between items-start mb-4">
-                  <div className="inline-flex items-center bg-gowith-orange/10 text-gowith-orange px-3 py-1 rounded-full text-sm font-bold">
-                    <Award className="w-4 h-4 mr-1" />
-                    {testimonials[currentTestimonial].result}
+            {/* Rotating testimonial groups display */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+              {testimonialGroups[currentTestimonialGroup].map((testimonial, index) => (
+                <div key={index} className="group bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:scale-105 h-full">
+                  <div className="flex mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 text-gowith-orange fill-current" />
+                    ))}
                   </div>
-                  <div className="text-green-600 font-bold text-sm bg-green-100 px-2 py-1 rounded">
-                    Saved {testimonials[currentTestimonial].savings}
-                  </div>
+                  <blockquote className="text-gray-700 mb-6 leading-relaxed font-medium">
+                    "{testimonial.quote}"
+                  </blockquote>
+                  <footer className="flex items-center">
+                    <div className="text-3xl mr-3">{testimonial.avatar}</div>
+                    <div>
+                      <div className="font-bold text-gowith-dark-blue">{testimonial.author}</div>
+                      <div className="text-gray-600 text-sm">{testimonial.business}</div>
+                    </div>
+                  </footer>
                 </div>
-                
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-gowith-orange fill-current" />
-                  ))}
-                </div>
-                <blockquote className="text-gray-700 mb-6 leading-relaxed font-medium text-lg">
-                  "{testimonials[currentTestimonial].quote}"
-                </blockquote>
-                <footer className="flex items-center">
-                  <div className="text-4xl mr-4">{testimonials[currentTestimonial].avatar}</div>
-                  <div>
-                    <div className="font-bold text-gowith-dark-blue text-lg">{testimonials[currentTestimonial].author}</div>
-                    <div className="text-gray-600">{testimonials[currentTestimonial].business}</div>
-                  </div>
-                </footer>
-              </div>
-            </div>
-
-            {/* Testimonial indicators */}
-            <div className="flex justify-center space-x-2 mb-8">
-              {testimonials.map((_, index) => (
-                <div 
-                  key={index} 
-                  className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    index === currentTestimonial ? 'bg-gowith-orange scale-150' : 'bg-gray-300 hover:bg-gray-400'
-                  }`} 
-                  onClick={() => setCurrentTestimonial(index)} 
-                />
               ))}
             </div>
 
-            <Carousel className="w-full max-w-6xl mx-auto">
-              <CarouselContent>
-                {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="group bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:scale-105 h-full">
-                      <div className="flex justify-between items-start mb-4">
-                        <div className="inline-flex items-center bg-gowith-orange/10 text-gowith-orange px-3 py-1 rounded-full text-sm font-bold">
-                          <Award className="w-4 h-4 mr-1" />
-                          {testimonial.result}
-                        </div>
-                        <div className="text-green-600 font-bold text-sm bg-green-100 px-2 py-1 rounded">
-                          Saved {testimonial.savings}
-                        </div>
-                      </div>
-                      
-                      <div className="flex mb-4">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-5 w-5 text-gowith-orange fill-current" />
-                        ))}
-                      </div>
-                      <blockquote className="text-gray-700 mb-6 leading-relaxed font-medium">
-                        "{testimonial.quote}"
-                      </blockquote>
-                      <footer className="flex items-center">
-                        <div className="text-3xl mr-3">{testimonial.avatar}</div>
-                        <div>
-                          <div className="font-bold text-gowith-dark-blue">{testimonial.author}</div>
-                          <div className="text-gray-600 text-sm">{testimonial.business}</div>
-                        </div>
-                      </footer>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
+            {/* Group indicators */}
+            <div className="flex justify-center space-x-2 mb-8">
+              {testimonialGroups.map((_, index) => (
+                <div 
+                  key={index} 
+                  className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
+                    index === currentTestimonialGroup ? 'bg-gowith-orange scale-150' : 'bg-gray-300 hover:bg-gray-400'
+                  }`} 
+                  onClick={() => setCurrentTestimonialGroup(index)} 
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Web Design Form Section */}
+      {/* Enhanced Web Design Form Section */}
       <section id="web-design-form" className="py-20 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative overflow-hidden">
+        {/* Enhanced background effects */}
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
           <div className="absolute bottom-10 right-10 w-80 h-80 bg-white/5 rounded-full blur-2xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gowith-orange/10 rounded-full blur-3xl"></div>
         </div>
         
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto">
+            {/* Enhanced header with pulsing elements */}
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-6xl font-black mb-6">
-                START YOUR <span className="text-gowith-orange">FREE WEB DESIGN</span>
+              <div className="inline-flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-8 py-4 rounded-full text-lg font-black mb-8 shadow-2xl animate-pulse">
+                <Star className="h-6 w-6 mr-3 animate-spin" />
+                🎯 MOST VISIBLE FORM - SUBMIT YOUR REQUEST NOW!
+                <Star className="h-6 w-6 ml-3 animate-spin" />
+              </div>
+              
+              <h2 className="text-4xl md:text-6xl font-black mb-6 text-shadow-lg">
+                START YOUR <span className="text-gowith-orange animate-pulse">FREE WEB DESIGN</span>
               </h2>
-              <h3 className="text-2xl md:text-3xl font-bold mb-6">
+              <h3 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
                 APPLY YOUR REQUEST TODAY!
               </h3>
-              <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8">
+              <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8 leading-relaxed">
                 Get your $6,800 professional website absolutely FREE. Tell us about your project and we'll get started right away.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <div className="bg-green-500 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center">
+                <div className="bg-green-500 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center shadow-lg">
                   <DollarSign className="h-5 w-5 mr-2" />
                   FREE DESIGN
                 </div>
-                <div className="bg-green-500 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center">
+                <div className="bg-green-500 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center shadow-lg">
                   <CheckCircle className="h-5 w-5 mr-2" />
                   FREE DEVELOPMENT
                 </div>
-                <div className="bg-white/20 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center">
+                <div className="bg-white/20 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center shadow-lg">
                   <Star className="h-5 w-5 mr-2" />
                   $6,800 Value
                 </div>
               </div>
             </div>
 
-            <div className="max-w-6xl mx-auto">
-              <WebApplicationForm />
+            {/* Enhanced form container with glowing border */}
+            <div className="relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-gowith-orange via-yellow-400 to-gowith-orange rounded-3xl blur opacity-75 animate-pulse"></div>
+              <div className="relative bg-white rounded-3xl p-8 shadow-2xl">
+                <div className="text-center mb-6">
+                  <h4 className="text-2xl font-black text-gowith-dark-blue mb-2">
+                    📝 SUBMIT YOUR WEB DESIGN REQUEST
+                  </h4>
+                  <p className="text-gray-600">Fill out this form to get your FREE $6,800 website</p>
+                </div>
+                <WebApplicationForm />
+              </div>
             </div>
 
             <div className="text-center mt-8">
