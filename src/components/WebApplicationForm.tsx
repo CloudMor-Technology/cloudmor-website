@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +17,7 @@ const WebApplicationForm = () => {
     { title: "Design Preferences", icon: "🎨" },
     { title: "Website Goals", icon: "🎯" },
     { title: "Additional Info", icon: "📋" },
+    { title: "Optional IT Services", icon: "🛠️" },
     { title: "Review & Submit", icon: "✅" }
   ];
 
@@ -71,6 +71,12 @@ const WebApplicationForm = () => {
     additionalInfo: '',
     previousExperience: '',
     competitorWebsites: '',
+    
+    // New IT Services fields
+    itServices: [],
+    isNewBusiness: '',
+    employeeCount: '',
+    wantsFreeConsultation: '',
     
     // Agreement
     understandsOffer: false,
@@ -142,13 +148,17 @@ Products/Services: ${formData.productsServices}
 Target Audience: ${formData.targetAudience}
 Color Preferences: ${formData.colorPreferences.join(', ')}
 Main Goals: ${formData.mainGoals.join(', ')}
+IT Services Needed: ${formData.itServices.join(', ')}
+Employee Count: ${formData.employeeCount}
+Is New Business: ${formData.isNewBusiness}
+Wants Free Consultation: ${formData.wantsFreeConsultation}
 Additional Info: ${formData.additionalInfo}
         `,
         form_type: 'web_application',
         request_consultation: true,
         subscribe_newsletter: false,
         preferred_date: null,
-        employee_count: null,
+        employee_count: formData.employeeCount || null,
         industry: formData.businessIndustry || null,
       };
 
@@ -198,7 +208,8 @@ Additional Info: ${formData.additionalInfo}
         hasWebsite: '', currentWebsite: '', socialMediaAccounts: [],
         mainGoals: [], biggestChallenge: '', hearAboutUs: '',
         referralName: '', additionalInfo: '', previousExperience: '',
-        competitorWebsites: '', understandsOffer: false,
+        competitorWebsites: '', itServices: [], isNewBusiness: '',
+        employeeCount: '', wantsFreeConsultation: '', understandsOffer: false,
         agreesToProvideContent: false, preferredContact: ''
       });
       setCurrentStep(0);
@@ -558,7 +569,380 @@ Additional Info: ${formData.additionalInfo}
           </div>
         );
 
-      case 5: // Review & Submit
+      case 5: // Optional IT Services and Support
+        return (
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Optional IT Services & Support</h3>
+            <p className="text-gray-600 text-center mb-8">Let us know what services you need now — or may consider in the future. Check all that apply:</p>
+            
+            <div className="space-y-8">
+              {/* Domain & Website Essentials */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">🌐</span>
+                  1. Domain & Website Essentials
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'Domain name search and registration',
+                    'Domain DNS setup and management',
+                    'Business website design and development',
+                    'Custom email using your domain (e.g., info@yourbusiness.com)'
+                  ].map((service) => (
+                    <label key={service} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="itServices[]"
+                        value={service}
+                        checked={formData.itServices.includes(service)}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded"
+                      />
+                      <span className="text-sm">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Business Communication */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">🖥️</span>
+                  2. Business Communication
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'Business phone number and VoIP system setup',
+                    'Call routing and voicemail configuration',
+                    'Multi-location or remote-friendly phone system'
+                  ].map((service) => (
+                    <label key={service} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="itServices[]"
+                        value={service}
+                        checked={formData.itServices.includes(service)}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded"
+                      />
+                      <span className="text-sm">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Email & Productivity Tools */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">📧</span>
+                  3. Email & Productivity Tools
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'Google Workspace or Microsoft 365 setup',
+                    'User account creation and management',
+                    'Shared calendar and file access setup',
+                    'Email backup and security'
+                  ].map((service) => (
+                    <label key={service} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="itServices[]"
+                        value={service}
+                        checked={formData.itServices.includes(service)}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded"
+                      />
+                      <span className="text-sm">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* CRM & Business Tools */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">📊</span>
+                  4. CRM & Business Tools
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'CRM system setup (e.g., HubSpot, Zoho, Salesforce)',
+                    'Lead tracking and automation tools',
+                    'CRM + Website integration'
+                  ].map((service) => (
+                    <label key={service} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="itServices[]"
+                        value={service}
+                        checked={formData.itServices.includes(service)}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded"
+                      />
+                      <span className="text-sm">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Office & IT Infrastructure */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">🧑‍💻</span>
+                  5. Office & IT Infrastructure
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'Office network setup (Wi-Fi, LAN, firewall)',
+                    'Workstation/laptop setup',
+                    'Printer and shared device configuration',
+                    'VPN or remote work access'
+                  ].map((service) => (
+                    <label key={service} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="itServices[]"
+                        value={service}
+                        checked={formData.itServices.includes(service)}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded"
+                      />
+                      <span className="text-sm">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Cybersecurity & Data Protection */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">🔐</span>
+                  6. Cybersecurity & Data Protection
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'Antivirus and endpoint protection',
+                    'Firewall and network security',
+                    'Backup and disaster recovery',
+                    'Staff cybersecurity training'
+                  ].map((service) => (
+                    <label key={service} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="itServices[]"
+                        value={service}
+                        checked={formData.itServices.includes(service)}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded"
+                      />
+                      <span className="text-sm">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Cloud Services & Hosting */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">☁️</span>
+                  7. Cloud Services & Hosting
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'Cloud storage (Google Drive, OneDrive, Dropbox, etc.)',
+                    'Cloud server or internal tool hosting',
+                    'Cloud migration from local setup'
+                  ].map((service) => (
+                    <label key={service} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="itServices[]"
+                        value={service}
+                        checked={formData.itServices.includes(service)}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded"
+                      />
+                      <span className="text-sm">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Ongoing IT Support */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">🛠️</span>
+                  8. Ongoing IT Support
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'Monthly IT maintenance and support',
+                    'Remote or onsite tech help',
+                    'System updates and monitoring'
+                  ].map((service) => (
+                    <label key={service} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="itServices[]"
+                        value={service}
+                        checked={formData.itServices.includes(service)}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded"
+                      />
+                      <span className="text-sm">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Payment & Booking Solutions */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">💳</span>
+                  9. Payment & Booking Solutions
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'Stripe, Square, PayPal setup',
+                    'POS system setup',
+                    'Online appointment/booking tools'
+                  ].map((service) => (
+                    <label key={service} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="itServices[]"
+                        value={service}
+                        checked={formData.itServices.includes(service)}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded"
+                      />
+                      <span className="text-sm">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Tech Consulting & Growth Planning */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">🧠</span>
+                  10. Tech Consulting & Growth Planning
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'Free IT health check or tech audit',
+                    'Software/tool recommendation',
+                    'IT roadmap for business growth'
+                  ].map((service) => (
+                    <label key={service} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="itServices[]"
+                        value={service}
+                        checked={formData.itServices.includes(service)}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded"
+                      />
+                      <span className="text-sm">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Business Info */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">📌</span>
+                  Business Info
+                </h4>
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-lg font-semibold mb-3 block">Are you a new business?</Label>
+                    <div className="flex flex-col space-y-2">
+                      <label className="flex items-center space-x-3">
+                        <input
+                          type="radio"
+                          name="isNewBusiness"
+                          value="Yes, we're just getting started"
+                          checked={formData.isNewBusiness === "Yes, we're just getting started"}
+                          onChange={handleInputChange}
+                          className="w-5 h-5"
+                        />
+                        <span>Yes, we're just getting started</span>
+                      </label>
+                      <label className="flex items-center space-x-3">
+                        <input
+                          type="radio"
+                          name="isNewBusiness"
+                          value="No, we're already operating"
+                          checked={formData.isNewBusiness === "No, we're already operating"}
+                          onChange={handleInputChange}
+                          className="w-5 h-5"
+                        />
+                        <span>No, we're already operating</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="employeeCount" className="text-lg font-semibold">How many employees do you currently have?</Label>
+                    <select
+                      id="employeeCount"
+                      name="employeeCount"
+                      value={formData.employeeCount}
+                      onChange={handleInputChange}
+                      className="mt-2 w-full p-3 border-2 border-gray-200 focus:border-blue-500 rounded-lg"
+                    >
+                      <option value="">Select employee count</option>
+                      <option value="1-5">1-5 employees</option>
+                      <option value="6-10">6-10 employees</option>
+                      <option value="11-25">11-25 employees</option>
+                      <option value="26-50">26-50 employees</option>
+                      <option value="51-100">51-100 employees</option>
+                      <option value="100+">100+ employees</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Free Consultation */}
+              <div className="border-2 border-gray-200 rounded-xl p-6">
+                <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-3">📞</span>
+                  Free Consultation
+                </h4>
+                <Label className="text-lg font-semibold mb-3 block">Would you like a free consultation about IT solutions for your business?</Label>
+                <div className="flex flex-col space-y-2">
+                  <label className="flex items-center space-x-3">
+                    <input
+                      type="radio"
+                      name="wantsFreeConsultation"
+                      value="Yes, please contact me"
+                      checked={formData.wantsFreeConsultation === "Yes, please contact me"}
+                      onChange={handleInputChange}
+                      className="w-5 h-5"
+                    />
+                    <span>Yes, please contact me</span>
+                  </label>
+                  <label className="flex items-center space-x-3">
+                    <input
+                      type="radio"
+                      name="wantsFreeConsultation"
+                      value="No, not at this time"
+                      checked={formData.wantsFreeConsultation === "No, not at this time"}
+                      onChange={handleInputChange}
+                      className="w-5 h-5"
+                    />
+                    <span>No, not at this time</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 6: // Review & Submit
         return (
           <div className="space-y-6">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Review & Submit</h3>
@@ -577,6 +961,11 @@ Additional Info: ${formData.additionalInfo}
                   <p><strong>Goals:</strong> {formData.mainGoals.slice(0, 2).join(', ')}</p>
                 </div>
               </div>
+              {formData.itServices.length > 0 && (
+                <div className="mt-4">
+                  <p><strong>IT Services:</strong> {formData.itServices.slice(0, 3).join(', ')}{formData.itServices.length > 3 && '...'}</p>
+                </div>
+              )}
             </div>
 
             <div className="space-y-4">
