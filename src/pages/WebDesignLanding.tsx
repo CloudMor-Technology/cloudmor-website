@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink } from 'lucide-react';
@@ -572,8 +571,8 @@ const WebDesignLanding = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[{
                 step: 1,
-                title: "Consultation",
-                desc: "Tell us about your business and vision",
+                title: "Submit your application",
+                desc: "Fill out our simple application form with your business details",
                 days: "Day 1",
                 color: "from-gowith-medium-blue to-gowith-light-blue"
               }, {
