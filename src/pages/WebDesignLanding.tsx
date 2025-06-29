@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink, FileText, Search, Settings, Code, Rocket as RocketIcon } from 'lucide-react';
+import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink, FileText, Search, Settings, Code, Rocket as RocketIcon, Palette, Brush, Layers } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import WebApplicationForm from '@/components/WebApplicationForm';
@@ -32,19 +32,19 @@ const WebDesignLanding = () => {
     // Group 1
     [
       {
-        quote: "Our website went from invisible to the top of Google searches. We're getting 5x more leads now!",
+        quote: "Our new website and logo transformed our business image completely. We look professional and trustworthy now!",
         author: "Sarah Chen",
         business: "Chen Marketing Solutions, San Francisco",
-        avatar: "📈"
+        avatar: "👩‍💼"
       },
       {
-        quote: "CloudMor made our complex services so easy to understand. New clients book appointments online daily!",
+        quote: "The mobile-friendly design brought us younger customers we never reached before. Revenue up 300%!",
         author: "Dr. Michael Rodriguez",
         business: "Rodriguez Medical Center, Los Angeles",
         avatar: "👨‍⚕️"
       },
       {
-        quote: "The mobile-friendly design brought us younger customers we never reached before. Revenue up 300%!",
+        quote: "Online appointment system eliminated phone tag. Client satisfaction scores hit all-time highs!",
         author: "Amanda Foster",
         business: "Foster's Boutique, Beverly Hills",
         avatar: "👗"
@@ -74,13 +74,13 @@ const WebDesignLanding = () => {
     // Group 3
     [
       {
-        quote: "Online appointment system eliminated phone tag. Client satisfaction scores hit all-time highs!",
+        quote: "New customers find us easily through Google search. Our visibility increased by 500% in just 3 months!",
         author: "Dr. Jennifer Park",
         business: "Park Dental Practice, Oakland",
         avatar: "🦷"
       },
       {
-        quote: "The SEO magic worked! We outrank competitors who've been around 20 years longer than us.",
+        quote: "The website perfectly represents our brand. Clients trust us before they even call!",
         author: "Carlos Mendez",
         business: "Mendez Digital Agency, Sacramento",
         avatar: "🎯"
@@ -584,6 +584,140 @@ const WebDesignLanding = () => {
         </div>
       </section>
 
+      {/* Logo Design Section */}
+      <section className="py-20 bg-gradient-to-br from-purple-50 to-blue-50">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg">
+                <Palette className="w-4 h-4 mr-2" />
+                BONUS: Professional Logo Design Included FREE!
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-black text-gowith-dark-blue mb-6">
+                Custom Logo Design <span className="text-gradient bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">+ Brand Identity</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-4xl mx-auto mb-8">
+                Your website deserves a professional logo that represents your brand perfectly. We create custom logos that make your business memorable and trustworthy.
+              </p>
+              
+              <div className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-bold">
+                <DollarSign className="w-4 h-4 mr-2" />
+                Usually costs $800-$1,200 - Yours FREE with website package
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+              {/* Logo Design Features */}
+              <div className="space-y-8">
+                <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Brush className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">Custom Logo Creation</h3>
+                      <p className="text-gray-600">Unique, professional logos designed specifically for your business and industry</p>
+                      <div className="text-green-600 font-bold text-sm mt-2">$500 value - FREE</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-teal-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Layers className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">Multiple Format Delivery</h3>
+                      <p className="text-gray-600">PNG, SVG, PDF, and high-resolution files for all your marketing needs</p>
+                      <div className="text-green-600 font-bold text-sm mt-2">$200 value - FREE</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Eye className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">Brand Color Palette</h3>
+                      <p className="text-gray-600">Professional color scheme that works across all your marketing materials</p>
+                      <div className="text-green-600 font-bold text-sm mt-2">$300 value - FREE</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Visual Examples */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-purple-100 to-blue-100 rounded-3xl p-8 text-center">
+                  <div className="bg-white rounded-2xl p-8 shadow-lg mb-6">
+                    <div className="text-6xl mb-4">🎨</div>
+                    <h3 className="text-2xl font-bold text-gowith-dark-blue mb-2">Your Logo Here</h3>
+                    <p className="text-gray-600">Professional design that represents your brand</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="bg-white rounded-xl p-4 shadow-md">
+                      <div className="text-2xl mb-2">📱</div>
+                      <div className="text-xs text-gray-600">Mobile Ready</div>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 shadow-md">
+                      <div className="text-2xl mb-2">🖥️</div>
+                      <div className="text-xs text-gray-600">Website</div>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 shadow-md">
+                      <div className="text-2xl mb-2">📧</div>
+                      <div className="text-xs text-gray-600">Email</div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Floating value badge */}
+                <div className="absolute -top-4 -right-4 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                  $1,000 Value FREE!
+                </div>
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="text-center bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue rounded-3xl p-8 text-white">
+              <h3 className="text-2xl font-bold mb-4">Website + Logo + Branding = Complete Package</h3>
+              <p className="text-lg text-blue-100 mb-6">
+                Get everything you need to establish a professional online presence
+              </p>
+              <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-6">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
+                  <div className="text-2xl font-bold text-gowith-orange">$6,800</div>
+                  <div className="text-sm text-blue-100">Website Value</div>
+                </div>
+                <div className="text-2xl">+</div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
+                  <div className="text-2xl font-bold text-gowith-orange">$1,000</div>
+                  <div className="text-sm text-blue-100">Logo & Branding</div>
+                </div>
+                <div className="text-2xl">=</div>
+                <div className="bg-gowith-orange rounded-xl p-4 text-center">
+                  <div className="text-2xl font-bold text-white">FREE</div>
+                  <div className="text-sm text-white">Your Investment</div>
+                </div>
+              </div>
+              
+              <Button 
+                onClick={scrollToForm}
+                className="bg-gowith-orange hover:bg-gowith-orange-hover text-white text-lg font-bold px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                <Palette className="mr-3 h-5 w-5" />
+                Get My FREE Website + Logo Package
+                <ArrowRight className="ml-3 h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
@@ -670,10 +804,6 @@ const WebDesignLanding = () => {
                 What Our Clients Say About <span className="text-gowith-medium-blue">CloudMor</span>
               </h2>
               <p className="text-xl text-gray-600 mb-4">Real results from real businesses across California</p>
-              <div className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-bold">
-                <DollarSign className="w-4 h-4 mr-2" />
-                Each client saved $5,000-$7,000 on professional web design
-              </div>
             </div>
 
             {/* Rotating testimonial groups display */}
