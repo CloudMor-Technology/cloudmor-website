@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink, FileText, Search, Settings, Code, Rocket as RocketIcon, Palette, Brush, Layers } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import WebApplicationForm from '@/components/WebApplicationForm';
+import { Link } from 'react-router-dom';
 
 const WebDesignLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -918,81 +918,54 @@ const WebDesignLanding = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gowith-dark-blue text-white py-16">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-              <div>
-                <div className="mb-8">
-                  <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-20 mb-4" />
-                  <p className="text-lg text-gray-300 mb-4">
-                    Professional web design and development services
-                  </p>
-                  <p className="text-gray-400">
-                    Creating digital experiences that drive business growth
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gowith-medium-blue rounded-lg flex items-center justify-center">
-                      <MapPin className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-white font-medium">1390 Market Street, Suite 200</p>
-                      <p className="text-gray-300">San Francisco, CA 94102</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gowith-orange rounded-lg flex items-center justify-center">
-                      <Phone className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <a href="tel:8885546597" className="text-white hover:text-gowith-orange transition-colors font-medium">
-                        (888) 554-6597
-                      </a>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gowith-medium-blue rounded-lg flex items-center justify-center">
-                      <Mail className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <a href="mailto:hello@cloudmor.com" className="text-white hover:text-gowith-orange transition-colors font-medium">
-                        hello@cloudmor.com
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-white mb-6">Our Services</h3>
-                <div className="space-y-3">
-                  <p className="text-gray-300">• Custom Web Design ($3,000 value - FREE)</p>
-                  <p className="text-gray-300">• Responsive Development ($2,500 value - FREE)</p>
-                  <p className="text-gray-300">• E-commerce Solutions</p>
-                  <p className="text-gray-300">• SEO Optimization ($900 value - FREE)</p>
-                  <p className="text-gray-300">• Website Maintenance</p>
-                  <p className="text-gray-300">• Digital Marketing</p>
-                </div>
-              </div>
+      <footer className="bg-gradient-to-r from-blue-100 to-blue-50 text-gowith-dark-blue py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <Link to="/" className="inline-block mb-4">
+                <img 
+                  src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
+                  alt="CloudMor Logo" 
+                  className="h-20 w-auto"
+                />
+              </Link>
+              <p className="text-gowith-medium-blue mb-4">
+                Enterprise-level technology solutions for growing businesses.
+              </p>
             </div>
             
-            <div className="border-t border-gray-700 pt-8">
-              <div className="flex flex-col md:flex-row justify-between items-center">
-                <p className="text-gray-400 text-sm mb-4 md:mb-0">
-                  &copy; {new Date().getFullYear()} CloudMor. All rights reserved.
-                </p>
-                <div className="flex space-x-6">
-                  <a href="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition-colors">
-                    Privacy Policy
-                  </a>
-                </div>
-              </div>
+            <div>
+              <h4 className="font-bold mb-4 text-gowith-dark-blue">Services</h4>
+              <ul className="space-y-2">
+                <li><Link to="/services/web-dev-automation" className="text-gowith-medium-blue hover:text-gowith-dark-blue">Web Development</Link></li>
+                <li><Link to="/services/managed-it" className="text-gowith-medium-blue hover:text-gowith-dark-blue">Managed IT</Link></li>
+                <li><Link to="/services/cybersecurity" className="text-gowith-medium-blue hover:text-gowith-dark-blue">Cybersecurity</Link></li>
+              </ul>
             </div>
+            
+            <div>
+              <h4 className="font-bold mb-4 text-gowith-dark-blue">Company</h4>
+              <ul className="space-y-2">
+                <li><Link to="/about" className="text-gowith-medium-blue hover:text-gowith-dark-blue">About</Link></li>
+                <li><Link to="/contact" className="text-gowith-medium-blue hover:text-gowith-dark-blue">Contact</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-bold mb-4 text-gowith-dark-blue">Contact</h4>
+              <p className="text-gowith-medium-blue mb-2">
+                <strong>Phone:</strong> <a href="tel:8885546597" className="hover:text-gowith-dark-blue">(888) 554-6597</a>
+              </p>
+              <p className="text-gowith-medium-blue">
+                <strong>Email:</strong> <a href="mailto:sales@cloudmor.com" className="hover:text-gowith-dark-blue">sales@cloudmor.com</a>
+              </p>
+            </div>
+          </div>
+          
+          <div className="border-t border-blue-300 mt-12 pt-8 text-center">
+            <p className="text-gowith-medium-blue">
+              &copy; {new Date().getFullYear()} CloudMor. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
