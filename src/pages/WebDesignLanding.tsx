@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink } from 'lucide-react';
+import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink, FileText, Search, Settings, Code, Rocket as RocketIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import WebApplicationForm from '@/components/WebApplicationForm';
@@ -557,10 +557,10 @@ const WebDesignLanding = () => {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-black text-gowith-dark-blue mb-6">
-                How It Works: <span className="text-gowith-medium-blue">Simple 4-Step Process</span>
+                Website Development <span className="text-gowith-medium-blue">Process</span>
               </h2>
               <p className="text-xl text-gray-600">
-                From initial consultation to website launch, we make it easy
+                From application to launch, we make it easy with our proven 5-step process
               </p>
               <div className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-bold mt-4">
                 <DollarSign className="w-4 h-4 mr-2" />
@@ -568,45 +568,126 @@ const WebDesignLanding = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[{
-                step: 1,
-                title: "Submit your application",
-                desc: "Fill out our simple application form with your business details",
-                days: "Day 1",
-                color: "from-gowith-medium-blue to-gowith-light-blue"
-              }, {
-                step: 2,
-                title: "Design",
-                desc: "We create custom mockups and designs",
-                days: "Day 2-5",
-                color: "from-gowith-orange to-gowith-orange-hover"
-              }, {
-                step: 3,
-                title: "Development",
-                desc: "Professional coding and optimization",
-                days: "Day 6-12",
-                color: "from-gray-600 to-gray-700"
-              }, {
-                step: 4,
-                title: "Launch",
-                desc: "Testing, final review, and go live",
-                days: "Day 13-14",
-                color: "from-gowith-dark-blue to-gowith-medium-blue"
-              }].map((item, index) => (
-                <div key={index} className="text-center group">
-                  <div className={`w-20 h-20 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                    <span className="text-white font-black text-2xl">{item.step}</span>
-                  </div>
-                  <div className="bg-white p-6 rounded-2xl shadow-lg group-hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-                    <div className="text-xs font-bold text-gowith-medium-blue mb-2 bg-blue-100 px-4 py-2 rounded-full inline-block">
-                      {item.days}
+            {/* Process Timeline */}
+            <div className="relative">
+              {/* Desktop Timeline Line */}
+              <div className="hidden lg:block absolute top-20 left-0 right-0 h-1 bg-gradient-to-r from-gowith-medium-blue via-gowith-orange to-gowith-dark-blue rounded-full"></div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4">
+                {[{
+                  step: 1,
+                  title: "Application Submission",
+                  desc: "Clients submit their website request through our application form with details about their needs, goals, and preferred features.",
+                  timeline: "",
+                  icon: FileText,
+                  color: "from-gowith-medium-blue to-gowith-light-blue"
+                }, {
+                  step: 2,
+                  title: "Review Process",
+                  desc: "Our team reviews the application, clarifies requirements if needed, and confirms the scope of the project.",
+                  timeline: "Days 1–2",
+                  icon: Search,
+                  color: "from-gowith-orange to-gowith-orange-hover"
+                }, {
+                  step: 3,
+                  title: "Finalize Requirements",
+                  desc: "We finalize the website features, pages, content structure, and gather all assets (logos, images, text, etc.) for development.",
+                  timeline: "Days 3–5",
+                  icon: Settings,
+                  color: "from-gray-600 to-gray-700"
+                }, {
+                  step: 4,
+                  title: "Design & Development",
+                  desc: "Our designers and developers build the website based on the finalized plan, ensuring it meets the client's vision, is mobile-friendly, and optimized.",
+                  timeline: "Days 6–12",
+                  icon: Code,
+                  color: "from-gowith-dark-blue to-gowith-medium-blue"
+                }, {
+                  step: 5,
+                  title: "Launch & Go Live",
+                  desc: "We test the website, perform quality checks, and once approved, deploy it to production and go live.",
+                  timeline: "Days 13–14",
+                  icon: RocketIcon,
+                  color: "from-green-600 to-green-700"
+                }].map((item, index) => (
+                  <div key={index} className="relative group">
+                    {/* Step Circle */}
+                    <div className="relative z-10 mb-6">
+                      <div className={`w-16 h-16 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300 border-4 border-white`}>
+                        <span className="text-white font-black text-xl">{item.step}</span>
+                      </div>
+                      {/* Icon overlay */}
+                      <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <item.icon className="w-4 h-4 text-gray-600" />
+                      </div>
                     </div>
-                    <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">{item.title}</h3>
-                    <p className="text-gray-600 text-sm">{item.desc}</p>
+
+                    {/* Content Card */}
+                    <div className="bg-white p-6 rounded-2xl shadow-lg group-hover:shadow-xl transition-all duration-300 border border-gray-100 h-full">
+                      {item.timeline && (
+                        <div className="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                          <Clock className="w-3 h-3 mr-1" />
+                          {item.timeline}
+                        </div>
+                      )}
+                      
+                      <h3 className="text-lg font-bold text-gowith-dark-blue mb-3 leading-tight">
+                        {item.title}
+                      </h3>
+                      
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        {item.desc}
+                      </p>
+
+                      {/* Step indicator */}
+                      <div className="mt-4 pt-4 border-t border-gray-100">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-medium text-gray-500">Step {item.step} of 5</span>
+                          <div className="flex space-x-1">
+                            {[...Array(5)].map((_, i) => (
+                              <div 
+                                key={i} 
+                                className={`w-2 h-2 rounded-full ${
+                                  i < item.step ? 'bg-gowith-orange' : 'bg-gray-200'
+                                }`} 
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Connector Arrow for Desktop */}
+                    {index < 4 && (
+                      <div className="hidden lg:block absolute top-8 -right-4 z-0">
+                        <ArrowRight className="w-8 h-8 text-gray-300" />
+                      </div>
+                    )}
                   </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Summary Section */}
+            <div className="mt-16 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue rounded-3xl p-8 text-white text-center">
+              <h3 className="text-2xl font-bold mb-4">Complete Process: 13-14 Days</h3>
+              <p className="text-lg text-blue-100 mb-6">
+                From application submission to website launch, we deliver professional results efficiently
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                  <div className="text-2xl font-bold text-gowith-orange">5 Steps</div>
+                  <div className="text-sm text-blue-100">Structured Process</div>
                 </div>
-              ))}
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                  <div className="text-2xl font-bold text-gowith-orange">14 Days</div>
+                  <div className="text-sm text-blue-100">Average Timeline</div>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                  <div className="text-2xl font-bold text-gowith-orange">$6,800</div>
+                  <div className="text-sm text-blue-100">Value Delivered FREE</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
