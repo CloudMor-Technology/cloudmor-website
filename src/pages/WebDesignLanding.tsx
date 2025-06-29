@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink, FileText, Search, Settings, Code, Rocket as RocketIcon, Palette, Brush, Layers } from 'lucide-react';
@@ -603,7 +604,7 @@ const WebDesignLanding = () => {
               
               <div className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-bold">
                 <DollarSign className="w-4 h-4 mr-2" />
-                Usually costs $800-$1,200 - Yours FREE with website package
+                Usually costs $250-$300 - Yours FREE with website package
               </div>
             </div>
 
@@ -618,7 +619,7 @@ const WebDesignLanding = () => {
                     <div>
                       <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">Custom Logo Creation</h3>
                       <p className="text-gray-600">Unique, professional logos designed specifically for your business and industry</p>
-                      <div className="text-green-600 font-bold text-sm mt-2">$500 value - FREE</div>
+                      <div className="text-green-600 font-bold text-sm mt-2">$150 value - FREE</div>
                     </div>
                   </div>
                 </div>
@@ -631,7 +632,7 @@ const WebDesignLanding = () => {
                     <div>
                       <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">Multiple Format Delivery</h3>
                       <p className="text-gray-600">PNG, SVG, PDF, and high-resolution files for all your marketing needs</p>
-                      <div className="text-green-600 font-bold text-sm mt-2">$200 value - FREE</div>
+                      <div className="text-green-600 font-bold text-sm mt-2">$75 value - FREE</div>
                     </div>
                   </div>
                 </div>
@@ -644,7 +645,7 @@ const WebDesignLanding = () => {
                     <div>
                       <h3 className="text-xl font-bold text-gowith-dark-blue mb-2">Brand Color Palette</h3>
                       <p className="text-gray-600">Professional color scheme that works across all your marketing materials</p>
-                      <div className="text-green-600 font-bold text-sm mt-2">$300 value - FREE</div>
+                      <div className="text-green-600 font-bold text-sm mt-2">$75 value - FREE</div>
                     </div>
                   </div>
                 </div>
@@ -677,7 +678,7 @@ const WebDesignLanding = () => {
                 
                 {/* Floating value badge */}
                 <div className="absolute -top-4 -right-4 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                  $1,000 Value FREE!
+                  $300 Value FREE!
                 </div>
               </div>
             </div>
@@ -695,7 +696,7 @@ const WebDesignLanding = () => {
                 </div>
                 <div className="text-2xl">+</div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
-                  <div className="text-2xl font-bold text-gowith-orange">$1,000</div>
+                  <div className="text-2xl font-bold text-gowith-orange">$300</div>
                   <div className="text-sm text-blue-100">Logo & Branding</div>
                 </div>
                 <div className="text-2xl">=</div>
