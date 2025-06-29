@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink } from 'lucide-react';
@@ -285,10 +286,13 @@ const WebDesignLanding = () => {
       <header className="w-full fixed top-0 left-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-24 w-auto" />
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-24 w-auto" />
+            </div>
             
             {/* Desktop Navigation - Centered */}
-            <nav className="hidden md:flex items-center justify-center flex-1 space-x-8">
+            <nav className="hidden md:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 space-x-8">
               <button 
                 onClick={() => scrollToSection('how-it-works')}
                 className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium"
@@ -313,7 +317,7 @@ const WebDesignLanding = () => {
             </nav>
 
             {/* Right Side Buttons */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4 flex-shrink-0">
               <Button 
                 className="bg-[#007bff] hover:bg-[#0056b3] text-white font-medium transition-colors"
               >
