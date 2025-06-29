@@ -29,196 +29,164 @@ const WebDesignLanding = () => {
 
   const testimonials = [
     {
-      quote: "CloudMor's team understood our vision perfectly. They delivered exactly what we needed for our law firm.",
-      author: "Jennifer Walsh",
-      business: "Walsh & Associates Law, Oakland",
-      result: "Perfect Vision",
-      avatar: "⚖️",
-      savings: "$6,800"
-    },
-    {
-      quote: "The SEO optimization they included helped us rank #1 on Google for our main keywords within 2 months.",
-      author: "Michael Thompson",
-      business: "Thompson Plumbing Services, Fresno",
-      result: "#1 Google Ranking",
-      avatar: "🔧",
-      savings: "$5,200"
-    },
-    {
-      quote: "As a startup, getting a professional website for free was a game-changer. We look like a million-dollar company now!",
-      author: "Lisa Chang",
-      business: "InnovateTech Solutions, Palo Alto",
-      result: "Million $ Look",
-      avatar: "🚀",
-      savings: "$7,000"
-    },
-    {
-      quote: "The customer support is incredible. They helped us update our content and made changes whenever we needed them.",
-      author: "Robert Garcia",
-      business: "Garcia Construction, San Jose",
-      result: "Amazing Support",
-      avatar: "👷‍♂️",
-      savings: "$6,500"
-    },
-    {
-      quote: "Our online sales went from zero to $10,000 per month after launching our new website. Absolutely amazing!",
-      author: "Emma Wilson",
-      business: "Wilson Handmade Crafts, Santa Barbara",
-      result: "$10K/Month Sales",
-      avatar: "🎨",
-      savings: "$6,800"
-    },
-    {
-      quote: "CloudMor delivered everything they promised and more. The security features give us complete peace of mind.",
-      author: "Dr. James Park",
-      business: "Park Family Dental, Riverside",
-      result: "Complete Security",
-      avatar: "🦷",
-      savings: "$5,800"
-    },
-    {
-      quote: "I couldn't believe they built our entire restaurant website for free. The quality is better than what we paid $6,000 for before.",
-      author: "Maria Rodriguez",
-      business: "Rodriguez Family Restaurant, Los Angeles",
-      result: "$6,000 Saved",
-      avatar: "👩‍🍳",
-      savings: "$6,000"
-    },
-    {
-      quote: "Their mobile-first approach helped us capture 70% more leads from mobile users within the first month.",
-      author: "Steve Martinez",
-      business: "Martinez Real Estate, San Diego",
-      result: "70% More Leads",
-      avatar: "🏠",
+      quote: "Our website went from invisible to the top of Google searches. We're getting 5x more leads now!",
+      author: "Sarah Chen",
+      business: "Chen Marketing Solutions, San Francisco",
+      result: "5x More Leads",
+      avatar: "📈",
       savings: "$7,200"
     },
     {
-      quote: "The e-commerce functionality they built helped us triple our online revenue in just 6 months.",
-      author: "Jessica Kim",
-      business: "Kim's Fashion Boutique, Beverly Hills",
-      result: "3x Revenue",
+      quote: "CloudMor made our complex services so easy to understand. New clients book appointments online daily!",
+      author: "Dr. Michael Rodriguez",
+      business: "Rodriguez Medical Center, Los Angeles",
+      result: "Daily Bookings",
+      avatar: "👨‍⚕️",
+      savings: "$6,800"
+    },
+    {
+      quote: "The mobile-friendly design brought us younger customers we never reached before. Revenue up 300%!",
+      author: "Amanda Foster",
+      business: "Foster's Boutique, Beverly Hills",
+      result: "300% Revenue Up",
       avatar: "👗",
       savings: "$6,400"
     },
     {
-      quote: "CloudMor's team worked around the clock to launch our site before our grand opening. Exceptional service!",
-      author: "Carlos Mendez",
-      business: "Mendez Auto Service, Bakersfield",
-      result: "Rush Delivery",
-      avatar: "🔧",
-      savings: "$5,500"
-    },
-    {
-      quote: "The analytics dashboard they provided helps us track everything. We've increased conversions by 250%.",
-      author: "Amanda Foster",
-      business: "Foster Marketing Agency, Sacramento",
-      result: "250% Conversions",
-      avatar: "📊",
-      savings: "$6,900"
-    },
-    {
-      quote: "Getting a professional logo design included was amazing. They saved us thousands on branding costs.",
-      author: "Kevin Wong",
-      business: "Wong Tech Solutions, Fremont",
-      result: "Free Branding",
-      avatar: "💻",
-      savings: "$6,800"
-    },
-    {
-      quote: "The speed optimization they did made our site load 3x faster. Our bounce rate dropped significantly.",
-      author: "Rachel Green",
-      business: "Green Wellness Center, Pasadena",
-      result: "3x Faster Speed",
-      avatar: "🌱",
-      savings: "$5,900"
-    },
-    {
-      quote: "I was skeptical about free web design, but CloudMor delivered a $7,000 quality website at no cost.",
-      author: "Tom Bradley",
-      business: "Bradley Landscaping, Modesto",
-      result: "$7,000 Value FREE",
-      avatar: "🌿",
+      quote: "Our competitors still look outdated while we appear cutting-edge. We're winning every proposal now!",
+      author: "James Liu",
+      business: "Liu Construction Group, San Diego",
+      result: "Winning Proposals",
+      avatar: "🏗️",
       savings: "$7,000"
     },
     {
-      quote: "Their content management system is so easy to use. We can update everything ourselves now.",
-      author: "Linda Davis",
-      business: "Davis Photography Studio, Long Beach",
-      result: "Easy Management",
-      avatar: "📸",
-      savings: "$6,300"
+      quote: "24/7 online presence means customers find us even when we're closed. Night inquiries increased 400%!",
+      author: "Maria Gonzalez",
+      business: "Gonzalez Auto Repair, Fresno",
+      result: "400% Night Leads",
+      avatar: "🔧",
+      savings: "$5,800"
     },
     {
-      quote: "The social media integration helped us gain 500 new followers in the first week after launch.",
-      author: "Marcus Johnson",
-      business: "Johnson Fitness Center, Stockton",
-      result: "500+ Followers",
-      avatar: "💪",
-      savings: "$5,700"
+      quote: "The professional credibility boost helped us attract Fortune 500 clients. Our biggest year ever!",
+      author: "Robert Kim",
+      business: "Kim Digital Consulting, Palo Alto",
+      result: "Fortune 500 Clients",
+      avatar: "💼",
+      savings: "$6,900"
     },
     {
-      quote: "CloudMor's backup and security features saved us when our old hosting provider failed.",
-      author: "Sarah Miller",
-      business: "Miller Accounting Services, Fresno",
-      result: "Disaster Recovery",
-      avatar: "📊",
-      savings: "$6,600"
-    },
-    {
-      quote: "The contact forms and lead generation tools they built brought us 40 new clients in 2 months.",
-      author: "James Wilson",
-      business: "Wilson Legal Services, Santa Monica",
-      result: "40 New Clients",
-      avatar: "⚖️",
+      quote: "Online appointment system eliminated phone tag. Client satisfaction scores hit all-time highs!",
+      author: "Dr. Jennifer Park",
+      business: "Park Dental Practice, Oakland",
+      result: "Perfect Satisfaction",
+      avatar: "🦷",
       savings: "$6,200"
     },
     {
-      quote: "Their team redesigned our outdated site into a modern masterpiece. We saved over $6,800!",
-      author: "Patricia Brown",
-      business: "Brown Interior Design, Newport Beach",
-      result: "$6,800 Saved",
+      quote: "The SEO magic worked! We outrank competitors who've been around 20 years longer than us.",
+      author: "Carlos Mendez",
+      business: "Mendez Digital Agency, Sacramento",
+      result: "Outrank Veterans",
+      avatar: "🎯",
+      savings: "$6,600"
+    },
+    {
+      quote: "Customer testimonials on our new site convert visitors instantly. Trust factor went through the roof!",
+      author: "Lisa Wang",
+      business: "Wang Interior Design, San Jose",
+      result: "Instant Trust",
       avatar: "🏡",
-      savings: "$6,800"
+      savings: "$6,300"
     },
     {
-      quote: "The appointment booking system they integrated increased our bookings by 300%.",
-      author: "Dr. Michael Lee",
-      business: "Lee Family Medicine, Irvine",
-      result: "300% Bookings",
-      avatar: "👨‍⚕️",
-      savings: "$5,400"
-    },
-    {
-      quote: "CloudMor transformed our small pet grooming business into a professional online presence.",
-      author: "Jennifer Taylor",
-      business: "Taylor's Pet Grooming, San Bernardino",
-      result: "Professional Image",
-      avatar: "🐕",
-      savings: "$6,100"
-    },
-    {
-      quote: "The multilingual support they added helped us reach Hispanic customers. Sales up 180%!",
-      author: "Diego Hernandez",
-      business: "Hernandez Construction, East LA",
-      result: "180% Sales Up",
-      avatar: "🔨",
+      quote: "The contact forms capture leads we used to lose. Follow-up automation does the heavy lifting for us!",
+      author: "Anthony Davis",
+      business: "Davis Legal Services, Long Beach",
+      result: "Zero Lost Leads",
+      avatar: "⚖️",
       savings: "$7,100"
     },
     {
-      quote: "I can't believe the quality of work they delivered for free. Worth every penny of the $6,800 value!",
+      quote: "Our e-commerce integration turned browsers into buyers. Online sales now match our physical store!",
+      author: "Rachel Green",
+      business: "Green Home Goods, Santa Monica",
+      result: "Equal Online Sales",
+      avatar: "🛍️",
+      savings: "$6,500"
+    },
+    {
+      quote: "The multilingual support opened doors to entire communities we couldn't serve before. Amazing growth!",
+      author: "Diego Hernandez",
+      business: "Hernandez Construction, East LA",
+      result: "New Communities",
+      avatar: "🔨",
+      savings: "$7,000"
+    },
+    {
+      quote: "Analytics dashboard shows exactly where our best customers come from. Marketing became so much smarter!",
       author: "Kelly Robinson",
       business: "Robinson Catering Services, Ventura",
-      result: "$6,800 FREE Value",
+      result: "Smart Marketing",
       avatar: "🍽️",
+      savings: "$6,100"
+    },
+    {
+      quote: "The speed optimization made our site lightning fast. Bounce rate dropped 70% and engagement soared!",
+      author: "Steve Martinez",
+      business: "Martinez Tech Solutions, Riverside",
+      result: "70% Less Bounce",
+      avatar: "⚡",
+      savings: "$6,700"
+    },
+    {
+      quote: "Social proof features showcase our work beautifully. Prospects convert before even calling us!",
+      author: "Patricia Brown",
+      business: "Brown Photography Studio, Pasadena",
+      result: "Pre-Call Conversions",
+      avatar: "📸",
+      savings: "$6,000"
+    },
+    {
+      quote: "The CRM integration tracks every interaction. We never miss a follow-up opportunity anymore!",
+      author: "Kevin Wong",
+      business: "Wong Financial Services, Fremont",
+      result: "Perfect Follow-up",
+      avatar: "💰",
       savings: "$6,800"
     },
     {
-      quote: "Their ongoing maintenance and support means we never have to worry about our website again.",
-      author: "Anthony Garcia",
-      business: "Garcia Plumbing, Riverside",
-      result: "Worry-Free",
-      avatar: "🔧",
-      savings: "$5,600"
+      quote: "Local SEO put us on the map literally! 'Near me' searches bring 80% of our new customers now.",
+      author: "Emma Wilson",
+      business: "Wilson Pet Grooming, Santa Barbara",
+      result: "80% Local Traffic",
+      avatar: "🐕",
+      savings: "$5,900"
+    },
+    {
+      quote: "The security features protect our client data perfectly. Peace of mind for both us and our customers!",
+      author: "Thomas Chen",
+      business: "Chen Accounting Firm, Stockton",
+      result: "Complete Security",
+      avatar: "🛡️",
+      savings: "$6,400"
+    },
+    {
+      quote: "Portfolio showcase feature turns every visitor into a potential client. Our closing rate doubled!",
+      author: "Jessica Kim",
+      business: "Kim Architecture Studio, Newport Beach",
+      result: "Double Closing Rate",
+      avatar: "🏢",
+      savings: "$7,200"
+    },
+    {
+      quote: "The backup system saved us during a server crash. Zero downtime means zero lost business!",
+      author: "Marcus Johnson",
+      business: "Johnson IT Support, Modesto",
+      result: "Zero Downtime",
+      avatar: "💻",
+      savings: "$6,600"
     }
   ];
 
@@ -269,7 +237,7 @@ const WebDesignLanding = () => {
   React.useEffect(() => {
     const testimonialInterval = setInterval(() => {
       setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
-    }, 4000);
+    }, 3000);
     return () => clearInterval(testimonialInterval);
   }, []);
 
@@ -785,6 +753,50 @@ const WebDesignLanding = () => {
               </div>
             </div>
 
+            {/* Auto-rotating testimonial display */}
+            <div className="max-w-4xl mx-auto mb-8">
+              <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-xl transform transition-all duration-500 hover:scale-105">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="inline-flex items-center bg-gowith-orange/10 text-gowith-orange px-3 py-1 rounded-full text-sm font-bold">
+                    <Award className="w-4 h-4 mr-1" />
+                    {testimonials[currentTestimonial].result}
+                  </div>
+                  <div className="text-green-600 font-bold text-sm bg-green-100 px-2 py-1 rounded">
+                    Saved {testimonials[currentTestimonial].savings}
+                  </div>
+                </div>
+                
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 text-gowith-orange fill-current" />
+                  ))}
+                </div>
+                <blockquote className="text-gray-700 mb-6 leading-relaxed font-medium text-lg">
+                  "{testimonials[currentTestimonial].quote}"
+                </blockquote>
+                <footer className="flex items-center">
+                  <div className="text-4xl mr-4">{testimonials[currentTestimonial].avatar}</div>
+                  <div>
+                    <div className="font-bold text-gowith-dark-blue text-lg">{testimonials[currentTestimonial].author}</div>
+                    <div className="text-gray-600">{testimonials[currentTestimonial].business}</div>
+                  </div>
+                </footer>
+              </div>
+            </div>
+
+            {/* Testimonial indicators */}
+            <div className="flex justify-center space-x-2 mb-8">
+              {testimonials.map((_, index) => (
+                <div 
+                  key={index} 
+                  className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    index === currentTestimonial ? 'bg-gowith-orange scale-150' : 'bg-gray-300 hover:bg-gray-400'
+                  }`} 
+                  onClick={() => setCurrentTestimonial(index)} 
+                />
+              ))}
+            </div>
+
             <Carousel className="w-full max-w-6xl mx-auto">
               <CarouselContent>
                 {testimonials.map((testimonial, index) => (
@@ -843,7 +855,7 @@ const WebDesignLanding = () => {
                 APPLY YOUR REQUEST TODAY!
               </h3>
               <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8">
-                Get your $6,800 professional website absolutely FREE. Tell us about your project and we'll provide a detailed proposal within 24 hours.
+                Get your $6,800 professional website absolutely FREE. Tell us about your project and we'll get started right away.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
@@ -869,8 +881,8 @@ const WebDesignLanding = () => {
             <div className="text-center mt-8">
               <div className="bg-gowith-orange rounded-2xl p-6 shadow-lg">
                 <p className="text-xl font-black text-white flex items-center justify-center">
-                  <DollarSign className="h-6 w-6 mr-3" />
-                  Ready to Get Your $6,800 Website FREE? Apply Now and Transform Your Business!
+                  <Heart className="h-6 w-6 mr-3" />
+                  From California, with ❤️ – Passionately Powering Your Vision
                 </p>
               </div>
             </div>
