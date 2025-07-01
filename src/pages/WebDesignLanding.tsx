@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink, FileText, Search, Settings, Code, Rocket as RocketIcon, Palette, Brush, Layers } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import WebApplicationForm from '@/components/WebApplicationForm';
 import { Link } from 'react-router-dom';
 
 const WebDesignLanding = () => {
@@ -846,7 +845,7 @@ const WebDesignLanding = () => {
         </div>
       </section>
 
-      {/* Enhanced Web Design Form Section */}
+      {/* Enhanced Web Design Form Section with Typeform Embed */}
       <section id="web-design-form" className="py-20 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative overflow-hidden">
         {/* Enhanced background effects */}
         <div className="absolute inset-0">
@@ -891,7 +890,7 @@ const WebDesignLanding = () => {
               </div>
             </div>
 
-            {/* Enhanced form container with glowing border */}
+            {/* Enhanced form container with glowing border and Typeform embed */}
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-gowith-orange via-yellow-400 to-gowith-orange rounded-3xl blur opacity-75 animate-pulse"></div>
               <div className="relative bg-white rounded-3xl p-8 shadow-2xl">
@@ -901,7 +900,18 @@ const WebDesignLanding = () => {
                   </h4>
                   <p className="text-gray-600">Fill out this form to get your FREE $6,800 website</p>
                 </div>
-                <WebApplicationForm />
+                
+                {/* Typeform Embed */}
+                <div className="w-full">
+                  <iframe
+                    src="https://form.typeform.com/to/tSkJytpC"
+                    width="100%"
+                    height="600"
+                    frameBorder="0"
+                    className="rounded-lg"
+                    title="Web Design Request Form"
+                  />
+                </div>
               </div>
             </div>
 
