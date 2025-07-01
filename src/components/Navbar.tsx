@@ -167,6 +167,7 @@ const Navbar = () => {
           </DropdownMenu>
           */}
           
+          {/* ... keep existing Industries dropdown code ... */}
           <DropdownMenu>
             <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
               Industries
@@ -235,7 +236,7 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           
-          {/* Support Dropdown Menu with direct Speed Test link */}
+          {/* ... keep existing Support dropdown code ... */}
           <DropdownMenu>
             <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
               Support
@@ -298,19 +299,32 @@ const Navbar = () => {
             Contact
           </Link>
 
-          {/* Special Offer dropdown with orange-green gradient and same size as other nav items */}
+          {/* Special Offer dropdown with animated blue gradient and eye-catching elements */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-gradient-to-r from-orange-500 to-green-500 hover:from-orange-600 hover:to-green-600 text-white border-none cursor-pointer flex items-center px-3 py-1 rounded">
+            <DropdownMenuTrigger className="relative text-white font-medium border-none cursor-pointer flex items-center px-3 py-1 rounded animate-pulse bg-gradient-to-r from-blue-600 via-blue-800 to-blue-400 bg-[length:200%_100%] animate-[gradient_2s_ease-in-out_infinite] shadow-lg">
+              <style jsx>{`
+                @keyframes gradient {
+                  0%, 100% { background-position: 0% 50%; }
+                  50% { background-position: 100% 50%; }
+                }
+              `}</style>
+              <Zap className="h-4 w-4 mr-1 animate-bounce" />
               ✨ Special Offer
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
               </svg>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="p-3 min-w-[250px] bg-white border-2 border-orange-200 shadow-xl">
+            <DropdownMenuContent className="p-3 min-w-[280px] bg-white border-2 border-blue-200 shadow-xl">
               <DropdownMenuItem>
-                <Link to="/web-design" className="w-full flex items-center gap-2 text-gray-800 hover:text-orange-600 font-medium">
-                  <Palette className="h-5 w-5 text-orange-500" />
+                <Link to="/web-design" className="w-full flex items-center gap-2 text-gray-800 hover:text-blue-600 font-medium">
+                  <Palette className="h-5 w-5 text-blue-500" />
                   <div>Web Design & Development</div>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/contact?service=web-design&type=application" className="w-full flex items-center gap-2 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 px-3 py-2 rounded font-medium">
+                  <Zap className="h-5 w-5" />
+                  <div>Apply Now - Limited Time!</div>
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -355,14 +369,18 @@ const Navbar = () => {
               Home
             </Link>
             
-            {/* Mobile Special Offer with orange-green gradient */}
+            {/* Mobile Special Offer with animated blue gradient */}
             <div className="px-4 py-2">
-              <div className="bg-gradient-to-r from-orange-500 to-green-500 text-white font-bold px-3 py-2 rounded-lg text-center mb-2 shadow-lg">
+              <div className="bg-gradient-to-r from-blue-600 via-blue-800 to-blue-400 bg-[length:200%_100%] animate-[gradient_2s_ease-in-out_infinite] text-white font-bold px-3 py-2 rounded-lg text-center mb-2 shadow-lg flex items-center justify-center">
+                <Zap className="h-4 w-4 mr-1 animate-bounce" />
                 ✨ Special Offer
               </div>
               <div className="ml-4 flex flex-col space-y-2">
-                <Link to="/web-design" className="text-orange-600 font-medium hover:text-orange-800" onClick={() => setIsOpen(false)}>
+                <Link to="/web-design" className="text-blue-600 font-medium hover:text-blue-800" onClick={() => setIsOpen(false)}>
                   Web Design & Development
+                </Link>
+                <Link to="/contact?service=web-design&type=application" className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-3 py-2 rounded text-center hover:from-blue-600 hover:to-blue-800" onClick={() => setIsOpen(false)}>
+                  Apply Now - Limited Time!
                 </Link>
               </div>
             </div>
