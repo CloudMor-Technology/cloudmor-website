@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette } from 'lucide-react';
+import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
 import { Button } from './ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
@@ -42,6 +43,27 @@ const Navbar = () => {
           <Link to="/" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
             Home
           </Link>
+          
+          {/* Limited Offer - Special styled menu item */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="bg-gradient-to-r from-red-500 to-red-600 text-white font-bold px-4 py-2 rounded-full hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg border-none cursor-pointer flex items-center animate-pulse">
+              🚀 Limited Offer
+              <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="p-3 min-w-[200px] bg-white border-2 border-red-200">
+              <DropdownMenuItem className="font-medium text-base border-b pb-2 mb-2 text-red-600">
+                Special Deals
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/web-design" className="w-full flex items-center gap-2 text-gray-800 hover:text-red-600 font-medium">
+                  <Zap className="h-5 w-5 text-red-500" />
+                  <div>Web Design Special</div>
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           
           <DropdownMenu>
             <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
@@ -333,6 +355,18 @@ const Navbar = () => {
             <Link to="/" className="text-gowith-dark-blue font-medium px-4 py-2 hover:bg-blue-100 rounded-md" onClick={() => setIsOpen(false)}>
               Home
             </Link>
+            
+            {/* Mobile Limited Offer */}
+            <div className="px-4 py-2">
+              <div className="bg-gradient-to-r from-red-500 to-red-600 text-white font-bold px-4 py-2 rounded-full text-center mb-2">
+                🚀 Limited Offer
+              </div>
+              <div className="ml-4 flex flex-col space-y-2">
+                <Link to="/web-design" className="text-red-600 font-medium hover:text-red-800" onClick={() => setIsOpen(false)}>
+                  Web Design Special
+                </Link>
+              </div>
+            </div>
             
             <div className="px-4 py-2">
               <div className="text-gowith-dark-blue font-medium mb-2">Services</div>
