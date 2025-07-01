@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
@@ -102,7 +101,6 @@ const fetchColorPalettes = async (page: number = 1): Promise<ColorPalette[]> => 
 
 const Colores = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSort, setSelectedSort] = useState<string>('popular-all');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedPalette, setSelectedPalette] = useState<ColorPalette | null>(null);
   const [noPreference, setNoPreference] = useState(false);
@@ -123,12 +121,6 @@ const Colores = () => {
       }
     }
   }, [palettes, currentPage]);
-
-  const sortOptions = [
-    { value: 'popular-all', label: '🔥 Popular (All time)' },
-    { value: 'random', label: '🎲 Random' },
-    { value: 'collection', label: '❤️ Collection' }
-  ];
 
   const tagOptions = [
     'pastel', 'vintage', 'retro', 'neon', 'gold', 'light', 'dark', 'warm', 'cold',
@@ -154,15 +146,8 @@ const Colores = () => {
       );
     }
 
-    // Apply sort filter
-    if (selectedSort === 'popular-all') {
-      filtered = filtered.filter(palette => palette.isPopular);
-    } else if (selectedSort === 'random') {
-      filtered = [...filtered].sort(() => Math.random() - 0.5);
-    }
-
     return filtered;
-  }, [allPalettes, searchTerm, selectedTags, selectedSort]);
+  }, [allPalettes, searchTerm, selectedTags]);
 
   const handleTagToggle = (tag: string) => {
     setSelectedTags(prev => 
@@ -203,7 +188,6 @@ const Colores = () => {
   const clearAllFilters = () => {
     setSelectedTags([]);
     setSearchTerm('');
-    setSelectedSort('popular-all');
     setSelectedPalette(null);
     setNoPreference(false);
   };
@@ -242,30 +226,8 @@ const Colores = () => {
                 </div>
               </div>
 
-              {/* Sort Options */}
-              <div className="mb-6">
-                <h4 className="font-medium mb-3">🔄 Sort</h4>
-                <div className="space-y-2">
-                  {sortOptions.map((option) => (
-                    <label key={option.value} className="flex items-center space-x-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="sort"
-                        value={option.value}
-                        checked={selectedSort === option.value}
-                        onChange={(e) => setSelectedSort(e.target.value)}
-                        className="w-4 h-4"
-                      />
-                      <span className="text-sm">{option.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <Separator />
-
               {/* Tag Filters */}
-              <div className="mt-6">
+              <div>
                 <h4 className="font-medium mb-3">🎯 Tags</h4>
                 <ScrollArea className="h-64">
                   <div className="space-y-2">
