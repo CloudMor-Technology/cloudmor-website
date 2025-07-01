@@ -294,28 +294,28 @@ const Navbar = () => {
           <Link to="/contact" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
             Contact
           </Link>
-        </nav>
 
-        {/* Updated CTA Buttons with Limited Offer */}
-        <div className="hidden md:flex items-center space-x-4">
-          {/* Limited Offer - Clean design next to buttons */}
+          {/* Special Offer dropdown styled like other nav items */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-3 py-2 rounded-lg border-none cursor-pointer flex items-center text-sm transition-colors">
-              🚀 Limited Offer
-              <svg className="ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
+              Special Offer
+              <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
               </svg>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="p-2 min-w-[180px] bg-white">
+            <DropdownMenuContent className="p-3 min-w-[250px]">
               <DropdownMenuItem>
-                <Link to="/web-design" className="w-full flex items-center gap-2 text-gray-800 hover:text-orange-600 font-medium">
-                  <Zap className="h-4 w-4 text-orange-500" />
-                  <div>Web Design Special</div>
+                <Link to="/web-design" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
+                  <Palette className="h-5 w-5 text-gowith-medium-blue" />
+                  <div>Web Design & Development</div>
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        </nav>
 
+        {/* Updated CTA Buttons */}
+        <div className="hidden md:flex items-center space-x-4">
           <Button className="bg-[#007bff] hover:bg-[#0056b3] text-white font-bold transition-colors">
             <a 
               href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login"
@@ -352,14 +352,12 @@ const Navbar = () => {
               Home
             </Link>
             
-            {/* Mobile Limited Offer - Updated design */}
+            {/* Mobile Special Offer */}
             <div className="px-4 py-2">
-              <div className="bg-orange-500 text-white font-semibold px-3 py-2 rounded-lg text-center mb-2">
-                🚀 Limited Offer
-              </div>
+              <div className="text-gowith-dark-blue font-medium mb-2">Special Offer</div>
               <div className="ml-4 flex flex-col space-y-2">
-                <Link to="/web-design" className="text-orange-600 font-medium hover:text-orange-800" onClick={() => setIsOpen(false)}>
-                  Web Design Special
+                <Link to="/web-design" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                  Web Design & Development
                 </Link>
               </div>
             </div>
