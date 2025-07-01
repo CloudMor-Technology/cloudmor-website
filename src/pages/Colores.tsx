@@ -102,7 +102,7 @@ const fetchColorPalettes = async (page: number = 1): Promise<ColorPalette[]> => 
 
 const Colores = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSort, setSelectedSort] = useState<string>('new');
+  const [selectedSort, setSelectedSort] = useState<string>('popular-all');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedPalette, setSelectedPalette] = useState<ColorPalette | null>(null);
   const [noPreference, setNoPreference] = useState(false);
@@ -125,9 +125,6 @@ const Colores = () => {
   }, [palettes, currentPage]);
 
   const sortOptions = [
-    { value: 'new', label: '✨ New' },
-    { value: 'popular-month', label: '🔥 Popular (Month)' },
-    { value: 'popular-year', label: '🔥 Popular (Year)' },
     { value: 'popular-all', label: '🔥 Popular (All time)' },
     { value: 'random', label: '🎲 Random' },
     { value: 'collection', label: '❤️ Collection' }
@@ -158,22 +155,8 @@ const Colores = () => {
     }
 
     // Apply sort filter
-    if (selectedSort === 'new') {
-      filtered = filtered.filter(palette => palette.isNew);
-    } else if (selectedSort.startsWith('popular')) {
-      const timeframe = selectedSort.split('-')[1];
-      const cutoffDate = new Date();
-      
-      if (timeframe === 'month') {
-        cutoffDate.setMonth(cutoffDate.getMonth() - 1);
-      } else if (timeframe === 'year') {
-        cutoffDate.setFullYear(cutoffDate.getFullYear() - 1);
-      }
-      
-      filtered = filtered.filter(palette => {
-        if (timeframe === 'all') return palette.isPopular;
-        return palette.isPopular && new Date(palette.createdAt) >= cutoffDate;
-      });
+    if (selectedSort === 'popular-all') {
+      filtered = filtered.filter(palette => palette.isPopular);
     } else if (selectedSort === 'random') {
       filtered = [...filtered].sort(() => Math.random() - 0.5);
     }
@@ -215,6 +198,14 @@ const Colores = () => {
 
   const loadMore = () => {
     setCurrentPage(prev => prev + 1);
+  };
+
+  const clearAllFilters = () => {
+    setSelectedTags([]);
+    setSearchTerm('');
+    setSelectedSort('popular-all');
+    setSelectedPalette(null);
+    setNoPreference(false);
   };
 
   return (
@@ -294,11 +285,7 @@ const Colores = () => {
               {/* Clear Filters */}
               <Button
                 variant="outline"
-                onClick={() => {
-                  setSelectedTags([]);
-                  setSearchTerm('');
-                  setSelectedSort('new');
-                }}
+                onClick={clearAllFilters}
                 className="w-full mt-4"
               >
                 <RefreshCw className="w-4 h-4 mr-2" />
