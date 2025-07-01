@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
@@ -326,13 +325,13 @@ const Navbar = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="p-3 min-w-[280px] bg-white border-2 border-blue-200 shadow-xl">
               <DropdownMenuItem>
-                <Link to="/web-design" className="w-full flex items-center gap-2 text-gray-800 hover:text-blue-600 font-medium">
+                <Link to="/services/web-design-development" className="w-full flex items-center gap-2 text-gray-800 hover:text-blue-600 font-medium">
                   <Palette className="h-5 w-5 text-blue-500" />
                   <div>Web Design & Development</div>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to="/contact?service=web-design&type=application" className="w-full flex items-center gap-2 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 px-3 py-2 rounded font-medium">
+                <Link to="/web-design" className="w-full flex items-center gap-2 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 px-3 py-2 rounded font-medium">
                   <Zap className="h-5 w-5" />
                   <div>Apply Now - Limited Time!</div>
                 </Link>
@@ -393,10 +392,10 @@ const Navbar = () => {
                 ✨ Special Offer
               </div>
               <div className="ml-4 flex flex-col space-y-2">
-                <Link to="/web-design" className="text-blue-600 font-medium hover:text-blue-800" onClick={() => setIsOpen(false)}>
+                <Link to="/services/web-design-development" className="text-blue-600 font-medium hover:text-blue-800" onClick={() => setIsOpen(false)}>
                   Web Design & Development
                 </Link>
-                <Link to="/contact?service=web-design&type=application" className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-3 py-2 rounded text-center hover:from-blue-600 hover:to-blue-800" onClick={() => setIsOpen(false)}>
+                <Link to="/web-design" className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-3 py-2 rounded text-center hover:from-blue-600 hover:to-blue-800" onClick={() => setIsOpen(false)}>
                   Apply Now - Limited Time!
                 </Link>
               </div>
