@@ -20,6 +20,7 @@ import WebLanding from "./pages/WebLanding";
 import WebDesignLanding from "./pages/WebDesignLanding";
 import RequestsForm from "./pages/RequestsForm";
 import ColorPalette from "./pages/ColorPalette";
+import Colores from "./pages/Colores";
 
 // Service Pages
 import ManagedIT from "./pages/services/ManagedIT";
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/web" element={<WebLanding />} />
             <Route path="/web-design" element={<WebDesignLanding />} />
             <Route path="/color-palette" element={<ColorPalette />} />
+            <Route path="/colores" element={<Colores />} />
             <Route path="/requests-form" element={<RequestsForm />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/managed-it" element={<ManagedIT />} />
