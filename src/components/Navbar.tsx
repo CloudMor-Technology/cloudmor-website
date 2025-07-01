@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
@@ -301,13 +302,22 @@ const Navbar = () => {
 
           {/* Special Offer dropdown with animated blue gradient and eye-catching elements */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="relative text-white font-medium border-none cursor-pointer flex items-center px-3 py-1 rounded animate-pulse bg-gradient-to-r from-blue-600 via-blue-800 to-blue-400 bg-[length:200%_100%] animate-[gradient_2s_ease-in-out_infinite] shadow-lg">
-              <style jsx>{`
-                @keyframes gradient {
-                  0%, 100% { background-position: 0% 50%; }
-                  50% { background-position: 100% 50%; }
-                }
-              `}</style>
+            <DropdownMenuTrigger 
+              className="relative text-white font-medium border-none cursor-pointer flex items-center px-3 py-1 rounded shadow-lg"
+              style={{
+                background: 'linear-gradient(-45deg, #1e3a8a, #3b82f6, #1e40af, #60a5fa)',
+                backgroundSize: '400% 400%',
+                animation: 'gradient 3s ease infinite'
+              }}
+            >
+              <style>
+                {`
+                  @keyframes gradient {
+                    0%, 100% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                  }
+                `}
+              </style>
               <Zap className="h-4 w-4 mr-1 animate-bounce" />
               ✨ Special Offer
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -371,7 +381,14 @@ const Navbar = () => {
             
             {/* Mobile Special Offer with animated blue gradient */}
             <div className="px-4 py-2">
-              <div className="bg-gradient-to-r from-blue-600 via-blue-800 to-blue-400 bg-[length:200%_100%] animate-[gradient_2s_ease-in-out_infinite] text-white font-bold px-3 py-2 rounded-lg text-center mb-2 shadow-lg flex items-center justify-center">
+              <div 
+                className="text-white font-bold px-3 py-2 rounded-lg text-center mb-2 shadow-lg flex items-center justify-center"
+                style={{
+                  background: 'linear-gradient(-45deg, #1e3a8a, #3b82f6, #1e40af, #60a5fa)',
+                  backgroundSize: '400% 400%',
+                  animation: 'gradient 3s ease infinite'
+                }}
+              >
                 <Zap className="h-4 w-4 mr-1 animate-bounce" />
                 ✨ Special Offer
               </div>
