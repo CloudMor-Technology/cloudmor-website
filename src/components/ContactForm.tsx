@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -51,7 +50,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
     if (serviceParam === 'web-design' && typeParam === 'application') {
       setFormData(prev => ({
         ...prev,
-        subject: "Web Design & Development - Special Offer Application"
+        subject: "Web Design & Development - LIMITED TIME Special Offer Application"
       }));
     }
   }, [searchParams]);
@@ -117,7 +116,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
       
       // Show different success messages based on form type
       if (actualFormType === 'application') {
-        toast.success("Thank you for your application! Our team will review your request and contact you within 24 hours about our special web design offer.");
+        toast.success("🎉 Application submitted successfully! Our team will contact you within 24 hours about your LIMITED TIME web design special offer. Don't miss out!");
       } else {
         toast.success("Thank you for contacting us! We'll be in touch soon.");
       }
@@ -157,9 +156,9 @@ const ContactForm: React.FC<ContactFormProps> = ({
   const isApplicationForm = serviceParam === 'web-design' && typeParam === 'application';
   
   // Update form display based on application type
-  const displayTitle = isApplicationForm ? "Apply for Special Web Design Offer" : formTitle;
-  const displayDescription = isApplicationForm ? "Take advantage of our limited-time special offer for web design and development services. Fill out the form below to apply!" : formDescription;
-  const displayButtonText = isApplicationForm ? "Submit Application" : buttonText;
+  const displayTitle = isApplicationForm ? "🚀 Apply for LIMITED TIME Web Design Special Offer!" : formTitle;
+  const displayDescription = isApplicationForm ? "⏰ Don't miss out! This exclusive offer for professional web design and development services is available for a limited time only. Apply now to secure your spot!" : formDescription;
+  const displayButtonText = isApplicationForm ? "🎯 Submit Application - Limited Time!" : buttonText;
   
   // Dynamically render fields based on formType
   const renderSpecificFields = () => {
@@ -317,14 +316,21 @@ const ContactForm: React.FC<ContactFormProps> = ({
       <p className="text-gray-600 mb-6">{displayDescription}</p>
       
       {isApplicationForm && (
-        <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-blue-100 border-l-4 border-blue-500 rounded">
-          <h4 className="font-semibold text-blue-800 mb-2">🎯 Special Offer Details:</h4>
-          <ul className="text-sm text-blue-700 space-y-1">
-            <li>• Professional web design consultation</li>
-            <li>• Custom website development</li>
-            <li>• Mobile-responsive design</li>
-            <li>• Limited time pricing</li>
-          </ul>
+        <div className="mb-6 p-4 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded animate-pulse">
+          <h4 className="font-bold text-red-800 mb-2 flex items-center">
+            ⚡ LIMITED TIME OFFER - Act Fast! ⚡
+          </h4>
+          <div className="text-sm text-red-700 space-y-2">
+            <p className="font-semibold">🎯 What's Included:</p>
+            <ul className="space-y-1 ml-4">
+              <li>• FREE professional web design consultation ($500 value)</li>
+              <li>• Custom responsive website development</li>
+              <li>• Mobile-first design approach</li>
+              <li>• SEO optimization included</li>
+              <li>• 30-day support guarantee</li>
+            </ul>
+            <p className="font-bold text-red-800 mt-3">⏰ This offer expires soon - Apply today!</p>
+          </div>
         </div>
       )}
       
@@ -459,7 +465,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
           disabled={isSubmitting}
           className={`w-full py-3 px-6 rounded-md font-medium transition-colors text-lg ${
             isApplicationForm 
-              ? 'bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white' 
+              ? 'bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700 text-white animate-pulse shadow-lg' 
               : 'bg-gowith-orange hover:bg-gowith-orange-hover text-white'
           }`}
         >
