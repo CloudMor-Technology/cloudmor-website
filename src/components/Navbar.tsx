@@ -138,6 +138,8 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           
+          {/* Insights dropdown temporarily hidden */}
+          {/* 
           <DropdownMenu>
             <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
               Insights
@@ -163,6 +165,7 @@ const Navbar = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          */}
           
           <DropdownMenu>
             <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
@@ -295,9 +298,9 @@ const Navbar = () => {
             Contact
           </Link>
 
-          {/* Special Offer dropdown with eye-catching colors */}
+          {/* Special Offer dropdown with orange-green gradient and same size as other nav items */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white font-bold px-4 py-2 rounded-lg border-none cursor-pointer flex items-center shadow-lg transform hover:scale-105 transition-all duration-200">
+            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-gradient-to-r from-orange-500 to-green-500 hover:from-orange-600 hover:to-green-600 text-white border-none cursor-pointer flex items-center px-3 py-1 rounded">
               ✨ Special Offer
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
@@ -352,9 +355,9 @@ const Navbar = () => {
               Home
             </Link>
             
-            {/* Mobile Special Offer with eye-catching design */}
+            {/* Mobile Special Offer with orange-green gradient */}
             <div className="px-4 py-2">
-              <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold px-3 py-2 rounded-lg text-center mb-2 shadow-lg">
+              <div className="bg-gradient-to-r from-orange-500 to-green-500 text-white font-bold px-3 py-2 rounded-lg text-center mb-2 shadow-lg">
                 ✨ Special Offer
               </div>
               <div className="ml-4 flex flex-col space-y-2">
@@ -397,6 +400,8 @@ const Navbar = () => {
               </div>
             </div>
             
+            {/* Insights section temporarily hidden in mobile menu too */}
+            {/*
             <div className="px-4 py-2">
               <div className="text-gowith-dark-blue font-medium mb-2">Insights</div>
               <div className="ml-4 flex flex-col space-y-2">
@@ -408,6 +413,7 @@ const Navbar = () => {
                 </Link>
               </div>
             </div>
+            */}
             
             <div className="px-4 py-2">
               <div className="text-gowith-dark-blue font-medium mb-2">Industries</div>
