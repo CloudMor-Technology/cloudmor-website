@@ -21,6 +21,7 @@ import WebDesignLanding from "./pages/WebDesignLanding";
 import RequestsForm from "./pages/RequestsForm";
 import ColorPalette from "./pages/ColorPalette";
 import Colores from "./pages/Colores";
+import ColorHunt from "./pages/ColorHunt";
 
 // Service Pages
 import ManagedIT from "./pages/services/ManagedIT";
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/web-design" element={<WebDesignLanding />} />
             <Route path="/color-palette" element={<ColorPalette />} />
             <Route path="/colores" element={<Colores />} />
+            <Route path="/colorhunt" element={<ColorHunt />} />
             <Route path="/requests-form" element={<RequestsForm />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/managed-it" element={<ManagedIT />} />
