@@ -2,12 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
-import { RefreshCw, Search, Check } from 'lucide-react';
+import { RefreshCw, Check } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -100,8 +96,6 @@ const fetchColorPalettes = async (page: number = 1): Promise<ColorPalette[]> => 
 };
 
 const Colores = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedPalette, setSelectedPalette] = useState<ColorPalette | null>(null);
   const [noPreference, setNoPreference] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -121,41 +115,6 @@ const Colores = () => {
       }
     }
   }, [palettes, currentPage]);
-
-  const tagOptions = [
-    'pastel', 'vintage', 'retro', 'neon', 'gold', 'light', 'dark', 'warm', 'cold',
-    'summer', 'fall', 'winter', 'spring', 'happy', 'nature', 'earth', 'night',
-    'space', 'rainbow', 'gradient', 'sunset', 'sky', 'sea', 'kids', 'skin',
-    'food', 'cream', 'coffee', 'wedding', 'christmas', 'halloween'
-  ];
-
-  const filteredPalettes = useMemo(() => {
-    let filtered = allPalettes;
-
-    // Apply search filter
-    if (searchTerm) {
-      filtered = filtered.filter(palette =>
-        palette.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
-    }
-
-    // Apply tag filters
-    if (selectedTags.length > 0) {
-      filtered = filtered.filter(palette =>
-        selectedTags.some(tag => palette.tags.includes(tag))
-      );
-    }
-
-    return filtered;
-  }, [allPalettes, searchTerm, selectedTags]);
-
-  const handleTagToggle = (tag: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tag) 
-        ? prev.filter(t => t !== tag)
-        : [...prev, tag]
-    );
-  };
 
   const handlePaletteSelect = (palette: ColorPalette) => {
     setSelectedPalette(palette);
@@ -185,13 +144,6 @@ const Colores = () => {
     setCurrentPage(prev => prev + 1);
   };
 
-  const clearAllFilters = () => {
-    setSelectedTags([]);
-    setSearchTerm('');
-    setSelectedPalette(null);
-    setNoPreference(false);
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -207,55 +159,8 @@ const Colores = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar Filters */}
-          <div className="lg:w-80 space-y-6">
-            <Card className="p-6">
-              <h3 className="font-semibold text-lg mb-4">Filters</h3>
-              
-              {/* Search */}
-              <div className="mb-6">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <Input
-                    type="text"
-                    placeholder="Search by tag..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-
-              {/* Tag Filters */}
-              <div>
-                <h4 className="font-medium mb-3">🎯 Tags</h4>
-                <ScrollArea className="h-64">
-                  <div className="space-y-2">
-                    {tagOptions.map((tag) => (
-                      <label key={tag} className="flex items-center space-x-2 cursor-pointer">
-                        <Checkbox
-                          checked={selectedTags.includes(tag)}
-                          onCheckedChange={() => handleTagToggle(tag)}
-                        />
-                        <span className="text-sm capitalize">{tag}</span>
-                      </label>
-                    ))}
-                  </div>
-                </ScrollArea>
-              </div>
-
-              {/* Clear Filters */}
-              <Button
-                variant="outline"
-                onClick={clearAllFilters}
-                className="w-full mt-4"
-              >
-                <RefreshCw className="w-4 h-4 mr-2" />
-                Clear Filters
-              </Button>
-            </Card>
-
-            {/* Selection Status */}
+          {/* Selection Status */}
+          <div className="lg:w-80">
             <Card className="p-6">
               <h3 className="font-semibold text-lg mb-4">Your Selection</h3>
               
@@ -299,8 +204,7 @@ const Colores = () => {
           <div className="flex-1">
             {/* Results count */}
             <div className="text-sm text-gray-500 mb-4">
-              Showing {filteredPalettes.length} palette{filteredPalettes.length !== 1 ? 's' : ''}
-              {selectedTags.length > 0 && ` with tags: ${selectedTags.join(', ')}`}
+              Showing {allPalettes.length} palette{allPalettes.length !== 1 ? 's' : ''}
             </div>
 
             {isLoading && currentPage === 1 ? (
@@ -322,7 +226,7 @@ const Colores = () => {
             ) : (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
-                  {filteredPalettes.map((palette) => (
+                  {allPalettes.map((palette) => (
                     <Card 
                       key={palette.id} 
                       className={`cursor-pointer hover:shadow-lg transition-all ${
@@ -369,7 +273,7 @@ const Colores = () => {
                 </div>
 
                 {/* Load More Button */}
-                {filteredPalettes.length >= currentPage * 60 && !isLoading && (
+                {allPalettes.length >= currentPage * 60 && !isLoading && (
                   <div className="text-center">
                     <Button onClick={loadMore} size="lg">
                       Load More Palettes
