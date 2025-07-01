@@ -16,11 +16,8 @@ import Blog from "./pages/Blog";
 import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Sitemap from "./pages/Sitemap";
-import WebLanding from "./pages/WebLanding";
 import WebDesignLanding from "./pages/WebDesignLanding";
-import RequestsForm from "./pages/RequestsForm";
 import Colores from "./pages/Colores";
-import ColorHunt from "./pages/ColorHunt";
 
 // Service Pages
 import ManagedIT from "./pages/services/ManagedIT";
@@ -46,11 +43,8 @@ const App = () => (
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/web" element={<WebLanding />} />
             <Route path="/web-design" element={<WebDesignLanding />} />
             <Route path="/colores" element={<Colores />} />
-            <Route path="/colorhunt" element={<ColorHunt />} />
-            <Route path="/requests-form" element={<RequestsForm />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/managed-it" element={<ManagedIT />} />
             <Route path="/services/cybersecurity" element={<Cybersecurity />} />
