@@ -19,7 +19,6 @@ import Sitemap from "./pages/Sitemap";
 import WebLanding from "./pages/WebLanding";
 import WebDesignLanding from "./pages/WebDesignLanding";
 import RequestsForm from "./pages/RequestsForm";
-import ColorPalette from "./pages/ColorPalette";
 import Colores from "./pages/Colores";
 import ColorHunt from "./pages/ColorHunt";
 
@@ -49,7 +48,6 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/web" element={<WebLanding />} />
             <Route path="/web-design" element={<WebDesignLanding />} />
-            <Route path="/color-palette" element={<ColorPalette />} />
             <Route path="/colores" element={<Colores />} />
             <Route path="/colorhunt" element={<ColorHunt />} />
             <Route path="/requests-form" element={<RequestsForm />} />
