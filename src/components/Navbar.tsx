@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
@@ -26,14 +27,14 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-blue-300 to-blue-200 shadow-md py-1' : 'bg-[#2c3e50] py-2'}`}>
+    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-blue-300 to-blue-200 shadow-md py-1' : 'bg-[#1e3a8a] py-2'}`}>
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img 
             src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
             alt="CloudMor Logo" 
-            className="h-16 w-auto" 
+            className="h-12 w-auto" 
           />
         </Link>
 
@@ -350,7 +351,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navigation */}
-      {isOpen && <div className="md:hidden absolute top-full left-0 w-full bg-[#2c3e50] shadow-md py-4 px-4 animate-fade-in">
+      {isOpen && <div className="md:hidden absolute top-full left-0 w-full bg-[#1e3a8a] shadow-md py-4 px-4 animate-fade-in">
           <div className="flex flex-col space-y-4">
             <Link to="/" className="text-white font-medium px-4 py-2 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
               Home
