@@ -3,17 +3,14 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ContactForm from "../components/ContactForm";
 import { toast } from "sonner";
-
 const Contact = () => {
   const handleFormSuccess = () => {
     toast.success("Thank you for your message! We'll be in touch soon.");
   };
-
-  return (
-    <>
+  return <>
       <Navbar />
       <main>
-        <section className="h-[35vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center justify-center">
+        <section className="h-[25vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center justify-center">
           <div className="container mx-auto px-[16px] my-[50px]">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
@@ -31,14 +28,7 @@ const Contact = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
               <div className="bg-gray-50 p-8 rounded-lg shadow-md">
-                <ContactForm 
-                  formTitle="Send Us a Message" 
-                  formDescription="Fill out the form below and our team will respond shortly."
-                  buttonText="Submit"
-                  formType="contact"
-                  showConsultationCheckbox={true}
-                  onSubmitSuccess={handleFormSuccess}
-                />
+                <ContactForm formTitle="Send Us a Message" formDescription="Fill out the form below and our team will respond shortly." buttonText="Submit" formType="contact" showConsultationCheckbox={true} onSubmitSuccess={handleFormSuccess} />
               </div>
               
               {/* Contact Information */}
@@ -87,8 +77,6 @@ const Contact = () => {
         </section>
       </main>
       <Footer />
-    </>
-  );
+    </>;
 };
-
 export default Contact;
