@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
 import { Button } from './ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./ui/navigation-menu";
@@ -9,6 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +25,17 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const handleApplyNowClick = () => {
+    navigate('/web-design');
+    // Scroll to form after navigation
+    setTimeout(() => {
+      const formElement = document.getElementById('web-design-form');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
 
   return (
     <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-blue-300 to-blue-200 shadow-md py-1' : 'bg-slate-900 py-2'}`}>
@@ -309,10 +321,13 @@ const Navbar = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to="/web-design" className="w-full flex items-center gap-2 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 px-3 py-2 rounded font-medium">
+                <button 
+                  onClick={handleApplyNowClick}
+                  className="w-full flex items-center gap-2 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 px-3 py-2 rounded font-medium"
+                >
                   <Zap className="h-5 w-5" />
                   <div>Apply Now - Limited Time!</div>
-                </Link>
+                </button>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -373,9 +388,15 @@ const Navbar = () => {
                 <Link to="/web-design" className="text-gowith-light-blue font-medium hover:text-white" onClick={() => setIsOpen(false)}>
                   Web Design & Development
                 </Link>
-                <Link to="/web-design" className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-3 py-2 rounded text-center hover:from-blue-600 hover:to-blue-800" onClick={() => setIsOpen(false)}>
+                <button 
+                  onClick={() => {
+                    handleApplyNowClick();
+                    setIsOpen(false);
+                  }}
+                  className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-3 py-2 rounded text-center hover:from-blue-600 hover:to-blue-800"
+                >
                   Apply Now - Limited Time!
-                </Link>
+                </button>
               </div>
             </div>
             
