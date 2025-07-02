@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
@@ -222,7 +223,11 @@ const Navbar = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          
+
+          <Link to="/about" className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} hover:text-gowith-light-blue transition-colors font-medium relative group`}>
+            About Us
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
+          </Link>
           
           <DropdownMenu>
             <DropdownMenuTrigger className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} font-medium hover:text-gowith-light-blue transition-colors bg-transparent border-none cursor-pointer flex items-center relative group`}>
@@ -278,11 +283,6 @@ const Navbar = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <Link to="/about" className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} hover:text-gowith-light-blue transition-colors font-medium relative group`}>
-            About Us
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
-          </Link>
 
           <Link to="/contact" className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} hover:text-gowith-light-blue transition-colors font-medium relative group`}>
             Contact
@@ -467,6 +467,10 @@ const Navbar = () => {
               </div>
             </div>
             
+            <Link to="/about" className="text-white font-medium px-4 py-2 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
+              About Us
+            </Link>
+            
             {/* Mobile Support Menu with direct Speed Test link */}
             <div className="px-4 py-2">
               <div className="text-white font-medium mb-2">Support</div>
@@ -500,10 +504,6 @@ const Navbar = () => {
                 </Link>
               </div>
             </div>
-            
-            <Link to="/about" className="text-white font-medium px-4 py-2 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
-              About Us
-            </Link>
             
             <Link to="/contact" className="text-white font-medium px-4 py-2 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
               Contact
