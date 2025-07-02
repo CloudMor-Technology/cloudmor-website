@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, ExternalLink, User, Palette, Zap } from 'lucide-react';
@@ -5,10 +6,12 @@ import { Button } from './ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,8 +29,16 @@ const Navbar = () => {
     };
   }, []);
 
+  // Close mobile menu when screen size changes to desktop
+  useEffect(() => {
+    if (!isMobile && isOpen) {
+      setIsOpen(false);
+    }
+  }, [isMobile, isOpen]);
+
   const handleApplyNowClick = () => {
     navigate('/web-design');
+    setIsOpen(false);
     // Scroll to form after navigation
     setTimeout(() => {
       const formElement = document.getElementById('web-design-form');
@@ -39,13 +50,13 @@ const Navbar = () => {
 
   return (
     <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-blue-300 to-blue-200 shadow-md py-1' : 'bg-slate-900 py-2'}`}>
-      <div className="container mx-auto px-4 flex items-center justify-between">
+      <div className="container mx-auto px-4 flex items-center justify-between h-16 md:h-auto">
         {/* Logo */}
-        <Link to="/" className="flex items-center">
+        <Link to="/" className="flex items-center flex-shrink-0">
           <img 
             src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
             alt="CloudMor Logo" 
-            className="h-24 w-auto" 
+            className="h-12 md:h-24 w-auto" 
           />
         </Link>
 
@@ -337,7 +348,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className={`md:hidden ${isScrolled ? 'text-gowith-dark-blue' : 'text-white'}`}
+          className={`md:hidden ${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} z-50 relative`}
           onClick={() => setIsOpen(!isOpen)} 
           aria-label="Toggle menu"
         >
@@ -346,9 +357,10 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navigation */}
-      {isOpen && <div className="md:hidden absolute top-full left-0 w-full bg-[#2c3e50] shadow-md py-4 px-4 animate-fade-in">
-          <div className="flex flex-col space-y-4">
-            <Link to="/" className="text-white font-medium px-4 py-2 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
+      {isOpen && (
+        <div className="md:hidden fixed inset-0 top-16 bg-slate-900 z-40 overflow-y-auto">
+          <div className="flex flex-col space-y-4 p-4 pb-20">
+            <Link to="/" className="text-white font-medium px-4 py-3 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
               Home
             </Link>
             
@@ -365,10 +377,7 @@ const Navbar = () => {
                   Web Design & Development
                 </Link>
                 <button 
-                  onClick={() => {
-                    handleApplyNowClick();
-                    setIsOpen(false);
-                  }}
+                  onClick={handleApplyNowClick}
                   className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-bold px-3 py-2 rounded text-center hover:from-orange-600 hover:to-yellow-600"
                 >
                   Apply Now - Limited Time!
@@ -380,31 +389,31 @@ const Navbar = () => {
             <div className="px-4 py-2">
               <div className="text-white font-medium mb-2">Services</div>
               <div className="ml-4 flex flex-col space-y-2">
-                <Link to="/services/managed-it" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/services/managed-it" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Managed IT Services
                 </Link>
-                <Link to="/services/cybersecurity" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/services/cybersecurity" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Cybersecurity Services
                 </Link>
-                <Link to="/services/cloud" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/services/cloud" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Managed Cloud Services
                 </Link>
-                <Link to="/services/professional" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/services/professional" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Professional Services
                 </Link>
-                <Link to="/services/it-strategy" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/services/it-strategy" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   IT Strategy
                 </Link>
-                <Link to="/services/business-comms" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/services/business-comms" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Business Comms Platform
                 </Link>
-                <Link to="/services/face-id-auth" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/services/face-id-auth" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Face ID Auth
                 </Link>
-                <Link to="/services/web-dev-automation" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/services/web-dev-automation" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Web Dev Automation
                 </Link>
-                <Link to="/web-design" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/web-design" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Web Design & Development
                 </Link>
               </div>
@@ -413,31 +422,31 @@ const Navbar = () => {
             <div className="px-4 py-2">
               <div className="text-white font-medium mb-2">Industries</div>
               <div className="ml-4 flex flex-col space-y-2">
-                <Link to="/industries/financial-services" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/industries/financial-services" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Financial Services
                 </Link>
-                <Link to="/industries/healthcare" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/industries/healthcare" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Healthcare
                 </Link>
-                <Link to="/industries/legal" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/industries/legal" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Law Firms
                 </Link>
-                <Link to="/industries/private-equity" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/industries/private-equity" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Private Equity
                 </Link>
-                <Link to="/industries/manufacturing" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/industries/manufacturing" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Manufacturing
                 </Link>
-                <Link to="/industries/technology" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/industries/technology" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Technology & Startups
                 </Link>
-                <Link to="/industries/entertainment" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/industries/entertainment" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Entertainment
                 </Link>
-                <Link to="/industries/professional-services" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/industries/professional-services" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Professional Services
                 </Link>
-                <Link to="/industries/non-profits" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/industries/non-profits" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Non-Profits
                 </Link>
               </div>
@@ -450,51 +459,54 @@ const Navbar = () => {
                   href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gowith-light-blue hover:text-white" 
+                  className="text-gowith-light-blue hover:text-white py-1" 
                   onClick={() => setIsOpen(false)}
                 >
                   Support Center Portal
                 </a>
-                <a href="#" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <a href="#" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Help Center
                 </a>
                 <a 
                   href="https://cloudmor.dualstack.speedtestcustom.com/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gowith-light-blue hover:text-white" 
+                  className="text-gowith-light-blue hover:text-white py-1" 
                   onClick={() => setIsOpen(false)}
                 >
                   Speed Test
                 </a>
-                <Link to="/about" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/about" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   About Us
                 </Link>
-                <Link to="/contact" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/contact" className="text-gowith-light-blue hover:text-white py-1" onClick={() => setIsOpen(false)}>
                   Contact Us
                 </Link>
               </div>
             </div>
             
-            <Button className="bg-[#007bff] hover:bg-[#0056b3] text-white font-bold w-full" onClick={() => setIsOpen(false)}>
-              <a 
-                href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2"
-              >
-                <User size={18} />
-                Client Portal
-              </a>
-            </Button>
-            
-            <Button className="bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold w-full" onClick={() => setIsOpen(false)}>
-              <Link to="/contact" className="w-full flex items-center justify-center">
-                Schedule a Consultation
-              </Link>
-            </Button>
+            <div className="px-4 py-2 space-y-3">
+              <Button className="bg-[#007bff] hover:bg-[#0056b3] text-white font-bold w-full" onClick={() => setIsOpen(false)}>
+                <a 
+                  href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2"
+                >
+                  <User size={18} />
+                  Client Portal
+                </a>
+              </Button>
+              
+              <Button className="bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold w-full" onClick={() => setIsOpen(false)}>
+                <Link to="/contact" className="w-full flex items-center justify-center">
+                  Schedule a Consultation
+                </Link>
+              </Button>
+            </div>
           </div>
-        </div>}
+        </div>
+      )}
     </header>
   );
 };
