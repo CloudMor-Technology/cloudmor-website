@@ -2,15 +2,9 @@
 import React from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import ContactForm from "../components/ContactForm";
-import { toast } from "sonner";
 import { MapPin } from "lucide-react";
 
 const Contact = () => {
-  const handleFormSuccess = () => {
-    toast.success("Thank you for your message! We'll be in touch soon.");
-  };
-
   return (
     <>
       <Navbar />
@@ -31,16 +25,10 @@ const Contact = () => {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* Contact Form */}
+              {/* Typeform Embed */}
               <div className="bg-gray-50 p-8 rounded-lg shadow-md">
-                <ContactForm 
-                  formTitle="Send Us a Message" 
-                  formDescription="Fill out the form below and our team will respond shortly." 
-                  buttonText="Submit" 
-                  formType="contact" 
-                  showConsultationCheckbox={true} 
-                  onSubmitSuccess={handleFormSuccess} 
-                />
+                <div data-tf-live="01JZ6NHSXJY8Z0T2Y9F67F1K68"></div>
+                <script src="//embed.typeform.com/next/embed.js"></script>
               </div>
               
               {/* Contact Information */}
