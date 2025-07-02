@@ -809,9 +809,9 @@ const WebDesignLanding = () => {
                   <p className="text-gray-600">Fill out this form to get your FREE $6,800 website</p>
                 </div>
                 
-                {/* Updated Typeform Embed */}
-                <div className="w-full">
-                  <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ"></div>
+                {/* Updated Typeform Embed with specific height */}
+                <div className="w-full h-[600px]">
+                  <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" className="w-full h-full"></div>
                 </div>
               </div>
             </div>
