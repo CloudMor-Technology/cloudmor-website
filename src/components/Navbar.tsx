@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
@@ -224,22 +223,23 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Link to="/about" className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} hover:text-gowith-light-blue transition-colors font-medium relative group`}>
-            About Us
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          
           <DropdownMenu>
             <DropdownMenuTrigger className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} font-medium hover:text-gowith-light-blue transition-colors bg-transparent border-none cursor-pointer flex items-center relative group`}>
-              Support
+              About Us
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
               </svg>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="p-3 min-w-[250px] bg-white z-50">
+            <DropdownMenuContent className="p-3 min-w-[300px] bg-white z-50">
               <DropdownMenuItem className="font-medium text-base border-b pb-2 mb-2 text-gowith-dark-blue">
-                Support Resources
+                About & Support
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/about" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
+                  <Building className="h-5 w-5 text-gowith-medium-blue" />
+                  <div>About Us</div>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <a 
@@ -278,16 +278,11 @@ const Navbar = () => {
               <DropdownMenuItem>
                 <Link to="/contact" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
                   <LifeBuoy className="h-5 w-5 text-gowith-medium-blue" />
-                  <div>Contact Support</div>
+                  <div>Contact Us</div>
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <Link to="/contact" className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} hover:text-gowith-light-blue transition-colors font-medium relative group`}>
-            Contact
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
-          </Link>
 
           {/* Special Offer dropdown with animated blue gradient and eye-catching elements */}
           <DropdownMenu>
@@ -467,14 +462,12 @@ const Navbar = () => {
               </div>
             </div>
             
-            <Link to="/about" className="text-white font-medium px-4 py-2 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
-              About Us
-            </Link>
-            
-            {/* Mobile Support Menu with direct Speed Test link */}
             <div className="px-4 py-2">
-              <div className="text-white font-medium mb-2">Support</div>
+              <div className="text-white font-medium mb-2">About Us</div>
               <div className="ml-4 flex flex-col space-y-2">
+                <Link to="/about" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                  About Us
+                </Link>
                 <a 
                   href="https://cloudmor.dualstack.speedtestcustom.com/" 
                   target="_blank" 
@@ -500,14 +493,10 @@ const Navbar = () => {
                   FAQs
                 </a>
                 <Link to="/contact" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
-                  Contact Support
+                  Contact Us
                 </Link>
               </div>
             </div>
-            
-            <Link to="/contact" className="text-white font-medium px-4 py-2 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
-              Contact
-            </Link>
             
             <Button className="bg-[#007bff] hover:bg-[#0056b3] text-white font-bold w-full" onClick={() => setIsOpen(false)}>
               <a 
