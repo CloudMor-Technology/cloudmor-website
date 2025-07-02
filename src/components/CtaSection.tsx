@@ -1,12 +1,9 @@
-
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import PhoneButton from './ui/phone-button';
 import { ExternalLink } from 'lucide-react';
-
 const CtaSection = () => {
-  return (
-    <section className="py-20 bg-gowith-dark-blue">
+  return <section className="py-20 bg-gowith-dark-blue bg-slate-900">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
@@ -22,12 +19,7 @@ const CtaSection = () => {
             </Button>
             
             <Button className="bg-gowith-medium-blue hover:bg-gowith-medium-blue/90 text-white px-8 py-6 text-lg">
-              <a 
-                href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
+              <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                 Customer Portal <ExternalLink size={18} />
               </a>
             </Button>
@@ -40,8 +32,6 @@ const CtaSection = () => {
           </p>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CtaSection;
