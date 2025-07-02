@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
@@ -132,7 +130,7 @@ const Navbar = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to="/services/web-design-development" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
+                <Link to="/web-design" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
                   <Palette className="h-5 w-5 text-gowith-medium-blue" />
                   <div>
                     <div>Web Design & Development</div>
@@ -305,7 +303,7 @@ const Navbar = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="p-3 min-w-[280px] bg-white border-2 border-blue-200 shadow-xl z-50">
               <DropdownMenuItem>
-                <Link to="/services/web-design-development" className="w-full flex items-center gap-2 text-gray-800 hover:text-blue-600 font-medium">
+                <Link to="/web-design" className="w-full flex items-center gap-2 text-gray-800 hover:text-blue-600 font-medium">
                   <Palette className="h-5 w-5 text-blue-500" />
                   <div>Web Design & Development</div>
                 </Link>
@@ -372,7 +370,7 @@ const Navbar = () => {
                 ✨ Special Offer
               </div>
               <div className="ml-4 flex flex-col space-y-2">
-                <Link to="/services/web-design-development" className="text-gowith-light-blue font-medium hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/web-design" className="text-gowith-light-blue font-medium hover:text-white" onClick={() => setIsOpen(false)}>
                   Web Design & Development
                 </Link>
                 <Link to="/web-design" className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-3 py-2 rounded text-center hover:from-blue-600 hover:to-blue-800" onClick={() => setIsOpen(false)}>
@@ -409,7 +407,7 @@ const Navbar = () => {
                 <Link to="/services/web-dev-automation" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Web Dev Automation
                 </Link>
-                <Link to="/services/web-design-development" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                <Link to="/web-design" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Web Design & Development
                 </Link>
               </div>
@@ -514,4 +512,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
