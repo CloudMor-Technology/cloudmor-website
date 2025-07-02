@@ -26,7 +26,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-blue-100 to-blue-50 shadow-md py-1' : 'bg-blue-50/95 backdrop-blur-sm py-2'}`}>
+    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-blue-300 to-blue-200 shadow-md py-1' : 'bg-[#2c3e50] py-2'}`}>
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center">
@@ -39,18 +39,21 @@ const Navbar = () => {
 
         {/* Desktop Navigation with enhanced dropdown menus */}
         <nav className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
+          <Link to="/" className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} hover:text-gowith-light-blue transition-colors font-medium relative group`}>
             Home
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
           </Link>
           
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
+            <DropdownMenuTrigger className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} font-medium hover:text-gowith-light-blue transition-colors bg-transparent border-none cursor-pointer flex items-center relative group`}>
               Services
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
               </svg>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="grid grid-cols-2 gap-1 p-3 w-[400px]">
+            <DropdownMenuContent className="grid grid-cols-2 gap-1 p-3 w-[400px] bg-white z-50">
+              
               <DropdownMenuItem className="col-span-2 font-medium text-base border-b pb-2 mb-2 text-gowith-dark-blue">
                 Our Services
               </DropdownMenuItem>
@@ -138,44 +141,16 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           
-          {/* Insights dropdown temporarily hidden */}
-          {/* 
-          <DropdownMenu>
-            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
-              Insights
-              <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="p-3 min-w-[250px]">
-              <DropdownMenuItem className="font-medium text-base border-b pb-2 mb-2 text-gowith-dark-blue">
-                Insights & Resources
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link to="/insights/case-studies" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
-                  <Briefcase className="h-5 w-5 text-gowith-medium-blue" />
-                  <div>Case Studies</div>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link to="/insights/blog" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
-                  <MessageSquare className="h-5 w-5 text-gowith-medium-blue" />
-                  <div>Blog</div>
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          */}
           
-          {/* ... keep existing Industries dropdown code ... */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
+            <DropdownMenuTrigger className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} font-medium hover:text-gowith-light-blue transition-colors bg-transparent border-none cursor-pointer flex items-center relative group`}>
               Industries
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
               </svg>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="grid grid-cols-2 gap-1 p-3 w-[450px]">
+            <DropdownMenuContent className="grid grid-cols-2 gap-1 p-3 w-[450px] bg-white z-50">
               <DropdownMenuItem className="col-span-2 font-medium text-base border-b pb-2 mb-2 text-gowith-dark-blue">
                 Industries We Serve
               </DropdownMenuItem>
@@ -236,15 +211,16 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           
-          {/* ... keep existing Support dropdown code ... */}
+          
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-gowith-dark-blue font-medium hover:text-gowith-medium-blue transition-colors bg-transparent border-none cursor-pointer flex items-center">
+            <DropdownMenuTrigger className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} font-medium hover:text-gowith-light-blue transition-colors bg-transparent border-none cursor-pointer flex items-center relative group`}>
               Support
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
               </svg>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="p-3 min-w-[250px]">
+            <DropdownMenuContent className="p-3 min-w-[250px] bg-white z-50">
               <DropdownMenuItem className="font-medium text-base border-b pb-2 mb-2 text-gowith-dark-blue">
                 Support Resources
               </DropdownMenuItem>
@@ -291,12 +267,14 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Link to="/about" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
+          <Link to="/about" className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} hover:text-gowith-light-blue transition-colors font-medium relative group`}>
             About Us
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
           </Link>
 
-          <Link to="/contact" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
+          <Link to="/contact" className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} hover:text-gowith-light-blue transition-colors font-medium relative group`}>
             Contact
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gowith-light-blue transition-all duration-300 group-hover:w-full"></span>
           </Link>
 
           {/* Special Offer dropdown with animated blue gradient and eye-catching elements */}
@@ -323,7 +301,7 @@ const Navbar = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
               </svg>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="p-3 min-w-[280px] bg-white border-2 border-blue-200 shadow-xl">
+            <DropdownMenuContent className="p-3 min-w-[280px] bg-white border-2 border-blue-200 shadow-xl z-50">
               <DropdownMenuItem>
                 <Link to="/services/web-design-development" className="w-full flex items-center gap-2 text-gray-800 hover:text-blue-600 font-medium">
                   <Palette className="h-5 w-5 text-blue-500" />
@@ -363,7 +341,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-gowith-dark-blue" 
+          className={`md:hidden ${isScrolled ? 'text-gowith-dark-blue' : 'text-white'}`}
           onClick={() => setIsOpen(!isOpen)} 
           aria-label="Toggle menu"
         >
@@ -372,9 +350,9 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navigation */}
-      {isOpen && <div className="md:hidden absolute top-full left-0 w-full bg-blue-50 shadow-md py-4 px-4 animate-fade-in">
+      {isOpen && <div className="md:hidden absolute top-full left-0 w-full bg-[#2c3e50] shadow-md py-4 px-4 animate-fade-in">
           <div className="flex flex-col space-y-4">
-            <Link to="/" className="text-gowith-dark-blue font-medium px-4 py-2 hover:bg-blue-100 rounded-md" onClick={() => setIsOpen(false)}>
+            <Link to="/" className="text-white font-medium px-4 py-2 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
               Home
             </Link>
             
@@ -392,7 +370,7 @@ const Navbar = () => {
                 ✨ Special Offer
               </div>
               <div className="ml-4 flex flex-col space-y-2">
-                <Link to="/services/web-design-development" className="text-blue-600 font-medium hover:text-blue-800" onClick={() => setIsOpen(false)}>
+                <Link to="/services/web-design-development" className="text-gowith-light-blue font-medium hover:text-white" onClick={() => setIsOpen(false)}>
                   Web Design & Development
                 </Link>
                 <Link to="/web-design" className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-3 py-2 rounded text-center hover:from-blue-600 hover:to-blue-800" onClick={() => setIsOpen(false)}>
@@ -401,8 +379,9 @@ const Navbar = () => {
               </div>
             </div>
             
+            
             <div className="px-4 py-2">
-              <div className="text-gowith-dark-blue font-medium mb-2">Services</div>
+              <div className="text-white font-medium mb-2">Services</div>
               <div className="ml-4 flex flex-col space-y-2">
                 <Link to="/services/managed-it" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Managed IT Services
@@ -434,23 +413,8 @@ const Navbar = () => {
               </div>
             </div>
             
-            {/* Insights section temporarily hidden in mobile menu too */}
-            {/*
             <div className="px-4 py-2">
-              <div className="text-gowith-dark-blue font-medium mb-2">Insights</div>
-              <div className="ml-4 flex flex-col space-y-2">
-                <Link to="/insights/case-studies" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
-                  Case Studies
-                </Link>
-                <Link to="/insights/blog" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
-                  Blog
-                </Link>
-              </div>
-            </div>
-            */}
-            
-            <div className="px-4 py-2">
-              <div className="text-gowith-dark-blue font-medium mb-2">Industries</div>
+              <div className="text-white font-medium mb-2">Industries</div>
               <div className="ml-4 flex flex-col space-y-2">
                 <Link to="/industries/financial-services" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Financial Services
@@ -484,7 +448,7 @@ const Navbar = () => {
             
             {/* Mobile Support Menu with direct Speed Test link */}
             <div className="px-4 py-2">
-              <div className="text-gowith-dark-blue font-medium mb-2">Support</div>
+              <div className="text-white font-medium mb-2">Support</div>
               <div className="ml-4 flex flex-col space-y-2">
                 <a 
                   href="https://cloudmor.dualstack.speedtestcustom.com/" 
@@ -516,11 +480,11 @@ const Navbar = () => {
               </div>
             </div>
             
-            <Link to="/about" className="text-gowith-dark-blue font-medium px-4 py-2 hover:bg-blue-100 rounded-md" onClick={() => setIsOpen(false)}>
+            <Link to="/about" className="text-white font-medium px-4 py-2 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
               About Us
             </Link>
             
-            <Link to="/contact" className="text-gowith-dark-blue font-medium px-4 py-2 hover:bg-blue-100 rounded-md" onClick={() => setIsOpen(false)}>
+            <Link to="/contact" className="text-white font-medium px-4 py-2 hover:bg-gowith-light-blue/20 rounded-md" onClick={() => setIsOpen(false)}>
               Contact
             </Link>
             
