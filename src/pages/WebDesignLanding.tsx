@@ -4,10 +4,12 @@ import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, A
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Link } from 'react-router-dom';
+
 const WebDesignLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentTestimonialGroup, setCurrentTestimonialGroup] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const websiteShowcase = [{
     name: "IT Services & Development",
     image: "/lovable-uploads/456f6b18-a26b-4d1c-8b81-c7b162c2f167.png"
@@ -149,7 +151,7 @@ const WebDesignLanding = () => {
       </Helmet>
 
       {/* Navigation Header */}
-      <header className="w-full fixed top-0 left-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
+      <header className="w-full fixed top-0 left-0 z-50 bg-slate-900 shadow-sm border-b border-gray-700">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -159,13 +161,13 @@ const WebDesignLanding = () => {
             
             {/* Desktop Navigation - Centered */}
             <nav className="hidden md:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 space-x-8">
-              <button onClick={() => scrollToSection('how-it-works')} className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
+              <button onClick={() => scrollToSection('how-it-works')} className="text-white hover:text-gray-300 transition-colors font-medium">
                 How It Works
               </button>
-              <button onClick={() => scrollToSection('reviews')} className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
+              <button onClick={() => scrollToSection('reviews')} className="text-white hover:text-gray-300 transition-colors font-medium">
                 Reviews
               </button>
-              <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" target="_blank" rel="noopener noreferrer" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium flex items-center gap-1">
+              <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition-colors font-medium flex items-center gap-1">
                 Support
                 <ExternalLink className="h-4 w-4" />
               </a>
@@ -186,21 +188,21 @@ const WebDesignLanding = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <button className="md:hidden text-gowith-dark-blue" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
 
           {/* Mobile Navigation */}
-          {isMenuOpen && <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
+          {isMenuOpen && <div className="md:hidden mt-4 pb-4 border-t border-gray-600">
               <div className="flex flex-col space-y-4 mt-4">
-                <button onClick={() => scrollToSection('how-it-works')} className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium text-left">
+                <button onClick={() => scrollToSection('how-it-works')} className="text-white hover:text-gray-300 transition-colors font-medium text-left">
                   How It Works
                 </button>
-                <button onClick={() => scrollToSection('reviews')} className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium text-left">
+                <button onClick={() => scrollToSection('reviews')} className="text-white hover:text-gray-300 transition-colors font-medium text-left">
                   Reviews
                 </button>
-                <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" target="_blank" rel="noopener noreferrer" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium text-left flex items-center gap-1">
+                <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition-colors font-medium text-left flex items-center gap-1">
                   Support
                   <ExternalLink className="h-4 w-4" />
                 </a>
@@ -810,48 +812,48 @@ const WebDesignLanding = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-blue-100 to-blue-50 text-gowith-dark-blue py-16 bg-slate-900">
+      <footer className="bg-slate-900 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <Link to="/" className="inline-block mb-4">
                 <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-20 w-auto" />
               </Link>
-              <p className="text-gowith-medium-blue mb-4">
+              <p className="text-gray-300 mb-4">
                 Enterprise-level technology solutions for growing businesses.
               </p>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4 text-gowith-dark-blue">Services</h4>
+              <h4 className="font-bold mb-4 text-white">Services</h4>
               <ul className="space-y-2">
-                <li><Link to="/services/web-dev-automation" className="text-gowith-medium-blue hover:text-gowith-dark-blue">Web Development</Link></li>
-                <li><Link to="/services/managed-it" className="text-gowith-medium-blue hover:text-gowith-dark-blue">Managed IT</Link></li>
-                <li><Link to="/services/cybersecurity" className="text-gowith-medium-blue hover:text-gowith-dark-blue">Cybersecurity</Link></li>
+                <li><Link to="/services/web-dev-automation" className="text-gray-300 hover:text-white">Web Development</Link></li>
+                <li><Link to="/services/managed-it" className="text-gray-300 hover:text-white">Managed IT</Link></li>
+                <li><Link to="/services/cybersecurity" className="text-gray-300 hover:text-white">Cybersecurity</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4 text-gowith-dark-blue">Company</h4>
+              <h4 className="font-bold mb-4 text-white">Company</h4>
               <ul className="space-y-2">
-                <li><Link to="/about" className="text-gowith-medium-blue hover:text-gowith-dark-blue">About</Link></li>
-                <li><Link to="/contact" className="text-gowith-medium-blue hover:text-gowith-dark-blue">Contact</Link></li>
+                <li><Link to="/about" className="text-gray-300 hover:text-white">About</Link></li>
+                <li><Link to="/contact" className="text-gray-300 hover:text-white">Contact</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4 text-gowith-dark-blue">Contact</h4>
-              <p className="text-gowith-medium-blue mb-2">
-                <strong>Phone:</strong> <a href="tel:8885546597" className="hover:text-gowith-dark-blue">(888) 554-6597</a>
+              <h4 className="font-bold mb-4 text-white">Contact</h4>
+              <p className="text-gray-300 mb-2">
+                <strong>Phone:</strong> <a href="tel:8885546597" className="hover:text-white">(888) 554-6597</a>
               </p>
-              <p className="text-gowith-medium-blue">
-                <strong>Email:</strong> <a href="mailto:sales@cloudmor.com" className="hover:text-gowith-dark-blue">sales@cloudmor.com</a>
+              <p className="text-gray-300">
+                <strong>Email:</strong> <a href="mailto:sales@cloudmor.com" className="hover:text-white">sales@cloudmor.com</a>
               </p>
             </div>
           </div>
           
-          <div className="border-t border-blue-300 mt-12 pt-8 text-center">
-            <p className="text-gowith-medium-blue">
+          <div className="border-t border-gray-600 mt-12 pt-8 text-center">
+            <p className="text-gray-300">
               &copy; {new Date().getFullYear()} CloudMor. All rights reserved.
             </p>
           </div>
@@ -859,4 +861,5 @@ const WebDesignLanding = () => {
       </footer>
     </div>;
 };
+
 export default WebDesignLanding;
