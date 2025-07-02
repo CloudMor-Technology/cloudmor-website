@@ -4,12 +4,10 @@ import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, A
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Link } from 'react-router-dom';
-
 const WebDesignLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentTestimonialGroup, setCurrentTestimonialGroup] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const websiteShowcase = [{
     name: "IT Services & Development",
     image: "/lovable-uploads/456f6b18-a26b-4d1c-8b81-c7b162c2f167.png"
@@ -29,92 +27,74 @@ const WebDesignLanding = () => {
 
   // 12 diverse testimonials grouped in sets of 3
   const testimonialGroups = [
-    // Group 1
-    [
-      {
-        quote: "Our new website and logo transformed our business image completely. We look professional and trustworthy now!",
-        author: "Sarah Chen",
-        business: "Chen Marketing Solutions, San Francisco",
-        avatar: "👩‍💼"
-      },
-      {
-        quote: "The mobile-friendly design brought us younger customers we never reached before. Revenue up 300%!",
-        author: "Dr. Michael Rodriguez",
-        business: "Rodriguez Medical Center, Los Angeles",
-        avatar: "👨‍⚕️"
-      },
-      {
-        quote: "Online appointment system eliminated phone tag. Client satisfaction scores hit all-time highs!",
-        author: "Amanda Foster",
-        business: "Foster's Boutique, Beverly Hills",
-        avatar: "👗"
-      }
-    ],
-    // Group 2
-    [
-      {
-        quote: "Our competitors still look outdated while we appear cutting-edge. We're winning every proposal now!",
-        author: "James Liu",
-        business: "Liu Construction Group, San Diego",
-        avatar: "🏗️"
-      },
-      {
-        quote: "24/7 online presence means customers find us even when we're closed. Night inquiries increased 400%!",
-        author: "Maria Gonzalez",
-        business: "Gonzalez Auto Repair, Fresno",
-        avatar: "🔧"
-      },
-      {
-        quote: "The professional credibility boost helped us attract Fortune 500 clients. Our biggest year ever!",
-        author: "Robert Kim",
-        business: "Kim Digital Consulting, Palo Alto",
-        avatar: "💼"
-      }
-    ],
-    // Group 3
-    [
-      {
-        quote: "New customers find us easily through Google search. Our visibility increased by 500% in just 3 months!",
-        author: "Dr. Jennifer Park",
-        business: "Park Dental Practice, Oakland",
-        avatar: "🦷"
-      },
-      {
-        quote: "The website perfectly represents our brand. Clients trust us before they even call!",
-        author: "Carlos Mendez",
-        business: "Mendez Digital Agency, Sacramento",
-        avatar: "🎯"
-      },
-      {
-        quote: "Customer testimonials on our new site convert visitors instantly. Trust factor went through the roof!",
-        author: "Lisa Wang",
-        business: "Wang Interior Design, San Jose",
-        avatar: "🏡"
-      }
-    ],
-    // Group 4
-    [
-      {
-        quote: "The contact forms capture leads we used to lose. Follow-up automation does the heavy lifting for us!",
-        author: "Anthony Davis",
-        business: "Davis Legal Services, Long Beach",
-        avatar: "⚖️"
-      },
-      {
-        quote: "Our e-commerce integration turned browsers into buyers. Online sales now match our physical store!",
-        author: "Rachel Green",
-        business: "Green Home Goods, Santa Monica",
-        avatar: "🛍️"
-      },
-      {
-        quote: "The backup system saved us during a server crash. Zero downtime means zero lost business!",
-        author: "Marcus Johnson",
-        business: "Johnson IT Support, Modesto",
-        avatar: "💻"
-      }
-    ]
-  ];
-
+  // Group 1
+  [{
+    quote: "Our new website and logo transformed our business image completely. We look professional and trustworthy now!",
+    author: "Sarah Chen",
+    business: "Chen Marketing Solutions, San Francisco",
+    avatar: "👩‍💼"
+  }, {
+    quote: "The mobile-friendly design brought us younger customers we never reached before. Revenue up 300%!",
+    author: "Dr. Michael Rodriguez",
+    business: "Rodriguez Medical Center, Los Angeles",
+    avatar: "👨‍⚕️"
+  }, {
+    quote: "Online appointment system eliminated phone tag. Client satisfaction scores hit all-time highs!",
+    author: "Amanda Foster",
+    business: "Foster's Boutique, Beverly Hills",
+    avatar: "👗"
+  }],
+  // Group 2
+  [{
+    quote: "Our competitors still look outdated while we appear cutting-edge. We're winning every proposal now!",
+    author: "James Liu",
+    business: "Liu Construction Group, San Diego",
+    avatar: "🏗️"
+  }, {
+    quote: "24/7 online presence means customers find us even when we're closed. Night inquiries increased 400%!",
+    author: "Maria Gonzalez",
+    business: "Gonzalez Auto Repair, Fresno",
+    avatar: "🔧"
+  }, {
+    quote: "The professional credibility boost helped us attract Fortune 500 clients. Our biggest year ever!",
+    author: "Robert Kim",
+    business: "Kim Digital Consulting, Palo Alto",
+    avatar: "💼"
+  }],
+  // Group 3
+  [{
+    quote: "New customers find us easily through Google search. Our visibility increased by 500% in just 3 months!",
+    author: "Dr. Jennifer Park",
+    business: "Park Dental Practice, Oakland",
+    avatar: "🦷"
+  }, {
+    quote: "The website perfectly represents our brand. Clients trust us before they even call!",
+    author: "Carlos Mendez",
+    business: "Mendez Digital Agency, Sacramento",
+    avatar: "🎯"
+  }, {
+    quote: "Customer testimonials on our new site convert visitors instantly. Trust factor went through the roof!",
+    author: "Lisa Wang",
+    business: "Wang Interior Design, San Jose",
+    avatar: "🏡"
+  }],
+  // Group 4
+  [{
+    quote: "The contact forms capture leads we used to lose. Follow-up automation does the heavy lifting for us!",
+    author: "Anthony Davis",
+    business: "Davis Legal Services, Long Beach",
+    avatar: "⚖️"
+  }, {
+    quote: "Our e-commerce integration turned browsers into buyers. Online sales now match our physical store!",
+    author: "Rachel Green",
+    business: "Green Home Goods, Santa Monica",
+    avatar: "🛍️"
+  }, {
+    quote: "The backup system saved us during a server crash. Zero downtime means zero lost business!",
+    author: "Marcus Johnson",
+    business: "Johnson IT Support, Modesto",
+    avatar: "💻"
+  }]];
   const socialProof = [{
     metric: "3451+",
     label: "Websites Built",
@@ -132,7 +112,6 @@ const WebDesignLanding = () => {
     label: "Average Launch Time",
     icon: "⚡"
   }];
-
   const scrollToForm = () => {
     const formElement = document.getElementById('web-design-form');
     if (formElement) {
@@ -141,7 +120,6 @@ const WebDesignLanding = () => {
       });
     }
   };
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -151,23 +129,19 @@ const WebDesignLanding = () => {
     }
     setIsMenuOpen(false);
   };
-
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % websiteShowcase.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
-
   React.useEffect(() => {
     const testimonialInterval = setInterval(() => {
       setCurrentTestimonialGroup(prev => (prev + 1) % testimonialGroups.length);
     }, 3000);
     return () => clearInterval(testimonialInterval);
   }, []);
-
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <Helmet>
         <title>Professional Web Design Services - CloudMor | Free Website Development</title>
         <meta name="description" content="Get professional web design services from CloudMor. Custom websites, responsive design, SEO optimization, and complete digital solutions for your business." />
@@ -185,24 +159,13 @@ const WebDesignLanding = () => {
             
             {/* Desktop Navigation - Centered */}
             <nav className="hidden md:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 space-x-8">
-              <button 
-                onClick={() => scrollToSection('how-it-works')}
-                className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium"
-              >
+              <button onClick={() => scrollToSection('how-it-works')} className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
                 How It Works
               </button>
-              <button 
-                onClick={() => scrollToSection('reviews')}
-                className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium"
-              >
+              <button onClick={() => scrollToSection('reviews')} className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium">
                 Reviews
               </button>
-              <a 
-                href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium flex items-center gap-1"
-              >
+              <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" target="_blank" rel="noopener noreferrer" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium flex items-center gap-1">
                 Support
                 <ExternalLink className="h-4 w-4" />
               </a>
@@ -210,84 +173,48 @@ const WebDesignLanding = () => {
 
             {/* Right Side Buttons */}
             <div className="hidden md:flex items-center space-x-4 flex-shrink-0">
-              <Button 
-                className="bg-[#007bff] hover:bg-[#0056b3] text-white font-medium transition-colors"
-              >
-                <a 
-                  href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2"
-                >
+              <Button className="bg-[#007bff] hover:bg-[#0056b3] text-white font-medium transition-colors">
+                <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                   <User size={18} />
                   Client Portal
                 </a>
               </Button>
               
-              <Button 
-                onClick={scrollToForm}
-                className="bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold transition-colors"
-              >
+              <Button onClick={scrollToForm} className="bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold transition-colors">
                 Apply Now
               </Button>
             </div>
 
             {/* Mobile Menu Button */}
-            <button 
-              className="md:hidden text-gowith-dark-blue" 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
+            <button className="md:hidden text-gowith-dark-blue" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
 
           {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
+          {isMenuOpen && <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
               <div className="flex flex-col space-y-4 mt-4">
-                <button 
-                  onClick={() => scrollToSection('how-it-works')}
-                  className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium text-left"
-                >
+                <button onClick={() => scrollToSection('how-it-works')} className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium text-left">
                   How It Works
                 </button>
-                <button 
-                  onClick={() => scrollToSection('reviews')}
-                  className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium text-left"
-                >
+                <button onClick={() => scrollToSection('reviews')} className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium text-left">
                   Reviews
                 </button>
-                <a 
-                  href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium text-left flex items-center gap-1"
-                >
+                <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" target="_blank" rel="noopener noreferrer" className="text-gowith-dark-blue hover:text-gowith-medium-blue transition-colors font-medium text-left flex items-center gap-1">
                   Support
                   <ExternalLink className="h-4 w-4" />
                 </a>
-                <Button 
-                  className="bg-[#007bff] hover:bg-[#0056b3] text-white font-medium transition-colors w-full"
-                >
-                  <a 
-                    href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2"
-                  >
+                <Button className="bg-[#007bff] hover:bg-[#0056b3] text-white font-medium transition-colors w-full">
+                  <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2">
                     <User size={18} />
                     Client Portal
                   </a>
                 </Button>
-                <Button 
-                  onClick={scrollToForm}
-                  className="bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold transition-colors w-full"
-                >
+                <Button onClick={scrollToForm} className="bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold transition-colors w-full">
                   Apply Now
                 </Button>
               </div>
-            </div>
-          )}
+            </div>}
         </div>
       </header>
 
@@ -362,15 +289,7 @@ const WebDesignLanding = () => {
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-6 space-x-3">
-                  {websiteShowcase.map((_, index) => (
-                    <div 
-                      key={index} 
-                      className={`w-3 h-3 rounded-full transition-all duration-500 cursor-pointer ${
-                        index === currentSlide ? 'bg-white scale-150 shadow-lg' : 'bg-white/50 hover:bg-white/80'
-                      }`} 
-                      onClick={() => setCurrentSlide(index)} 
-                    />
-                  ))}
+                  {websiteShowcase.map((_, index) => <div key={index} className={`w-3 h-3 rounded-full transition-all duration-500 cursor-pointer ${index === currentSlide ? 'bg-white scale-150 shadow-lg' : 'bg-white/50 hover:bg-white/80'}`} onClick={() => setCurrentSlide(index)} />)}
                 </div>
               </div>
             </div>
@@ -432,13 +351,11 @@ const WebDesignLanding = () => {
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {socialProof.map((item, index) => (
-                <div key={index} className="text-center group hover:scale-110 transition-transform duration-300">
+              {socialProof.map((item, index) => <div key={index} className="text-center group hover:scale-110 transition-transform duration-300">
                   <div className="text-5xl mb-2">{item.icon}</div>
                   <div className="text-4xl font-black text-gowith-orange mb-2">{item.metric}</div>
                   <div className="text-gray-300 font-medium">{item.label}</div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </div>
@@ -468,42 +385,41 @@ const WebDesignLanding = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4">
                 {[{
-                  step: 1,
-                  title: "Application Submission",
-                  desc: "Clients submit their website request through our application form with details about their needs, goals, and preferred features.",
-                  timeline: "Day 1",
-                  icon: FileText,
-                  color: "from-gowith-medium-blue to-gowith-light-blue"
-                }, {
-                  step: 2,
-                  title: "Review Process",
-                  desc: "Our team reviews the application, clarifies requirements if needed, and confirms the scope of the project.",
-                  timeline: "Day 2",
-                  icon: Search,
-                  color: "from-gowith-orange to-gowith-orange-hover"
-                }, {
-                  step: 3,
-                  title: "Finalize Requirements",
-                  desc: "We finalize the website features, pages, content structure, and gather all assets (logos, images, text, etc.) for development.",
-                  timeline: "Days 3–5",
-                  icon: Settings,
-                  color: "from-gray-600 to-gray-700"
-                }, {
-                  step: 4,
-                  title: "Design & Development",
-                  desc: "Our designers and developers build the website based on the finalized plan, ensuring it meets the client's vision, is mobile-friendly, and optimized.",
-                  timeline: "Days 6–12",
-                  icon: Code,
-                  color: "from-gowith-dark-blue to-gowith-medium-blue"
-                }, {
-                  step: 5,
-                  title: "Launch & Go Live",
-                  desc: "We test the website, perform quality checks, and once approved, deploy it to production and go live.",
-                  timeline: "Days 13–14",
-                  icon: RocketIcon,
-                  color: "from-green-600 to-green-700"
-                }].map((item, index) => (
-                  <div key={index} className="relative group">
+                step: 1,
+                title: "Application Submission",
+                desc: "Clients submit their website request through our application form with details about their needs, goals, and preferred features.",
+                timeline: "Day 1",
+                icon: FileText,
+                color: "from-gowith-medium-blue to-gowith-light-blue"
+              }, {
+                step: 2,
+                title: "Review Process",
+                desc: "Our team reviews the application, clarifies requirements if needed, and confirms the scope of the project.",
+                timeline: "Day 2",
+                icon: Search,
+                color: "from-gowith-orange to-gowith-orange-hover"
+              }, {
+                step: 3,
+                title: "Finalize Requirements",
+                desc: "We finalize the website features, pages, content structure, and gather all assets (logos, images, text, etc.) for development.",
+                timeline: "Days 3–5",
+                icon: Settings,
+                color: "from-gray-600 to-gray-700"
+              }, {
+                step: 4,
+                title: "Design & Development",
+                desc: "Our designers and developers build the website based on the finalized plan, ensuring it meets the client's vision, is mobile-friendly, and optimized.",
+                timeline: "Days 6–12",
+                icon: Code,
+                color: "from-gowith-dark-blue to-gowith-medium-blue"
+              }, {
+                step: 5,
+                title: "Launch & Go Live",
+                desc: "We test the website, perform quality checks, and once approved, deploy it to production and go live.",
+                timeline: "Days 13–14",
+                icon: RocketIcon,
+                color: "from-green-600 to-green-700"
+              }].map((item, index) => <div key={index} className="relative group">
                     {/* Step Circle */}
                     <div className="relative z-10 mb-6">
                       <div className={`w-16 h-16 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300 border-4 border-white`}>
@@ -535,27 +451,17 @@ const WebDesignLanding = () => {
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-medium text-gray-500">Step {item.step} of 5</span>
                           <div className="flex space-x-1">
-                            {[...Array(5)].map((_, i) => (
-                              <div 
-                                key={i} 
-                                className={`w-2 h-2 rounded-full ${
-                                  i < item.step ? 'bg-gowith-orange' : 'bg-gray-200'
-                                }`} 
-                              />
-                            ))}
+                            {[...Array(5)].map((_, i) => <div key={i} className={`w-2 h-2 rounded-full ${i < item.step ? 'bg-gowith-orange' : 'bg-gray-200'}`} />)}
                           </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Connector Arrow for Desktop */}
-                    {index < 4 && (
-                      <div className="hidden lg:block absolute top-8 -right-4 z-0">
+                    {index < 4 && <div className="hidden lg:block absolute top-8 -right-4 z-0">
                         <ArrowRight className="w-8 h-8 text-gray-300" />
-                      </div>
-                    )}
-                  </div>
-                ))}
+                      </div>}
+                  </div>)}
               </div>
             </div>
 
@@ -705,10 +611,7 @@ const WebDesignLanding = () => {
                 </div>
               </div>
               
-              <Button 
-                onClick={scrollToForm}
-                className="bg-gowith-orange hover:bg-gowith-orange-hover text-white text-lg font-bold px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition-all duration-300"
-              >
+              <Button onClick={scrollToForm} className="bg-gowith-orange hover:bg-gowith-orange-hover text-white text-lg font-bold px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
                 <Palette className="mr-3 h-5 w-5" />
                 Get My FREE Website + Logo Package
                 <ArrowRight className="ml-3 h-5 w-5" />
@@ -737,43 +640,42 @@ const WebDesignLanding = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[{
-                icon: Smartphone,
-                title: "Mobile-First Design",
-                desc: "Responsive design that works perfectly on all devices",
-                color: "from-gowith-medium-blue to-gowith-light-blue",
-                value: "$400"
-              }, {
-                icon: TrendingUp,
-                title: "SEO Optimized",
-                desc: "Built to rank higher in search results",
-                color: "from-gowith-orange to-gowith-orange-hover",
-                value: "$900"
-              }, {
-                icon: Zap,
-                title: "Lightning Fast",
-                desc: "Optimized for speed and performance",
-                color: "from-gray-600 to-gray-700",
-                value: "$300"
-              }, {
-                icon: Shield,
-                title: "Secure & Reliable",
-                desc: "Advanced security and reliable hosting",
-                color: "from-gowith-dark-blue to-gowith-medium-blue",
-                value: "$500"
-              }, {
-                icon: Star,
-                title: "Custom Design",
-                desc: "Unique designs tailored to your brand",
-                color: "from-gowith-orange to-gowith-orange-hover",
-                value: "$3,000"
-              }, {
-                icon: Users,
-                title: "Ongoing Support",
-                desc: "Continuous support and maintenance",
-                color: "from-gowith-medium-blue to-gowith-light-blue",
-                value: "$1,700"
-              }].map((feature, index) => (
-                <div key={index} className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
+              icon: Smartphone,
+              title: "Mobile-First Design",
+              desc: "Responsive design that works perfectly on all devices",
+              color: "from-gowith-medium-blue to-gowith-light-blue",
+              value: "$400"
+            }, {
+              icon: TrendingUp,
+              title: "SEO Optimized",
+              desc: "Built to rank higher in search results",
+              color: "from-gowith-orange to-gowith-orange-hover",
+              value: "$900"
+            }, {
+              icon: Zap,
+              title: "Lightning Fast",
+              desc: "Optimized for speed and performance",
+              color: "from-gray-600 to-gray-700",
+              value: "$300"
+            }, {
+              icon: Shield,
+              title: "Secure & Reliable",
+              desc: "Advanced security and reliable hosting",
+              color: "from-gowith-dark-blue to-gowith-medium-blue",
+              value: "$500"
+            }, {
+              icon: Star,
+              title: "Custom Design",
+              desc: "Unique designs tailored to your brand",
+              color: "from-gowith-orange to-gowith-orange-hover",
+              value: "$3,000"
+            }, {
+              icon: Users,
+              title: "Ongoing Support",
+              desc: "Continuous support and maintenance",
+              color: "from-gowith-medium-blue to-gowith-light-blue",
+              value: "$1,700"
+            }].map((feature, index) => <div key={index} className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
                   <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-300`}>
                     <feature.icon className="h-8 w-8 text-white" />
                   </div>
@@ -788,8 +690,7 @@ const WebDesignLanding = () => {
                   <p className="text-gray-600 leading-relaxed">
                     {feature.desc}
                   </p>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </div>
@@ -808,12 +709,9 @@ const WebDesignLanding = () => {
 
             {/* Rotating testimonial groups display */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-              {testimonialGroups[currentTestimonialGroup].map((testimonial, index) => (
-                <div key={index} className="group bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:scale-105 h-full">
+              {testimonialGroups[currentTestimonialGroup].map((testimonial, index) => <div key={index} className="group bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:scale-105 h-full">
                   <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 text-gowith-orange fill-current" />
-                    ))}
+                    {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 text-gowith-orange fill-current" />)}
                   </div>
                   <blockquote className="text-gray-700 mb-6 leading-relaxed font-medium">
                     "{testimonial.quote}"
@@ -825,21 +723,12 @@ const WebDesignLanding = () => {
                       <div className="text-gray-600 text-sm">{testimonial.business}</div>
                     </div>
                   </footer>
-                </div>
-              ))}
+                </div>)}
             </div>
 
             {/* Group indicators */}
             <div className="flex justify-center space-x-2 mb-8">
-              {testimonialGroups.map((_, index) => (
-                <div 
-                  key={index} 
-                  className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
-                    index === currentTestimonialGroup ? 'bg-gowith-orange scale-150' : 'bg-gray-300 hover:bg-gray-400'
-                  }`} 
-                  onClick={() => setCurrentTestimonialGroup(index)} 
-                />
-              ))}
+              {testimonialGroups.map((_, index) => <div key={index} className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${index === currentTestimonialGroup ? 'bg-gowith-orange scale-150' : 'bg-gray-300 hover:bg-gray-400'}`} onClick={() => setCurrentTestimonialGroup(index)} />)}
             </div>
           </div>
         </div>
@@ -903,14 +792,7 @@ const WebDesignLanding = () => {
                 
                 {/* Typeform Embed */}
                 <div className="w-full">
-                  <iframe
-                    src="https://form.typeform.com/to/tSkJytpC"
-                    width="100%"
-                    height="600"
-                    frameBorder="0"
-                    className="rounded-lg"
-                    title="Web Design Request Form"
-                  />
+                  <iframe src="https://form.typeform.com/to/tSkJytpC" width="100%" height="600" frameBorder="0" className="rounded-lg" title="Web Design Request Form" />
                 </div>
               </div>
             </div>
@@ -928,16 +810,12 @@ const WebDesignLanding = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-blue-100 to-blue-50 text-gowith-dark-blue py-16">
+      <footer className="bg-gradient-to-r from-blue-100 to-blue-50 text-gowith-dark-blue py-16 bg-slate-900">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <Link to="/" className="inline-block mb-4">
-                <img 
-                  src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
-                  alt="CloudMor Logo" 
-                  className="h-20 w-auto"
-                />
+                <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-20 w-auto" />
               </Link>
               <p className="text-gowith-medium-blue mb-4">
                 Enterprise-level technology solutions for growing businesses.
@@ -979,8 +857,6 @@ const WebDesignLanding = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default WebDesignLanding;
