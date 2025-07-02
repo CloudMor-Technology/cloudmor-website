@@ -1,4 +1,5 @@
 
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
@@ -34,7 +35,7 @@ const Navbar = () => {
           <img 
             src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
             alt="CloudMor Logo" 
-            className="h-20 w-auto" 
+            className="h-24 w-auto" 
           />
         </Link>
 
@@ -513,3 +514,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
