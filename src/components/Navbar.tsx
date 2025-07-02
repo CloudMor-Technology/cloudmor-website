@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
@@ -237,23 +236,6 @@ const Navbar = () => {
                 About & Support
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to="/about" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
-                  <Building className="h-5 w-5 text-gowith-medium-blue" />
-                  <div>About Us</div>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <a 
-                  href="https://cloudmor.dualstack.speedtestcustom.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue"
-                >
-                  <Gauge className="h-5 w-5 text-gowith-medium-blue" />
-                  <div>Speed Test</div>
-                </a>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
                 <a 
                   href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" 
                   target="_blank" 
@@ -269,6 +251,23 @@ const Navbar = () => {
                   <HelpCircle className="h-5 w-5 text-gowith-medium-blue" />
                   <div>Help Center</div>
                 </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <a 
+                  href="https://cloudmor.dualstack.speedtestcustom.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue"
+                >
+                  <Gauge className="h-5 w-5 text-gowith-medium-blue" />
+                  <div>Speed Test</div>
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/about" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
+                  <Building className="h-5 w-5 text-gowith-medium-blue" />
+                  <div>About Us</div>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <a href="#" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
@@ -453,18 +452,6 @@ const Navbar = () => {
             <div className="px-4 py-2">
               <div className="text-white font-medium mb-2">About Us</div>
               <div className="ml-4 flex flex-col space-y-2">
-                <Link to="/about" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
-                  About Us
-                </Link>
-                <a 
-                  href="https://cloudmor.dualstack.speedtestcustom.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gowith-light-blue hover:text-white" 
-                  onClick={() => setIsOpen(false)}
-                >
-                  Speed Test
-                </a>
                 <a 
                   href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" 
                   target="_blank" 
@@ -477,6 +464,18 @@ const Navbar = () => {
                 <a href="#" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Help Center
                 </a>
+                <a 
+                  href="https://cloudmor.dualstack.speedtestcustom.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gowith-light-blue hover:text-white" 
+                  onClick={() => setIsOpen(false)}
+                >
+                  Speed Test
+                </a>
+                <Link to="/about" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
+                  About Us
+                </Link>
                 <a href="#" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   FAQs
                 </a>
