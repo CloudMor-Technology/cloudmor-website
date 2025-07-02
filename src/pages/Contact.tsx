@@ -10,7 +10,7 @@ const Contact = () => {
   return <>
       <Navbar />
       <main>
-        <section className="h-[25vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center justify-center">
+        <section className="h-[15vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center justify-center my-20">
           <div className="container mx-auto px-[16px] my-[50px]">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
