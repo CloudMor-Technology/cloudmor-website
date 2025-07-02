@@ -1,10 +1,26 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { MapPin } from "lucide-react";
 
 const Contact = () => {
+  useEffect(() => {
+    // Load Typeform embed script
+    const script = document.createElement('script');
+    script.src = '//embed.typeform.com/next/embed.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup: remove script when component unmounts
+      const existingScript = document.querySelector('script[src="//embed.typeform.com/next/embed.js"]');
+      if (existingScript) {
+        document.body.removeChild(existingScript);
+      }
+    };
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -28,7 +44,6 @@ const Contact = () => {
               {/* Typeform Embed */}
               <div className="bg-gray-50 p-8 rounded-lg shadow-md">
                 <div data-tf-live="01JZ6NHSXJY8Z0T2Y9F67F1K68"></div>
-                <script src="//embed.typeform.com/next/embed.js"></script>
               </div>
               
               {/* Contact Information */}
