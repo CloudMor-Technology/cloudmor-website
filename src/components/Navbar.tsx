@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
@@ -284,41 +285,33 @@ const Navbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Special Offer dropdown with animated blue gradient and eye-catching elements */}
+          {/* Special Offer dropdown with eye-catching orange/yellow color scheme */}
           <DropdownMenu>
-            <DropdownMenuTrigger 
-              className="relative text-white font-medium border-none cursor-pointer flex items-center px-3 py-1 rounded shadow-lg"
-              style={{
-                background: 'linear-gradient(-45deg, #1e3a8a, #3b82f6, #1e40af, #60a5fa)',
-                backgroundSize: '400% 400%',
-                animation: 'gradient 3s ease infinite'
-              }}
-            >
-              <style>
-                {`
-                  @keyframes gradient {
-                    0%, 100% { background-position: 0% 50%; }
-                    50% { background-position: 100% 50%; }
-                  }
-                `}
-              </style>
-              <Zap className="h-4 w-4 mr-1 animate-bounce" />
-              ✨ Special Offer
-              <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <DropdownMenuTrigger className={`${isScrolled ? 'text-gowith-dark-blue' : 'text-white'} font-medium hover:text-yellow-300 transition-colors bg-transparent border-none cursor-pointer flex items-center relative group bg-gradient-to-r from-orange-500 to-yellow-500 px-3 py-2 rounded-lg shadow-lg`}>
+              <Zap className="h-4 w-4 mr-1 text-white" />
+              <span className="text-white">✨ Special Offer</span>
+              <svg className="ml-1 w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
               </svg>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full"></span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="p-3 min-w-[280px] bg-white border-2 border-blue-200 shadow-xl z-50">
+            <DropdownMenuContent className="p-3 min-w-[300px] bg-white border-2 border-orange-200 shadow-xl z-50">
+              <DropdownMenuItem className="font-medium text-base border-b pb-2 mb-2 text-orange-600">
+                🎯 Limited Time Offers
+              </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to="/web-design" className="w-full flex items-center gap-2 text-gray-800 hover:text-blue-600 font-medium">
-                  <Palette className="h-5 w-5 text-blue-500" />
-                  <div>Web Design & Development</div>
+                <Link to="/web-design" className="w-full flex items-center gap-2 text-gray-800 hover:text-orange-600">
+                  <Palette className="h-5 w-5 text-orange-500" />
+                  <div>
+                    <div>Web Design & Development</div>
+                    <div className="text-xs text-gray-500">Professional website solutions</div>
+                  </div>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <button 
                   onClick={handleApplyNowClick}
-                  className="w-full flex items-center gap-2 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 px-3 py-2 rounded font-medium"
+                  className="w-full flex items-center gap-2 text-white bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 px-3 py-2 rounded font-medium"
                 >
                   <Zap className="h-5 w-5" />
                   <div>Apply Now - Limited Time!</div>
@@ -366,17 +359,12 @@ const Navbar = () => {
               Home
             </Link>
             
-            {/* Mobile Special Offer with animated blue gradient */}
+            {/* Mobile Special Offer with eye-catching orange/yellow gradient */}
             <div className="px-4 py-2">
               <div 
-                className="text-white font-bold px-3 py-2 rounded-lg text-center mb-2 shadow-lg flex items-center justify-center"
-                style={{
-                  background: 'linear-gradient(-45deg, #1e3a8a, #3b82f6, #1e40af, #60a5fa)',
-                  backgroundSize: '400% 400%',
-                  animation: 'gradient 3s ease infinite'
-                }}
+                className="text-white font-bold px-3 py-2 rounded-lg text-center mb-2 shadow-lg flex items-center justify-center bg-gradient-to-r from-orange-500 to-yellow-500"
               >
-                <Zap className="h-4 w-4 mr-1 animate-bounce" />
+                <Zap className="h-4 w-4 mr-1" />
                 ✨ Special Offer
               </div>
               <div className="ml-4 flex flex-col space-y-2">
@@ -388,7 +376,7 @@ const Navbar = () => {
                     handleApplyNowClick();
                     setIsOpen(false);
                   }}
-                  className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold px-3 py-2 rounded text-center hover:from-blue-600 hover:to-blue-800"
+                  className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-bold px-3 py-2 rounded text-center hover:from-orange-600 hover:to-yellow-600"
                 >
                   Apply Now - Limited Time!
                 </button>
