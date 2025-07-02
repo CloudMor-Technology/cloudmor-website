@@ -1,13 +1,18 @@
+
 import React from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ContactForm from "../components/ContactForm";
 import { toast } from "sonner";
+import { MapPin } from "lucide-react";
+
 const Contact = () => {
   const handleFormSuccess = () => {
     toast.success("Thank you for your message! We'll be in touch soon.");
   };
-  return <>
+
+  return (
+    <>
       <Navbar />
       <main>
         <section className="h-[15vh] bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue flex items-center justify-center my-20">
@@ -28,7 +33,14 @@ const Contact = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
               <div className="bg-gray-50 p-8 rounded-lg shadow-md">
-                <ContactForm formTitle="Send Us a Message" formDescription="Fill out the form below and our team will respond shortly." buttonText="Submit" formType="contact" showConsultationCheckbox={true} onSubmitSuccess={handleFormSuccess} />
+                <ContactForm 
+                  formTitle="Send Us a Message" 
+                  formDescription="Fill out the form below and our team will respond shortly." 
+                  buttonText="Submit" 
+                  formType="contact" 
+                  showConsultationCheckbox={true} 
+                  onSubmitSuccess={handleFormSuccess} 
+                />
               </div>
               
               {/* Contact Information */}
@@ -36,6 +48,31 @@ const Contact = () => {
                 <h2 className="text-2xl font-bold text-gowith-dark-blue mb-6">Contact Information</h2>
                 
                 <div className="space-y-8">
+                  {/* Office Address */}
+                  <div>
+                    <h3 className="text-xl font-bold text-gowith-medium-blue mb-2 flex items-center gap-2">
+                      <MapPin className="h-5 w-5" />
+                      Office Location
+                    </h3>
+                    <div className="bg-gowith-dark-blue text-white p-4 rounded-lg mb-4">
+                      <p className="font-medium">188 Spear Street, #170</p>
+                      <p>San Francisco, CA 94105</p>
+                    </div>
+                    {/* Embedded Google Map */}
+                    <div className="w-full h-64 rounded-lg overflow-hidden shadow-md">
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0136999999998!2d-122.39358!3d37.791541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085807c35b1b1b1%3A0x1b1b1b1b1b1b1b1b!2s188%20Spear%20St%2C%20San%20Francisco%2C%20CA%2094105!5e0!3m2!1sen!2sus!4v1234567890123"
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="CloudMor Office Location"
+                      />
+                    </div>
+                  </div>
+
                   <div>
                     <h3 className="text-xl font-bold text-gowith-medium-blue mb-2">Phone</h3>
                     <p className="text-gray-600">Main: <a href="tel:8885546597" className="text-gowith-medium-blue hover:underline">(888) 554-6597</a></p>
@@ -77,6 +114,8 @@ const Contact = () => {
         </section>
       </main>
       <Footer />
-    </>;
+    </>
+  );
 };
+
 export default Contact;

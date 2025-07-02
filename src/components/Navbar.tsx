@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, FileQuestion, ExternalLink, User, Palette, Zap } from 'lucide-react';
+import { Menu, X, Headset, Shield, Cloud, Briefcase, LineChart, MessageSquare, Scan, Code, Building, ShieldCheck, Stethoscope, Scale, Landmark, Factory, Laptop, Film, Building2, HeartHandshake, Gauge, LifeBuoy, HelpCircle, ExternalLink, User, Palette, Zap } from 'lucide-react';
 import { Button } from './ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
@@ -270,12 +270,6 @@ const Navbar = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <a href="#" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
-                  <FileQuestion className="h-5 w-5 text-gowith-medium-blue" />
-                  <div>FAQs</div>
-                </a>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
                 <Link to="/contact" className="w-full flex items-center gap-2 text-gray-800 hover:text-gowith-dark-blue">
                   <LifeBuoy className="h-5 w-5 text-gowith-medium-blue" />
                   <div>Contact Us</div>
@@ -476,9 +470,6 @@ const Navbar = () => {
                 <Link to="/about" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   About Us
                 </Link>
-                <a href="#" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
-                  FAQs
-                </a>
                 <Link to="/contact" className="text-gowith-light-blue hover:text-white" onClick={() => setIsOpen(false)}>
                   Contact Us
                 </Link>
