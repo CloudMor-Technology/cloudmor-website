@@ -26,14 +26,14 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-blue-100 to-blue-50 shadow-md py-2' : 'bg-blue-50/95 backdrop-blur-sm py-4'}`}>
+    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gradient-to-r from-blue-100 to-blue-50 shadow-md py-1' : 'bg-blue-50/95 backdrop-blur-sm py-2'}`}>
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img 
             src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" 
             alt="CloudMor Logo" 
-            className="h-28 w-auto" 
+            className="h-16 w-auto" 
           />
         </Link>
 
