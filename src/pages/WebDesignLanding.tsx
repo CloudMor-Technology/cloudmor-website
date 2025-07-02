@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, ArrowRight, Play, MapPin, Phone, Mail, Award, Target, Rocket, Eye, Heart, DollarSign, Menu, X, User, ExternalLink, FileText, Search, Settings, Code, Rocket as RocketIcon, Palette, Brush, Layers } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,23 @@ const WebDesignLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentTestimonialGroup, setCurrentTestimonialGroup] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Add useEffect for Typeform script loading
+  useEffect(() => {
+    // Load Typeform embed script
+    const script = document.createElement('script');
+    script.src = '//embed.typeform.com/next/embed.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Clean up script on component unmount
+      const existingScript = document.querySelector('script[src="//embed.typeform.com/next/embed.js"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
 
   const websiteShowcase = [{
     name: "IT Services & Development",
@@ -736,7 +753,7 @@ const WebDesignLanding = () => {
         </div>
       </section>
 
-      {/* Enhanced Web Design Form Section with Typeform Embed */}
+      {/* Enhanced Web Design Form Section with Updated Typeform Embed */}
       <section id="web-design-form" className="py-20 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative overflow-hidden">
         {/* Enhanced background effects */}
         <div className="absolute inset-0">
@@ -781,7 +798,7 @@ const WebDesignLanding = () => {
               </div>
             </div>
 
-            {/* Enhanced form container with glowing border and Typeform embed */}
+            {/* Enhanced form container with glowing border and Updated Typeform embed */}
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-gowith-orange via-yellow-400 to-gowith-orange rounded-3xl blur opacity-75 animate-pulse"></div>
               <div className="relative bg-white rounded-3xl p-8 shadow-2xl">
@@ -792,9 +809,9 @@ const WebDesignLanding = () => {
                   <p className="text-gray-600">Fill out this form to get your FREE $6,800 website</p>
                 </div>
                 
-                {/* Typeform Embed */}
+                {/* Updated Typeform Embed */}
                 <div className="w-full">
-                  <iframe src="https://form.typeform.com/to/tSkJytpC" width="100%" height="600" frameBorder="0" className="rounded-lg" title="Web Design Request Form" />
+                  <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ"></div>
                 </div>
               </div>
             </div>
