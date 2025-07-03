@@ -168,13 +168,13 @@ const WebDesignLanding = () => {
         <meta name="keywords" content="web design, website development, professional websites, CloudMor, responsive design, SEO" />
       </Helmet>
 
-      {/* Navigation Header */}
+      {/* Navigation Header - Fixed but with proper mobile support */}
       <header className="w-full fixed top-0 left-0 z-50 bg-slate-900 shadow-sm border-b border-gray-700">
-        <div className="container mx-auto px-6 py-4">
+        <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-24 w-auto" />
+              <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-16 sm:h-20 md:h-24 w-auto" />
             </div>
             
             {/* Desktop Navigation - Centered */}
@@ -206,21 +206,21 @@ const WebDesignLanding = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button className="md:hidden text-white p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
 
-          {/* Mobile Navigation */}
-          {isMenuOpen && <div className="md:hidden mt-4 pb-4 border-t border-gray-600">
+          {/* Mobile Navigation - Fixed mobile menu issues */}
+          {isMenuOpen && <div className="md:hidden mt-4 pb-4 border-t border-gray-600 bg-slate-900">
               <div className="flex flex-col space-y-4 mt-4">
-                <button onClick={() => scrollToSection('how-it-works')} className="text-white hover:text-gray-300 transition-colors font-medium text-left">
+                <button onClick={() => scrollToSection('how-it-works')} className="text-white hover:text-gray-300 transition-colors font-medium text-left p-2">
                   How It Works
                 </button>
-                <button onClick={() => scrollToSection('reviews')} className="text-white hover:text-gray-300 transition-colors font-medium text-left">
+                <button onClick={() => scrollToSection('reviews')} className="text-white hover:text-gray-300 transition-colors font-medium text-left p-2">
                   Reviews
                 </button>
-                <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition-colors font-medium text-left flex items-center gap-1">
+                <a href="https://cloudmor.atlassian.net/servicedesk/customer/portal/4/user/login?destination=portal%2F4%2Fgroup%2F13%2Fcreate%2F10021" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition-colors font-medium text-left flex items-center gap-1 p-2">
                   Support
                   <ExternalLink className="h-4 w-4" />
                 </a>
@@ -238,21 +238,21 @@ const WebDesignLanding = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue pt-32 pb-20 overflow-hidden">
+      {/* Hero Section - Fixed mobile padding and overflow */}
+      <section className="relative bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue pt-24 sm:pt-32 pb-12 sm:pb-20 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-5xl mx-auto text-center py-20">
-            <div className="inline-flex items-center bg-green-500 text-white px-6 py-3 rounded-full text-sm font-bold mb-8 shadow-lg">
-              <DollarSign className="w-4 h-4 mr-2" />
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="max-w-5xl mx-auto text-center py-8 sm:py-20">
+            <div className="inline-flex items-center bg-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-bold mb-6 sm:mb-8 shadow-lg">
+              <DollarSign className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
               Save $6,800 - Professional Web Design FREE!
             </div>
             
-            <h1 className="text-5xl font-black text-white mb-6 leading-tight md:text-6xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 leading-tight">
               PROFESSIONAL
               <span className="block text-gowith-orange">
                 WEB DESIGN
@@ -260,56 +260,56 @@ const WebDesignLanding = () => {
               <span className="block text-white">SERVICES</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-blue-100 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
               Get a <span className="font-bold text-gowith-orange">$6,800 professional website absolutely FREE</span>. Custom designs that drive results and convert visitors into customers.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12 max-w-4xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20 hover:scale-105 transition-transform duration-300">
-                <div className="text-3xl font-black text-white mb-2">FREE</div>
-                <div className="text-white text-sm font-medium">Custom Design</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mb-8 sm:mb-12 max-w-4xl mx-auto px-4">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-6 text-center border border-white/20 hover:scale-105 transition-transform duration-300">
+                <div className="text-xl sm:text-3xl font-black text-white mb-1 sm:mb-2">FREE</div>
+                <div className="text-white text-xs sm:text-sm font-medium">Custom Design</div>
                 <div className="text-gowith-orange text-xs font-bold">Worth $3,000</div>
-                <Heart className="w-6 h-6 text-white mx-auto mt-2" />
+                <Heart className="w-4 h-4 sm:w-6 sm:h-6 text-white mx-auto mt-1 sm:mt-2" />
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20 hover:scale-105 transition-transform duration-300">
-                <div className="text-3xl font-black text-white mb-2">FREE</div>
-                <div className="text-white text-sm font-medium">Development</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-6 text-center border border-white/20 hover:scale-105 transition-transform duration-300">
+                <div className="text-xl sm:text-3xl font-black text-white mb-1 sm:mb-2">FREE</div>
+                <div className="text-white text-xs sm:text-sm font-medium">Development</div>
                 <div className="text-gowith-orange text-xs font-bold">Worth $2,500</div>
-                <Shield className="w-6 h-6 text-white mx-auto mt-2" />
+                <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-white mx-auto mt-1 sm:mt-2" />
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20 hover:scale-105 transition-transform duration-300">
-                <div className="text-3xl font-black text-white mb-2">SEO</div>
-                <div className="text-white text-sm font-medium">Optimized</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-6 text-center border border-white/20 hover:scale-105 transition-transform duration-300">
+                <div className="text-xl sm:text-3xl font-black text-white mb-1 sm:mb-2">SEO</div>
+                <div className="text-white text-xs sm:text-sm font-medium">Optimized</div>
                 <div className="text-gowith-orange text-xs font-bold">Worth $900</div>
-                <TrendingUp className="w-6 h-6 text-white mx-auto mt-2" />
+                <TrendingUp className="w-4 h-4 sm:w-6 sm:h-6 text-white mx-auto mt-1 sm:mt-2" />
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20 hover:scale-105 transition-transform duration-300">
-                <div className="text-3xl font-black text-white mb-2">Mobile</div>
-                <div className="text-white text-sm font-medium">Responsive</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-6 text-center border border-white/20 hover:scale-105 transition-transform duration-300">
+                <div className="text-xl sm:text-3xl font-black text-white mb-1 sm:mb-2">Mobile</div>
+                <div className="text-white text-xs sm:text-sm font-medium">Responsive</div>
                 <div className="text-gowith-orange text-xs font-bold">Worth $400</div>
-                <Smartphone className="w-6 h-6 text-white mx-auto mt-2" />
+                <Smartphone className="w-4 h-4 sm:w-6 sm:h-6 text-white mx-auto mt-1 sm:mt-2" />
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <button onClick={scrollToForm} className="group relative inline-flex items-center bg-gowith-orange hover:bg-gowith-orange-hover text-white text-xl font-black px-10 py-5 rounded-xl transition-all duration-300 transform hover:scale-110 shadow-2xl">
-                <DollarSign className="mr-3 h-6 w-6 group-hover:animate-bounce" />
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 sm:mb-16 px-4">
+              <button onClick={scrollToForm} className="group relative inline-flex items-center bg-gowith-orange hover:bg-gowith-orange-hover text-white text-lg sm:text-xl font-black px-6 sm:px-10 py-4 sm:py-5 rounded-xl transition-all duration-300 transform hover:scale-110 shadow-2xl">
+                <DollarSign className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:animate-bounce" />
                 GET YOUR $6,800 VALUE FREE!
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform" />
+                <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-2 transition-transform" />
               </button>
             </div>
 
-            <div className="relative max-w-5xl mx-auto">
-              <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-gray-100 border-4 border-white/50">
-                <div className="relative h-80 md:h-[500px] overflow-hidden">
+            <div className="relative max-w-5xl mx-auto px-4">
+              <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl bg-gray-100 border-2 sm:border-4 border-white/50">
+                <div className="relative h-64 sm:h-80 md:h-[500px] overflow-hidden">
                   <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full object-cover object-top transition-all duration-1000 transform hover:scale-105" />
-                  <div className="absolute bottom-6 left-6 bg-black/90 backdrop-blur-sm text-white px-6 py-3 rounded-xl shadow-lg">
-                    <span className="font-bold text-lg">{websiteShowcase[currentSlide].name}</span>
-                    <div className="text-gowith-orange text-sm font-medium">✓ $6,800 Value - FREE</div>
+                  <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 bg-black/90 backdrop-blur-sm text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl shadow-lg">
+                    <span className="font-bold text-sm sm:text-lg">{websiteShowcase[currentSlide].name}</span>
+                    <div className="text-gowith-orange text-xs sm:text-sm font-medium">✓ $6,800 Value - FREE</div>
                   </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-6 space-x-3">
-                  {websiteShowcase.map((_, index) => <div key={index} className={`w-3 h-3 rounded-full transition-all duration-500 cursor-pointer ${index === currentSlide ? 'bg-white scale-150 shadow-lg' : 'bg-white/50 hover:bg-white/80'}`} onClick={() => setCurrentSlide(index)} />)}
+                <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-4 sm:pb-6 space-x-2 sm:space-x-3">
+                  {websiteShowcase.map((_, index) => <div key={index} className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-500 cursor-pointer ${index === currentSlide ? 'bg-white scale-150 shadow-lg' : 'bg-white/50 hover:bg-white/80'}`} onClick={() => setCurrentSlide(index)} />)}
                 </div>
               </div>
             </div>
@@ -318,41 +318,41 @@ const WebDesignLanding = () => {
       </section>
 
       {/* Value Proposition Section */}
-      <section className="py-16 bg-gradient-to-r from-green-500 to-green-600 text-white">
-        <div className="container mx-auto px-6">
+      <section className="py-12 sm:py-16 bg-gradient-to-r from-green-500 to-green-600 text-white">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-6xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-black mb-8">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-6 sm:mb-8">
               🎯 What You're Getting: <span className="text-yellow-300">$6,800 Value</span>
             </h2>
-            <p className="text-xl mb-8">See exactly what's included in your free professional website package</p>
+            <p className="text-lg sm:text-xl mb-6 sm:mb-8">See exactly what's included in your free professional website package</p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                <div className="text-3xl mb-4">🎨</div>
-                <h3 className="text-xl font-bold mb-2">Professional Website Design</h3>
-                <div className="text-2xl font-black text-yellow-300">$3,000</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 sm:p-6">
+                <div className="text-2xl sm:text-3xl mb-3 sm:mb-4">🎨</div>
+                <h3 className="text-lg sm:text-xl font-bold mb-2">Professional Website Design</h3>
+                <div className="text-xl sm:text-2xl font-black text-yellow-300">$3,000</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                <div className="text-3xl mb-4">💻</div>
-                <h3 className="text-xl font-bold mb-2">Custom Development</h3>
-                <div className="text-2xl font-black text-yellow-300">$2,500</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 sm:p-6">
+                <div className="text-2xl sm:text-3xl mb-3 sm:mb-4">💻</div>
+                <h3 className="text-lg sm:text-xl font-bold mb-2">Custom Development</h3>
+                <div className="text-xl sm:text-2xl font-black text-yellow-300">$2,500</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                <div className="text-3xl mb-4">🚀</div>
-                <h3 className="text-xl font-bold mb-2">SEO & Optimization</h3>
-                <div className="text-2xl font-black text-yellow-300">$1,300</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 sm:p-6">
+                <div className="text-2xl sm:text-3xl mb-3 sm:mb-4">🚀</div>
+                <h3 className="text-lg sm:text-xl font-bold mb-2">SEO & Optimization</h3>
+                <div className="text-xl sm:text-2xl font-black text-yellow-300">$1,300</div>
               </div>
             </div>
             
-            <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-              <div className="bg-green-600 rounded-2xl p-8 text-center">
-                <div className="text-yellow-300 text-lg font-bold mb-2">TOTAL VALUE</div>
-                <div className="text-4xl font-black">$6,800</div>
+            <div className="flex flex-col md:flex-row justify-center items-center gap-6 sm:gap-8">
+              <div className="bg-green-600 rounded-2xl p-6 sm:p-8 text-center">
+                <div className="text-yellow-300 text-base sm:text-lg font-bold mb-2">TOTAL VALUE</div>
+                <div className="text-3xl sm:text-4xl font-black">$6,800</div>
               </div>
-              <div className="text-6xl">→</div>
-              <div className="bg-blue-600 rounded-2xl p-8 text-center">
-                <div className="text-yellow-300 text-lg font-bold mb-2">YOUR INVESTMENT</div>
-                <div className="text-4xl font-black text-yellow-300">FREE</div>
+              <div className="text-4xl sm:text-6xl">→</div>
+              <div className="bg-blue-600 rounded-2xl p-6 sm:p-8 text-center">
+                <div className="text-yellow-300 text-base sm:text-lg font-bold mb-2">YOUR INVESTMENT</div>
+                <div className="text-3xl sm:text-4xl font-black text-yellow-300">FREE</div>
               </div>
             </div>
           </div>
@@ -360,21 +360,21 @@ const WebDesignLanding = () => {
       </section>
 
       {/* Social Proof Section */}
-      <section className="py-16 bg-gowith-dark-blue text-white">
-        <div className="container mx-auto px-6">
+      <section className="py-12 sm:py-16 bg-gowith-dark-blue text-white">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
                 Trusted by <span className="text-gowith-orange">500+ California Businesses</span>
               </h2>
-              <p className="text-xl text-gray-300">Each saved an average of $6,800 on professional web design</p>
+              <p className="text-lg sm:text-xl text-gray-300">Each saved an average of $6,800 on professional web design</p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
               {socialProof.map((item, index) => <div key={index} className="text-center group hover:scale-110 transition-transform duration-300">
-                  <div className="text-5xl mb-2">{item.icon}</div>
-                  <div className="text-4xl font-black text-gowith-orange mb-2">{item.metric}</div>
-                  <div className="text-gray-300 font-medium">{item.label}</div>
+                  <div className="text-3xl sm:text-5xl mb-2">{item.icon}</div>
+                  <div className="text-2xl sm:text-4xl font-black text-gowith-orange mb-2">{item.metric}</div>
+                  <div className="text-gray-300 font-medium text-sm sm:text-base">{item.label}</div>
                 </div>)}
             </div>
           </div>
@@ -382,28 +382,28 @@ const WebDesignLanding = () => {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6">
+      <section id="how-it-works" className="py-12 sm:py-20 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-black text-gowith-dark-blue mb-6">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gowith-dark-blue mb-4 sm:mb-6">
                 Website Development <span className="text-gowith-medium-blue">Process</span>
               </h2>
-              <p className="text-xl text-gray-600">
+              <p className="text-lg sm:text-xl text-gray-600">
                 From application to launch, we make it easy with our proven 5-step process
               </p>
-              <div className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-bold mt-4">
-                <DollarSign className="w-4 h-4 mr-2" />
+              <div className="inline-flex items-center bg-green-100 text-green-800 px-3 sm:px-4 py-2 rounded-full text-sm font-bold mt-4">
+                <DollarSign className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                 No upfront costs - $6,800 value delivered FREE
               </div>
             </div>
 
-            {/* Process Timeline */}
+            {/* Process Timeline - Mobile responsive */}
             <div className="relative">
               {/* Desktop Timeline Line */}
               <div className="hidden lg:block absolute top-20 left-0 right-0 h-1 bg-gradient-to-r from-gowith-medium-blue via-gowith-orange to-gowith-dark-blue rounded-full"></div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-4">
                 {[{
                 step: 1,
                 title: "Application Submission",
@@ -441,37 +441,37 @@ const WebDesignLanding = () => {
                 color: "from-green-600 to-green-700"
               }].map((item, index) => <div key={index} className="relative group">
                     {/* Step Circle */}
-                    <div className="relative z-10 mb-6">
-                      <div className={`w-16 h-16 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300 border-4 border-white`}>
-                        <span className="text-white font-black text-xl">{item.step}</span>
+                    <div className="relative z-10 mb-4 sm:mb-6">
+                      <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300 border-2 sm:border-4 border-white`}>
+                        <span className="text-white font-black text-lg sm:text-xl">{item.step}</span>
                       </div>
                       {/* Icon overlay */}
-                      <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
-                        <item.icon className="w-4 h-4 text-gray-600" />
+                      <div className="absolute -bottom-1 sm:-bottom-2 -right-1 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center shadow-md">
+                        <item.icon className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
                       </div>
                     </div>
 
                     {/* Content Card */}
-                    <div className="bg-white p-6 rounded-2xl shadow-lg group-hover:shadow-xl transition-all duration-300 border border-gray-100 h-full">
-                      <div className="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                    <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg group-hover:shadow-xl transition-all duration-300 border border-gray-100 h-full">
+                      <div className="inline-flex items-center bg-blue-50 text-blue-700 px-2 sm:px-3 py-1 rounded-full text-xs font-bold mb-3 sm:mb-4">
                         <Clock className="w-3 h-3 mr-1" />
                         {item.timeline}
                       </div>
                       
-                      <h3 className="text-lg font-bold text-gowith-dark-blue mb-3 leading-tight">
+                      <h3 className="text-base sm:text-lg font-bold text-gowith-dark-blue mb-2 sm:mb-3 leading-tight">
                         {item.title}
                       </h3>
                       
-                      <p className="text-gray-600 text-sm leading-relaxed">
+                      <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
                         {item.desc}
                       </p>
 
                       {/* Step indicator */}
-                      <div className="mt-4 pt-4 border-t border-gray-100">
+                      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-100">
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-medium text-gray-500">Step {item.step} of 5</span>
                           <div className="flex space-x-1">
-                            {[...Array(5)].map((_, i) => <div key={i} className={`w-2 h-2 rounded-full ${i < item.step ? 'bg-gowith-orange' : 'bg-gray-200'}`} />)}
+                            {[...Array(5)].map((_, i) => <div key={i} className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${i < item.step ? 'bg-gowith-orange' : 'bg-gray-200'}`} />)}
                           </div>
                         </div>
                       </div>
@@ -486,23 +486,23 @@ const WebDesignLanding = () => {
             </div>
 
             {/* Summary Section */}
-            <div className="mt-16 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue rounded-3xl p-8 text-white text-center">
-              <h3 className="text-2xl font-bold mb-4">Complete Process: 13-14 Days</h3>
-              <p className="text-lg text-blue-100 mb-6">
+            <div className="mt-12 sm:mt-16 bg-gradient-to-r from-gowith-dark-blue to-gowith-medium-blue rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white text-center">
+              <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Complete Process: 13-14 Days</h3>
+              <p className="text-base sm:text-lg text-blue-100 mb-4 sm:mb-6">
                 From application submission to website launch, we deliver professional results efficiently
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                  <div className="text-2xl font-bold text-gowith-orange">5 Steps</div>
-                  <div className="text-sm text-blue-100">Structured Process</div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4">
+                  <div className="text-xl sm:text-2xl font-bold text-gowith-orange">5 Steps</div>
+                  <div className="text-xs sm:text-sm text-blue-100">Structured Process</div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                  <div className="text-2xl font-bold text-gowith-orange">14 Days</div>
-                  <div className="text-sm text-blue-100">Average Timeline</div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4">
+                  <div className="text-xl sm:text-2xl font-bold text-gowith-orange">14 Days</div>
+                  <div className="text-xs sm:text-sm text-blue-100">Average Timeline</div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                  <div className="text-2xl font-bold text-gowith-orange">$6,800</div>
-                  <div className="text-sm text-blue-100">Value Delivered FREE</div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4">
+                  <div className="text-xl sm:text-2xl font-bold text-gowith-orange">$6,800</div>
+                  <div className="text-xs sm:text-sm text-blue-100">Value Delivered FREE</div>
                 </div>
               </div>
             </div>
@@ -515,7 +515,7 @@ const WebDesignLanding = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <div className="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg">
+              <div className="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-full text-sm font-bold mb-6 sm:mb-8 shadow-lg">
                 <Palette className="w-4 h-4 mr-2" />
                 BONUS: Professional Logo Design Included FREE!
               </div>
@@ -755,7 +755,7 @@ const WebDesignLanding = () => {
       </section>
 
       {/* Enhanced Web Design Form Section with Updated Typeform Embed */}
-      <section id="web-design-form" className="py-20 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative overflow-hidden">
+      <section id="web-design-form" className="py-12 sm:py-20 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative overflow-hidden">
         {/* Enhanced background effects */}
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
@@ -763,37 +763,37 @@ const WebDesignLanding = () => {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gowith-orange/10 rounded-full blur-3xl"></div>
         </div>
         
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-4xl mx-auto">
             {/* Enhanced header with pulsing elements */}
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-8 py-4 rounded-full text-lg font-black mb-8 shadow-2xl animate-pulse">
-                <Star className="h-6 w-6 mr-3 animate-spin" />
+            <div className="text-center mb-8 sm:mb-12">
+              <div className="inline-flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 sm:px-8 py-2 sm:py-4 rounded-full text-base sm:text-lg font-black mb-6 sm:mb-8 shadow-2xl animate-pulse">
+                <Star className="h-4 w-4 sm:h-6 sm:w-6 mr-2 sm:mr-3 animate-spin" />
                 🎯 MOST VISIBLE FORM - SUBMIT YOUR REQUEST NOW!
-                <Star className="h-6 w-6 ml-3 animate-spin" />
+                <Star className="h-4 w-4 sm:h-6 sm:w-6 ml-2 sm:ml-3 animate-spin" />
               </div>
               
-              <h2 className="text-4xl md:text-6xl font-black mb-6 text-shadow-lg">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 sm:mb-6 text-shadow-lg">
                 START YOUR <span className="text-gowith-orange animate-pulse">FREE WEB DESIGN</span>
               </h2>
-              <h3 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
                 APPLY YOUR REQUEST TODAY!
               </h3>
-              <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8 leading-relaxed">
+              <p className="text-base sm:text-xl text-blue-100 max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed px-4">
                 Get your $6,800 professional website absolutely FREE. Tell us about your project and we'll get started right away.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <div className="bg-green-500 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center shadow-lg">
-                  <DollarSign className="h-5 w-5 mr-2" />
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6 sm:mb-8 px-4">
+                <div className="bg-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-bold text-base sm:text-lg flex items-center shadow-lg">
+                  <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   FREE DESIGN
                 </div>
-                <div className="bg-green-500 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center shadow-lg">
-                  <CheckCircle className="h-5 w-5 mr-2" />
+                <div className="bg-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-bold text-base sm:text-lg flex items-center shadow-lg">
+                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   FREE DEVELOPMENT
                 </div>
-                <div className="bg-white/20 text-white px-6 py-3 rounded-full font-bold text-lg flex items-center shadow-lg">
-                  <Star className="h-5 w-5 mr-2" />
+                <div className="bg-white/20 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-bold text-base sm:text-lg flex items-center shadow-lg">
+                  <Star className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   $6,800 Value
                 </div>
               </div>
@@ -801,26 +801,26 @@ const WebDesignLanding = () => {
 
             {/* Enhanced form container with glowing border and Updated Typeform embed */}
             <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-gowith-orange via-yellow-400 to-gowith-orange rounded-3xl blur opacity-75 animate-pulse"></div>
-              <div className="relative bg-white rounded-3xl p-8 shadow-2xl">
-                <div className="text-center mb-6">
-                  <h4 className="text-2xl font-black text-gowith-dark-blue mb-2">
+              <div className="absolute -inset-1 bg-gradient-to-r from-gowith-orange via-yellow-400 to-gowith-orange rounded-2xl sm:rounded-3xl blur opacity-75 animate-pulse"></div>
+              <div className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl">
+                <div className="text-center mb-4 sm:mb-6">
+                  <h4 className="text-xl sm:text-2xl font-black text-gowith-dark-blue mb-2">
                     📝 SUBMIT YOUR WEB DESIGN REQUEST
                   </h4>
-                  <p className="text-gray-600">Fill out this form to get your FREE $6,800 website</p>
+                  <p className="text-gray-600 text-sm sm:text-base">Fill out this form to get your FREE $6,800 website</p>
                 </div>
                 
                 {/* Updated Typeform Embed with form ID 01JZ6P3Y0CNZCV4GXSH5YQ4WSQ */}
-                <div className="w-full h-[600px]">
+                <div className="w-full h-[500px] sm:h-[600px]">
                   <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" className="w-full h-full"></div>
                 </div>
               </div>
             </div>
 
-            <div className="text-center mt-8">
-              <div className="bg-gowith-orange rounded-2xl p-6 shadow-lg">
-                <p className="text-xl font-black text-white flex items-center justify-center">
-                  <Heart className="h-6 w-6 mr-3" />
+            <div className="text-center mt-6 sm:mt-8">
+              <div className="bg-gowith-orange rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+                <p className="text-lg sm:text-xl font-black text-white flex items-center justify-center">
+                  <Heart className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
                   From California, with ❤️ – Passionately Powering Your Vision
                 </p>
               </div>
@@ -833,48 +833,48 @@ const WebDesignLanding = () => {
       <ContactSection />
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-white py-16">
+      <footer className="bg-slate-900 text-white py-12 sm:py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8">
             <div>
               <Link to="/" className="inline-block mb-4">
-                <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-20 w-auto" />
+                <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-16 sm:h-20 w-auto" />
               </Link>
-              <p className="text-gray-300 mb-4">
+              <p className="text-gray-300 mb-4 text-sm sm:text-base">
                 Enterprise-level technology solutions for growing businesses.
               </p>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4 text-white">Services</h4>
+              <h4 className="font-bold mb-3 sm:mb-4 text-white">Services</h4>
               <ul className="space-y-2">
-                <li><Link to="/services/web-dev-automation" className="text-gray-300 hover:text-white">Web Development</Link></li>
-                <li><Link to="/services/managed-it" className="text-gray-300 hover:text-white">Managed IT</Link></li>
-                <li><Link to="/services/cybersecurity" className="text-gray-300 hover:text-white">Cybersecurity</Link></li>
+                <li><Link to="/services/web-dev-automation" className="text-gray-300 hover:text-white text-sm sm:text-base">Web Development</Link></li>
+                <li><Link to="/services/managed-it" className="text-gray-300 hover:text-white text-sm sm:text-base">Managed IT</Link></li>
+                <li><Link to="/services/cybersecurity" className="text-gray-300 hover:text-white text-sm sm:text-base">Cybersecurity</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4 text-white">Company</h4>
+              <h4 className="font-bold mb-3 sm:mb-4 text-white">Company</h4>
               <ul className="space-y-2">
-                <li><Link to="/about" className="text-gray-300 hover:text-white">About</Link></li>
-                <li><Link to="/contact" className="text-gray-300 hover:text-white">Contact</Link></li>
+                <li><Link to="/about" className="text-gray-300 hover:text-white text-sm sm:text-base">About</Link></li>
+                <li><Link to="/contact" className="text-gray-300 hover:text-white text-sm sm:text-base">Contact</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4 text-white">Contact</h4>
-              <p className="text-gray-300 mb-2">
+              <h4 className="font-bold mb-3 sm:mb-4 text-white">Contact</h4>
+              <p className="text-gray-300 mb-2 text-sm sm:text-base">
                 <strong>Phone:</strong> <a href="tel:8885546597" className="hover:text-white">(888) 554-6597</a>
               </p>
-              <p className="text-gray-300">
+              <p className="text-gray-300 text-sm sm:text-base">
                 <strong>Email:</strong> <a href="mailto:sales@cloudmor.com" className="hover:text-white">sales@cloudmor.com</a>
               </p>
             </div>
           </div>
           
-          <div className="border-t border-gray-600 mt-12 pt-8 text-center">
-            <p className="text-gray-300">
+          <div className="border-t border-gray-600 mt-8 sm:mt-12 pt-6 sm:pt-8 text-center">
+            <p className="text-gray-300 text-sm sm:text-base">
               &copy; {new Date().getFullYear()} CloudMor. All rights reserved.
             </p>
           </div>
