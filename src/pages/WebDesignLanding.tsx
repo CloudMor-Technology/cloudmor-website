@@ -300,9 +300,9 @@ const WebDesignLanding = () => {
             </div>
 
             <div className="relative max-w-5xl mx-auto px-4">
-              <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl bg-gray-100 border-2 sm:border-4 border-white/50">
-                <div className="relative h-64 sm:h-80 md:h-[500px] overflow-hidden">
-                  <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full object-cover object-top transition-all duration-1000 transform hover:scale-105" />
+              <div className="relative rounded-2xl sm:rounded-3xl shadow-2xl bg-gray-100 border-2 sm:border-4 border-white/50">
+                <div className="relative h-64 sm:h-80 md:h-[500px]">
+                  <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full object-cover object-top transition-all duration-1000 transform hover:scale-105 rounded-2xl sm:rounded-3xl" />
                   <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 bg-black/90 backdrop-blur-sm text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl shadow-lg">
                     <span className="font-bold text-sm sm:text-lg">{websiteShowcase[currentSlide].name}</span>
                     <div className="text-gowith-orange text-xs sm:text-sm font-medium">✓ $6,800 Value - FREE</div>
@@ -439,7 +439,7 @@ const WebDesignLanding = () => {
                 timeline: "Days 13–14",
                 icon: RocketIcon,
                 color: "from-green-600 to-green-700"
-              }].map((item, index) => <div key={index} className="relative group">
+              ]}.map((item, index) => <div key={index} className="relative group">
                     {/* Step Circle */}
                     <div className="relative z-10 mb-4 sm:mb-6">
                       <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300 border-2 sm:border-4 border-white`}>
@@ -755,7 +755,7 @@ const WebDesignLanding = () => {
       </section>
 
       {/* Enhanced Web Design Form Section with Updated Typeform Embed */}
-      <section id="web-design-form" className="py-12 sm:py-20 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative overflow-hidden">
+      <section id="web-design-form" className="py-12 sm:py-20 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative">
         {/* Enhanced background effects */}
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
