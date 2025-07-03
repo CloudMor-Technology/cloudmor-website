@@ -115,6 +115,7 @@ const WebDesignLanding = () => {
     business: "Johnson IT Support, Modesto",
     avatar: "💻"
   }]];
+  
   const socialProof = [{
     metric: "3451+",
     label: "Websites Built",
@@ -132,6 +133,7 @@ const WebDesignLanding = () => {
     label: "Average Launch Time",
     icon: "⚡"
   }];
+  
   const scrollToForm = () => {
     const formElement = document.getElementById('web-design-form');
     if (formElement) {
@@ -140,6 +142,7 @@ const WebDesignLanding = () => {
       });
     }
   };
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -149,18 +152,21 @@ const WebDesignLanding = () => {
     }
     setIsMenuOpen(false);
   };
+  
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % websiteShowcase.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+  
   React.useEffect(() => {
     const testimonialInterval = setInterval(() => {
       setCurrentTestimonialGroup(prev => (prev + 1) % testimonialGroups.length);
     }, 3000);
     return () => clearInterval(testimonialInterval);
   }, []);
+
   return <div className="min-h-screen bg-white">
       <Helmet>
         <title>Professional Web Design Services - CloudMor | Free Website Development</title>
@@ -755,7 +761,7 @@ const WebDesignLanding = () => {
       </section>
 
       {/* Enhanced Web Design Form Section with Fixed Layout */}
-      <section id="web-design-form" className="py-12 sm:py-20 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative">
+      <section id="web-design-form" className="py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative min-h-screen flex items-center">
         {/* Enhanced background effects */}
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
@@ -763,75 +769,102 @@ const WebDesignLanding = () => {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gowith-orange/10 rounded-full blur-3xl"></div>
         </div>
         
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto">
-            {/* Enhanced header with pulsing elements */}
-            <div className="text-center mb-8 sm:mb-12">
-              <div className="inline-flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 sm:px-8 py-2 sm:py-4 rounded-full text-base sm:text-lg font-black mb-6 sm:mb-8 shadow-2xl animate-pulse">
-                <Star className="h-4 w-4 sm:h-6 sm:w-6 mr-2 sm:mr-3 animate-spin" />
-                🎯 MOST VISIBLE FORM - SUBMIT YOUR REQUEST NOW!
-                <Star className="h-4 w-4 sm:h-6 sm:w-6 ml-2 sm:ml-3 animate-spin" />
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full">
+          <div className="max-w-5xl mx-auto">
+            {/* Compact header for better space utilization */}
+            <div className="text-center mb-6 sm:mb-8">
+              <div className="inline-flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-3 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-black mb-4 sm:mb-6 shadow-2xl animate-pulse">
+                <Star className="h-3 w-3 sm:h-4 sm:w-4 mr-2 animate-spin" />
+                🎯 SUBMIT YOUR REQUEST NOW!
+                <Star className="h-3 w-3 sm:h-4 sm:w-4 ml-2 animate-spin" />
               </div>
               
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 sm:mb-6 text-shadow-lg">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black mb-3 sm:mb-4 text-shadow-lg">
                 START YOUR <span className="text-gowith-orange animate-pulse">FREE WEB DESIGN</span>
               </h2>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
                 APPLY YOUR REQUEST TODAY!
               </h3>
-              <p className="text-base sm:text-xl text-blue-100 max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed px-4">
+              <p className="text-sm sm:text-base lg:text-lg text-blue-100 max-w-3xl mx-auto mb-4 sm:mb-6 leading-relaxed px-2">
                 Get your $6,800 professional website absolutely FREE. Tell us about your project and we'll get started right away.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6 sm:mb-8 px-4">
-                <div className="bg-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-bold text-base sm:text-lg flex items-center shadow-lg">
-                  <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+              <div className="flex flex-wrap gap-2 sm:gap-3 justify-center mb-4 sm:mb-6 px-2">
+                <div className="bg-green-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm flex items-center shadow-lg">
+                  <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
                   FREE DESIGN
                 </div>
-                <div className="bg-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-bold text-base sm:text-lg flex items-center shadow-lg">
-                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                <div className="bg-green-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm flex items-center shadow-lg">
+                  <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
                   FREE DEVELOPMENT
                 </div>
-                <div className="bg-white/20 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-bold text-base sm:text-lg flex items-center shadow-lg">
-                  <Star className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                <div className="bg-white/20 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm flex items-center shadow-lg">
+                  <Star className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
                   $6,800 Value
                 </div>
               </div>
             </div>
 
-            {/* Fixed form container with proper responsive dimensions */}
-            <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-gowith-orange via-yellow-400 to-gowith-orange rounded-2xl sm:rounded-3xl blur opacity-75 animate-pulse"></div>
-              <div className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl">
-                <div className="text-center mb-4 sm:mb-6">
-                  <h4 className="text-xl sm:text-2xl font-black text-gowith-dark-blue mb-2">
+            {/* Dynamic form container with adaptive sizing */}
+            <div className="relative w-full">
+              <div className="absolute -inset-0.5 sm:-inset-1 bg-gradient-to-r from-gowith-orange via-yellow-400 to-gowith-orange rounded-xl sm:rounded-2xl lg:rounded-3xl blur opacity-75 animate-pulse"></div>
+              <div className="relative bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-6 lg:p-8 shadow-2xl">
+                <div className="text-center mb-3 sm:mb-4">
+                  <h4 className="text-lg sm:text-xl font-black text-gowith-dark-blue mb-2">
                     📝 SUBMIT YOUR WEB DESIGN REQUEST
                   </h4>
-                  <p className="text-gray-600 text-sm sm:text-base">Fill out this form to get your FREE $6,800 website</p>
+                  <p className="text-gray-600 text-xs sm:text-sm">Fill out this form to get your FREE $6,800 website</p>
                 </div>
                 
-                {/* Fixed Typeform Embed with responsive container */}
-                <div className="w-full relative">
-                  <div 
-                    className="w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] max-h-[70vh] border border-gray-200 rounded-xl overflow-hidden"
-                    style={{ aspectRatio: '16/10' }}
-                  >
+                {/* Adaptive Typeform Embed with dynamic height */}
+                <div className="w-full">
+                  {/* Mobile-first responsive container */}
+                  <div className="block sm:hidden">
                     <div 
-                      data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" 
-                      data-tf-iframe-props="title=Web Design Request Form"
-                      data-tf-medium="snippet"
-                      className="w-full h-full"
-                      style={{ minHeight: '400px' }}
-                    ></div>
+                      className="w-full h-[500px] border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                      <div 
+                        data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" 
+                        data-tf-iframe-props="title=Web Design Request Form"
+                        data-tf-medium="snippet"
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Tablet responsive container */}
+                  <div className="hidden sm:block lg:hidden">
+                    <div 
+                      className="w-full h-[600px] border border-gray-200 rounded-xl overflow-hidden"
+                    >
+                      <div 
+                        data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" 
+                        data-tf-iframe-props="title=Web Design Request Form"
+                        data-tf-medium="snippet"
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Desktop responsive container */}
+                  <div className="hidden lg:block">
+                    <div 
+                      className="w-full h-[700px] max-h-[80vh] border border-gray-200 rounded-2xl overflow-hidden"
+                      style={{ minHeight: '600px' }}
+                    >
+                      <div 
+                        data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" 
+                        data-tf-iframe-props="title=Web Design Request Form"
+                        data-tf-medium="snippet"
+                      ></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="text-center mt-6 sm:mt-8">
-              <div className="bg-gowith-orange rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
-                <p className="text-lg sm:text-xl font-black text-white flex items-center justify-center">
-                  <Heart className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
+            <div className="text-center mt-4 sm:mt-6">
+              <div className="bg-gowith-orange rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-lg">
+                <p className="text-sm sm:text-lg font-black text-white flex items-center justify-center">
+                  <Heart className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   From California, with ❤️ – Passionately Powering Your Vision
                 </p>
               </div>
