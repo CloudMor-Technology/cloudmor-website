@@ -439,7 +439,7 @@ const WebDesignLanding = () => {
                 timeline: "Days 13–14",
                 icon: RocketIcon,
                 color: "from-green-600 to-green-700"
-              ]}.map((item, index) => <div key={index} className="relative group">
+              }].map((item, index) => <div key={index} className="relative group">
                     {/* Step Circle */}
                     <div className="relative z-10 mb-4 sm:mb-6">
                       <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300 border-2 sm:border-4 border-white`}>
