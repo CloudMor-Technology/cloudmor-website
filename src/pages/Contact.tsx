@@ -40,6 +40,9 @@ const Contact = () => {
 
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-gowith-dark-blue mb-8 text-center">
+              Have Questions? Contact Us
+            </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Typeform Embed */}
               <div className="bg-gray-50 p-8 rounded-lg shadow-md">
