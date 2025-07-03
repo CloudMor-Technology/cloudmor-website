@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -313,6 +312,9 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold text-gowith-dark-blue mb-4 text-center">
+        Have Questions? Contact Us
+      </h2>
       <h3 className="text-2xl font-bold text-gowith-dark-blue mb-2">{displayTitle}</h3>
       <p className="text-gray-600 mb-6">{displayDescription}</p>
       
