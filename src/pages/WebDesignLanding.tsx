@@ -4,6 +4,7 @@ import { CheckCircle, Star, Users, Clock, Shield, Smartphone, TrendingUp, Zap, A
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Link } from 'react-router-dom';
+import ContactSection from '@/components/ContactSection';
 
 const WebDesignLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -827,6 +828,9 @@ const WebDesignLanding = () => {
           </div>
         </div>
       </section>
+
+      {/* Contact Section */}
+      <ContactSection />
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white py-16">
