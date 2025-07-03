@@ -754,7 +754,7 @@ const WebDesignLanding = () => {
         </div>
       </section>
 
-      {/* Enhanced Web Design Form Section with Updated Typeform Embed */}
+      {/* Enhanced Web Design Form Section with Fixed Layout */}
       <section id="web-design-form" className="py-12 sm:py-20 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative">
         {/* Enhanced background effects */}
         <div className="absolute inset-0">
@@ -799,7 +799,7 @@ const WebDesignLanding = () => {
               </div>
             </div>
 
-            {/* Enhanced form container with glowing border and Updated Typeform embed */}
+            {/* Fixed form container with proper responsive dimensions */}
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-gowith-orange via-yellow-400 to-gowith-orange rounded-2xl sm:rounded-3xl blur opacity-75 animate-pulse"></div>
               <div className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl">
@@ -810,9 +810,20 @@ const WebDesignLanding = () => {
                   <p className="text-gray-600 text-sm sm:text-base">Fill out this form to get your FREE $6,800 website</p>
                 </div>
                 
-                {/* Updated Typeform Embed with form ID 01JZ6P3Y0CNZCV4GXSH5YQ4WSQ */}
-                <div className="w-full h-[500px] sm:h-[600px]">
-                  <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" className="w-full h-full"></div>
+                {/* Fixed Typeform Embed with responsive container */}
+                <div className="w-full relative">
+                  <div 
+                    className="w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] max-h-[70vh] border border-gray-200 rounded-xl overflow-hidden"
+                    style={{ aspectRatio: '16/10' }}
+                  >
+                    <div 
+                      data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" 
+                      data-tf-iframe-props="title=Web Design Request Form"
+                      data-tf-medium="snippet"
+                      className="w-full h-full"
+                      style={{ minHeight: '400px' }}
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>
