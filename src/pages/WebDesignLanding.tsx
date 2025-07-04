@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Link } from 'react-router-dom';
 import ContactSection from '@/components/ContactSection';
-
 const WebDesignLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentTestimonialGroup, setCurrentTestimonialGroup] = useState(0);
@@ -18,7 +17,6 @@ const WebDesignLanding = () => {
     script.src = '//embed.typeform.com/next/embed.js';
     script.async = true;
     document.body.appendChild(script);
-
     return () => {
       // Clean up script on component unmount
       const existingScript = document.querySelector('script[src="//embed.typeform.com/next/embed.js"]');
@@ -27,7 +25,6 @@ const WebDesignLanding = () => {
       }
     };
   }, []);
-
   const websiteShowcase = [{
     name: "IT Services & Development",
     image: "/lovable-uploads/456f6b18-a26b-4d1c-8b81-c7b162c2f167.png"
@@ -115,7 +112,6 @@ const WebDesignLanding = () => {
     business: "Johnson IT Support, Modesto",
     avatar: "💻"
   }]];
-  
   const socialProof = [{
     metric: "3451+",
     label: "Websites Built",
@@ -133,7 +129,6 @@ const WebDesignLanding = () => {
     label: "Average Launch Time",
     icon: "⚡"
   }];
-  
   const scrollToForm = () => {
     const formElement = document.getElementById('web-design-form');
     if (formElement) {
@@ -142,7 +137,6 @@ const WebDesignLanding = () => {
       });
     }
   };
-  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -152,21 +146,18 @@ const WebDesignLanding = () => {
     }
     setIsMenuOpen(false);
   };
-  
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % websiteShowcase.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
-  
   React.useEffect(() => {
     const testimonialInterval = setInterval(() => {
       setCurrentTestimonialGroup(prev => (prev + 1) % testimonialGroups.length);
     }, 3000);
     return () => clearInterval(testimonialInterval);
   }, []);
-
   return <div className="min-h-screen bg-white">
       <Helmet>
         <title>Professional Web Design Services - CloudMor | Free Website Development</title>
@@ -808,7 +799,7 @@ const WebDesignLanding = () => {
             {/* Dynamic form container with adaptive sizing */}
             <div className="relative w-full">
               <div className="absolute -inset-0.5 sm:-inset-1 bg-gradient-to-r from-gowith-orange via-yellow-400 to-gowith-orange rounded-xl sm:rounded-2xl lg:rounded-3xl blur opacity-75 animate-pulse"></div>
-              <div className="relative bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-6 lg:p-8 shadow-2xl">
+              <div className="relative bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 lg:p-8 shadow-2xl lg:rounded-3xl py-0 px-0">
                 <div className="text-center mb-3 sm:mb-4">
                   <h4 className="text-lg sm:text-xl font-black text-gowith-dark-blue mb-2">
                     📝 SUBMIT YOUR WEB DESIGN REQUEST
@@ -820,41 +811,24 @@ const WebDesignLanding = () => {
                 <div className="w-full">
                   {/* Mobile-first responsive container */}
                   <div className="block sm:hidden">
-                    <div 
-                      className="w-full h-[500px] border border-gray-200 rounded-lg overflow-hidden"
-                    >
-                      <div 
-                        data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" 
-                        data-tf-iframe-props="title=Web Design Request Form"
-                        data-tf-medium="snippet"
-                      ></div>
+                    <div className="w-full h-[500px] border border-gray-200 rounded-lg overflow-hidden">
+                      <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet"></div>
                     </div>
                   </div>
 
                   {/* Tablet responsive container */}
                   <div className="hidden sm:block lg:hidden">
-                    <div 
-                      className="w-full h-[600px] border border-gray-200 rounded-xl overflow-hidden"
-                    >
-                      <div 
-                        data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" 
-                        data-tf-iframe-props="title=Web Design Request Form"
-                        data-tf-medium="snippet"
-                      ></div>
+                    <div className="w-full h-[600px] border border-gray-200 rounded-xl overflow-hidden">
+                      <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet"></div>
                     </div>
                   </div>
 
                   {/* Desktop responsive container */}
                   <div className="hidden lg:block">
-                    <div 
-                      className="w-full h-[700px] max-h-[80vh] border border-gray-200 rounded-2xl overflow-hidden"
-                      style={{ minHeight: '600px' }}
-                    >
-                      <div 
-                        data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" 
-                        data-tf-iframe-props="title=Web Design Request Form"
-                        data-tf-medium="snippet"
-                      ></div>
+                    <div className="w-full h-[700px] max-h-[80vh] border border-gray-200 rounded-2xl overflow-hidden" style={{
+                    minHeight: '600px'
+                  }}>
+                      <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet"></div>
                     </div>
                   </div>
                 </div>
@@ -926,5 +900,4 @@ const WebDesignLanding = () => {
       </footer>
     </div>;
 };
-
 export default WebDesignLanding;
