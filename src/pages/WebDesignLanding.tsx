@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Link } from 'react-router-dom';
 import ContactSection from '@/components/ContactSection';
+
 const WebDesignLanding = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentTestimonialGroup, setCurrentTestimonialGroup] = useState(0);
@@ -751,7 +752,7 @@ const WebDesignLanding = () => {
         </div>
       </section>
 
-      {/* Enhanced Web Design Form Section with Fixed Layout */}
+      {/* Enhanced Web Design Form Section with Removed White Background */}
       <section id="web-design-form" className="py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative min-h-screen flex items-center">
         {/* Enhanced background effects */}
         <div className="absolute inset-0">
@@ -761,7 +762,7 @@ const WebDesignLanding = () => {
         </div>
         
         <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             {/* Compact header for better space utilization */}
             <div className="text-center mb-6 sm:mb-8">
               <div className="inline-flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-3 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-black mb-4 sm:mb-6 shadow-2xl animate-pulse">
@@ -796,47 +797,44 @@ const WebDesignLanding = () => {
               </div>
             </div>
 
-            {/* Dynamic form container with adaptive sizing */}
-            <div className="relative w-full">
-              <div className="absolute -inset-0.5 sm:-inset-1 bg-gradient-to-r from-gowith-orange via-yellow-400 to-gowith-orange rounded-xl sm:rounded-2xl lg:rounded-3xl blur opacity-75 animate-pulse"></div>
-              <div className="relative bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 lg:p-8 shadow-2xl lg:rounded-3xl py-0 px-0">
-                <div className="text-center mb-3 sm:mb-4">
-                  <h4 className="text-lg sm:text-xl font-black text-gowith-dark-blue mb-2">
-                    📝 SUBMIT YOUR WEB DESIGN REQUEST
-                  </h4>
-                  <p className="text-gray-600 text-xs sm:text-sm">Fill out this form to get your FREE $6,800 website</p>
+            {/* Form container without white background - allowing natural expansion */}
+            <div className="w-full max-w-6xl mx-auto">
+              <div className="text-center mb-4 sm:mb-6">
+                <h4 className="text-lg sm:text-xl font-black text-white mb-2">
+                  📝 SUBMIT YOUR WEB DESIGN REQUEST
+                </h4>
+                <p className="text-blue-100 text-sm sm:text-base">Fill out this form to get your FREE $6,800 website</p>
+              </div>
+              
+              {/* Typeform container with natural expansion and transparent background */}
+              <div className="w-full">
+                {/* Mobile-first responsive container */}
+                <div className="block sm:hidden">
+                  <div className="w-full h-[600px] rounded-lg overflow-hidden bg-transparent">
+                    <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet" style={{width: '100%', height: '100%'}}></div>
+                  </div>
                 </div>
-                
-                {/* Adaptive Typeform Embed with dynamic height */}
-                <div className="w-full">
-                  {/* Mobile-first responsive container */}
-                  <div className="block sm:hidden">
-                    <div className="w-full h-[500px] border border-gray-200 rounded-lg overflow-hidden">
-                      <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet"></div>
-                    </div>
-                  </div>
 
-                  {/* Tablet responsive container */}
-                  <div className="hidden sm:block lg:hidden">
-                    <div className="w-full h-[600px] border border-gray-200 rounded-xl overflow-hidden">
-                      <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet"></div>
-                    </div>
+                {/* Tablet responsive container */}
+                <div className="hidden sm:block lg:hidden">
+                  <div className="w-full h-[700px] rounded-xl overflow-hidden bg-transparent">
+                    <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet" style={{width: '100%', height: '100%'}}></div>
                   </div>
+                </div>
 
-                  {/* Desktop responsive container */}
-                  <div className="hidden lg:block">
-                    <div className="w-full h-[700px] max-h-[80vh] border border-gray-200 rounded-2xl overflow-hidden" style={{
-                    minHeight: '600px'
+                {/* Desktop responsive container */}
+                <div className="hidden lg:block">
+                  <div className="w-full h-[800px] max-h-[85vh] rounded-2xl overflow-hidden bg-transparent" style={{
+                    minHeight: '700px'
                   }}>
-                      <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet"></div>
-                    </div>
+                    <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet" style={{width: '100%', height: '100%'}}></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="text-center mt-4 sm:mt-6">
-              <div className="bg-gowith-orange rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-lg">
+            <div className="text-center mt-6 sm:mt-8">
+              <div className="bg-gowith-orange rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-lg max-w-2xl mx-auto">
                 <p className="text-sm sm:text-lg font-black text-white flex items-center justify-center">
                   <Heart className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                   From California, with ❤️ – Passionately Powering Your Vision
@@ -900,4 +898,5 @@ const WebDesignLanding = () => {
       </footer>
     </div>;
 };
+
 export default WebDesignLanding;
