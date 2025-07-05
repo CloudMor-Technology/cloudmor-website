@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 const Footer = () => {
   return <footer className="bg-slate-900 text-white pt-16 pb-8">
@@ -132,9 +133,14 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-gray-600 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-300 text-sm mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} CloudMor. All rights reserved.
-            </p>
+            <div className="flex flex-col md:flex-row items-center mb-4 md:mb-0">
+              <p className="text-gray-300 text-sm mb-2 md:mb-0 md:mr-4">
+                &copy; {new Date().getFullYear()} CloudMor. All rights reserved.
+              </p>
+              <p className="text-gray-300 text-sm">
+                Made with 🤍 in California
+              </p>
+            </div>
             <div className="flex space-x-6">
               <Link to="/privacy-policy" className="text-gray-300 hover:text-white text-sm transition-colors">
                 Privacy Policy
