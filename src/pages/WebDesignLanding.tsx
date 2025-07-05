@@ -159,7 +159,7 @@ const WebDesignLanding = () => {
     }, 3000);
     return () => clearInterval(testimonialInterval);
   }, []);
-  return <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white overflow-x-hidden">
       <Helmet>
         <title>Professional Web Design Services - CloudMor | Free Website Development</title>
         <meta name="description" content="Get professional web design services from CloudMor. Custom websites, responsive design, SEO optimization, and complete digital solutions for your business." />
@@ -752,8 +752,8 @@ const WebDesignLanding = () => {
         </div>
       </section>
 
-      {/* Enhanced Web Design Form Section with Removed White Background */}
-      <section id="web-design-form" className="py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative min-h-screen flex items-center">
+      {/* Enhanced Web Design Form Section - Fixed scrolling and removed white background */}
+      <section id="web-design-form" className="py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative">
         {/* Enhanced background effects */}
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
@@ -797,7 +797,7 @@ const WebDesignLanding = () => {
               </div>
             </div>
 
-            {/* Form container without white background - allowing natural expansion */}
+            {/* Form containers without white background - allowing natural expansion */}
             <div className="w-full max-w-6xl mx-auto">
               <div className="text-center mb-4 sm:mb-6">
                 <h4 className="text-lg sm:text-xl font-black text-white mb-2">
@@ -806,28 +806,77 @@ const WebDesignLanding = () => {
                 <p className="text-blue-100 text-sm sm:text-base">Fill out this form to get your FREE $6,800 website</p>
               </div>
               
-              {/* Typeform container with natural expansion and transparent background */}
-              <div className="w-full">
+              {/* Main Typeform container */}
+              <div className="w-full mb-8">
                 {/* Mobile-first responsive container */}
                 <div className="block sm:hidden">
-                  <div className="w-full h-[600px] rounded-lg overflow-hidden bg-transparent">
+                  <div className="w-full h-[600px] rounded-lg overflow-hidden">
                     <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet" style={{width: '100%', height: '100%'}}></div>
                   </div>
                 </div>
 
                 {/* Tablet responsive container */}
                 <div className="hidden sm:block lg:hidden">
-                  <div className="w-full h-[700px] rounded-xl overflow-hidden bg-transparent">
+                  <div className="w-full h-[700px] rounded-xl overflow-hidden">
                     <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet" style={{width: '100%', height: '100%'}}></div>
                   </div>
                 </div>
 
                 {/* Desktop responsive container */}
                 <div className="hidden lg:block">
-                  <div className="w-full h-[800px] max-h-[85vh] rounded-2xl overflow-hidden bg-transparent" style={{
+                  <div className="w-full h-[800px] max-h-[85vh] rounded-2xl overflow-hidden" style={{
                     minHeight: '700px'
                   }}>
                     <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet" style={{width: '100%', height: '100%'}}></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Alternative form section */}
+              <div className="w-full">
+                <div className="text-center mb-4">
+                  <h4 className="text-lg sm:text-xl font-black text-white mb-2">
+                    📋 ALTERNATIVE FORM ACCESS
+                  </h4>
+                  <p className="text-blue-100 text-sm sm:text-base">Or use our alternative form interface</p>
+                </div>
+                
+                {/* Alternative form container */}
+                <div className="w-full">
+                  {/* Mobile alternative form */}
+                  <div className="block sm:hidden">
+                    <div style={{position: 'relative', height: '80dvh', overflow: 'auto'}}>
+                      <iframe 
+                        src="https://form.cloudmor.com/s/cmcpvno78000cnu01hu89ap0e" 
+                        frameBorder="0" 
+                        style={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', border: 0}}
+                        title="Alternative Web Design Form"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Tablet alternative form */}
+                  <div className="hidden sm:block lg:hidden">
+                    <div style={{position: 'relative', height: '80dvh', overflow: 'auto'}} className="rounded-xl">
+                      <iframe 
+                        src="https://form.cloudmor.com/s/cmcpvno78000cnu01hu89ap0e" 
+                        frameBorder="0" 
+                        style={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', border: 0}}
+                        title="Alternative Web Design Form"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Desktop alternative form */}
+                  <div className="hidden lg:block">
+                    <div style={{position: 'relative', height: '80dvh', overflow: 'auto'}} className="rounded-2xl">
+                      <iframe 
+                        src="https://form.cloudmor.com/s/cmcpvno78000cnu01hu89ap0e" 
+                        frameBorder="0" 
+                        style={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', border: 0}}
+                        title="Alternative Web Design Form"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
