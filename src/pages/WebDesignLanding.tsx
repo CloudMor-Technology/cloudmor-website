@@ -11,21 +11,7 @@ const WebDesignLanding = () => {
   const [currentTestimonialGroup, setCurrentTestimonialGroup] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Add useEffect for Typeform script loading
-  useEffect(() => {
-    // Load Typeform embed script
-    const script = document.createElement('script');
-    script.src = '//embed.typeform.com/next/embed.js';
-    script.async = true;
-    document.body.appendChild(script);
-    return () => {
-      // Clean up script on component unmount
-      const existingScript = document.querySelector('script[src="//embed.typeform.com/next/embed.js"]');
-      if (existingScript) {
-        existingScript.remove();
-      }
-    };
-  }, []);
+  console.log('WebDesignLanding component loaded');
 
   const websiteShowcase = [{
     name: "IT Services & Development",
@@ -46,74 +32,76 @@ const WebDesignLanding = () => {
 
   // 12 diverse testimonials grouped in sets of 3
   const testimonialGroups = [
-  // Group 1
-  [{
-    quote: "Our new website and logo transformed our business image completely. We look professional and trustworthy now!",
-    author: "Sarah Chen",
-    business: "Chen Marketing Solutions, San Francisco",
-    avatar: "👩‍💼"
-  }, {
-    quote: "The mobile-friendly design brought us younger customers we never reached before. Revenue up 300%!",
-    author: "Dr. Michael Rodriguez",
-    business: "Rodriguez Medical Center, Los Angeles",
-    avatar: "👨‍⚕️"
-  }, {
-    quote: "Online appointment system eliminated phone tag. Client satisfaction scores hit all-time highs!",
-    author: "Amanda Foster",
-    business: "Foster's Boutique, Beverly Hills",
-    avatar: "👗"
-  }],
-  // Group 2
-  [{
-    quote: "Our competitors still look outdated while we appear cutting-edge. We're winning every proposal now!",
-    author: "James Liu",
-    business: "Liu Construction Group, San Diego",
-    avatar: "🏗️"
-  }, {
-    quote: "24/7 online presence means customers find us even when we're closed. Night inquiries increased 400%!",
-    author: "Maria Gonzalez",
-    business: "Gonzalez Auto Repair, Fresno",
-    avatar: "🔧"
-  }, {
-    quote: "The professional credibility boost helped us attract Fortune 500 clients. Our biggest year ever!",
-    author: "Robert Kim",
-    business: "Kim Digital Consulting, Palo Alto",
-    avatar: "💼"
-  }],
-  // Group 3
-  [{
-    quote: "New customers find us easily through Google search. Our visibility increased by 500% in just 3 months!",
-    author: "Dr. Jennifer Park",
-    business: "Park Dental Practice, Oakland",
-    avatar: "🦷"
-  }, {
-    quote: "The website perfectly represents our brand. Clients trust us before they even call!",
-    author: "Carlos Mendez",
-    business: "Mendez Digital Agency, Sacramento",
-    avatar: "🎯"
-  }, {
-    quote: "Customer testimonials on our new site convert visitors instantly. Trust factor went through the roof!",
-    author: "Lisa Wang",
-    business: "Wang Interior Design, San Jose",
-    avatar: "🏡"
-  }],
-  // Group 4
-  [{
-    quote: "The contact forms capture leads we used to lose. Follow-up automation does the heavy lifting for us!",
-    author: "Anthony Davis",
-    business: "Davis Legal Services, Long Beach",
-    avatar: "⚖️"
-  }, {
-    quote: "Our e-commerce integration turned browsers into buyers. Online sales now match our physical store!",
-    author: "Rachel Green",
-    business: "Green Home Goods, Santa Monica",
-    avatar: "🛍️"
-  }, {
-    quote: "The backup system saved us during a server crash. Zero downtime means zero lost business!",
-    author: "Marcus Johnson",
-    business: "Johnson IT Support, Modesto",
-    avatar: "💻"
-  }]];
+    // Group 1
+    [{
+      quote: "Our new website and logo transformed our business image completely. We look professional and trustworthy now!",
+      author: "Sarah Chen",
+      business: "Chen Marketing Solutions, San Francisco",
+      avatar: "👩‍💼"
+    }, {
+      quote: "The mobile-friendly design brought us younger customers we never reached before. Revenue up 300%!",
+      author: "Dr. Michael Rodriguez",
+      business: "Rodriguez Medical Center, Los Angeles",
+      avatar: "👨‍⚕️"
+    }, {
+      quote: "Online appointment system eliminated phone tag. Client satisfaction scores hit all-time highs!",
+      author: "Amanda Foster",
+      business: "Foster's Boutique, Beverly Hills",
+      avatar: "👗"
+    }],
+    // Group 2
+    [{
+      quote: "Our competitors still look outdated while we appear cutting-edge. We're winning every proposal now!",
+      author: "James Liu",
+      business: "Liu Construction Group, San Diego",
+      avatar: "🏗️"
+    }, {
+      quote: "24/7 online presence means customers find us even when we're closed. Night inquiries increased 400%!",
+      author: "Maria Gonzalez",
+      business: "Gonzalez Auto Repair, Fresno",
+      avatar: "🔧"
+    }, {
+      quote: "The professional credibility boost helped us attract Fortune 500 clients. Our biggest year ever!",
+      author: "Robert Kim",
+      business: "Kim Digital Consulting, Palo Alto",
+      avatar: "💼"
+    }],
+    // Group 3
+    [{
+      quote: "New customers find us easily through Google search. Our visibility increased by 500% in just 3 months!",
+      author: "Dr. Jennifer Park",
+      business: "Park Dental Practice, Oakland",
+      avatar: "🦷"
+    }, {
+      quote: "The website perfectly represents our brand. Clients trust us before they even call!",
+      author: "Carlos Mendez",
+      business: "Mendez Digital Agency, Sacramento",
+      avatar: "🎯"
+    }, {
+      quote: "Customer testimonials on our new site convert visitors instantly. Trust factor went through the roof!",
+      author: "Lisa Wang",
+      business: "Wang Interior Design, San Jose",
+      avatar: "🏡"
+    }],
+    // Group 4
+    [{
+      quote: "The contact forms capture leads we used to lose. Follow-up automation does the heavy lifting for us!",
+      author: "Anthony Davis",
+      business: "Davis Legal Services, Long Beach",
+      avatar: "⚖️"
+    }, {
+      quote: "Our e-commerce integration turned browsers into buyers. Online sales now match our physical store!",
+      author: "Rachel Green",
+      business: "Green Home Goods, Santa Monica",
+      avatar: "🛍️"
+    }, {
+      quote: "The backup system saved us during a server crash. Zero downtime means zero lost business!",
+      author: "Marcus Johnson",
+      business: "Johnson IT Support, Modesto",
+      avatar: "💻"
+    }]
+  ];
+
   const socialProof = [{
     metric: "3451+",
     label: "Websites Built",
@@ -131,7 +119,9 @@ const WebDesignLanding = () => {
     label: "Average Launch Time",
     icon: "⚡"
   }];
+
   const scrollToForm = () => {
+    console.log('Scrolling to form');
     const formElement = document.getElementById('web-design-form');
     if (formElement) {
       formElement.scrollIntoView({
@@ -139,7 +129,9 @@ const WebDesignLanding = () => {
       });
     }
   };
+
   const scrollToSection = (sectionId: string) => {
+    console.log('Scrolling to section:', sectionId);
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({
@@ -148,26 +140,42 @@ const WebDesignLanding = () => {
     }
     setIsMenuOpen(false);
   };
-  React.useEffect(() => {
+
+  // Simplified useEffect for slides
+  useEffect(() => {
+    console.log('Setting up slide interval');
     const interval = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % websiteShowcase.length);
     }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-  React.useEffect(() => {
+    return () => {
+      console.log('Cleaning up slide interval');
+      clearInterval(interval);
+    };
+  }, [websiteShowcase.length]);
+
+  // Simplified useEffect for testimonials
+  useEffect(() => {
+    console.log('Setting up testimonial interval');
     const testimonialInterval = setInterval(() => {
       setCurrentTestimonialGroup(prev => (prev + 1) % testimonialGroups.length);
     }, 3000);
-    return () => clearInterval(testimonialInterval);
-  }, []);
-  return <div className="min-h-screen bg-white">
+    return () => {
+      console.log('Cleaning up testimonial interval');
+      clearInterval(testimonialInterval);
+    };
+  }, [testimonialGroups.length]);
+
+  console.log('Rendering WebDesignLanding component');
+
+  return (
+    <div className="min-h-screen bg-white">
       <Helmet>
         <title>Professional Web Design Services - CloudMor | Free Website Development</title>
         <meta name="description" content="Get professional web design services from CloudMor. Custom websites, responsive design, SEO optimization, and complete digital solutions for your business." />
         <meta name="keywords" content="web design, website development, professional websites, CloudMor, responsive design, SEO" />
       </Helmet>
 
-      {/* Navigation Header - Fixed but with proper mobile support */}
+      {/* Navigation Header */}
       <header className="w-full fixed top-0 left-0 z-50 bg-slate-900 shadow-sm border-b border-gray-700">
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
@@ -176,7 +184,7 @@ const WebDesignLanding = () => {
               <img src="/lovable-uploads/691e7939-254c-4028-91c9-7c00fd9a8db8.png" alt="CloudMor Logo" className="h-16 sm:h-20 md:h-24 w-auto" />
             </div>
             
-            {/* Desktop Navigation - Centered */}
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 space-x-8">
               <button onClick={() => scrollToSection('how-it-works')} className="text-white hover:text-gray-300 transition-colors font-medium">
                 How It Works
@@ -210,8 +218,9 @@ const WebDesignLanding = () => {
             </button>
           </div>
 
-          {/* Mobile Navigation - Fixed mobile menu issues */}
-          {isMenuOpen && <div className="md:hidden mt-4 pb-4 border-t border-gray-600 bg-slate-900">
+          {/* Mobile Navigation */}
+          {isMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-600 bg-slate-900">
               <div className="flex flex-col space-y-4 mt-4">
                 <button onClick={() => scrollToSection('how-it-works')} className="text-white hover:text-gray-300 transition-colors font-medium text-left p-2">
                   How It Works
@@ -233,11 +242,12 @@ const WebDesignLanding = () => {
                   Apply Now
                 </Button>
               </div>
-            </div>}
+            </div>
+          )}
         </div>
       </header>
 
-      {/* Hero Section - Fixed mobile padding and overflow */}
+      {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue pt-24 sm:pt-32 pb-12 sm:pb-20">
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
@@ -298,17 +308,30 @@ const WebDesignLanding = () => {
               </button>
             </div>
 
+            {/* Website Showcase */}
             <div className="relative max-w-5xl mx-auto px-4">
               <div className="relative rounded-2xl sm:rounded-3xl shadow-2xl bg-gray-100 border-2 sm:border-4 border-white/50">
                 <div className="relative h-64 sm:h-80 md:h-[500px]">
-                  <img src={websiteShowcase[currentSlide].image} alt={websiteShowcase[currentSlide].name} className="w-full h-full object-cover object-top transition-all duration-1000 transform hover:scale-105 rounded-2xl sm:rounded-3xl" />
+                  <img 
+                    src={websiteShowcase[currentSlide].image} 
+                    alt={websiteShowcase[currentSlide].name} 
+                    className="w-full h-full object-cover object-top transition-all duration-1000 transform hover:scale-105 rounded-2xl sm:rounded-3xl" 
+                  />
                   <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 bg-black/90 backdrop-blur-sm text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl shadow-lg">
                     <span className="font-bold text-sm sm:text-lg">{websiteShowcase[currentSlide].name}</span>
                     <div className="text-gowith-orange text-xs sm:text-sm font-medium">✓ $6,800 Value - FREE</div>
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-4 sm:pb-6 space-x-2 sm:space-x-3">
-                  {websiteShowcase.map((_, index) => <div key={index} className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-500 cursor-pointer ${index === currentSlide ? 'bg-white scale-150 shadow-lg' : 'bg-white/50 hover:bg-white/80'}`} onClick={() => setCurrentSlide(index)} />)}
+                  {websiteShowcase.map((_, index) => (
+                    <div 
+                      key={index} 
+                      className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-500 cursor-pointer ${
+                        index === currentSlide ? 'bg-white scale-150 shadow-lg' : 'bg-white/50 hover:bg-white/80'
+                      }`} 
+                      onClick={() => setCurrentSlide(index)} 
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -860,7 +883,8 @@ const WebDesignLanding = () => {
           </div>
         </div>
       </footer>
-    </div>;
+    </div>
+  );
 };
 
 export default WebDesignLanding;
