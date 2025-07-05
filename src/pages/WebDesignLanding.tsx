@@ -26,6 +26,7 @@ const WebDesignLanding = () => {
       }
     };
   }, []);
+
   const websiteShowcase = [{
     name: "IT Services & Development",
     image: "/lovable-uploads/456f6b18-a26b-4d1c-8b81-c7b162c2f167.png"
@@ -159,7 +160,7 @@ const WebDesignLanding = () => {
     }, 3000);
     return () => clearInterval(testimonialInterval);
   }, []);
-  return <div className="min-h-screen bg-white overflow-x-hidden">
+  return <div className="min-h-screen bg-white">
       <Helmet>
         <title>Professional Web Design Services - CloudMor | Free Website Development</title>
         <meta name="description" content="Get professional web design services from CloudMor. Custom websites, responsive design, SEO optimization, and complete digital solutions for your business." />
@@ -237,7 +238,7 @@ const WebDesignLanding = () => {
       </header>
 
       {/* Hero Section - Fixed mobile padding and overflow */}
-      <section className="relative bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue pt-24 sm:pt-32 pb-12 sm:pb-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue pt-24 sm:pt-32 pb-12 sm:pb-20">
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
@@ -753,17 +754,10 @@ const WebDesignLanding = () => {
       </section>
 
       {/* Enhanced Web Design Form Section - Fixed scrolling and removed white background */}
-      <section id="web-design-form" className="py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white relative">
-        {/* Enhanced background effects */}
-        <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-10 right-10 w-80 h-80 bg-white/5 rounded-full blur-2xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gowith-orange/10 rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full">
-          <div className="max-w-7xl mx-auto">
-            {/* Compact header for better space utilization */}
+      <section id="web-design-form" className="py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-gowith-dark-blue to-gowith-medium-blue text-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
             <div className="text-center mb-6 sm:mb-8">
               <div className="inline-flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-3 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-black mb-4 sm:mb-6 shadow-2xl animate-pulse">
                 <Star className="h-3 w-3 sm:h-4 sm:w-4 mr-2 animate-spin" />
@@ -771,7 +765,7 @@ const WebDesignLanding = () => {
                 <Star className="h-3 w-3 sm:h-4 sm:w-4 ml-2 animate-spin" />
               </div>
               
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black mb-3 sm:mb-4 text-shadow-lg">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black mb-3 sm:mb-4">
                 START YOUR <span className="text-gowith-orange animate-pulse">FREE WEB DESIGN</span>
               </h2>
               <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
@@ -780,24 +774,9 @@ const WebDesignLanding = () => {
               <p className="text-sm sm:text-base lg:text-lg text-blue-100 max-w-3xl mx-auto mb-4 sm:mb-6 leading-relaxed px-2">
                 Get your $6,800 professional website absolutely FREE. Tell us about your project and we'll get started right away.
               </p>
-              
-              <div className="flex flex-wrap gap-2 sm:gap-3 justify-center mb-4 sm:mb-6 px-2">
-                <div className="bg-green-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm flex items-center shadow-lg">
-                  <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                  FREE DESIGN
-                </div>
-                <div className="bg-green-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm flex items-center shadow-lg">
-                  <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                  FREE DEVELOPMENT
-                </div>
-                <div className="bg-white/20 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm flex items-center shadow-lg">
-                  <Star className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                  $6,800 Value
-                </div>
-              </div>
             </div>
 
-            {/* Form containers without white background - allowing natural expansion */}
+            {/* Simplified Form Container */}
             <div className="w-full max-w-6xl mx-auto">
               <div className="text-center mb-4 sm:mb-6">
                 <h4 className="text-lg sm:text-xl font-black text-white mb-2">
@@ -806,78 +785,14 @@ const WebDesignLanding = () => {
                 <p className="text-blue-100 text-sm sm:text-base">Fill out this form to get your FREE $6,800 website</p>
               </div>
               
-              {/* Main Typeform container */}
-              <div className="w-full mb-8">
-                {/* Mobile-first responsive container */}
-                <div className="block sm:hidden">
-                  <div className="w-full h-[600px] rounded-lg overflow-hidden">
-                    <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet" style={{width: '100%', height: '100%'}}></div>
-                  </div>
-                </div>
-
-                {/* Tablet responsive container */}
-                <div className="hidden sm:block lg:hidden">
-                  <div className="w-full h-[700px] rounded-xl overflow-hidden">
-                    <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet" style={{width: '100%', height: '100%'}}></div>
-                  </div>
-                </div>
-
-                {/* Desktop responsive container */}
-                <div className="hidden lg:block">
-                  <div className="w-full h-[800px] max-h-[85vh] rounded-2xl overflow-hidden" style={{
-                    minHeight: '700px'
-                  }}>
-                    <div data-tf-live="01JZ6P3Y0CNZCV4GXSH5YQ4WSQ" data-tf-iframe-props="title=Web Design Request Form" data-tf-medium="snippet" style={{width: '100%', height: '100%'}}></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Alternative form section */}
-              <div className="w-full">
-                <div className="text-center mb-4">
-                  <h4 className="text-lg sm:text-xl font-black text-white mb-2">
-                    📋 ALTERNATIVE FORM ACCESS
-                  </h4>
-                  <p className="text-blue-100 text-sm sm:text-base">Or use our alternative form interface</p>
-                </div>
-                
-                {/* Alternative form container */}
-                <div className="w-full">
-                  {/* Mobile alternative form */}
-                  <div className="block sm:hidden">
-                    <div style={{position: 'relative', height: '80dvh', overflow: 'auto'}}>
-                      <iframe 
-                        src="https://form.cloudmor.com/s/cmcpvno78000cnu01hu89ap0e" 
-                        frameBorder="0" 
-                        style={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', border: 0}}
-                        title="Alternative Web Design Form"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Tablet alternative form */}
-                  <div className="hidden sm:block lg:hidden">
-                    <div style={{position: 'relative', height: '80dvh', overflow: 'auto'}} className="rounded-xl">
-                      <iframe 
-                        src="https://form.cloudmor.com/s/cmcpvno78000cnu01hu89ap0e" 
-                        frameBorder="0" 
-                        style={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', border: 0}}
-                        title="Alternative Web Design Form"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Desktop alternative form */}
-                  <div className="hidden lg:block">
-                    <div style={{position: 'relative', height: '80dvh', overflow: 'auto'}} className="rounded-2xl">
-                      <iframe 
-                        src="https://form.cloudmor.com/s/cmcpvno78000cnu01hu89ap0e" 
-                        frameBorder="0" 
-                        style={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', border: 0}}
-                        title="Alternative Web Design Form"
-                      />
-                    </div>
-                  </div>
+              {/* Single Responsive Form */}
+              <div className="w-full rounded-2xl bg-white/5 backdrop-blur-sm p-4 border border-white/10">
+                <div style={{position: 'relative', width: '100%', height: '600px'}}>
+                  <iframe 
+                    src="https://form.cloudmor.com/s/cmcpvno78000cnu01hu89ap0e" 
+                    style={{position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', border: 0, borderRadius: '12px'}}
+                    title="Web Design Request Form"
+                  />
                 </div>
               </div>
             </div>
