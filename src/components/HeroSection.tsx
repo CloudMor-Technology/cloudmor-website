@@ -7,7 +7,7 @@ const HeroSection = () => {
     <section className="relative bg-transparent min-h-[80vh] flex items-end justify-center">
       <div className="absolute inset-0 z-0">
         <img 
-          src="/lovable-uploads/834d5c69-5070-4488-bc7a-7b19eeebae04.png" 
+          src="/lovable-uploads/c61c7476-bc00-4462-acbb-f8d72f7ecac3.png" 
           alt="CloudMor Business Meeting" 
           className="w-full h-full object-cover" 
           style={{
