@@ -18,6 +18,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Sitemap from "./pages/Sitemap";
 import WebDesignLanding from "./pages/WebDesignLanding";
 import Colores from "./pages/Colores";
+import BusinessCards from "./pages/BusinessCards";
+import AliRahimi from "./pages/AliRahimi";
 
 // Service Pages
 import ManagedIT from "./pages/services/ManagedIT";
@@ -45,6 +47,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/web-design" element={<WebDesignLanding />} />
             <Route path="/colores" element={<Colores />} />
+            <Route path="/bc" element={<BusinessCards />} />
+            <Route path="/alirahimi" element={<AliRahimi />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/managed-it" element={<ManagedIT />} />
             <Route path="/services/cybersecurity" element={<Cybersecurity />} />
