@@ -20,6 +20,7 @@ import WebDesignLanding from "./pages/WebDesignLanding";
 import Colores from "./pages/Colores";
 import BusinessCards from "./pages/BusinessCards";
 import AliRahimi from "./pages/AliRahimi";
+import Portal from "./pages/Portal";
 
 // Service Pages
 import ManagedIT from "./pages/services/ManagedIT";
@@ -45,6 +46,7 @@ const App = () => (
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/portal" element={<Portal />} />
             <Route path="/web-design" element={<WebDesignLanding />} />
             <Route path="/colores" element={<Colores />} />
             <Route path="/bc" element={<BusinessCards />} />

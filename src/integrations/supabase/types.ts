@@ -14,6 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
+      companies: {
+        Row: {
+          address: string | null
+          created_at: string
+          id: string
+          jira_account_id: string | null
+          name: string
+          primary_contact_email: string | null
+          primary_contact_name: string | null
+          primary_contact_phone: string | null
+          start_date: string | null
+          stripe_customer_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          id?: string
+          jira_account_id?: string | null
+          name: string
+          primary_contact_email?: string | null
+          primary_contact_name?: string | null
+          primary_contact_phone?: string | null
+          start_date?: string | null
+          stripe_customer_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          id?: string
+          jira_account_id?: string | null
+          name?: string
+          primary_contact_email?: string | null
+          primary_contact_name?: string | null
+          primary_contact_phone?: string | null
+          start_date?: string | null
+          stripe_customer_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      company_services: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          service_id: string | null
+          start_date: string | null
+          status: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          service_id?: string | null
+          start_date?: string | null
+          status?: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          service_id?: string | null
+          start_date?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_services_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_services_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_submissions: {
         Row: {
           company: string | null
@@ -68,6 +155,118 @@ export type Database = {
           subject?: string | null
           subscribe_newsletter?: boolean | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      phone_extensions: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          extension_number: string
+          id: string
+          is_active: boolean | null
+          user_name: string
+          voicemail_email: string | null
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          extension_number: string
+          id?: string
+          is_active?: boolean | null
+          user_name: string
+          voicemail_email?: string | null
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          extension_number?: string
+          id?: string
+          is_active?: boolean | null
+          user_name?: string
+          voicemail_email?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "phone_extensions_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          job_title: string | null
+          last_login: string | null
+          phone: string | null
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id: string
+          job_title?: string | null
+          last_login?: string | null
+          phone?: string | null
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          job_title?: string | null
+          last_login?: string | null
+          phone?: string | null
+          role?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      services: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
         }
         Relationships: []
       }
