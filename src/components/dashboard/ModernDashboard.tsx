@@ -44,8 +44,11 @@ export const ModernDashboard = () => {
       <div className="relative z-10">
         <PortalNavigation activeTab={activeTab} onTabChange={setActiveTab} />
         
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {renderTabContent()}
+        {/* Made the main content area much larger - 90% width instead of 70% */}
+        <main className="max-w-[95%] mx-auto px-6 sm:px-8 lg:px-12 py-10">
+          <div className="min-h-[80vh]">
+            {renderTabContent()}
+          </div>
         </main>
       </div>
     </div>

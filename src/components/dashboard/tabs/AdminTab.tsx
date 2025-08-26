@@ -1,141 +1,235 @@
 
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Users, Server, Activity, Settings } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Users, Settings, Building, CreditCard, Headphones, Wrench } from 'lucide-react';
+import { toast } from 'sonner';
 
 export const AdminTab = () => {
-  const adminStats = [
-    { title: 'Total Users', value: '4', icon: Users, color: 'blue' },
-    { title: 'Active Services', value: '4', icon: Server, color: 'green' },
-    { title: 'Open Tickets', value: '3', icon: Activity, color: 'orange' },
-    { title: 'System Status', value: 'Healthy', icon: Settings, color: 'purple' }
-  ];
+  const [companyInfo, setCompanyInfo] = useState({
+    name: 'CloudMor',
+    email: 'support@cloudmor.com',
+    phone: '(855) 123-4567',
+    address: '123 Business Ave, Suite 100, City, State 12345',
+    emergencyPhone: '(866) 123-4567',
+    emergencyEmail: 'emergency@cloudmor.com'
+  });
 
-  const recentActivity = [
-    { user: 'John Smith', action: 'Last login: 12/31/2024', status: 'online' },
-    { user: 'Sarah Johnson', action: 'Last login: 12/31/2024', status: 'online' },
-    { user: 'Mike Chen', action: 'Last login: 12/30/2024', status: 'offline' },
-    { user: 'Lisa Wilson', action: 'Last login: 12/30/2024', status: 'offline' }
-  ];
+  const [supportContent, setSupportContent] = useState({
+    emergencyHours: 'Mon-Fri 24/7 EST',
+    weekendPolicy: 'Weekend: Emergency Only',
+    responseTime: 'Response within 30 minutes',
+    supportProcess: `1. Submit ticket through CloudMor Support Portal
+2. Send email to support@cloudmor.com for immediate needs
+3. Call phone line with ticket number in place`
+  });
 
-  const serviceUsage = [
-    { service: 'IT Support Package', usage: '$35k/month' },
-    { service: 'Cloud Backup Pro', usage: '$15k/month' },
-    { service: 'VoIP Phone System', usage: '$8k/month' },
-    { service: 'Security Monitoring', usage: '$12k/month' }
-  ];
+  const handleUpdateCompanyInfo = () => {
+    toast.success('Company information updated successfully');
+  };
+
+  const handleUpdateSupportContent = () => {
+    toast.success('Support content updated successfully');
+  };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-white">Admin Dashboard</h2>
-          <p className="text-white/70">Manage users, services, and system settings</p>
+          <h2 className="text-3xl font-bold text-white">Administrator Panel</h2>
+          <p className="text-white/70 text-lg">Manage all portal content and user settings</p>
         </div>
-        <Button className="bg-orange-600 hover:bg-orange-700 text-white">
+        <Button className="bg-orange-600 hover:bg-orange-700 text-white text-lg px-6 py-3">
+          <Settings className="w-5 h-5 mr-2" />
           Administrator
         </Button>
       </div>
 
-      {/* Admin Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {adminStats.map((stat, index) => {
-          const IconComponent = stat.icon;
-          return (
-            <Card key={index} className="bg-white/80 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="flex items-center space-x-3">
-                  <div className={`w-12 h-12 bg-${stat.color}-100 rounded-full flex items-center justify-center`}>
-                    <IconComponent className={`w-6 h-6 text-${stat.color}-600`} />
-                  </div>
-                  <div>
-                    <p className={`text-2xl font-bold text-${stat.color}-600`}>{stat.value}</p>
-                    <p className="text-sm text-gray-600">{stat.title}</p>
-                  </div>
+      <Tabs defaultValue="company" className="w-full">
+        <TabsList className="grid w-full grid-cols-4 bg-white/20 backdrop-blur-sm h-14">
+          <TabsTrigger value="company" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
+            <Building className="w-5 h-5 mr-2" />
+            Company Info
+          </TabsTrigger>
+          <TabsTrigger value="support" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
+            <Headphones className="w-5 h-5 mr-2" />
+            Support Content
+          </TabsTrigger>
+          <TabsTrigger value="users" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
+            <Users className="w-5 h-5 mr-2" />
+            User Management
+          </TabsTrigger>
+          <TabsTrigger value="services" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
+            <Wrench className="w-5 h-5 mr-2" />
+            Services
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="company" className="mt-6">
+          <Card className="bg-white/90 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-2xl">Company Information Management</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="companyName" className="text-lg">Company Name</Label>
+                  <Input
+                    id="companyName"
+                    value={companyInfo.name}
+                    onChange={(e) => setCompanyInfo({...companyInfo, name: e.target.value})}
+                    className="text-lg py-3"
+                  />
                 </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+                <div>
+                  <Label htmlFor="companyEmail" className="text-lg">Company Email</Label>
+                  <Input
+                    id="companyEmail"
+                    value={companyInfo.email}
+                    onChange={(e) => setCompanyInfo({...companyInfo, email: e.target.value})}
+                    className="text-lg py-3"
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="companyPhone" className="text-lg">Company Phone</Label>
+                  <Input
+                    id="companyPhone"
+                    value={companyInfo.phone}
+                    onChange={(e) => setCompanyInfo({...companyInfo, phone: e.target.value})}
+                    className="text-lg py-3"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="emergencyPhone" className="text-lg">Emergency Phone</Label>
+                  <Input
+                    id="emergencyPhone"
+                    value={companyInfo.emergencyPhone}
+                    onChange={(e) => setCompanyInfo({...companyInfo, emergencyPhone: e.target.value})}
+                    className="text-lg py-3"
+                  />
+                </div>
+              </div>
 
-      {/* Admin Tabs */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-1">
-          <Card className="bg-white/80 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-sm">Admin Navigation</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <Button variant="ghost" className="w-full justify-start text-sm">
-                Overview
-              </Button>
-              <Button variant="ghost" className="w-full justify-start text-sm">
-                User Management
-              </Button>
-              <Button variant="ghost" className="w-full justify-start text-sm">
-                Service Management
-              </Button>
-              <Button variant="ghost" className="w-full justify-start text-sm">
-                System Settings
+              <div>
+                <Label htmlFor="companyAddress" className="text-lg">Company Address</Label>
+                <Textarea
+                  id="companyAddress"
+                  value={companyInfo.address}
+                  onChange={(e) => setCompanyInfo({...companyInfo, address: e.target.value})}
+                  className="text-lg py-3"
+                  rows={3}
+                />
+              </div>
+
+              <Button onClick={handleUpdateCompanyInfo} className="bg-blue-600 hover:bg-blue-700 text-lg px-6 py-3">
+                Update Company Information
               </Button>
             </CardContent>
           </Card>
-        </div>
+        </TabsContent>
 
-        <div className="lg:col-span-3 space-y-6">
-          {/* Recent User Activity */}
-          <Card className="bg-white/80 backdrop-blur-sm">
-            <CardHeader>     
-              <CardTitle>Recent User Activity</CardTitle>
+        <TabsContent value="support" className="mt-6">
+          <Card className="bg-white/90 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-2xl">Support Content Management</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="emergencyHours" className="text-lg">Emergency Support Hours</Label>
+                  <Input
+                    id="emergencyHours"
+                    value={supportContent.emergencyHours}
+                    onChange={(e) => setSupportContent({...supportContent, emergencyHours: e.target.value})}
+                    className="text-lg py-3"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="responseTime" className="text-lg">Response Time</Label>
+                  <Input
+                    id="responseTime"
+                    value={supportContent.responseTime}
+                    onChange={(e) => setSupportContent({...supportContent, responseTime: e.target.value})}
+                    className="text-lg py-3"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="weekendPolicy" className="text-lg">Weekend Policy</Label>
+                <Input
+                  id="weekendPolicy"
+                  value={supportContent.weekendPolicy}
+                  onChange={(e) => setSupportContent({...supportContent, weekendPolicy: e.target.value})}
+                  className="text-lg py-3"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="supportProcess" className="text-lg">Support Process Steps</Label>
+                <Textarea
+                  id="supportProcess"
+                  value={supportContent.supportProcess}
+                  onChange={(e) => setSupportContent({...supportContent, supportProcess: e.target.value})}
+                  className="text-lg py-3"
+                  rows={6}
+                />
+              </div>
+
+              <Button onClick={handleUpdateSupportContent} className="bg-green-600 hover:bg-green-700 text-lg px-6 py-3">
+                Update Support Content
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="users" className="mt-6">
+          <Card className="bg-white/90 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-2xl">User Management</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-3 h-3 rounded-full ${
-                        activity.status === 'online' ? 'bg-green-500' : 'bg-gray-400'
-                      }`}></div>
-                      <div>
-                        <p className="font-medium">{activity.user}</p>
-                        <p className="text-sm text-gray-500">{activity.action}</p>
-                      </div>
-                    </div>
-                    <span className={`px-2 py-1 text-xs rounded-full ${
-                      activity.status === 'online' 
-                        ? 'bg-green-100 text-green-700' 
-                        : 'bg-gray-100 text-gray-700'
-                    }`}>
-                      {activity.status}
-                    </span>
-                  </div>
-                ))}
+                <Button className="bg-blue-600 hover:bg-blue-700 text-lg px-6 py-3">
+                  <Users className="w-5 h-5 mr-2" />
+                  Create New Client
+                </Button>
+                <div className="text-lg text-gray-600">
+                  User management functionality will be implemented here.
+                  This will include creating, editing, and managing client accounts.
+                </div>
               </div>
             </CardContent>
-          </Card>
+          </Card>  
+        </TabsContent>
 
-          {/* Service Usage */}
-          <Card className="bg-white/80 backdrop-blur-sm">
+        <TabsContent value="services" className="mt-6">
+          <Card className="bg-white/90 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Service Usage</CardTitle>
+              <CardTitle className="text-2xl">Services Management</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {serviceUsage.map((usage, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <p className="font-medium">{usage.service}</p>
-                      <p className="text-sm text-gray-500">Active</p>
-                    </div>
-                    <p className="font-bold text-lg">{usage.usage}</p>
-                  </div>
-                ))}
+                <Button className="bg-purple-600 hover:bg-purple-700 text-lg px-6 py-3">
+                  <Wrench className="w-5 h-5 mr-2" />
+                  Manage Services
+                </Button>
+                <div className="text-lg text-gray-600">
+                  Services management functionality will be implemented here.
+                  This will include creating, editing, and managing service offerings.
+                </div>
               </div>
             </CardContent>
           </Card>
-        </div>
-      </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
