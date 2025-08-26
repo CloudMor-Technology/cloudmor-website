@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Users, Settings, Building, CreditCard, Headphones, Wrench } from 'lucide-react';
 import { toast } from 'sonner';
+import { UserManagement } from './admin/UserManagement';
 
 export const AdminTab = () => {
   const [companyInfo, setCompanyInfo] = useState({
@@ -49,8 +49,12 @@ export const AdminTab = () => {
         </Button>
       </div>
 
-      <Tabs defaultValue="company" className="w-full">
+      <Tabs defaultValue="users" className="w-full">
         <TabsList className="grid w-full grid-cols-4 bg-white/20 backdrop-blur-sm h-14">
+          <TabsTrigger value="users" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
+            <Users className="w-5 h-5 mr-2" />
+            User Management
+          </TabsTrigger>
           <TabsTrigger value="company" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
             <Building className="w-5 h-5 mr-2" />
             Company Info
@@ -59,15 +63,19 @@ export const AdminTab = () => {
             <Headphones className="w-5 h-5 mr-2" />
             Support Content
           </TabsTrigger>
-          <TabsTrigger value="users" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
-            <Users className="w-5 h-5 mr-2" />
-            User Management
-          </TabsTrigger>
           <TabsTrigger value="services" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
             <Wrench className="w-5 h-5 mr-2" />
             Services
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="users" className="mt-6">
+          <Card className="bg-white/90 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <UserManagement />
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="company" className="mt-6">
           <Card className="bg-white/90 backdrop-blur-sm">
@@ -188,26 +196,6 @@ export const AdminTab = () => {
               </Button>
             </CardContent>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="users" className="mt-6">
-          <Card className="bg-white/90 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-2xl">User Management</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-lg px-6 py-3">
-                  <Users className="w-5 h-5 mr-2" />
-                  Create New Client
-                </Button>
-                <div className="text-lg text-gray-600">
-                  User management functionality will be implemented here.
-                  This will include creating, editing, and managing client accounts.
-                </div>
-              </div>
-            </CardContent>
-          </Card>  
         </TabsContent>
 
         <TabsContent value="services" className="mt-6">

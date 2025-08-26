@@ -2,11 +2,13 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, FileText, Calendar, CreditCard, Plus } from 'lucide-react';
+import { Download, FileText, Calendar, CreditCard, Plus, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 
 export const BillingTab = () => {
+  const { user } = useAuth();
   const [billingData, setBillingData] = useState({
     totalSpent: '$0.00',
     nextBilling: 'Loading...',
@@ -17,6 +19,7 @@ export const BillingTab = () => {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [recentInvoices, setRecentInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const services = [
     { name: 'IT Support Package', amount: '$699.00', status: 'Active' },
@@ -25,55 +28,100 @@ export const BillingTab = () => {
   ];
 
   useEffect(() => {
-    fetchBillingData();
-  }, []);
+    if (user) {
+      fetchBillingData();
+    }
+  }, [user]);
 
   const fetchBillingData = async () => {
+    if (!user) {
+      toast.error('Please log in to view billing information');
+      return;
+    }
+
     try {
       setLoading(true);
-      const { data, error } = await supabase.functions.invoke('get-billing-info');
+      setError(null);
+      
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('No active session');
+      }
+
+      const { data, error } = await supabase.functions.invoke('get-billing-info', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
       
       if (error) {
         console.error('Error fetching billing data:', error);
-        toast.error('Failed to load billing information');
+        setError(error.message || 'Failed to load billing information');
         return;
       }
 
-      if (data) {
+      if (data && !data.error) {
         setBillingData({
-          totalSpent: data.totalSpent || '$1,299.00',
-          nextBilling: data.nextBilling || 'Feb 1, 2024',
+          totalSpent: data.totalSpent || '$0.00',
+          nextBilling: data.nextBilling || 'N/A',
           balance: data.balance || '$0.00',
-          currentPeriod: data.currentPeriod || 'January 2024'
+          currentPeriod: data.currentPeriod || new Date().toLocaleString('en-US', { month: 'long', year: 'numeric' })
         });
         setPaymentMethods(data.paymentMethods || []);
-        setRecentInvoices(data.invoices || [
-          { id: 'INV-2024-003', date: '01/15/2024', amount: '$1,299.00', status: 'Paid' },
-          { id: 'INV-2023-012', date: '12/15/2023', amount: '$1,299.00', status: 'Paid' },
-          { id: 'INV-2023-011', date: '11/15/2023', amount: '$1,199.00', status: 'Paid' }
-        ]);
+        setRecentInvoices(data.invoices || []);
+      } else {
+        setError(data?.error || 'Failed to load billing data');
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Failed to load billing information');
+      setError(error.message || 'Failed to load billing information');
     } finally {
       setLoading(false);
     }
   };
 
   const handleManagePayments = async () => {
+    if (!user) {
+      toast.error('Please log in to manage payments');
+      return;
+    }
+
     try {
-      const { data, error } = await supabase.functions.invoke('create-customer-portal');
-      if (error) throw error;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('No active session');
+      }
+
+      const { data, error } = await supabase.functions.invoke('create-customer-portal', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+      
+      if (error) {
+        console.error('Error:', error);
+        toast.error('Failed to open payment management');
+        return;
+      }
       
       if (data?.url) {
         window.open(data.url, '_blank');
+      } else {
+        toast.error('No portal URL received');
       }
     } catch (error) {
       console.error('Error:', error);
       toast.error('Failed to open payment management');
     }
   };
+
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <p className="text-white text-lg">Please log in to view billing information</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -82,14 +130,39 @@ export const BillingTab = () => {
           <h2 className="text-3xl font-bold text-white">Billing & Payments</h2>
           <p className="text-white/70 text-lg">Manage your billing information and view invoices</p>
         </div>
-        <Button 
-          onClick={handleManagePayments}
-          className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-6 py-3"
-        >
-          <CreditCard className="w-5 h-5 mr-2" />
-          Manage Payments
-        </Button>
+        <div className="flex space-x-4">
+          <Button 
+            onClick={fetchBillingData}
+            variant="outline"
+            className="bg-white/10 border-white/20 text-white hover:bg-white/20 text-lg px-4 py-3"
+            disabled={loading}
+          >
+            <RefreshCw className={`w-5 h-5 mr-2 ${loading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+          <Button 
+            onClick={handleManagePayments}
+            className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-6 py-3"
+          >
+            <CreditCard className="w-5 h-5 mr-2" />
+            Manage Payments
+          </Button>
+        </div>
       </div>
+
+      {error && (
+        <Card className="bg-red-100 border-red-300">
+          <CardContent className="p-6">
+            <p className="text-red-800">Error: {error}</p>
+            <Button 
+              onClick={fetchBillingData} 
+              className="mt-4 bg-red-600 hover:bg-red-700"
+            >
+              Retry
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Billing Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -149,7 +222,7 @@ export const BillingTab = () => {
             <div className="pt-6 border-t-2 border-gray-200">
               <div className="flex justify-between items-center">
                 <p className="text-xl font-bold">Monthly Total</p>
-                <p className="text-3xl font-bold text-blue-600">{billingData.totalSpent}</p>
+                <p className="text-3xl font-bold text-blue-600">$1,299.00</p>
               </div>
             </div>
           </div>
@@ -177,7 +250,9 @@ export const BillingTab = () => {
                 paymentMethods.map((method, index) => (
                   <div key={index} className="p-4 bg-gray-50 rounded-lg">
                     <p className="font-medium text-lg">•••• •••• •••• {method.last4}</p>
-                    <p className="text-gray-500">Expires {method.exp_month}/{method.exp_year}</p>
+                    <p className="text-gray-500">
+                      {method.brand?.toUpperCase()} expires {method.exp_month}/{method.exp_year}
+                    </p>
                   </div>
                 ))
               ) : (
@@ -205,30 +280,43 @@ export const BillingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {recentInvoices.map((invoice, index) => (
-                <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                      <FileText className="w-6 h-6 text-blue-600" />
+              {recentInvoices.length > 0 ? (
+                recentInvoices.map((invoice, index) => (
+                  <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                        <FileText className="w-6 h-6 text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-lg">{invoice.id}</p>
+                        <p className="text-gray-500">{invoice.date}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium text-lg">{invoice.id}</p>
-                      <p className="text-gray-500">{invoice.date}</p>
+                    <div className="flex items-center space-x-4">
+                      <div className="text-right">
+                        <p className="font-bold text-lg">{invoice.amount}</p>
+                        <span className="text-sm px-3 py-1 bg-green-100 text-green-700 rounded-full">
+                          {invoice.status}
+                        </span>
+                      </div>
+                      {invoice.url && (
+                        <Button 
+                          variant="ghost" 
+                          size="lg"
+                          onClick={() => window.open(invoice.url, '_blank')}
+                        >
+                          <Download className="w-5 h-5" />
+                        </Button>
+                      )}
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="text-right">
-                      <p className="font-bold text-lg">{invoice.amount}</p>
-                      <span className="text-sm px-3 py-1 bg-green-100 text-green-700 rounded-full">
-                        {invoice.status}
-                      </span>
-                    </div>
-                    <Button variant="ghost" size="lg">
-                      <Download className="w-5 h-5" />
-                    </Button>
-                  </div>
+                ))
+              ) : (
+                <div className="text-center py-8">
+                  <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-500 text-lg">No invoices found</p>
                 </div>
-              ))}
+              )}
             </div>
           </CardContent>
         </Card>
