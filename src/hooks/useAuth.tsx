@@ -37,9 +37,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
+  console.log('Auth state:', { user: !!user, profile: !!profile, session: !!session, loading });
+
   const fetchProfile = async (userId: string) => {
     try {
-      // Use service role to bypass RLS for initial profile fetch
+      console.log('Fetching profile for user:', userId);
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -51,6 +53,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         return null;
       }
 
+      console.log('Profile fetched:', data);
       return data;
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -64,10 +67,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     // Get initial session
     const getInitialSession = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        console.log('Getting initial session...');
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Error getting session:', error);
+        }
         
         if (!mounted) return;
         
+        console.log('Initial session:', !!session);
         setSession(session);
         setUser(session?.user ?? null);
         
@@ -76,11 +85,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           if (mounted) {
             setProfile(profileData);
           }
+        } else {
+          setProfile(null);
         }
       } catch (error) {
         console.error('Error getting session:', error);
       } finally {
         if (mounted) {
+          console.log('Setting loading to false');
           setLoading(false);
         }
       }
@@ -93,26 +105,33 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       async (event, session) => {
         if (!mounted) return;
         
-        console.log('Auth state changed:', event);
+        console.log('Auth state changed:', event, !!session);
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          const profileData = await fetchProfile(session.user.id);
-          if (mounted) {
-            setProfile(profileData);
-          }
+          // Use setTimeout to prevent potential deadlocks
+          setTimeout(async () => {
+            if (mounted) {
+              const profileData = await fetchProfile(session.user.id);
+              if (mounted) {
+                setProfile(profileData);
+              }
+            }
+          }, 0);
           
           // Update last login on sign in
           if (event === 'SIGNED_IN') {
-            try {
-              await supabase
-                .from('profiles')
-                .update({ last_login: new Date().toISOString() })
-                .eq('id', session.user.id);
-            } catch (error) {
-              console.error('Error updating last login:', error);
-            }
+            setTimeout(async () => {
+              try {
+                await supabase
+                  .from('profiles')
+                  .update({ last_login: new Date().toISOString() })
+                  .eq('id', session.user.id);
+              } catch (error) {
+                console.error('Error updating last login:', error);
+              }
+            }, 0);
           }
         } else {
           setProfile(null);
@@ -123,6 +142,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     );
 
     return () => {
+      console.log('Cleaning up auth provider');
       mounted = false;
       subscription.unsubscribe();
     };
@@ -136,6 +156,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         data: {
           full_name: fullName,
         },
+        emailRedirectTo: `${window.location.origin}/portal`
       },
     });
 
