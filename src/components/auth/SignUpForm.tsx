@@ -52,17 +52,17 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Sign Up</CardTitle>
-        <CardDescription className="text-center">
+    <Card className="w-full bg-white/95 backdrop-blur-sm shadow-2xl border-0">
+      <CardHeader className="space-y-1 text-center">
+        <CardTitle className="text-2xl font-bold text-gray-900">Sign Up</CardTitle>
+        <CardDescription className="text-gray-600">
           Create your account to access the client portal
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="fullName">Full Name</Label>
+            <Label htmlFor="fullName" className="text-gray-700 font-medium">Full Name</Label>
             <Input
               id="fullName"
               name="fullName"
@@ -70,11 +70,12 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
               placeholder="Enter your full name"
               value={formData.fullName}
               onChange={handleChange}
+              className="bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-gray-700 font-medium">Email</Label>
             <Input
               id="email"
               name="email"
@@ -82,11 +83,12 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
+              className="bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
             <Input
               id="password"
               name="password"
@@ -94,11 +96,12 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
+              className="bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <Label htmlFor="confirmPassword" className="text-gray-700 font-medium">Confirm Password</Label>
             <Input
               id="confirmPassword"
               name="confirmPassword"
@@ -106,12 +109,17 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
               placeholder="Confirm your password"
               value={formData.confirmPassword}
               onChange={handleChange}
+              className="bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               required
             />
           </div>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button 
+            type="submit" 
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 text-lg rounded-full transition-all duration-200" 
+            disabled={loading}
+          >
             {loading ? 'Creating Account...' : 'Sign Up'}
           </Button>
           <p className="text-sm text-center text-gray-600">
@@ -119,7 +127,7 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
             <button
               type="button"
               onClick={onToggleMode}
-              className="text-blue-600 hover:underline"
+              className="text-blue-600 hover:underline font-medium"
             >
               Sign in here
             </button>
