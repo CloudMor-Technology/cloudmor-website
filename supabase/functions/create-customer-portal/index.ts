@@ -14,6 +14,8 @@ serve(async (req) => {
   }
 
   try {
+    console.log('Starting customer portal request...');
+
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_ANON_KEY") ?? ""
@@ -32,6 +34,8 @@ serve(async (req) => {
       throw new Error("User not authenticated");
     }
 
+    console.log('User authenticated:', user.email);
+
     const stripeKey = Deno.env.get("Stripe API Key");
     if (!stripeKey) {
       throw new Error("Stripe API Key not configured");
@@ -47,10 +51,14 @@ serve(async (req) => {
       throw new Error("Customer ID not configured");
     }
 
+    console.log('Creating customer portal session for:', customerId);
+
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
       return_url: `${req.headers.get("origin")}/portal?tab=billing`,
     });
+
+    console.log('Customer portal session created:', session.id);
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

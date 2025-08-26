@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, FileText, Calendar, CreditCard, Plus, RefreshCw } from 'lucide-react';
+import { Download, FileText, Calendar, CreditCard, Plus, RefreshCw, ExternalLink } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
@@ -48,6 +48,8 @@ export const BillingTab = () => {
         throw new Error('No active session');
       }
 
+      console.log('Fetching billing data with session:', session.access_token.substring(0, 20) + '...');
+
       const { data, error } = await supabase.functions.invoke('get-billing-info', {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
@@ -56,11 +58,11 @@ export const BillingTab = () => {
       
       if (error) {
         console.error('Error fetching billing data:', error);
-        setError(error.message || 'Failed to load billing information');
-        return;
+        throw new Error(error.message || 'Failed to load billing information');
       }
 
       if (data && !data.error) {
+        console.log('Billing data received:', data);
         setBillingData({
           totalSpent: data.totalSpent || '$0.00',
           nextBilling: data.nextBilling || 'N/A',
@@ -69,12 +71,15 @@ export const BillingTab = () => {
         });
         setPaymentMethods(data.paymentMethods || []);
         setRecentInvoices(data.invoices || []);
+        toast.success('Billing data loaded successfully');
       } else {
-        setError(data?.error || 'Failed to load billing data');
+        throw new Error(data?.error || 'Failed to load billing data');
       }
     } catch (error) {
       console.error('Error:', error);
-      setError(error.message || 'Failed to load billing information');
+      const errorMessage = error.message || 'Failed to load billing information';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -92,6 +97,8 @@ export const BillingTab = () => {
         throw new Error('No active session');
       }
 
+      console.log('Opening customer portal...');
+
       const { data, error } = await supabase.functions.invoke('create-customer-portal', {
         headers: {
           Authorization: `Bearer ${session.access_token}`,
@@ -100,18 +107,19 @@ export const BillingTab = () => {
       
       if (error) {
         console.error('Error:', error);
-        toast.error('Failed to open payment management');
-        return;
+        throw new Error(error.message || 'Failed to open payment management');
       }
       
       if (data?.url) {
+        console.log('Opening portal URL:', data.url);
         window.open(data.url, '_blank');
+        toast.success('Customer portal opened in new tab');
       } else {
-        toast.error('No portal URL received');
+        throw new Error('No portal URL received');
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Failed to open payment management');
+      toast.error(error.message || 'Failed to open payment management');
     }
   };
 
@@ -144,8 +152,8 @@ export const BillingTab = () => {
             onClick={handleManagePayments}
             className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-6 py-3"
           >
-            <CreditCard className="w-5 h-5 mr-2" />
-            Manage Payments
+            <ExternalLink className="w-5 h-5 mr-2" />
+            Customer Portal
           </Button>
         </div>
       </div>
@@ -197,6 +205,29 @@ export const BillingTab = () => {
         </Card>
       </div>
 
+      {/* Customer Portal Integration */}
+      <Card className="bg-white/90 backdrop-blur-sm">
+        <CardHeader>
+          <CardTitle className="text-2xl flex items-center">
+            <ExternalLink className="w-6 h-6 mr-2" />
+            Customer Portal
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-gray-600 mb-4">
+            Access your complete billing management portal to update payment methods, view detailed invoices, 
+            manage subscriptions, and download receipts.
+          </p>
+          <Button 
+            onClick={handleManagePayments}
+            className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-6 py-3"
+          >
+            <ExternalLink className="w-5 h-5 mr-2" />
+            Open Customer Portal
+          </Button>
+        </CardContent>
+      </Card>
+
       {/* Current Billing Period */}
       <Card className="bg-white/90 backdrop-blur-sm">
         <CardHeader className="flex flex-row items-center justify-between pb-4">
@@ -241,7 +272,7 @@ export const BillingTab = () => {
               className="text-lg px-4 py-2"
             >
               <Plus className="w-5 h-5 mr-2" />
-              Add Card
+              Manage
             </Button>
           </CardHeader>
           <CardContent>
@@ -274,7 +305,12 @@ export const BillingTab = () => {
         <Card className="bg-white/90 backdrop-blur-sm">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-2xl">Recent Invoices</CardTitle>
-            <Button variant="outline" size="lg" className="text-lg px-4 py-2">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              onClick={handleManagePayments}
+              className="text-lg px-4 py-2"
+            >
               View All
             </Button>
           </CardHeader>
@@ -315,6 +351,9 @@ export const BillingTab = () => {
                 <div className="text-center py-8">
                   <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-500 text-lg">No invoices found</p>
+                  <p className="text-gray-400 text-sm mt-2">
+                    Use the Customer Portal to view detailed invoice history
+                  </p>
                 </div>
               )}
             </div>
