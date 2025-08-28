@@ -52,17 +52,17 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
   };
 
   return (
-    <Card className="w-full bg-white/95 backdrop-blur-sm shadow-2xl border-0">
-      <CardHeader className="space-y-1 text-center">
-        <CardTitle className="text-2xl font-bold text-gray-900">Sign Up</CardTitle>
-        <CardDescription className="text-gray-600">
+    <Card className="w-full bg-white/90 backdrop-blur-md shadow-2xl border-0 rounded-2xl">
+      <CardHeader className="space-y-1 text-center pb-6">
+        <CardTitle className="text-3xl font-bold text-gray-900">Sign Up</CardTitle>
+        <CardDescription className="text-gray-600 text-base">
           Create your account to access the client portal
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 px-8">
           <div className="space-y-2">
-            <Label htmlFor="fullName" className="text-gray-700 font-medium">Full Name</Label>
+            <Label htmlFor="fullName" className="text-gray-700 font-medium text-base">Full Name</Label>
             <Input
               id="fullName"
               name="fullName"
@@ -70,12 +70,12 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
               placeholder="Enter your full name"
               value={formData.fullName}
               onChange={handleChange}
-              className="bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              className="bg-white/80 border-gray-300 focus:border-blue-500 focus:ring-blue-500 h-12 text-base rounded-lg"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-gray-700 font-medium">Email</Label>
+            <Label htmlFor="email" className="text-gray-700 font-medium text-base">Email</Label>
             <Input
               id="email"
               name="email"
@@ -83,12 +83,12 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
-              className="bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              className="bg-white/80 border-gray-300 focus:border-blue-500 focus:ring-blue-500 h-12 text-base rounded-lg"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
+            <Label htmlFor="password" className="text-gray-700 font-medium text-base">Password</Label>
             <Input
               id="password"
               name="password"
@@ -96,12 +96,12 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
-              className="bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              className="bg-white/80 border-gray-300 focus:border-blue-500 focus:ring-blue-500 h-12 text-base rounded-lg"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword" className="text-gray-700 font-medium">Confirm Password</Label>
+            <Label htmlFor="confirmPassword" className="text-gray-700 font-medium text-base">Confirm Password</Label>
             <Input
               id="confirmPassword"
               name="confirmPassword"
@@ -109,20 +109,20 @@ export const SignUpForm = ({ onToggleMode }: SignUpFormProps) => {
               placeholder="Confirm your password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="bg-white border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              className="bg-white/80 border-gray-300 focus:border-blue-500 focus:ring-blue-500 h-12 text-base rounded-lg"
               required
             />
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col space-y-4">
+        <CardFooter className="flex flex-col space-y-6 px-8 pb-8">
           <Button 
             type="submit" 
-            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 text-lg rounded-full transition-all duration-200" 
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 text-lg rounded-full transition-all duration-200 h-14" 
             disabled={loading}
           >
             {loading ? 'Creating Account...' : 'Sign Up'}
           </Button>
-          <p className="text-sm text-center text-gray-600">
+          <p className="text-base text-center text-gray-600">
             Already have an account?{' '}
             <button
               type="button"
