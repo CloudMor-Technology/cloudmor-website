@@ -222,6 +222,34 @@ export const UserManagement = () => {
     window.location.href = '/portal';
   };
 
+  const handleDeleteUser = async (user) => {
+    if (!confirm(`Are you sure you want to delete user "${user.full_name || user.email}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      // Delete from auth.users (this will cascade to profiles due to foreign key)
+      const { error: authError } = await supabase.auth.admin.deleteUser(user.id);
+      
+      if (authError) {
+        console.error('Auth delete error:', authError);
+        // If auth delete fails, try deleting from profiles table directly
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .delete()
+          .eq('id', user.id);
+          
+        if (profileError) throw profileError;
+      }
+
+      toast.success(`User ${user.full_name || user.email} deleted successfully`);
+      fetchUsers(); // Refresh the user list
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      toast.error('Failed to delete user. Please try again.');
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -433,6 +461,7 @@ export const UserManagement = () => {
                   <Button 
                     variant="outline" 
                     size="sm"
+                    onClick={() => handleDeleteUser(user)}
                     className="text-red-600 hover:text-red-700"
                   >
                     <Trash2 className="w-4 h-4" />
