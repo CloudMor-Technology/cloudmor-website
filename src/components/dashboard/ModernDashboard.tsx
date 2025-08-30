@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { PortalNavigation } from './PortalNavigation';
 import { DashboardTab } from './tabs/DashboardTab';
-import { ProfileTab } from './tabs/ProfileTab';
+
 import { BillingTab } from './tabs/BillingTab';
 import { SupportTab } from './tabs/SupportTab';
 import { ServicesTab } from './tabs/ServicesTab';
@@ -17,8 +17,6 @@ export const ModernDashboard = () => {
     switch (activeTab) {
       case 'dashboard':
         return <DashboardTab />;
-      case 'profile':
-        return <ProfileTab />;
       case 'billing':
         return <BillingTab />;
       case 'support':
