@@ -19,6 +19,15 @@ interface ProfileData {
   role: string;
 }
 
+interface CompanyData {
+  id: string;
+  name: string;
+  address?: string;
+  primary_contact_name?: string;
+  primary_contact_email?: string;
+  primary_contact_phone?: string;
+}
+
 interface StripeCustomer {
   id: string;
   name: string;
@@ -29,6 +38,7 @@ interface StripeCustomer {
 export const ProfileTab = () => {
   const { user } = useAuth();
   const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [company, setCompany] = useState<CompanyData | null>(null);
   const [stripeCustomer, setStripeCustomer] = useState<StripeCustomer | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -37,6 +47,13 @@ export const ProfileTab = () => {
     full_name: '',
     phone: '',
     job_title: ''
+  });
+  const [companyFormData, setCompanyFormData] = useState({
+    name: '',
+    address: '',
+    primary_contact_name: '',
+    primary_contact_email: '',
+    primary_contact_phone: ''
   });
 
   useEffect(() => {
@@ -68,6 +85,26 @@ export const ProfileTab = () => {
         phone: profileData.phone || '',
         job_title: profileData.job_title || ''
       });
+
+      // Fetch company data if user has a company
+      if (profileData.company_id) {
+        const { data: companyData, error: companyError } = await supabase
+          .from('companies')
+          .select('*')
+          .eq('id', profileData.company_id)
+          .single();
+
+        if (!companyError && companyData) {
+          setCompany(companyData);
+          setCompanyFormData({
+            name: companyData.name || '',
+            address: companyData.address || '',
+            primary_contact_name: companyData.primary_contact_name || '',
+            primary_contact_email: companyData.primary_contact_email || '',
+            primary_contact_phone: companyData.primary_contact_phone || ''
+          });
+        }
+      }
 
       // If user has a Stripe customer ID, fetch Stripe data
       if (profileData.stripe_customer_id) {
@@ -131,7 +168,8 @@ export const ProfileTab = () => {
     try {
       setSaving(true);
 
-      const { error } = await supabase
+      // Update profile
+      const { error: profileError } = await supabase
         .from('profiles')
         .update({
           full_name: formData.full_name,
@@ -141,9 +179,30 @@ export const ProfileTab = () => {
         })
         .eq('id', user?.id);
 
-      if (error) {
+      if (profileError) {
         toast.error('Failed to save profile');
         return;
+      }
+
+      // Update company if user has company access
+      if (company && profile?.company_id) {
+        const { error: companyError } = await supabase
+          .from('companies')
+          .update({
+            name: companyFormData.name,
+            address: companyFormData.address,
+            primary_contact_name: companyFormData.primary_contact_name,
+            primary_contact_email: companyFormData.primary_contact_email,
+            primary_contact_phone: companyFormData.primary_contact_phone,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', profile.company_id);
+
+        if (companyError) {
+          console.error('Company update error:', companyError);
+          toast.error('Profile saved, but failed to update company info');
+          return;
+        }
       }
 
       toast.success('Profile updated successfully!');
@@ -168,7 +227,7 @@ export const ProfileTab = () => {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">Client Profile</h1>
-        <p className="text-white/80">Manage your profile and sync with Stripe customer data</p>
+        <p className="text-white/80">Manage your profile and company information</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -177,10 +236,10 @@ export const ProfileTab = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <UserCircle className="h-5 w-5" />
-              Profile Information
+              Personal Information
             </CardTitle>
             <CardDescription className="text-white/70">
-              Update your personal information
+              Update your personal details
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -227,7 +286,94 @@ export const ProfileTab = () => {
                 className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
               />
             </div>
+          </CardContent>
+        </Card>
 
+        {/* Company Information Card */}
+        <Card className="bg-white/10 backdrop-blur-md border-white/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <CreditCard className="h-5 w-5" />
+              Company Information
+            </CardTitle>
+            <CardDescription className="text-white/70">
+              Update your company details
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {company ? (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="company_name" className="text-white">Company Name</Label>
+                  <Input
+                    id="company_name"
+                    value={companyFormData.name}
+                    onChange={(e) => setCompanyFormData(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="Enter company name"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="company_address" className="text-white">Billing Address</Label>
+                  <Input
+                    id="company_address"
+                    value={companyFormData.address}
+                    onChange={(e) => setCompanyFormData(prev => ({ ...prev, address: e.target.value }))}
+                    placeholder="Enter company address"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="primary_contact_name" className="text-white">Primary Contact Name</Label>
+                  <Input
+                    id="primary_contact_name"
+                    value={companyFormData.primary_contact_name}
+                    onChange={(e) => setCompanyFormData(prev => ({ ...prev, primary_contact_name: e.target.value }))}
+                    placeholder="Enter primary contact name"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="primary_contact_email" className="text-white">Primary Contact Email</Label>
+                  <Input
+                    id="primary_contact_email"
+                    value={companyFormData.primary_contact_email}
+                    onChange={(e) => setCompanyFormData(prev => ({ ...prev, primary_contact_email: e.target.value }))}
+                    placeholder="Enter primary contact email"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="primary_contact_phone" className="text-white">Primary Contact Phone</Label>
+                  <Input
+                    id="primary_contact_phone"
+                    value={companyFormData.primary_contact_phone}
+                    onChange={(e) => setCompanyFormData(prev => ({ ...prev, primary_contact_phone: e.target.value }))}
+                    placeholder="Enter primary contact phone"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </div>
+              </>
+            ) : (
+              <div className="p-4 bg-yellow-500/20 border border-yellow-400/30 rounded-lg">
+                <h4 className="font-medium text-yellow-300 mb-2">No Company Assigned</h4>
+                <p className="text-sm text-yellow-200">
+                  Contact your administrator to assign you to a company.
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Save Button and Stripe Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="bg-white/10 backdrop-blur-md border-white/20">
+          <CardContent className="pt-6">
             <Button 
               onClick={saveProfile} 
               disabled={saving}
@@ -239,7 +385,7 @@ export const ProfileTab = () => {
                   Saving...
                 </>
               ) : (
-                'Save Profile'
+                'Save All Changes'
               )}
             </Button>
           </CardContent>

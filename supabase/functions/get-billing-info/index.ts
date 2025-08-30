@@ -43,8 +43,8 @@ serve(async (req) => {
       throw new Error("Supabase configuration missing");
     }
 
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-    const supabaseClient = createClient(supabaseUrl, supabaseServiceKey || supabaseAnonKey);
+    // Use anon key for auth operations to avoid JWT issues
+    const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
 
     // Get and validate user
     const authHeader = req.headers.get("Authorization");
