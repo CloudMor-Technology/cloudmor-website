@@ -18,7 +18,8 @@ import {
   AlertCircle,
   User,
   Settings,
-  TrendingUp
+  TrendingUp,
+  X
 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -45,6 +46,9 @@ export const BillingTab = () => {
   const [error, setError] = useState<string | null>(null);
   const [companyName, setCompanyName] = useState<string>('');
   const [selectedYear, setSelectedYear] = useState<string>('all');
+  const [showStripePortal, setShowStripePortal] = useState(false);
+  const [stripePortalUrl, setStripePortalUrl] = useState<string | null>(null);
+  const [portalType, setPortalType] = useState<'billing' | 'payment'>('billing');
 
   useEffect(() => {
     if (user) {
@@ -183,34 +187,10 @@ export const BillingTab = () => {
       }
 
       if (data?.url) {
-        console.log('Opening billing info portal in new window:', data.url);
-        
-        // Calculate center position
-        const width = 1200;
-        const height = 800;
-        const left = (window.screen.width - width) / 2;
-        const top = (window.screen.height - height) / 2;
-        
-        // Open in new window centered and properly sized
-        const billingWindow = window.open(
-          data.url, 
-          'stripe-billing-window', 
-          `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no`
-        );
-        
-        if (billingWindow) {
-          // Focus on the window
-          billingWindow.focus();
-          
-          // Optional: Listen for window close and refresh data
-          const checkClosed = setInterval(() => {
-            if (billingWindow.closed) {
-              clearInterval(checkClosed);
-              console.log('Billing window closed, refreshing data...');
-              fetchBillingData();
-            }
-          }, 1000);
-        }
+        console.log('Opening billing info portal inline:', data.url);
+        setStripePortalUrl(data.url);
+        setPortalType('billing');
+        setShowStripePortal(true);
       } else {
         throw new Error('No portal URL received');
       }
@@ -241,34 +221,10 @@ export const BillingTab = () => {
       }
 
       if (data?.url) {
-        console.log('Opening payment method portal in new window:', data.url);
-        
-        // Calculate center position
-        const width = 1200;
-        const height = 800;
-        const left = (window.screen.width - width) / 2;
-        const top = (window.screen.height - height) / 2;
-        
-        // Open in new window centered and properly sized
-        const paymentWindow = window.open(
-          data.url, 
-          'stripe-payment-window', 
-          `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no`
-        );
-        
-        if (paymentWindow) {
-          // Focus on the window
-          paymentWindow.focus();
-          
-          // Optional: Listen for window close and refresh data
-          const checkClosed = setInterval(() => {
-            if (paymentWindow.closed) {
-              clearInterval(checkClosed);
-              console.log('Payment window closed, refreshing data...');
-              fetchBillingData();
-            }
-          }, 1000);
-        }
+        console.log('Opening payment method portal inline:', data.url);
+        setStripePortalUrl(data.url);
+        setPortalType('payment');
+        setShowStripePortal(true);
       } else {
         throw new Error('No portal URL received');
       }
@@ -281,6 +237,13 @@ export const BillingTab = () => {
         variant: "destructive",
       });
     }
+  };
+
+  const closeStripePortal = () => {
+    setShowStripePortal(false);
+    setStripePortalUrl(null);
+    console.log('Stripe portal closed, refreshing data...');
+    fetchBillingData();
   };
 
   const testStripeConnection = async () => {
@@ -637,6 +600,45 @@ export const BillingTab = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Embedded Stripe Portal */}
+      {showStripePortal && stripePortalUrl && (
+        <Card className="bg-white/95 backdrop-blur-sm border-2 border-blue-200">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="flex items-center gap-2">
+              {portalType === 'billing' ? (
+                <>
+                  <User className="h-5 w-5" />
+                  Update Billing Information
+                </>
+              ) : (
+                <>
+                  <CreditCard className="h-5 w-5" />
+                  Update Payment Method
+                </>
+              )}
+            </CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={closeStripePortal}
+              className="h-8 w-8 p-0"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="w-full h-[600px] overflow-hidden rounded-b-lg">
+              <iframe
+                src={stripePortalUrl}
+                className="w-full h-full border-0"
+                title={`Stripe ${portalType === 'billing' ? 'Billing Information' : 'Payment Method'} Portal`}
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
