@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,47 +13,17 @@ export const SinglePagePortal = () => {
   const isAdmin = profile?.role === 'admin';
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [showClientManagement, setShowClientManagement] = useState(false);
-  const [clients, setClients] = useState([
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
-      phone: '(555) 123-4567',
-      company: 'Tech Solutions Inc',
-      companyWebsite: 'www.techsolutions.com',
-      companyAddress: '123 Tech Street, NY 10001',
-      stripeCustomerId: 'cus_abc123',
-      stripeEmail: 'billing@techsolutions.com',
-      jiraEmail: 'support@techsolutions.com',
-      services: 'Managed IT Services, Cloud Hosting'
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane@company.com',
-      phone: '(555) 987-6543',
-      company: 'Digital Corp',
-      companyWebsite: 'www.digitalcorp.com',
-      companyAddress: '456 Digital Ave, CA 90210',
-      stripeCustomerId: 'cus_def456',
-      stripeEmail: 'accounting@digitalcorp.com',
-      jiraEmail: 'help@digitalcorp.com',
-      services: 'Cybersecurity Services, Web Development'
-    },
-    {
-      id: 3,
-      name: 'Bob Johnson',
-      email: 'bob@business.com',
-      phone: '(555) 456-7890',
-      company: 'Business Solutions LLC',
-      companyWebsite: 'www.bizsolut.com',
-      companyAddress: '789 Business Blvd, TX 75001',
-      stripeCustomerId: 'cus_ghi789',
-      stripeEmail: 'finance@bizsolut.com',
-      jiraEmail: 'tickets@bizsolut.com',
-      services: 'Network Management, Technical Support'
-    }
-  ]);
+  
+  // Initialize clients from localStorage or start empty
+  const [clients, setClients] = useState(() => {
+    const savedClients = localStorage.getItem('portalClients');
+    return savedClients ? JSON.parse(savedClients) : [];
+  });
+
+  // Save clients to localStorage whenever clients change
+  useEffect(() => {
+    localStorage.setItem('portalClients', JSON.stringify(clients));
+  }, [clients]);
   const [clientForm, setClientForm] = useState({
     name: '',
     email: '',
