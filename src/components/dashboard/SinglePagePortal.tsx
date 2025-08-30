@@ -17,6 +17,7 @@ interface ClientService {
   status: string | null;
   notes: string | null;
   created_at: string;
+  start_date: string | null;
 }
 interface PhoneExtension {
   id: string;
@@ -503,10 +504,10 @@ export const SinglePagePortal = () => {
                             </div>
                           </div>}
                         
-                        <div className="flex justify-between items-center text-sm text-white/80 font-medium">
-                          <span>Added: {new Date(service.created_at).toLocaleDateString()}</span>
-                          <span>Status: {status}</span>
-                        </div>
+                         <div className="flex justify-between items-center text-sm text-white/80 font-medium">
+                           <span>Started: {service.start_date ? new Date(service.start_date).toLocaleDateString() : 'Not specified'}</span>
+                           <span>Status: {status}</span>
+                         </div>
                       </CardContent>
                     </Card>;
             })}

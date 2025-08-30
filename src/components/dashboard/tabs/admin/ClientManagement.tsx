@@ -8,9 +8,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Users, Plus, Edit, Eye, Trash2, Building2, RotateCcw, Mail } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Users, Plus, Edit, Eye, Trash2, Building2, RotateCcw, Mail, CalendarIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 interface Client {
   id: string;
@@ -30,12 +34,14 @@ interface ClientService {
   service_name: string;
   service_description: string;
   status: string;
+  start_date: string;
 }
 
 export const ClientManagement = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [serviceNotes, setServiceNotes] = useState<{[key: string]: string}>({});
+  const [serviceStartDates, setServiceStartDates] = useState<{[key: string]: Date}>({});
   const [showForm, setShowForm] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [formData, setFormData] = useState({
@@ -144,6 +150,7 @@ export const ClientManagement = () => {
           service_name: serviceName,
           service_description: serviceOptions.find(s => s.name === serviceName)?.description || `${serviceName} for ${formData.company_name}`,
           notes: serviceNotes[serviceName] || null,
+          start_date: serviceStartDates[serviceName] ? format(serviceStartDates[serviceName], 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd'),
           is_active: true
         }));
 
@@ -230,6 +237,7 @@ export const ClientManagement = () => {
           service_name: serviceName,
           service_description: serviceOptions.find(s => s.name === serviceName)?.description || `${serviceName} for ${formData.company_name}`,
           notes: serviceNotes[serviceName] || null,
+          start_date: serviceStartDates[serviceName] ? format(serviceStartDates[serviceName], 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd'),
           is_active: true
         }));
 
@@ -296,6 +304,7 @@ export const ClientManagement = () => {
     });
     setSelectedServices([]);
     setServiceNotes({});
+    setServiceStartDates({});
     setShowForm(false);
     setEditingClient(null);
   };
@@ -314,9 +323,13 @@ export const ClientManagement = () => {
       
       const existingServices = clientServices?.map(s => s.service_name) || [];
       const existingNotes: {[key: string]: string} = {};
+      const existingStartDates: {[key: string]: Date} = {};
       clientServices?.forEach(service => {
         if (service.notes) {
           existingNotes[service.service_name] = service.notes;
+        }
+        if (service.start_date) {
+          existingStartDates[service.service_name] = new Date(service.start_date);
         }
       });
       
@@ -333,6 +346,7 @@ export const ClientManagement = () => {
       });
       setSelectedServices(existingServices);
       setServiceNotes(existingNotes);
+      setServiceStartDates(existingStartDates);
       setShowForm(true);
     } catch (error) {
       console.error('Error fetching client services:', error);
@@ -508,23 +522,61 @@ export const ClientManagement = () => {
                       />
                       <Label htmlFor={service.name} className="font-medium text-sm">{service.name}</Label>
                     </div>
-                    {selectedServices.includes(service.name) && (
-                      <>
-                        <p className="text-xs text-gray-600 ml-6 bg-blue-50 p-2 rounded border-l-2 border-blue-400 mb-2">
-                          {service.description}
-                        </p>
-                        <div className="ml-6">
-                          <Label htmlFor={`notes-${service.name}`} className="text-xs font-medium">Service Notes</Label>
-                          <Input
-                            id={`notes-${service.name}`}
-                            placeholder="Add specific notes for this service..."
-                            className="text-xs mt-1"
-                            value={serviceNotes[service.name] || ''}
-                            onChange={(e) => setServiceNotes(prev => ({...prev, [service.name]: e.target.value}))}
-                          />
-                        </div>
-                      </>
-                    )}
+                     {selectedServices.includes(service.name) && (
+                       <>
+                         <p className="text-xs text-gray-600 ml-6 bg-blue-50 p-2 rounded border-l-2 border-blue-400 mb-2">
+                           {service.description}
+                         </p>
+                         <div className="ml-6 space-y-3">
+                           <div>
+                             <Label htmlFor={`start-date-${service.name}`} className="text-xs font-medium">Service Start Date</Label>
+                             <Popover>
+                               <PopoverTrigger asChild>
+                                 <Button
+                                   variant="outline"
+                                   className={cn(
+                                     "w-full justify-start text-left font-normal mt-1",
+                                     !serviceStartDates[service.name] && "text-muted-foreground"
+                                   )}
+                                   size="sm"
+                                 >
+                                   <CalendarIcon className="mr-2 h-4 w-4" />
+                                   {serviceStartDates[service.name] ? (
+                                     format(serviceStartDates[service.name], "PPP")
+                                   ) : (
+                                     <span>Pick a start date</span>
+                                   )}
+                                 </Button>
+                               </PopoverTrigger>
+                               <PopoverContent className="w-auto p-0" align="start">
+                                 <Calendar
+                                   mode="single"
+                                   selected={serviceStartDates[service.name]}
+                                   onSelect={(date) => 
+                                     setServiceStartDates(prev => ({
+                                       ...prev, 
+                                       [service.name]: date || new Date()
+                                     }))
+                                   }
+                                   initialFocus
+                                   className={cn("p-3 pointer-events-auto")}
+                                 />
+                               </PopoverContent>
+                             </Popover>
+                           </div>
+                           <div>
+                             <Label htmlFor={`notes-${service.name}`} className="text-xs font-medium">Service Notes</Label>
+                             <Input
+                               id={`notes-${service.name}`}
+                               placeholder="Add specific notes for this service..."
+                               className="text-xs mt-1"
+                               value={serviceNotes[service.name] || ''}
+                               onChange={(e) => setServiceNotes(prev => ({...prev, [service.name]: e.target.value}))}
+                             />
+                           </div>
+                         </div>
+                       </>
+                     )}
                   </div>
                 ))}
               </div>

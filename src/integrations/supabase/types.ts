@@ -60,6 +60,7 @@ export type Database = {
           service_description: string | null
           service_name: string
           service_provider_id: string | null
+          start_date: string | null
           status: string | null
         }
         Insert: {
@@ -71,6 +72,7 @@ export type Database = {
           service_description?: string | null
           service_name: string
           service_provider_id?: string | null
+          start_date?: string | null
           status?: string | null
         }
         Update: {
@@ -82,6 +84,7 @@ export type Database = {
           service_description?: string | null
           service_name?: string
           service_provider_id?: string | null
+          start_date?: string | null
           status?: string | null
         }
         Relationships: [
