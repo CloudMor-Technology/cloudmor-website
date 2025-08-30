@@ -34,7 +34,8 @@ export const SinglePagePortal = () => {
     stripeCustomerId: '',
     stripeEmail: '',
     jiraEmail: '',
-    services: ''
+    services: '',
+    password: ''
   });
   const [passwordForm, setPasswordForm] = useState({
     currentPassword: '',
@@ -97,7 +98,8 @@ export const SinglePagePortal = () => {
         stripeCustomerId: '',
         stripeEmail: '',
         jiraEmail: '',
-        services: ''
+        services: '',
+        password: ''
       });
     } catch (error) {
       toast.error('Failed to add client');
@@ -438,19 +440,34 @@ export const SinglePagePortal = () => {
                       />
                     </div>
                     
-                    <div className="mt-4">
-                      <Label htmlFor="clientServices">Services Provided</Label>
-                      <Input
-                        id="clientServices"
-                        value={clientForm.services}
-                        onChange={(e) => setClientForm({...clientForm, services: e.target.value})}
-                        placeholder="Enter services separated by commas (e.g., Managed IT Services, Cloud Hosting, Cybersecurity)"
-                        className="w-full"
-                      />
-                      <p className="text-sm text-gray-500 mt-1">
-                        Type the services you provide to this client, separated by commas
-                      </p>
-                    </div>
+                     <div className="mt-4">
+                       <Label htmlFor="clientServices">Services Provided</Label>
+                       <Input
+                         id="clientServices"
+                         value={clientForm.services}
+                         onChange={(e) => setClientForm({...clientForm, services: e.target.value})}
+                         placeholder="Enter services separated by commas (e.g., Managed IT Services, Cloud Hosting, Cybersecurity)"
+                         className="w-full"
+                       />
+                       <p className="text-sm text-gray-500 mt-1">
+                         Type the services you provide to this client, separated by commas
+                       </p>
+                     </div>
+                     
+                     <div className="mt-4">
+                       <Label htmlFor="clientPassword">Account Password</Label>
+                       <Input
+                         id="clientPassword"
+                         type="password"
+                         value={clientForm.password || ''}
+                         onChange={(e) => setClientForm({...clientForm, password: e.target.value})}
+                         placeholder="Create a secure password for this client"
+                         className="w-full"
+                       />
+                       <p className="text-sm text-gray-500 mt-1">
+                         This password will be used for the client's portal access
+                       </p>
+                     </div>
                     
                     <div className="flex gap-3 mt-6">
                       <Button onClick={handleAddClient} className="bg-green-600 hover:bg-green-700">
