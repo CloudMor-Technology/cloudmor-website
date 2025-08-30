@@ -49,13 +49,34 @@ export const ClientManagement = () => {
   });
 
   const serviceOptions = [
-    'Managed IT Services',
-    'Cloud Services',
-    'Cybersecurity',
-    'IT Strategy & Consulting',
-    'Business Communications',
-    'Professional Services',
-    'Web Design & Development'
+    {
+      name: 'Managed IT Services',
+      description: 'Comprehensive IT infrastructure management, monitoring, and support including network management, server maintenance, and helpdesk services.'
+    },
+    {
+      name: 'Cyber Security',
+      description: 'Advanced cybersecurity solutions including threat detection, firewall management, security audits, and employee security training.'
+    },
+    {
+      name: 'Business Phone System',
+      description: 'Modern VoIP phone systems with advanced features like call routing, voicemail, conferencing, and mobile integration.'
+    },
+    {
+      name: 'Web Design and Development',
+      description: 'Custom website design and development, e-commerce solutions, content management systems, and web application development.'
+    },
+    {
+      name: 'Face ID Authentication',
+      description: 'Biometric authentication systems using facial recognition technology for secure access control and identity verification.'
+    },
+    {
+      name: 'Business Automation AI',
+      description: 'AI-powered automation solutions to streamline business processes, improve efficiency, and reduce manual tasks.'
+    },
+    {
+      name: 'Managed Cloud Services',
+      description: 'Cloud infrastructure management, migration services, backup solutions, and ongoing cloud optimization and support.'
+    }
   ];
 
   useEffect(() => {
@@ -116,10 +137,10 @@ export const ClientManagement = () => {
 
       // Add services for the client
       if (selectedServices.length > 0) {
-        const serviceInserts = selectedServices.map(service => ({
+        const serviceInserts = selectedServices.map(serviceName => ({
           client_id: clientData.id,
-          service_name: service,
-          service_description: `${service} for ${formData.company_name}`
+          service_name: serviceName,
+          service_description: serviceOptions.find(s => s.name === serviceName)?.description || `${serviceName} for ${formData.company_name}`
         }));
 
         const { error: serviceError } = await supabase
@@ -262,12 +283,31 @@ export const ClientManagement = () => {
     setShowForm(true);
   };
 
-  const handleServiceToggle = (service: string) => {
+  const handleServiceToggle = (serviceName: string) => {
     setSelectedServices(prev => 
-      prev.includes(service) 
-        ? prev.filter(s => s !== service)
-        : [...prev, service]
+      prev.includes(serviceName) 
+        ? prev.filter(s => s !== serviceName)
+        : [...prev, serviceName]
     );
+  };
+
+  const formatPhoneNumber = (value: string) => {
+    // Remove all non-digits
+    const digits = value.replace(/\D/g, '');
+    
+    // Format as (XXX) XXX-XXXX
+    if (digits.length >= 6) {
+      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+    } else if (digits.length >= 3) {
+      return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    } else {
+      return digits;
+    }
+  };
+
+  const handlePhoneChange = (value: string) => {
+    const formatted = formatPhoneNumber(value);
+    setFormData({...formData, phone: formatted});
   };
 
   return (
@@ -355,8 +395,9 @@ export const ClientManagement = () => {
                 <Input
                   id="phone"
                   value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  onChange={(e) => handlePhoneChange(e.target.value)}
                   className="border-blue-300 focus:border-blue-500"
+                  placeholder="(555) 123-4567"
                 />
               </div>
               <div>
@@ -398,17 +439,24 @@ export const ClientManagement = () => {
             {!editingClient && (
               <div>
                 <Label>Services Provided</Label>
-                <div className="grid grid-cols-2 gap-2 mt-2">
+                <div className="grid grid-cols-1 gap-3 mt-2">
                   {serviceOptions.map((service) => (
-                    <div key={service} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id={service}
-                        checked={selectedServices.includes(service)}
-                        onChange={() => handleServiceToggle(service)}
-                        className="rounded border-blue-300"
-                      />
-                      <Label htmlFor={service} className="text-sm">{service}</Label>
+                    <div key={service.name} className="border border-blue-200 rounded-lg p-3">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <input
+                          type="checkbox"
+                          id={service.name}
+                          checked={selectedServices.includes(service.name)}
+                          onChange={() => handleServiceToggle(service.name)}
+                          className="rounded border-blue-300"
+                        />
+                        <Label htmlFor={service.name} className="font-medium text-sm">{service.name}</Label>
+                      </div>
+                      {selectedServices.includes(service.name) && (
+                        <p className="text-xs text-gray-600 ml-6 bg-blue-50 p-2 rounded border-l-2 border-blue-400">
+                          {service.description}
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>
