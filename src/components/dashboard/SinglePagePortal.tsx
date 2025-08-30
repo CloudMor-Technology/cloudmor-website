@@ -1,21 +1,74 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
-import { User, UserPlus, Settings, Phone, Mail, AlertTriangle, CheckCircle } from 'lucide-react';
-import { BillingTab } from './tabs/BillingTab';
+import { User, UserPlus, Settings, Phone, Mail, AlertTriangle, CheckCircle, Eye, CreditCard, Lock } from 'lucide-react';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 export const SinglePagePortal = () => {
   const { profile, user } = useAuth();
   const isAdmin = profile?.role === 'admin';
-  
-  // Stats data
-  const stats = [
-    { title: 'Active Services', value: '94.5%', color: 'text-green-600' },
-    { title: 'Uptime Performance', value: '99.5%', color: 'text-blue-600' },
-    { title: 'Average Usage', value: '72.3%', color: 'text-orange-600' },
-    { title: 'Service Success Rate', value: '100%', color: 'text-purple-600' }
-  ];
+  const [showProfile, setShowProfile] = useState(false);
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
+
+  const handlePasswordChange = async () => {
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      toast.error('New passwords do not match');
+      return;
+    }
+    // Here you would implement the actual password change logic
+    toast.success('Password updated successfully');
+    setIsChangingPassword(false);
+    setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+  };
+
+  const handleViewInvoices = async () => {
+    try {
+      const response = await fetch('/api/supabase/functions/create-customer-portal', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ return_url: window.location.origin })
+      });
+      
+      if (!response.ok) throw new Error('Failed to create portal session');
+      
+      const data = await response.json();
+      window.open(data.url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+    } catch (error) {
+      toast.error('Failed to open billing portal');
+    }
+  };
+
+  const handleManagePayment = async () => {
+    try {
+      const response = await fetch('/api/supabase/functions/create-customer-portal', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ return_url: window.location.origin })
+      });
+      
+      if (!response.ok) throw new Error('Failed to create portal session');
+      
+      const data = await response.json();
+      window.open(data.url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+    } catch (error) {
+      toast.error('Failed to open billing portal');
+    }
+  };
 
   const supportChannels = [
     {
@@ -85,16 +138,15 @@ export const SinglePagePortal = () => {
         )}
 
         {/* Account Information Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Profile Info */}
-          <Card className="bg-white/90 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <User className="w-5 h-5" />
-                Account Information
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+        <Card className="bg-white/90 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <User className="w-5 h-5" />
+              Account Information
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
                   <User className="w-8 h-8 text-blue-600" />
@@ -105,53 +157,162 @@ export const SinglePagePortal = () => {
                   <p className="text-sm text-gray-400 capitalize">{profile?.role || 'Client'} Account</p>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-2 gap-4 pt-4">
-                <div>
-                  <p className="text-sm text-gray-500">Phone</p>
-                  <p className="font-medium">{profile?.phone || 'Not set'}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Job Title</p>
-                  <p className="font-medium">{profile?.job_title || 'Not set'}</p>
-                </div>
-              </div>
-              
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 mt-4">
-                Edit Profile
+              <Button 
+                onClick={() => setShowProfile(!showProfile)}
+                variant="outline"
+                className="flex items-center gap-2"
+              >
+                <User className="w-4 h-4" />
+                Profile
               </Button>
-            </CardContent>
-          </Card>
-
-          {/* Service Stats */}
-          <Card className="bg-white/90 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle>Service Overview</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-4">
-                {stats.map((stat, index) => (
-                  <div key={index} className="text-center p-4 bg-gray-50 rounded-lg">
-                    <div className={`text-2xl font-bold ${stat.color}`}>
-                      {stat.value}
+            </div>
+            
+            {showProfile && (
+              <div className="border-t pt-4 mt-4">
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-gray-500">Phone</p>
+                      <p className="font-medium">{profile?.phone || 'Not set'}</p>
                     </div>
-                    <div className="text-sm text-gray-600">
-                      {stat.title}
+                    <div>
+                      <p className="text-sm text-gray-500">Job Title</p>
+                      <p className="font-medium">{profile?.job_title || 'Not set'}</p>
                     </div>
                   </div>
-                ))}
+                  
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-semibold">Security</h4>
+                    <Button 
+                      onClick={() => setIsChangingPassword(!isChangingPassword)}
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      <Lock className="w-4 h-4" />
+                      Change Password
+                    </Button>
+                  </div>
+                  
+                  {isChangingPassword && (
+                    <div className="space-y-3 p-4 bg-gray-50 rounded-lg">
+                      <div>
+                        <Label htmlFor="currentPassword">Current Password</Label>
+                        <Input
+                          id="currentPassword"
+                          type="password"
+                          value={passwordForm.currentPassword}
+                          onChange={(e) => setPasswordForm({...passwordForm, currentPassword: e.target.value})}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="newPassword">New Password</Label>
+                        <Input
+                          id="newPassword"
+                          type="password"
+                          value={passwordForm.newPassword}
+                          onChange={(e) => setPasswordForm({...passwordForm, newPassword: e.target.value})}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                        <Input
+                          id="confirmPassword"
+                          type="password"
+                          value={passwordForm.confirmPassword}
+                          onChange={(e) => setPasswordForm({...passwordForm, confirmPassword: e.target.value})}
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <Button onClick={handlePasswordChange} size="sm" className="bg-green-600 hover:bg-green-700">
+                          Update Password
+                        </Button>
+                        <Button 
+                          onClick={() => {
+                            setIsChangingPassword(false);
+                            setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+                          }}
+                          variant="outline" 
+                          size="sm"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            )}
+          </CardContent>
+        </Card>
 
-        {/* Billing Section (Compact) */}
+        {/* Billing Section */}
         <Card className="bg-white/90 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle>Billing Overview</CardTitle>
+            <CardTitle>Billing</CardTitle>
           </CardHeader>
           <CardContent>
-            <BillingTab />
+            <div className="flex gap-4">
+              <Button 
+                onClick={handleViewInvoices}
+                className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2"
+              >
+                <Eye className="w-4 h-4" />
+                View Invoices
+              </Button>
+              <Button 
+                onClick={handleManagePayment}
+                variant="outline"
+                className="flex items-center gap-2"
+              >
+                <CreditCard className="w-4 h-4" />
+                Manage Payment Method
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Services Section */}
+        <Card className="bg-white/90 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle>My Services</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 border rounded-lg">
+                  <h4 className="font-semibold text-green-600">Active</h4>
+                  <h3 className="text-lg font-bold">Managed IT Services</h3>
+                  <p className="text-sm text-gray-500">Monthly Plan</p>
+                  <p className="text-sm text-gray-600">Next billing: Jan 15, 2025</p>
+                </div>
+                
+                <div className="p-4 border rounded-lg">
+                  <h4 className="font-semibold text-green-600">Active</h4>
+                  <h3 className="text-lg font-bold">Cloud Hosting</h3>
+                  <p className="text-sm text-gray-500">Annual Plan</p>
+                  <p className="text-sm text-gray-600">Expires: Dec 31, 2025</p>
+                </div>
+                
+                <div className="p-4 border rounded-lg">
+                  <h4 className="font-semibold text-blue-600">Pending</h4>
+                  <h3 className="text-lg font-bold">Cybersecurity Audit</h3>
+                  <p className="text-sm text-gray-500">One-time Service</p>
+                  <p className="text-sm text-gray-600">Scheduled: Feb 1, 2025</p>
+                </div>
+              </div>
+              
+              <div className="pt-4 border-t">
+                <div className="flex justify-between items-center">
+                  <h4 className="font-semibold">Service Summary</h4>
+                  <div className="flex gap-4 text-sm">
+                    <span className="text-green-600">● 2 Active</span>
+                    <span className="text-blue-600">● 1 Pending</span>
+                    <span className="text-gray-500">● 0 Inactive</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
