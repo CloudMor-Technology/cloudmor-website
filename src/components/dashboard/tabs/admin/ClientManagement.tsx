@@ -16,6 +16,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
+// Helper function to format date safely without timezone issues
+const formatDateForDatabase = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 interface Client {
   id: string;
   company_name: string;
@@ -150,7 +158,7 @@ export const ClientManagement = () => {
           service_name: serviceName,
           service_description: serviceOptions.find(s => s.name === serviceName)?.description || `${serviceName} for ${formData.company_name}`,
           notes: serviceNotes[serviceName] || null,
-          start_date: serviceStartDates[serviceName] ? format(serviceStartDates[serviceName], 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd'),
+          start_date: serviceStartDates[serviceName] ? formatDateForDatabase(serviceStartDates[serviceName]) : formatDateForDatabase(new Date()),
           is_active: true
         }));
 
@@ -237,7 +245,7 @@ export const ClientManagement = () => {
           service_name: serviceName,
           service_description: serviceOptions.find(s => s.name === serviceName)?.description || `${serviceName} for ${formData.company_name}`,
           notes: serviceNotes[serviceName] || null,
-          start_date: serviceStartDates[serviceName] ? format(serviceStartDates[serviceName], 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd'),
+          start_date: serviceStartDates[serviceName] ? formatDateForDatabase(serviceStartDates[serviceName]) : formatDateForDatabase(new Date()),
           is_active: true
         }));
 
