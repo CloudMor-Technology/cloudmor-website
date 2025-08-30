@@ -4,12 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
-import { User, UserPlus, Settings, Phone, Mail, AlertTriangle, CheckCircle, Eye, CreditCard, Lock } from 'lucide-react';
+import { User, UserPlus, Settings, Phone, Mail, AlertTriangle, CheckCircle, Eye, CreditCard, Lock, LogOut } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 
 export const SinglePagePortal = () => {
-  const { profile, user } = useAuth();
+  const { profile, user, signOut } = useAuth();
   const isAdmin = profile?.role === 'admin';
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [passwordForm, setPasswordForm] = useState({
@@ -17,6 +17,15 @@ export const SinglePagePortal = () => {
     newPassword: '',
     confirmPassword: ''
   });
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast.success('Signed out successfully');
+    } catch (error) {
+      toast.error('Failed to sign out');
+    }
+  };
 
   const handlePasswordChange = async () => {
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
@@ -139,11 +148,12 @@ export const SinglePagePortal = () => {
                 Account Information
               </CardTitle>
               <Button 
+                onClick={handleSignOut}
                 variant="outline"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
               >
-                <User className="w-4 h-4" />
-                Profile
+                <LogOut className="w-4 h-4" />
+                Sign Out
               </Button>
             </div>
           </CardHeader>
