@@ -110,12 +110,19 @@ serve(async (req) => {
       apiVersion: "2023-10-16",
     });
 
+    // Use SERVICE ROLE for profile lookup to bypass RLS
+    const supabaseService = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      { auth: { persistSession: false } }
+    );
+
     // Get user profile to check for existing customer ID
-    console.log('Checking profile for existing customer ID...');
+    console.log('Checking profile for existing customer ID using service role...');
     console.log('User ID:', user.id);
     console.log('Target email:', targetEmail);
     
-    let { data: profileData, error: profileError } = await supabaseClient
+    let { data: profileData, error: profileError } = await supabaseService
       .from('profiles')
       .select('stripe_customer_id, email, full_name')
       .eq('id', user.id)
@@ -129,7 +136,7 @@ serve(async (req) => {
       console.error('Error fetching profile:', profileError);
       // Try alternative lookup by email as fallback
       console.log('Trying fallback lookup by email...');
-      const { data: fallbackProfile, error: fallbackError } = await supabaseClient
+      const { data: fallbackProfile, error: fallbackError } = await supabaseService
         .from('profiles')
         .select('stripe_customer_id, email, full_name')
         .eq('email', targetEmail)

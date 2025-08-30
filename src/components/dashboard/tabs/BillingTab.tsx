@@ -150,6 +150,54 @@ export const BillingTab = () => {
     }
   };
 
+  const testStripeConnection = async () => {
+    try {
+      console.log('Testing Stripe connection...');
+      
+      const { data, error } = await supabase.functions.invoke('test-stripe-connection', {
+        headers: {
+          Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+        },
+      });
+
+      if (error) {
+        console.error('Stripe test error:', error);
+        toast({
+          title: "Connection Test Failed",
+          description: `Error: ${error.message}`,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log('Stripe test results:', data);
+      
+      if (data.success) {
+        toast({
+          title: "Stripe Connection Successful!",
+          description: `Found ${data.results.data.subscriptions} subscriptions, ${data.results.data.invoices} invoices, ${data.results.data.paymentMethods} payment methods`,
+        });
+        
+        // After successful test, refresh billing data
+        fetchBillingData();
+      } else {
+        toast({
+          title: "Stripe Connection Issue",
+          description: data.error,
+          variant: "destructive",
+        });
+      }
+
+    } catch (error) {
+      console.error('Error testing Stripe connection:', error);
+      toast({
+        title: "Test Failed",
+        description: "Failed to test Stripe connection. Check console for details.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const formatCurrency = (amountInCents: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -188,6 +236,14 @@ export const BillingTab = () => {
           >
             <RefreshCcw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
             Refresh
+          </Button>
+          <Button 
+            variant="outline" 
+            onClick={testStripeConnection}
+            className="flex items-center gap-2 bg-amber-600/10 border-amber-600/20 text-amber-200 hover:bg-amber-600/20"
+          >
+            <AlertCircle className="h-4 w-4" />
+            Test Stripe
           </Button>
           <Button 
             onClick={handleManagePayments}
