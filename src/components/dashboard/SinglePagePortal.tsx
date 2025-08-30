@@ -31,10 +31,7 @@ interface ClientSupportDocument {
   title: string;
   description: string | null;
   url: string | null;
-  category: string | null;
-  role: string;
-  assigned_to_all: boolean;
-  is_active: boolean;
+  client_id: string | null;
   created_at: string;
 }
 export const SinglePagePortal = () => {
@@ -120,16 +117,29 @@ export const SinglePagePortal = () => {
   };
   const fetchClientSupportDocs = async () => {
     try {
-      // Get client-specific and all-client documents
+      // Get client-specific documents - simplified since we're using support_documents table
       let clientEmail = profile?.email;
       if (isImpersonating && profile?.role === 'admin') {
         const impersonatedClient = JSON.parse(localStorage.getItem('impersonating_client') || '{}');
         clientEmail = impersonatedClient.contact_email;
       }
+      
+      // Get the client ID first
+      const { data: clientData } = await supabase
+        .from('clients')
+        .select('id')
+        .eq('contact_email', clientEmail)
+        .single();
+        
+      if (!clientData) {
+        setClientSupportDocs([]);
+        return;
+      }
+      
       const {
         data,
         error
-      } = await supabase.from('client_support_documents').select('*').eq('is_active', true).or(`assigned_to_all.eq.true,id.in.(${await getClientAssignedDocIds(clientEmail)})`).order('created_at', {
+      } = await supabase.from('support_documents').select('*').eq('client_id', clientData.id).order('created_at', {
         ascending: false
       });
       if (error) throw error;
@@ -574,8 +584,8 @@ export const SinglePagePortal = () => {
                         Send Email
                       </Button>
                       <Button onClick={() => window.open('tel:888-554-6597', '_self')} className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium">
-                        <Phone className="w-4 h-4 mr-2" />
-                        Call: 888-554-6597
+                        <Phone className="w-3 h-3 mr-2" />
+                        <span className="text-sm">Call: 888-554-6597</span>
                       </Button>
                     </div>
                   </CardContent>

@@ -23,12 +23,8 @@ interface ClientSupportDocument {
   title: string;
   description: string | null;
   url: string | null;
-  category: string | null;
-  role: string;
-  assigned_to_all: boolean;
-  is_active: boolean;
+  client_id: string | null;
   created_at: string;
-  client_assignments?: Client[];
 }
 
 export const ClientSupportDocuments = () => {
@@ -41,9 +37,7 @@ export const ClientSupportDocuments = () => {
     title: '',
     description: '',
     url: '',
-    category: 'quick_tips',
-    role: 'all',
-    assigned_to_all: true
+    client_id: ''
   });
 
   useEffect(() => {
@@ -69,37 +63,12 @@ export const ClientSupportDocuments = () => {
   const fetchDocuments = async () => {
     try {
       const { data: docs, error: docsError } = await supabase
-        .from('client_support_documents')
+        .from('support_documents')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (docsError) throw docsError;
-
-      // Fetch assignment data for each document
-      const enrichedDocs = await Promise.all(
-        (docs || []).map(async (doc) => {
-          if (!doc.assigned_to_all) {
-            const { data: assignments, error: assignError } = await supabase
-              .from('client_support_document_assignments')
-              .select(`
-                clients:client_id (
-                  id, company_name, contact_email
-                )
-              `)
-              .eq('document_id', doc.id);
-
-            if (!assignError && assignments) {
-              return {
-                ...doc,
-                client_assignments: assignments.map(a => a.clients).filter(Boolean)
-              };
-            }
-          }
-          return { ...doc, client_assignments: [] };
-        })
-      );
-
-      setDocuments(enrichedDocs);
+      setDocuments(docs || []);
     } catch (error) {
       console.error('Error fetching documents:', error);
       toast.error('Failed to fetch documents');
@@ -108,36 +77,19 @@ export const ClientSupportDocuments = () => {
 
   const handleCreateDocument = async () => {
     try {
-      // Insert the document
+      // Insert the document with client assignment
       const { data: docData, error: docError } = await supabase
-        .from('client_support_documents')
+        .from('support_documents')
         .insert({
           title: formData.title,
           description: formData.description,
           url: formData.url,
-          category: formData.category,
-          role: formData.role,
-          assigned_to_all: formData.assigned_to_all,
-          is_active: true
+          client_id: selectedClients.length > 0 ? selectedClients[0] : null
         })
         .select()
         .single();
 
       if (docError) throw docError;
-
-      // If not assigned to all, create client assignments
-      if (!formData.assigned_to_all && selectedClients.length > 0) {
-        const assignments = selectedClients.map(clientId => ({
-          document_id: docData.id,
-          client_id: clientId
-        }));
-
-        const { error: assignError } = await supabase
-          .from('client_support_document_assignments')
-          .insert(assignments);
-
-        if (assignError) throw assignError;
-      }
 
       toast.success('Client support document created successfully');
       fetchDocuments();
@@ -154,40 +106,16 @@ export const ClientSupportDocuments = () => {
     try {
       // Update the document
       const { error: docError } = await supabase
-        .from('client_support_documents')
+        .from('support_documents')
         .update({
           title: formData.title,
           description: formData.description,
           url: formData.url,
-          category: formData.category,
-          role: formData.role,
-          assigned_to_all: formData.assigned_to_all
+          client_id: selectedClients.length > 0 ? selectedClients[0] : null
         })
         .eq('id', editingDocument.id);
 
       if (docError) throw docError;
-
-      // Delete existing assignments
-      const { error: deleteError } = await supabase
-        .from('client_support_document_assignments')
-        .delete()
-        .eq('document_id', editingDocument.id);
-
-      if (deleteError) throw deleteError;
-
-      // If not assigned to all, create new client assignments
-      if (!formData.assigned_to_all && selectedClients.length > 0) {
-        const assignments = selectedClients.map(clientId => ({
-          document_id: editingDocument.id,
-          client_id: clientId
-        }));
-
-        const { error: assignError } = await supabase
-          .from('client_support_document_assignments')
-          .insert(assignments);
-
-        if (assignError) throw assignError;
-      }
 
       toast.success('Client support document updated successfully');
       fetchDocuments();
@@ -203,7 +131,7 @@ export const ClientSupportDocuments = () => {
 
     try {
       const { error } = await supabase
-        .from('client_support_documents')
+        .from('support_documents')
         .delete()
         .eq('id', id);
 
@@ -222,9 +150,7 @@ export const ClientSupportDocuments = () => {
       title: '',
       description: '',
       url: '',
-      category: 'quick_tips',
-      role: 'all',
-      assigned_to_all: true
+      client_id: ''
     });
     setSelectedClients([]);
     setShowForm(false);
@@ -237,11 +163,9 @@ export const ClientSupportDocuments = () => {
       title: document.title,
       description: document.description || '',
       url: document.url || '',
-      category: document.category || 'quick_tips',
-      role: document.role,
-      assigned_to_all: document.assigned_to_all
+      client_id: document.client_id || ''
     });
-    setSelectedClients(document.client_assignments?.map(c => c.id) || []);
+    setSelectedClients(document.client_id ? [document.client_id] : []);
     setShowForm(true);
   };
 
@@ -280,7 +204,7 @@ export const ClientSupportDocuments = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div>
                 <Label htmlFor="title">Document Title *</Label>
                 <Input
@@ -290,20 +214,6 @@ export const ClientSupportDocuments = () => {
                   placeholder="e.g., Phone System Guide"
                   className="border-portal-accent/30 focus:border-portal-accent"
                 />
-              </div>
-              <div>
-                <Label htmlFor="category">Category</Label>
-                <Select value={formData.category} onValueChange={(value) => setFormData({...formData, category: value})}>
-                  <SelectTrigger className="border-portal-accent/30 focus:border-portal-accent">
-                    <SelectValue placeholder="Select category..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="quick_tips">Quick Tips</SelectItem>
-                    <SelectItem value="tutorials">Tutorials</SelectItem>
-                    <SelectItem value="troubleshooting">Troubleshooting</SelectItem>
-                    <SelectItem value="security">Security</SelectItem>
-                  </SelectContent>
-                </Select>
               </div>
             </div>
 
@@ -331,40 +241,26 @@ export const ClientSupportDocuments = () => {
             </div>
 
             <div>
-              <Label>Assignment</Label>
+              <Label>Client Assignment (Optional)</Label>
               <div className="space-y-2 mt-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="assigned_to_all"
-                    checked={formData.assigned_to_all}
-                    onCheckedChange={(checked) => setFormData({...formData, assigned_to_all: !!checked})}
-                  />
-                  <Label htmlFor="assigned_to_all" className="flex items-center gap-2">
-                    <Globe className="w-4 h-4" />
-                    Show for all clients
+                <div className="border border-portal-accent/20 rounded-lg p-3 bg-blue-50/30">
+                  <Label className="flex items-center gap-2 mb-2">
+                    <Users className="w-4 h-4" />
+                    Select client (leave empty for all clients):
                   </Label>
-                </div>
-                
-                {!formData.assigned_to_all && (
-                  <div className="border border-portal-accent/20 rounded-lg p-3 bg-blue-50/30">
-                    <Label className="flex items-center gap-2 mb-2">
-                      <Users className="w-4 h-4" />
-                      Select specific clients:
-                    </Label>
-                    <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
-                      {clients.map((client) => (
-                        <div key={client.id} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={client.id}
-                            checked={selectedClients.includes(client.id)}
-                            onCheckedChange={() => handleClientToggle(client.id)}
-                          />
-                          <Label htmlFor={client.id} className="text-sm">{client.company_name}</Label>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
+                    {clients.map((client) => (
+                      <div key={client.id} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={client.id}
+                          checked={selectedClients.includes(client.id)}
+                          onCheckedChange={() => handleClientToggle(client.id)}
+                        />
+                        <Label htmlFor={client.id} className="text-sm">{client.company_name}</Label>
+                      </div>
+                    ))}
                   </div>
-                )}
+                </div>
               </div>
             </div>
 
@@ -400,25 +296,15 @@ export const ClientSupportDocuments = () => {
                       <div className="space-y-2 flex-1">
                         <div className="flex items-center gap-2">
                           <h4 className="font-bold text-lg text-portal-text">{document.title}</h4>
-                          <Badge variant="outline" className="text-xs">
-                            {document.category}
-                          </Badge>
                         </div>
                         
                         <div className="flex items-center gap-2 text-sm text-portal-text-muted">
-                          {document.assigned_to_all ? (
-                            <div className="flex items-center gap-1">
-                              <Globe className="w-4 h-4" />
-                              <span>All Clients</span>
-                            </div>
-                          ) : (
-                            <div className="flex items-center gap-1">
-                              <Users className="w-4 h-4" />
-                              <span>
-                                {document.client_assignments?.length || 0} specific client(s)
-                              </span>
-                            </div>
-                          )}
+                          <div className="flex items-center gap-1">
+                            <Users className="w-4 h-4" />
+                            <span>
+                              {document.client_id ? 'Assigned to specific client' : 'Available to all clients'}
+                            </span>
+                          </div>
                         </div>
                         
                         {document.description && (
