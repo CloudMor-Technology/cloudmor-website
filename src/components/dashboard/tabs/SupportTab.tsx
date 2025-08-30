@@ -39,6 +39,20 @@ export const SupportTab = () => {
     };
   }, []);
 
+  const openJiraPortal = async () => {
+    // Check if user is impersonating a client
+    const impersonationData = localStorage.getItem('impersonating_client');
+    let clientEmail = profile?.email;
+    
+    if (impersonationData && profile?.role === 'admin') {
+      const impersonatedClient = JSON.parse(impersonationData);
+      clientEmail = impersonatedClient.contact_email;
+    }
+
+    // For now, open the portal directly - Jira auto-login integration would require backend setup
+    window.open(`https://support.cloudmor.com?email=${encodeURIComponent(clientEmail || '')}`, '_blank');
+  };
+
   const supportOptions = [
     {
       title: 'CloudMor Support Portal',
@@ -46,7 +60,7 @@ export const SupportTab = () => {
       url: 'support.cloudmor.com',
       icon: Globe,
       color: 'blue',
-      action: () => window.open('https://support.cloudmor.com', '_blank')
+      action: openJiraPortal
     },
     {
       title: 'Email Support',
@@ -85,16 +99,21 @@ export const SupportTab = () => {
         {supportOptions.map((option, index) => {
           const IconComponent = option.icon;
           return (
-            <Card key={index} className="bg-white/90 backdrop-blur-sm hover:shadow-xl transition-shadow cursor-pointer" onClick={option.action}>
-              <CardContent className="p-8">
-                <div className={`w-16 h-16 bg-${option.color}-100 rounded-full flex items-center justify-center mb-6`}>
-                  <IconComponent className={`w-8 h-8 text-${option.color}-600`} />
+            <Card 
+              key={index} 
+              className="bg-white/90 backdrop-blur-sm hover:shadow-2xl transform hover:scale-105 transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-blue-300 animate-pulse hover:animate-none" 
+              onClick={option.action}
+            >
+              <CardContent className="p-8 text-center">
+                <div className={`w-16 h-16 bg-gradient-to-br from-${option.color}-400 to-${option.color}-600 rounded-full flex items-center justify-center mb-6 mx-auto shadow-lg animate-bounce hover:animate-none`}>
+                  <IconComponent className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-bold text-xl mb-3">{option.title}</h3>
+                <h3 className="font-bold text-xl mb-3 text-gray-800">{option.title}</h3>
                 <p className="text-gray-600 text-lg mb-4">{option.description}</p>
-                <p className={`text-${option.color}-600 font-bold text-lg`}>
-                  {option.url}
-                </p>
+                <div className={`bg-gradient-to-r from-${option.color}-500 to-${option.color}-700 text-white px-4 py-2 rounded-full font-bold text-lg shadow-md`}>
+                  ✨ {option.url} ✨
+                </div>
+                <p className="text-xs text-gray-500 mt-2 font-semibold">👆 CLICK HERE TO ACCESS 👆</p>
               </CardContent>
             </Card>
           );
@@ -136,11 +155,11 @@ export const SupportTab = () => {
         <CardContent>
           <div className="text-center space-y-4">
             <Button 
-              onClick={() => window.open('https://support.cloudmor.com', '_blank')}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg px-8 py-3 mr-4"
+              onClick={openJiraPortal}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg px-8 py-3 mr-4 shadow-lg transform hover:scale-105 transition-all duration-300 animate-pulse hover:animate-none"
             >
               <Globe className="w-5 h-5 mr-2" />
-              Open Support Portal
+              ✨ Open Support Portal ✨
             </Button>
             <Button 
               onClick={() => {
@@ -148,10 +167,10 @@ export const SupportTab = () => {
                   window.JSDWidget.show();
                 }
               }}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg px-8 py-3"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg px-8 py-3 shadow-lg transform hover:scale-105 transition-all duration-300 animate-pulse hover:animate-none"
             >
               <MessageCircle className="w-5 h-5 mr-2" />
-              Start Chat Support
+              ✨ Start Chat Support ✨
             </Button>
           </div>
         </CardContent>

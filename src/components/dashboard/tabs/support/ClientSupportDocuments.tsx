@@ -111,7 +111,20 @@ export const ClientSupportDocuments = () => {
                       <h4 className="font-bold text-lg text-green-800">{document.title}</h4>
                     </div>
                     {document.description && (
-                      <p className="text-gray-600 text-sm">{document.description}</p>
+                      <div className="text-gray-600 text-sm">
+                        {document.description.split('\n').map((line, idx) => {
+                          const trimmedLine = line.trim();
+                          if (trimmedLine.startsWith('•') || trimmedLine.startsWith('-') || trimmedLine.startsWith('*')) {
+                            return (
+                              <div key={idx} className="flex items-start gap-2 mb-1">
+                                <span className="text-blue-600 font-bold mt-1">•</span>
+                                <span>{trimmedLine.substring(1).trim()}</span>
+                              </div>
+                            );
+                          }
+                          return trimmedLine ? <p key={idx} className="mb-1">{trimmedLine}</p> : null;
+                        })}
+                      </div>
                     )}
                     <p className="text-gray-500 text-xs">
                       Added: {new Date(document.created_at).toLocaleDateString()}
