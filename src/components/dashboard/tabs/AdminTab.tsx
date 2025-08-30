@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Users, Settings, Building, CreditCard, Headphones, Wrench, UserCheck, FileText } from 'lucide-react';
 import { toast } from 'sonner';
-import { UserManagement } from './admin/UserManagement';
 import { ClientManagement } from './admin/ClientManagement';
 import { ClientImpersonation } from './admin/ClientImpersonation';
 import { SupportDocuments } from './admin/SupportDocuments';
@@ -53,7 +52,7 @@ export const AdminTab = () => {
       </div>
 
       <Tabs defaultValue="clients" className="w-full">
-        <TabsList className="grid w-full grid-cols-6 bg-white/20 backdrop-blur-sm h-14">
+        <TabsList className="grid w-full grid-cols-5 bg-white/20 backdrop-blur-sm h-14">
           <TabsTrigger value="clients" className="text-white data-[state=active]:bg-white/20 text-sm py-3">
             <Building className="w-4 h-4 mr-1" />
             Client Management
@@ -65,10 +64,6 @@ export const AdminTab = () => {
           <TabsTrigger value="documents" className="text-white data-[state=active]:bg-white/20 text-sm py-3">
             <FileText className="w-4 h-4 mr-1" />
             Support Documents
-          </TabsTrigger>
-          <TabsTrigger value="users" className="text-white data-[state=active]:bg-white/20 text-sm py-3">
-            <Users className="w-4 h-4 mr-1" />
-            User Management
           </TabsTrigger>
           <TabsTrigger value="company" className="text-white data-[state=active]:bg-white/20 text-sm py-3">
             <Building className="w-4 h-4 mr-1" />
@@ -100,14 +95,6 @@ export const AdminTab = () => {
           <Card className="bg-white/90 backdrop-blur-sm">
             <CardContent className="p-6">
               <SupportDocuments />
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="users" className="mt-6">
-          <Card className="bg-white/90 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <UserManagement />
             </CardContent>
           </Card>
         </TabsContent>

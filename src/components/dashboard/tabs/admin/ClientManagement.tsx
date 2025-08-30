@@ -163,15 +163,25 @@ export const ClientManagement = () => {
     const newPassword = prompt(`Enter new password for ${client.contact_name || client.company_name}:`);
     
     if (!newPassword) return;
-    if (newPassword.length < 6) {
-      toast.error('Password must be at least 6 characters long');
+    if (newPassword.length < 1) {
+      toast.error('Password cannot be empty');
       return;
     }
 
     try {
-      // Update the user's password in Supabase auth
+      // First, find the user by email to get their UUID
+      const { data: users, error: getUserError } = await supabase.auth.admin.listUsers();
+      if (getUserError) throw getUserError;
+      
+      const user = users.users.find((u: any) => u.email === client.contact_email);
+      if (!user) {
+        toast.error('User not found in authentication system');
+        return;
+      }
+
+      // Update the user's password using their UUID
       const { error } = await supabase.auth.admin.updateUserById(
-        client.contact_email, // Using email as identifier
+        user.id, // Using UUID as identifier
         { password: newPassword }
       );
 
