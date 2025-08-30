@@ -192,16 +192,21 @@ serve(async (req) => {
     // Use ONLY the customer ID from the profile - never create or lookup by email
     let customer;
     try {
+      console.log('Attempting to retrieve Stripe customer:', customerId);
       customer = await stripe.customers.retrieve(customerId);
       console.log('Successfully retrieved customer using admin-configured ID:', customerId);
+      console.log('Customer object:', JSON.stringify(customer, null, 2));
     } catch (error) {
       console.error('Failed to retrieve customer with admin ID:', customerId, error);
+      console.error('Error details:', error.message, error.type, error.code);
       return new Response(JSON.stringify({
         success: true,
         data: {
           customer: { email: targetEmail },
           thisMonthTotal: 0,
           totalSpentThisYear: 0,
+          totalSpent2024: 0,
+          totalSpent2025: 0,
           nextBillingDate: 'No active subscription',
           subscriptions: [],
           paymentMethods: [],
@@ -212,7 +217,7 @@ serve(async (req) => {
           isImpersonating,
           adminEmail: user.email,
           targetEmail,
-          message: `Invalid Stripe Customer ID (${customerId}) configured by admin. Please contact your administrator to correct the Stripe Customer ID.`
+          message: `Invalid Stripe Customer ID (${customerId}) configured by admin. Error: ${error.message}. Please contact your administrator to correct the Stripe Customer ID.`
         }
       }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -254,6 +259,7 @@ serve(async (req) => {
     console.log('Subscription fetch result:', subscriptions.status);
     if (subscriptions.status === 'fulfilled') {
       console.log('Found subscriptions:', subscriptions.value.data.length);
+      console.log('Raw subscription data:', JSON.stringify(subscriptions.value.data, null, 2));
       subscriptions.value.data.forEach(sub => {
         console.log(`Subscription ${sub.id}: status=${sub.status}, amount=${sub.items.data[0]?.price?.unit_amount}`);
       });
@@ -264,6 +270,7 @@ serve(async (req) => {
     console.log('Invoice fetch result:', invoices.status);
     if (invoices.status === 'fulfilled') {
       console.log('Found invoices:', invoices.value.data.length);
+      console.log('Raw invoice data (first 3):', JSON.stringify(invoices.value.data.slice(0, 3), null, 2));
     } else {
       console.error('Invoice fetch failed:', invoices.reason);
     }
@@ -271,8 +278,16 @@ serve(async (req) => {
     console.log('Payment methods fetch result:', paymentMethods.status);
     if (paymentMethods.status === 'fulfilled') {
       console.log('Found payment methods:', paymentMethods.value.data.length);
+      console.log('Raw payment methods data:', JSON.stringify(paymentMethods.value.data, null, 2));
     } else {
       console.error('Payment methods fetch failed:', paymentMethods.reason);
+    }
+
+    console.log('Customer details fetch result:', customerDetails.status);
+    if (customerDetails.status === 'fulfilled') {
+      console.log('Customer details:', JSON.stringify(customerDetails.value, null, 2));
+    } else {
+      console.error('Customer details fetch failed:', customerDetails.reason);
     }
 
     // Try to get upcoming invoice
