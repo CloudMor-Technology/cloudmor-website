@@ -110,39 +110,47 @@ serve(async (req) => {
       apiVersion: "2023-10-16",
     });
 
-    // Look up customer by target email
-    console.log('Looking up Stripe customer for:', targetEmail);
-    
-    const customers = await stripe.customers.list({
-      email: targetEmail,
-      limit: 1
-    });
+    // Get user profile to check for existing customer ID
+    console.log('Checking profile for existing customer ID...');
+    const { data: profileData, error: profileError } = await supabaseClient
+      .from('profiles')
+      .select('stripe_customer_id')
+      .eq('email', targetEmail)
+      .maybeSingle();
+
+    if (profileError) {
+      console.error('Error fetching profile:', profileError);
+    }
 
     let customer;
-    if (customers.data.length === 0) {
-      console.log('No customer found, creating new customer for:', targetEmail);
-      // Create a new Stripe customer
+    let customerId = profileData?.stripe_customer_id;
+    
+    console.log('Profile customer ID:', customerId);
+
+    if (customerId && customerId.trim() !== '') {
+      // User has a customer ID in their profile, use it directly
+      console.log('Using existing customer ID from profile:', customerId);
       try {
-        customer = await stripe.customers.create({
-          email: targetEmail,
-          name: isImpersonating ? (requestBody as any).userName || 'User' : user.user_metadata?.full_name || 'User'
-        });
-        console.log('Created new Stripe customer:', customer.id);
-        
-        // Update the profile with the new customer ID
-        const supabaseService = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
-        const { error: updateError } = await supabaseService
-          .from('profiles')
-          .update({ stripe_customer_id: customer.id })
-          .eq('email', targetEmail);
-          
-        if (updateError) {
-          console.error('Failed to update profile with customer ID:', updateError);
-        } else {
-          console.log('Updated profile with new Stripe customer ID');
-        }
-      } catch (createError) {
-        console.error('Failed to create Stripe customer:', createError);
+        customer = await stripe.customers.retrieve(customerId);
+        console.log('Successfully retrieved customer:', customer.id);
+      } catch (error) {
+        console.error('Failed to retrieve customer with ID:', customerId, error);
+        // Customer ID is invalid, try to find by email
+        customerId = null;
+      }
+    }
+    
+    if (!customerId) {
+      // Look up customer by target email
+      console.log('Looking up Stripe customer by email:', targetEmail);
+      
+      const customers = await stripe.customers.list({
+        email: targetEmail,
+        limit: 1
+      });
+
+      if (customers.data.length === 0) {
+        console.log('No customer found for email:', targetEmail);
         return new Response(JSON.stringify({
           success: true,
           data: {
@@ -159,18 +167,35 @@ serve(async (req) => {
             isImpersonating,
             adminEmail: user.email,
             targetEmail,
-            message: 'New customer account created. Billing data will be available after first purchase.'
+            message: 'No Stripe customer found. Please add your Stripe Customer ID in your profile settings.'
           }
         }), {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
           status: 200,
         });
       }
-    } else {
+
       customer = customers.data[0];
+      customerId = customer.id;
+      console.log('Found customer by email:', customerId);
+      
+      // Update profile with found customer ID
+      if (profileData) {
+        const supabaseService = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+        const { error: updateError } = await supabaseService
+          .from('profiles')
+          .update({ stripe_customer_id: customerId })
+          .eq('email', targetEmail);
+          
+        if (updateError) {
+          console.error('Failed to update profile with customer ID:', updateError);
+        } else {
+          console.log('Updated profile with found customer ID');
+        }
+      }
     }
 
-    console.log('Using customer ID:', customer.id);
+    console.log('Using customer for billing data:', customerId);
 
     console.log('Fetching comprehensive dashboard data for:', customer.id);
 
