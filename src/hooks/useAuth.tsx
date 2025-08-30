@@ -5,6 +5,33 @@ import type { Database } from '@/integrations/supabase/types';
 
 type Profile = Database['public']['Tables']['profiles']['Row'];
 
+// Auth state cleanup utility to prevent limbo states
+export const cleanupAuthState = () => {
+  console.log('Cleaning up auth state...');
+  
+  // Remove all Supabase auth keys from localStorage
+  Object.keys(localStorage).forEach((key) => {
+    if (key.startsWith('supabase.auth.') || key.includes('sb-') || key.startsWith('supabase-auth-')) {
+      localStorage.removeItem(key);
+      console.log('Removed localStorage key:', key);
+    }
+  });
+  
+  // Remove from sessionStorage if in use
+  if (typeof sessionStorage !== 'undefined') {
+    Object.keys(sessionStorage).forEach((key) => {
+      if (key.startsWith('supabase.auth.') || key.includes('sb-') || key.startsWith('supabase-auth-')) {
+        sessionStorage.removeItem(key);
+        console.log('Removed sessionStorage key:', key);
+      }
+    });
+  }
+  
+  // Remove impersonation data
+  localStorage.removeItem('impersonating_user');
+  localStorage.removeItem('impersonating_client');
+};
+
 interface AuthContextType {
   user: User | null;
   profile: Profile | null;
@@ -201,22 +228,71 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      console.log('Starting sign in process...');
+      
+      // Clean up existing state first
+      cleanupAuthState();
+      
+      // Attempt global sign out to clear any existing sessions
+      try {
+        await supabase.auth.signOut({ scope: 'global' });
+        console.log('Cleared existing sessions');
+      } catch (err) {
+        console.log('No existing session to clear:', err);
+      }
+      
+      // Wait a moment for cleanup
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) throw error;
+      if (error) throw error;
+      
+      if (data.user) {
+        console.log('Sign in successful, redirecting...');
+        // Force page reload for clean state
+        setTimeout(() => {
+          window.location.href = '/portal';
+        }, 100);
+      }
+    } catch (error) {
+      console.error('Sign in error:', error);
+      throw error;
+    }
   };
 
   const signOut = async () => {
-    // Clear impersonation on logout
-    localStorage.removeItem('impersonating_user');
-    setIsImpersonating(false);
-    setOriginalProfile(null);
-    
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    try {
+      console.log('Starting sign out process...');
+      
+      // Clean up auth state first
+      cleanupAuthState();
+      
+      // Clear impersonation states
+      setIsImpersonating(false);
+      setOriginalProfile(null);
+      
+      // Attempt global sign out (ignore errors)
+      try {
+        await supabase.auth.signOut({ scope: 'global' });
+        console.log('Global sign out successful');
+      } catch (err) {
+        console.log('Global sign out failed, continuing with cleanup:', err);
+      }
+      
+      // Force page reload to ensure clean state
+      console.log('Redirecting to portal page...');
+      window.location.href = '/portal';
+    } catch (error) {
+      console.error('Sign out error:', error);
+      // Even if sign out fails, clean up and redirect
+      cleanupAuthState();
+      window.location.href = '/portal';
+    }
   };
 
   const updateProfile = async (updates: Partial<Profile>) => {
