@@ -18,10 +18,14 @@ import { cn } from '@/lib/utils';
 
 // Helper function to format date safely without timezone issues
 const formatDateForDatabase = (date: Date) => {
+  console.log('Original date object:', date);
+  console.log('Date ISO string:', date.toISOString());
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  const formatted = `${year}-${month}-${day}`;
+  console.log('Formatted date for database:', formatted);
+  return formatted;
 };
 
 interface Client {
@@ -556,20 +560,26 @@ export const ClientManagement = () => {
                                    )}
                                  </Button>
                                </PopoverTrigger>
-                               <PopoverContent className="w-auto p-0" align="start">
-                                 <Calendar
-                                   mode="single"
-                                   selected={serviceStartDates[service.name]}
-                                   onSelect={(date) => 
-                                     setServiceStartDates(prev => ({
-                                       ...prev, 
-                                       [service.name]: date || new Date()
-                                     }))
-                                   }
-                                   initialFocus
-                                   className={cn("p-3 pointer-events-auto")}
-                                 />
-                               </PopoverContent>
+                                <PopoverContent className="w-auto p-0" align="start">
+                                  <Calendar
+                                    mode="single"
+                                    selected={serviceStartDates[service.name]}
+                                    onSelect={(date) => {
+                                      console.log('Date selected from calendar:', date);
+                                      if (date) {
+                                        // Create a new date at noon to avoid timezone issues
+                                        const safeDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0);
+                                        console.log('Safe date created:', safeDate);
+                                        setServiceStartDates(prev => ({
+                                          ...prev, 
+                                          [service.name]: safeDate
+                                        }));
+                                      }
+                                    }}
+                                    initialFocus
+                                    className={cn("p-3 pointer-events-auto")}
+                                  />
+                                </PopoverContent>
                              </Popover>
                            </div>
                            <div>

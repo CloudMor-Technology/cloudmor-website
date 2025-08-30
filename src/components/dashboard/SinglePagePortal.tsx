@@ -514,81 +514,73 @@ export const SinglePagePortal = () => {
               </div>}
           </section>
 
-          {/* Billing Section */}
-          <section id="billing" className="space-y-8">
+          {/* Billing & Support Section - Side by Side */}
+          <section className="space-y-8">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
-                Billing & Payments
+                Billing & Support
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full mx-auto"></div>
             </div>
 
-            <div className="max-w-2xl mx-auto">
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-                 <CardHeader>
-                   <CardTitle className="text-2xl flex items-center gap-2 text-blue-900">
-                     <Eye className="w-6 h-6 text-blue-400" />
-                     Billing Management
-                   </CardTitle>
-                   <p className="text-white/90 font-medium">Access your billing history, download invoices, and manage payment methods</p>
-                 </CardHeader>
-                <CardContent>
-                  <Button onClick={handleViewInvoices} className="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white text-lg py-3">
-                    <Eye className="w-5 h-5 mr-2" />
-                    Open Billing Portal
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </section>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Billing Section */}
+              <div className="space-y-6">
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
+                    Billing & Payments
+                  </h3>
+                </div>
+                <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+                   <CardHeader>
+                     <CardTitle className="text-2xl flex items-center gap-2 text-blue-900">
+                       <Eye className="w-6 h-6 text-blue-400" />
+                       Billing Management
+                     </CardTitle>
+                     <p className="text-white/90 font-medium">Access your billing history, download invoices, and manage payment methods</p>
+                   </CardHeader>
+                  <CardContent>
+                    <Button onClick={handleViewInvoices} className="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white text-lg py-3">
+                      <Eye className="w-5 h-5 mr-2" />
+                      Open Billing Portal
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
 
-          {/* Support Section - Combined */}
-          <section id="support" className="space-y-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
-                Support Center
-              </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full mx-auto"></div>
-            </div>
-
-            {/* Combined Support Options */}
-            <div className="grid gap-6">
-              {/* Contact Support - Expanded */}
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-                <CardHeader>
-                  <CardTitle className="text-2xl flex items-center gap-2 text-blue-900">
-                    <Users className="w-6 h-6 text-blue-400" />
-                    Contact Support
-                  </CardTitle>
-                  <p className="text-white/90 font-medium">Get help through multiple channels</p>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="grid md:grid-cols-2 gap-3">
-                    <Button onClick={openJiraPortal} className="bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-medium">
-                      <Globe className="w-4 h-4 mr-2" />
-                      Open Support Portal
-                    </Button>
-                    <Button onClick={() => window.open('mailto:support@cloudmor.com', '_blank')} className="bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-medium">
-                      <Mail className="w-4 h-4 mr-2" />
-                      Send Email
-                    </Button>
-                    <Button onClick={() => {
-                    if ((window as any).JSDWidget) {
-                      (window as any).JSDWidget.show();
-                    }
-                  }} className="bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-medium">
-                      <MessageCircle className="w-4 h-4 mr-2" />
-                      Start Live Chat
-                    </Button>
-                     <Button onClick={() => window.open('tel:888-554-6597', '_self')} className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium">
-                       <Phone className="w-4 h-4 mr-2" />
-                       Call Support: 888-554-6597
-                     </Button>
-                  </div>
-                  
-                  {/* Emergency Section - Removed as requested by user */}
-                </CardContent>
-              </Card>
+              {/* Support Section */}
+              <div className="space-y-6">
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
+                    Support Center
+                  </h3>
+                </div>
+                <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+                  <CardHeader>
+                    <CardTitle className="text-2xl flex items-center gap-2 text-blue-900">
+                      <Users className="w-6 h-6 text-blue-400" />
+                      Contact Support
+                    </CardTitle>
+                    <p className="text-white/90 font-medium">Get help through multiple channels</p>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="grid gap-3">
+                      <Button onClick={openJiraPortal} className="bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-medium">
+                        <Globe className="w-4 h-4 mr-2" />
+                        Open Support Portal
+                      </Button>
+                      <Button onClick={() => window.open('mailto:support@cloudmor.com', '_blank')} className="bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-medium">
+                        <Mail className="w-4 h-4 mr-2" />
+                        Send Email
+                      </Button>
+                      <Button onClick={() => window.open('tel:888-554-6597', '_self')} className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium">
+                        <Phone className="w-4 h-4 mr-2" />
+                        Call: 888-554-6597
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
 
             {/* Support Tips Section */}
@@ -645,7 +637,6 @@ export const SinglePagePortal = () => {
               </Card>
             </div>
           </section>
-
 
         </div>
       </div>
