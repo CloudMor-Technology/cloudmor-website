@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
-import { User, Settings, Phone, CheckCircle, Eye, CreditCard, Lock, LogOut, Building2, Headphones, Shield, Globe, Mail, MessageCircle, FileText, ExternalLink, Folder, TrendingUp, Activity, DollarSign, Calendar, RefreshCcw, AlertCircle, Wifi, Cloud } from 'lucide-react';
+import { User, Settings, Phone, CheckCircle, Eye, CreditCard, Lock, LogOut, Building2, Headphones, Shield, Globe, Mail, MessageCircle, FileText, ExternalLink, Folder, TrendingUp, Activity, DollarSign, Calendar, RefreshCcw, AlertCircle, Wifi, Cloud, BookOpen, AlertTriangle, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { AdminTab } from './tabs/AdminTab';
@@ -19,6 +19,24 @@ interface ClientService {
   created_at: string;
 }
 
+interface PhoneExtension {
+  id: string;
+  extension_number: string;
+  user_name: string;
+  voicemail_email: string | null;
+  is_active: boolean;
+}
+
+interface AdminSupportDocument {
+  id: string;
+  title: string;
+  description: string | null;
+  url: string | null;
+  category: string | null;
+  is_active: boolean;
+  created_at: string;
+}
+
 export const SinglePagePortal = () => {
   const { profile, user, signOut } = useAuth();
   const isAdmin = profile?.role === 'admin';
@@ -29,6 +47,8 @@ export const SinglePagePortal = () => {
     confirmPassword: ''
   });
   const [clientServices, setClientServices] = useState<ClientService[]>([]);
+  const [phoneExtensions, setPhoneExtensions] = useState<PhoneExtension[]>([]);
+  const [adminSupportDocs, setAdminSupportDocs] = useState<AdminSupportDocument[]>([]);
   const [servicesLoading, setServicesLoading] = useState(true);
 
   // Check for impersonation
@@ -39,7 +59,9 @@ export const SinglePagePortal = () => {
   useEffect(() => {
     if ((!isAdmin || isImpersonating) && profile?.email) {
       fetchClientServices();
+      fetchPhoneExtensions();
     }
+    fetchAdminSupportDocs();
   }, [profile, isAdmin, isImpersonating]);
 
   const fetchClientServices = async () => {
@@ -84,6 +106,40 @@ export const SinglePagePortal = () => {
       console.error('Error fetching client services:', error);
     } finally {
       setServicesLoading(false);
+    }
+  };
+
+  const fetchPhoneExtensions = async () => {
+    if (!profile?.company_id) return;
+
+    try {
+      const { data: extensionsData, error: extensionsError } = await supabase
+        .from('phone_extensions')
+        .select('*')
+        .eq('company_id', profile.company_id)
+        .eq('is_active', true)
+        .order('extension_number');
+
+      if (extensionsError) throw extensionsError;
+      setPhoneExtensions(extensionsData || []);
+    } catch (error) {
+      console.error('Error fetching phone extensions:', error);
+    }
+  };
+
+  const fetchAdminSupportDocs = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('admin_support_documents')
+        .select('*')
+        .eq('is_active', true)
+        .eq('category', 'quick_tips')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setAdminSupportDocs(data || []);
+    } catch (error) {
+      console.error('Error fetching admin support documents:', error);
     }
   };
 
@@ -336,22 +392,22 @@ export const SinglePagePortal = () => {
                 <CardContent className="space-y-4">
                   <div>
                     <p className="text-sm text-blue-300 font-medium">Full Name</p>
-                    <p className="text-white font-semibold">
-                      {isImpersonating ? impersonatedClient.contact_name : (profile?.full_name || 'Not provided')}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-blue-300 font-medium">Email</p>
-                    <p className="text-white font-semibold">
-                      {isImpersonating ? impersonatedClient.contact_email : user?.email}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-blue-300 font-medium">Role</p>
-                    <p className="text-white font-semibold capitalize">
-                      {isImpersonating ? 'Client' : (profile?.role || 'Client')}
-                    </p>
-                  </div>
+                     <p className="text-white font-semibold text-lg">
+                       {isImpersonating ? impersonatedClient.contact_name : (profile?.full_name || 'Not provided')}
+                     </p>
+                   </div>
+                   <div>
+                     <p className="text-sm text-blue-300 font-semibold">Email</p>
+                     <p className="text-white font-semibold text-lg">
+                       {isImpersonating ? impersonatedClient.contact_email : user?.email}
+                     </p>
+                   </div>
+                   <div>
+                     <p className="text-sm text-blue-300 font-semibold">Role</p>
+                     <p className="text-white font-semibold text-lg capitalize">
+                       {isImpersonating ? 'Client' : (profile?.role || 'Client')}
+                     </p>
+                   </div>
                 </CardContent>
               </Card>
 
@@ -400,21 +456,21 @@ export const SinglePagePortal = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-blue-300">Active Services</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-white font-semibold text-2xl">{clientServices.length}</span>
+                      <span className="text-white font-bold text-2xl">{clientServices.length}</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-blue-300">System Status</span>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      <span className="text-white font-semibold">Online</span>
+                      <span className="text-white font-bold">Online</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-blue-300">Support</span>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      <span className="text-white font-semibold">Available</span>
+                      <span className="text-white font-bold">Available</span>
                     </div>
                   </div>
                 </CardContent>
@@ -455,7 +511,7 @@ export const SinglePagePortal = () => {
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6">
                 {clientServices.map((service) => {
                   const status = service.status || 'ACTIVE';
                   
@@ -463,14 +519,14 @@ export const SinglePagePortal = () => {
                     <Card key={service.id} className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300">
                       <CardHeader>
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
-                            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-orange-500 rounded-lg flex items-center justify-center">
-                              <span className="text-white font-bold text-lg">
+                          <div className="flex items-center space-x-4 flex-1">
+                            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-orange-500 rounded-lg flex items-center justify-center">
+                              <span className="text-white font-bold text-2xl">
                                 {service.service_name.charAt(0)}
                               </span>
                             </div>
-                            <div>
-                              <CardTitle className="text-lg text-white">{service.service_name}</CardTitle>
+                            <div className="flex-1">
+                              <CardTitle className="text-xl text-white font-bold">{service.service_name}</CardTitle>
                               <Badge className={getStatusColor(status)}>
                                 {status}
                               </Badge>
@@ -480,21 +536,31 @@ export const SinglePagePortal = () => {
                       </CardHeader>
                       <CardContent className="space-y-4">
                         {service.service_description && (
-                          <p className="text-white/70 text-sm">{service.service_description}</p>
+                          <p className="text-white/90 text-base font-medium">{service.service_description}</p>
                         )}
                         
-                        <div className="flex justify-between items-center text-xs text-white/50">
+                        {/* Phone Extensions for Business Phone Systems */}
+                        {service.service_name.toLowerCase().includes('phone') && phoneExtensions.length > 0 && (
+                          <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+                            <h5 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
+                              <Phone className="w-5 h-5" />
+                              Phone Extensions
+                            </h5>
+                            <div className="grid md:grid-cols-2 gap-2">
+                              {phoneExtensions.map((ext) => (
+                                <div key={ext.id} className="flex justify-between items-center text-sm bg-white/10 p-3 rounded border border-white/10">
+                                  <span className="font-bold text-white">Ext. {ext.extension_number}</span>
+                                  <span className="text-white/90 font-medium">{ext.user_name}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        
+                        <div className="flex justify-between items-center text-sm text-white/80 font-medium">
                           <span>Added: {new Date(service.created_at).toLocaleDateString()}</span>
                           <span>Status: {status}</span>
                         </div>
-
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white border-0"
-                        >
-                          View Service Details
-                        </Button>
                       </CardContent>
                     </Card>
                   );
@@ -514,13 +580,13 @@ export const SinglePagePortal = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-white flex items-center gap-2">
-                    <Eye className="w-6 h-6 text-blue-400" />
-                    View Invoices
-                  </CardTitle>
-                  <p className="text-white/70">Access your billing history and download invoices</p>
-                </CardHeader>
+                 <CardHeader>
+                   <CardTitle className="text-2xl text-white flex items-center gap-2">
+                     <Eye className="w-6 h-6 text-blue-400" />
+                     View Invoices
+                   </CardTitle>
+                   <p className="text-white/90 font-medium">Access your billing history and download invoices</p>
+                 </CardHeader>
                 <CardContent>
                   <Button 
                     onClick={handleViewInvoices}
@@ -533,13 +599,13 @@ export const SinglePagePortal = () => {
               </Card>
 
               <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-white flex items-center gap-2">
-                    <CreditCard className="w-6 h-6 text-orange-400" />
-                    Payment Methods
-                  </CardTitle>
-                  <p className="text-white/70">Update your payment information and billing preferences</p>
-                </CardHeader>
+                 <CardHeader>
+                   <CardTitle className="text-2xl text-white flex items-center gap-2">
+                     <CreditCard className="w-6 h-6 text-orange-400" />
+                     Payment Methods
+                   </CardTitle>
+                   <p className="text-white/90 font-medium">Update your payment information and billing preferences</p>
+                 </CardHeader>
                 <CardContent>
                   <Button 
                     onClick={handleManagePayment}
@@ -563,68 +629,63 @@ export const SinglePagePortal = () => {
             </div>
 
             {/* Combined Support Options */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Support Options */}
+            <div className="grid gap-6">
+              {/* Contact Support - Expanded */}
               <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                 <CardHeader>
                   <CardTitle className="text-2xl text-white flex items-center gap-2">
-                    <Headphones className="w-6 h-6 text-blue-400" />
+                    <Users className="w-6 h-6 text-blue-400" />
                     Contact Support
                   </CardTitle>
-                  <p className="text-white/70">Get help through multiple channels</p>
+                  <p className="text-white/90 font-medium">Get help through multiple channels</p>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <Button
-                    onClick={openJiraPortal}
-                    className="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white"
-                  >
-                    <Globe className="w-4 h-4 mr-2" />
-                    Open Support Portal
-                  </Button>
-                  <Button
-                    onClick={() => window.open('mailto:support@cloudmor.com', '_blank')}
-                    className="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white"
-                  >
-                    <Mail className="w-4 h-4 mr-2" />
-                    Send Email
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      if ((window as any).JSDWidget) {
-                        (window as any).JSDWidget.show();
-                      }
-                    }}
-                    className="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white"
-                  >
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Start Live Chat
-                  </Button>
-                  <Button
-                    onClick={() => window.open('tel:+19497694428', '_self')}
-                    className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white text-lg py-3"
-                  >
-                    <Phone className="w-5 h-5 mr-2" />
-                    Call Support: (949) 769-4428
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Emergency & Documents */}
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-white flex items-center gap-2">
-                    <Phone className="w-6 h-6 text-orange-400" />
-                    Emergency & Resources
-                  </CardTitle>
-                  <p className="text-white/70">Emergency support and helpful documents</p>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="bg-white/5 rounded-lg p-4 text-center">
-                    <p className="text-white/70 mb-2">Emergency Hotline</p>
-                    <p className="text-3xl font-bold text-white">📞 888-554-6597</p>
-                    <p className="text-white/60 text-lg mt-1">Have your ticket number ready</p>
+                <CardContent className="space-y-3">
+                  <div className="grid md:grid-cols-2 gap-3">
+                    <Button
+                      onClick={openJiraPortal}
+                      className="bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-medium"
+                    >
+                      <Globe className="w-4 h-4 mr-2" />
+                      Open Support Portal
+                    </Button>
+                    <Button
+                      onClick={() => window.open('mailto:support@cloudmor.com', '_blank')}
+                      className="bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-medium"
+                    >
+                      <Mail className="w-4 h-4 mr-2" />
+                      Send Email
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        if ((window as any).JSDWidget) {
+                          (window as any).JSDWidget.show();
+                        }
+                      }}
+                      className="bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-medium"
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Start Live Chat
+                    </Button>
+                    <Button
+                      onClick={() => window.open('tel:+19497694428', '_self')}
+                      className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium"
+                    >
+                      <Phone className="w-4 h-4 mr-2" />
+                      Call Support: (949) 769-4428
+                    </Button>
                   </div>
-                  <ClientSupportDocuments />
+                  
+                  {/* Emergency Section */}
+                  <div className="border-t border-white/20 pt-4 mt-4">
+                    <div className="text-center bg-red-500/20 p-4 rounded-lg border border-red-500/30">
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        <AlertTriangle className="w-5 h-5 text-red-400" />
+                        <span className="text-white font-bold text-lg">Emergency Hotline</span>
+                      </div>
+                      <div className="text-3xl font-bold text-white mb-1">📞 888-554-6597</div>
+                      <p className="text-white/90 text-base font-medium">Have your ticket number ready</p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -634,41 +695,64 @@ export const SinglePagePortal = () => {
               <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                 <CardHeader>
                   <CardTitle className="text-2xl text-white flex items-center gap-2">
-                    <FileText className="w-6 h-6 text-blue-400" />
+                    <BookOpen className="w-6 h-6 text-blue-400" />
                     Quick Support Tips
                   </CardTitle>
-                  <p className="text-white/70">Helpful guides and troubleshooting resources</p>
+                  <p className="text-white/90 font-medium">Helpful guides and troubleshooting resources</p>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-white/5 rounded-lg p-4">
-                      <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-green-400" />
-                        Phone System Help
-                      </h4>
-                      <p className="text-white/70 text-sm">Need help with your phone extensions or voicemail? Check our phone system guide.</p>
-                    </div>
-                    <div className="bg-white/5 rounded-lg p-4">
-                      <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
-                        <Wifi className="w-4 h-4 text-blue-400" />
-                        Network Issues
-                      </h4>
-                      <p className="text-white/70 text-sm">Experiencing connectivity problems? Run our network diagnostics tool first.</p>
-                    </div>
-                    <div className="bg-white/5 rounded-lg p-4">
-                      <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
-                        <Shield className="w-4 h-4 text-orange-400" />
-                        Security Best Practices
-                      </h4>
-                      <p className="text-white/70 text-sm">Keep your business secure with our cybersecurity guidelines and tips.</p>
-                    </div>
-                    <div className="bg-white/5 rounded-lg p-4">
-                      <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
-                        <Cloud className="w-4 h-4 text-purple-400" />
-                        Cloud Services
-                      </h4>
-                      <p className="text-white/70 text-sm">Learn how to maximize your cloud infrastructure and backup solutions.</p>
-                    </div>
+                    {adminSupportDocs.length > 0 ? (
+                      adminSupportDocs.map((doc) => (
+                        <div key={doc.id} className="bg-white/10 rounded-lg p-4 border border-white/20 hover:bg-white/15 transition-colors">
+                          <h4 className="text-white font-bold text-lg mb-2">{doc.title}</h4>
+                          {doc.description && (
+                            <p className="text-white/90 text-base mb-3 font-medium">{doc.description}</p>
+                          )}
+                          {doc.url && (
+                            <Button 
+                              size="sm" 
+                              className="bg-white/10 border-white/20 text-white hover:bg-white/20 font-medium"
+                              onClick={() => window.open(doc.url, '_blank')}
+                            >
+                              <ExternalLink className="w-3 h-3 mr-1" />
+                              View Resource
+                            </Button>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      <>
+                        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+                          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+                            <Phone className="w-5 h-5 text-green-400" />
+                            Phone System Help
+                          </h4>
+                          <p className="text-white/90 text-base font-medium">Need help with your phone extensions or voicemail? Check our phone system guide.</p>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+                          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+                            <Wifi className="w-5 h-5 text-blue-400" />
+                            Network Issues
+                          </h4>
+                          <p className="text-white/90 text-base font-medium">Experiencing connectivity problems? Run our network diagnostics tool first.</p>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+                          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+                            <Shield className="w-5 h-5 text-orange-400" />
+                            Security Best Practices
+                          </h4>
+                          <p className="text-white/90 text-base font-medium">Keep your business secure with our cybersecurity guidelines and tips.</p>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+                          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+                            <Cloud className="w-5 h-5 text-purple-400" />
+                            Cloud Services
+                          </h4>
+                          <p className="text-white/90 text-base font-medium">Learn how to maximize your cloud infrastructure and backup solutions.</p>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </CardContent>
               </Card>
