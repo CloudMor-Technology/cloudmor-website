@@ -309,12 +309,12 @@ export const SinglePagePortal = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-[gowith-dark-blue] text-sky-200 font-extrabold">
-                  CloudMor Client Portal
-                </h1>
-                <p className="font-medium text-gowith-orange">
-                  Welcome, {isImpersonating ? `${impersonatedClient.contact_name}` : profile?.full_name || user?.email?.split('@')[0]}
-                </p>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-[gowith-dark-blue] text-sky-200">
+                CloudMor Client Portal
+              </h1>
+              <p className="text-sm font-medium text-gowith-orange">
+                Welcome, {isImpersonating ? `${impersonatedClient.contact_name}` : profile?.full_name || user?.email?.split('@')[0]}
+              </p>
                 {isImpersonating && <div className="bg-orange-100 border border-orange-300 rounded-lg px-3 py-1 mt-2 inline-block">
                     <span className="text-orange-800 text-sm font-medium">Admin Impersonation Active</span>
                   </div>}
@@ -350,7 +350,7 @@ export const SinglePagePortal = () => {
           {/* Dashboard Section */}
           <section id="dashboard" className="space-y-8">
             <div className="text-center mb-8">
-              <h2 className="font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-amber-500 text-[gowith-orange-hover]">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-amber-500 text-[gowith-orange-hover]">
                 Dashboard Overview
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full mx-auto"></div>
@@ -527,7 +527,7 @@ export const SinglePagePortal = () => {
           {/* Billing & Support Section - Side by Side */}
           <section className="space-y-8">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
                 Billing & Support
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full mx-auto"></div>
@@ -537,7 +537,7 @@ export const SinglePagePortal = () => {
               {/* Billing Section */}
               <div className="space-y-6">
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
+                  <h3 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
                     Billing & Payments
                   </h3>
                 </div>
@@ -561,7 +561,7 @@ export const SinglePagePortal = () => {
               {/* Support Section */}
               <div className="space-y-6">
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
+                  <h3 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
                     Support Center
                   </h3>
                 </div>
@@ -604,27 +604,8 @@ export const SinglePagePortal = () => {
                   <p className="font-medium text-white/90">Helpful guides and troubleshooting resources</p>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {/* Phone Call Quality - Full Width */}
-                  <div className="bg-white/10 rounded-lg p-6 border border-white/20 hover:bg-white/15 transition-colors">
-                    <h4 className="text-blue-900 font-bold text-xl mb-3 flex items-center gap-3">
-                      <Phone className="w-4 h-4 text-blue-400" />
-                      Phone Call Quality
-                    </h4>
-                    <p className="text-white/90 text-base font-medium mb-4">How to Check Your Internet Speed for Better call quality?</p>
-                    <div className="text-white/80 text-sm space-y-2 mb-4">
-                      <p>1. Click Go to start the speed test link to check your Internet speed.</p>
-                      <p>3. Once the test is complete, take a screenshot of the results.</p>
-                      <p>4. If you are still experiencing problems, submit a support ticket and attach the screenshot of your speed test. This will help our support team quickly identify if the issue is related to your internet connection or something else.</p>
-                    </div>
-                    <Button 
-                      size="sm" 
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium border-0"
-                      onClick={() => window.open('/support/speed-test', '_blank')}
-                    >
-                      <ExternalLink className="w-3 h-3 mr-1" />
-                      View Resource
-                    </Button>
-                  </div>
+                  {/* Support Documents - Full Width */}
+                  <ClientSupportDocuments />
                   
                   {/* Other Support Tips - Grid Layout */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

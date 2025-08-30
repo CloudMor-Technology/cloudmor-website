@@ -93,44 +93,41 @@ export const ClientSupportDocuments = () => {
   return (
     <div className="space-y-4">
       {documents.map((document) => (
-        <Button 
-          key={document.id}
-          onClick={() => window.open(document.url, '_blank')}
-          className="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 group text-left"
-        >
-          <div className="flex items-center justify-between w-full">
-            <div className="text-left">
-              <p className="font-semibold text-lg">{document.title}</p>
-              {document.description && (
-                <div className="text-sm text-white/90 mt-2">
-                  {document.description.split('\n').map((line, index) => (
-                    <div key={index} className="flex items-start mb-1">
-                      {line.trim().startsWith('•') ? (
-                        <>
-                          <span className="mr-2 text-orange-300 font-bold">•</span>
-                          <span>{line.replace('•', '').trim()}</span>
-                        </>
-                      ) : line.trim().startsWith('-') ? (
-                        <>
-                          <span className="mr-2 text-orange-300 font-bold">•</span>
-                          <span>{line.replace('-', '').trim()}</span>
-                        </>
-                      ) : (
-                        <span>{line}</span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-              <p className="text-xs text-white/70 mt-2">
-                Added: {new Date(document.created_at).toLocaleDateString()}
-              </p>
+        <div key={document.id} className="bg-white/10 rounded-lg p-6 border border-white/20 hover:bg-white/15 transition-colors">
+          <h4 className="text-blue-900 font-bold text-xl mb-3 flex items-center gap-3">
+            <FileText className="w-4 h-4 text-blue-400" />
+            {document.title}
+          </h4>
+          {document.description && (
+            <div className="text-white/80 text-sm space-y-2 mb-4">
+              {document.description.split('\n').map((line, index) => (
+                <p key={index}>
+                  {line.trim().startsWith('•') ? (
+                    <>
+                      <span className="mr-2 text-orange-300 font-bold">•</span>
+                      {line.replace('•', '').trim()}
+                    </>
+                  ) : line.trim().startsWith('-') ? (
+                    <>
+                      <span className="mr-2 text-orange-300 font-bold">•</span>
+                      {line.replace('-', '').trim()}
+                    </>
+                  ) : (
+                    line
+                  )}
+                </p>
+              ))}
             </div>
-            <div className="bg-white/20 p-2 rounded-full">
-              <ExternalLink className="w-5 h-5 text-white" />
-            </div>
-          </div>
-        </Button>
+          )}
+          <Button 
+            size="sm" 
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium border-0"
+            onClick={() => window.open(document.url, '_blank')}
+          >
+            <ExternalLink className="w-3 h-3 mr-1" />
+            View Resource
+          </Button>
+        </div>
       ))}
     </div>
   );
