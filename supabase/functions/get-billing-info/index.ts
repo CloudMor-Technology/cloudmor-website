@@ -75,15 +75,24 @@ serve(async (req) => {
       .single();
 
     console.log('Admin profile role:', adminProfile?.role);
+    console.log('Request body received:', requestBody);
+    console.log('Impersonate email from body:', (requestBody as any).impersonateEmail);
     
     let targetEmail = user.email;
     let isImpersonating = false;
 
     // If admin, check for impersonation parameter
-    if (adminProfile?.role === 'admin' && (requestBody as any).impersonateEmail) {
-      targetEmail = (requestBody as any).impersonateEmail;
-      isImpersonating = true;
-      console.log('Admin impersonating user:', targetEmail);
+    if (adminProfile?.role === 'admin') {
+      console.log('User is admin, checking for impersonation...');
+      if ((requestBody as any).impersonateEmail) {
+        targetEmail = (requestBody as any).impersonateEmail;
+        isImpersonating = true;
+        console.log('IMPERSONATION ACTIVE - Admin impersonating user:', targetEmail);
+      } else {
+        console.log('No impersonation email found in request body');
+      }
+    } else {
+      console.log('User is not admin, role:', adminProfile?.role);
     }
 
     console.log('Final target email:', targetEmail, 'Impersonating:', isImpersonating);
