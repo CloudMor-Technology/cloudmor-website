@@ -112,16 +112,20 @@ serve(async (req) => {
 
     // Get user profile to check for existing customer ID
     console.log('Checking profile for existing customer ID...');
+    console.log('User ID:', user.id);
+    console.log('Target email:', targetEmail);
+    
     const { data: profileData, error: profileError } = await supabaseClient
       .from('profiles')
       .select('stripe_customer_id')
-      .eq('email', targetEmail)
-      .maybeSingle();
+      .eq('id', user.id)
+      .single();
 
     if (profileError) {
       console.error('Error fetching profile:', profileError);
     }
 
+    console.log('Raw profile data:', profileData);
     let customerId = profileData?.stripe_customer_id?.trim();
     
     console.log('Profile customer ID from admin settings:', customerId);
