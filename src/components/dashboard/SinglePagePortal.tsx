@@ -123,19 +123,15 @@ export const SinglePagePortal = () => {
         const impersonatedClient = JSON.parse(localStorage.getItem('impersonating_client') || '{}');
         clientEmail = impersonatedClient.contact_email;
       }
-      
+
       // Get the client ID first
-      const { data: clientData } = await supabase
-        .from('clients')
-        .select('id')
-        .eq('contact_email', clientEmail)
-        .single();
-        
+      const {
+        data: clientData
+      } = await supabase.from('clients').select('id').eq('contact_email', clientEmail).single();
       if (!clientData) {
         setClientSupportDocs([]);
         return;
       }
-      
       const {
         data,
         error
@@ -609,14 +605,7 @@ export const SinglePagePortal = () => {
                   
                   {/* Other Support Tips - Grid Layout */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {clientSupportDocs.length > 0 ? clientSupportDocs.map(doc => <div key={doc.id} className="bg-white/10 rounded-lg p-4 border border-white/20 hover:bg-white/15 transition-colors">
-                          <h4 className="font-bold text-lg mb-2 text-blue-900">{doc.title}</h4>
-                          {doc.description && <p className="text-base mb-3 font-medium text-white/90 whitespace-pre-wrap break-words">{doc.description}</p>}
-                          {doc.url && <Button size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white/20 font-medium" onClick={() => window.open(doc.url, '_blank')}>
-                              <ExternalLink className="w-3 h-3 mr-1" />
-                              View Resource
-                            </Button>}
-                        </div>) : <>
+                    {clientSupportDocs.length > 0 ? clientSupportDocs.map(doc => {}) : <>
         <div className="bg-white/10 rounded-lg p-4 border border-white/20">
           <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
             <Wifi className="w-5 h-5 text-blue-400" />
