@@ -32,40 +32,34 @@ export const SinglePagePortal = () => {
 
   const handleViewInvoices = async () => {
     try {
-      const response = await fetch('/api/supabase/functions/create-customer-portal', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ return_url: window.location.origin })
+      const { data, error } = await supabase.functions.invoke('create-customer-portal', {
+        body: { return_url: window.location.origin }
       });
       
-      if (!response.ok) throw new Error('Failed to create portal session');
+      if (error) throw error;
       
-      const data = await response.json();
-      window.open(data.url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      }
     } catch (error) {
+      console.error('Error creating customer portal session:', error);
       toast.error('Failed to open billing portal');
     }
   };
 
   const handleManagePayment = async () => {
     try {
-      const response = await fetch('/api/supabase/functions/create-customer-portal', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ return_url: window.location.origin })
+      const { data, error } = await supabase.functions.invoke('create-customer-portal', {
+        body: { return_url: window.location.origin }
       });
       
-      if (!response.ok) throw new Error('Failed to create portal session');
+      if (error) throw error;
       
-      const data = await response.json();
-      window.open(data.url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      }
     } catch (error) {
+      console.error('Error creating customer portal session:', error);
       toast.error('Failed to open billing portal');
     }
   };
