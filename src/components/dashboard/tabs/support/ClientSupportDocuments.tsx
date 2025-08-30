@@ -91,58 +91,47 @@ export const ClientSupportDocuments = () => {
   }
 
   return (
-    <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-200">
-      <CardHeader>
-        <CardTitle className="text-2xl text-green-800 flex items-center gap-2">
-          <Folder className="w-6 h-6" />
-          Useful Tools & Resources
-        </CardTitle>
-        <p className="text-green-600 text-lg">Documents and tools specific to your account</p>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {documents.map((document) => (
-            <Card key={document.id} className="border border-green-200 hover:shadow-md transition-shadow bg-white">
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2 flex-1">
-                    <div className="flex items-center gap-2">
-                      <FileText className="w-5 h-5 text-green-600" />
-                      <h4 className="font-bold text-lg text-green-800">{document.title}</h4>
+    <div className="space-y-4">
+      {documents.map((document) => (
+        <Button 
+          key={document.id}
+          onClick={() => window.open(document.url, '_blank')}
+          className="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 group text-left"
+        >
+          <div className="flex items-center justify-between w-full">
+            <div className="text-left">
+              <p className="font-semibold text-lg">{document.title}</p>
+              {document.description && (
+                <div className="text-sm text-white/90 mt-2">
+                  {document.description.split('\n').map((line, index) => (
+                    <div key={index} className="flex items-start mb-1">
+                      {line.trim().startsWith('•') ? (
+                        <>
+                          <span className="mr-2 text-orange-300 font-bold">•</span>
+                          <span>{line.replace('•', '').trim()}</span>
+                        </>
+                      ) : line.trim().startsWith('-') ? (
+                        <>
+                          <span className="mr-2 text-orange-300 font-bold">•</span>
+                          <span>{line.replace('-', '').trim()}</span>
+                        </>
+                      ) : (
+                        <span>{line}</span>
+                      )}
                     </div>
-                    {document.description && (
-                      <div className="text-gray-600 text-sm">
-                        {document.description.split('\n').map((line, idx) => {
-                          const trimmedLine = line.trim();
-                          if (trimmedLine.startsWith('•') || trimmedLine.startsWith('-') || trimmedLine.startsWith('*')) {
-                            return (
-                              <div key={idx} className="flex items-start gap-2 mb-1">
-                                <span className="text-blue-600 font-bold mt-1">•</span>
-                                <span>{trimmedLine.substring(1).trim()}</span>
-                              </div>
-                            );
-                          }
-                          return trimmedLine ? <p key={idx} className="mb-1">{trimmedLine}</p> : null;
-                        })}
-                      </div>
-                    )}
-                    <p className="text-gray-500 text-xs">
-                      Added: {new Date(document.created_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <Button
-                    onClick={() => window.open(document.url, '_blank')}
-                    size="sm"
-                    className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white ml-4"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                  </Button>
+                  ))}
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+              )}
+              <p className="text-xs text-white/70 mt-2">
+                Added: {new Date(document.created_at).toLocaleDateString()}
+              </p>
+            </div>
+            <div className="bg-white/20 p-2 rounded-full">
+              <ExternalLink className="w-5 h-5 text-white" />
+            </div>
+          </div>
+        </Button>
+      ))}
+    </div>
   );
 };

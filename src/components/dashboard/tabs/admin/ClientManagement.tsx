@@ -197,6 +197,7 @@ export const ClientManagement = () => {
     if (!editingClient) return;
 
     try {
+      // Update client information
       const { error } = await supabase
         .from('clients')
         .update({
@@ -210,6 +211,29 @@ export const ClientManagement = () => {
         .eq('id', editingClient.id);
 
       if (error) throw error;
+
+      // Update services - delete existing and insert new ones
+      const { error: deleteError } = await supabase
+        .from('client_services')
+        .delete()
+        .eq('client_id', editingClient.id);
+
+      if (deleteError) throw deleteError;
+
+      // Add new services
+      if (selectedServices.length > 0) {
+        const serviceInserts = selectedServices.map(serviceName => ({
+          client_id: editingClient.id,
+          service_name: serviceName,
+          service_description: serviceOptions.find(s => s.name === serviceName)?.description || `${serviceName} for ${formData.company_name}`
+        }));
+
+        const { error: serviceError } = await supabase
+          .from('client_services')
+          .insert(serviceInserts);
+
+        if (serviceError) throw serviceError;
+      }
 
       toast.success('Client updated successfully');
       fetchClients();
@@ -270,20 +294,37 @@ export const ClientManagement = () => {
     setEditingClient(null);
   };
 
-  const startEdit = (client: Client) => {
+  const startEdit = async (client: Client) => {
     setEditingClient(client);
-    setFormData({
-      company_name: client.company_name,
-      contact_email: client.contact_email,
-      contact_name: client.contact_name,
-      phone: client.phone || '',
-      address: client.address || '',
-      stripe_customer_id: client.stripe_customer_id || '',
-      password: '',
-      services: [],
-      serviceNotes: ''
-    });
-    setShowForm(true);
+    
+    // Fetch existing services for this client
+    try {
+      const { data: clientServices, error } = await supabase
+        .from('client_services')
+        .select('*')
+        .eq('client_id', client.id);
+      
+      if (error) throw error;
+      
+      const existingServices = clientServices?.map(s => s.service_name) || [];
+      
+      setFormData({
+        company_name: client.company_name,
+        contact_email: client.contact_email,
+        contact_name: client.contact_name,
+        phone: client.phone || '',
+        address: client.address || '',
+        stripe_customer_id: client.stripe_customer_id || '',
+        password: '',
+        services: existingServices,
+        serviceNotes: ''
+      });
+      setSelectedServices(existingServices);
+      setShowForm(true);
+    } catch (error) {
+      console.error('Error fetching client services:', error);
+      toast.error('Failed to load client services');
+    }
   };
 
   const handleServiceToggle = (serviceName: string) => {
@@ -439,32 +480,30 @@ export const ClientManagement = () => {
               </div>
             )}
 
-            {!editingClient && (
-              <div>
-                <Label>Services Provided</Label>
-                <div className="grid grid-cols-1 gap-3 mt-2">
-                  {serviceOptions.map((service) => (
-                    <div key={service.name} className="border border-blue-200 rounded-lg p-3">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <input
-                          type="checkbox"
-                          id={service.name}
-                          checked={selectedServices.includes(service.name)}
-                          onChange={() => handleServiceToggle(service.name)}
-                          className="rounded border-blue-300"
-                        />
-                        <Label htmlFor={service.name} className="font-medium text-sm">{service.name}</Label>
-                      </div>
-                      {selectedServices.includes(service.name) && (
-                        <p className="text-xs text-gray-600 ml-6 bg-blue-50 p-2 rounded border-l-2 border-blue-400">
-                          {service.description}
-                        </p>
-                      )}
+            <div>
+              <Label>Services Provided {editingClient && <span className="text-blue-600">(Edit Services)</span>}</Label>
+              <div className="grid grid-cols-1 gap-3 mt-2">
+                {serviceOptions.map((service) => (
+                  <div key={service.name} className="border border-blue-200 rounded-lg p-3">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <input
+                        type="checkbox"
+                        id={service.name}
+                        checked={selectedServices.includes(service.name)}
+                        onChange={() => handleServiceToggle(service.name)}
+                        className="rounded border-blue-300"
+                      />
+                      <Label htmlFor={service.name} className="font-medium text-sm">{service.name}</Label>
                     </div>
-                  ))}
-                </div>
+                    {selectedServices.includes(service.name) && (
+                      <p className="text-xs text-gray-600 ml-6 bg-blue-50 p-2 rounded border-l-2 border-blue-400">
+                        {service.description}
+                      </p>
+                    )}
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
 
             {selectedServices.length > 0 && (
               <div>
