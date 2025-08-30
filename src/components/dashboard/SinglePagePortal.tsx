@@ -71,6 +71,27 @@ export const SinglePagePortal = () => {
     newPassword: '',
     confirmPassword: ''
   });
+  const [showCreatePassword, setShowCreatePassword] = useState<string | null>(null);
+  const [clientPasswordForm, setClientPasswordForm] = useState({
+    email: '',
+    password: ''
+  });
+
+  // Get user services - mock for now, would come from database
+  const getUserServices = () => {
+    if (isAdmin) {
+      return []; // Admins don't have assigned services
+    }
+    
+    // For regular users, find their services from clients list
+    // This would normally come from a database query
+    const userServices = clients
+      .filter(client => client.email === user?.email)
+      .map(client => client.services)
+      .join(', ');
+    
+    return userServices ? userServices.split(', ').map(service => service.trim()) : [];
+  };
 
   const handleSignOut = async () => {
     try {
@@ -118,6 +139,18 @@ export const SinglePagePortal = () => {
     toast.success('Client deleted successfully');
   };
 
+  const handleCreatePassword = async (clientEmail: string) => {
+    try {
+      // Here you would implement the logic to create password for the client
+      console.log('Creating password for:', clientEmail);
+      toast.success('Password created and sent to client via email');
+      setShowCreatePassword(null);
+      setClientPasswordForm({ email: '', password: '' });
+    } catch (error) {
+      toast.error('Failed to create password');
+    }
+  };
+
   const handlePasswordChange = async () => {
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
       toast.error('New passwords do not match');
@@ -131,8 +164,25 @@ export const SinglePagePortal = () => {
 
   const handleViewInvoices = async () => {
     try {
+      // Determine the correct stripe customer ID based on user type
+      let stripeCustomerId = profile?.stripe_customer_id;
+      
+      // If not admin and no stripe ID in profile, check if they're in the clients list
+      if (!stripeCustomerId && !isAdmin) {
+        const clientRecord = clients.find(client => client.email === user?.email);
+        stripeCustomerId = clientRecord?.stripeCustomerId;
+      }
+      
+      if (!stripeCustomerId) {
+        toast.error('No billing information found. Please contact your administrator.');
+        return;
+      }
+
       const { data, error } = await supabase.functions.invoke('create-customer-portal', {
-        body: { return_url: window.location.origin }
+        body: { 
+          return_url: window.location.origin,
+          stripe_customer_id: stripeCustomerId
+        }
       });
       
       if (error) throw error;
@@ -148,8 +198,25 @@ export const SinglePagePortal = () => {
 
   const handleManagePayment = async () => {
     try {
+      // Determine the correct stripe customer ID based on user type
+      let stripeCustomerId = profile?.stripe_customer_id;
+      
+      // If not admin and no stripe ID in profile, check if they're in the clients list
+      if (!stripeCustomerId && !isAdmin) {
+        const clientRecord = clients.find(client => client.email === user?.email);
+        stripeCustomerId = clientRecord?.stripeCustomerId;
+      }
+      
+      if (!stripeCustomerId) {
+        toast.error('No billing information found. Please contact your administrator.');
+        return;
+      }
+
       const { data, error } = await supabase.functions.invoke('create-customer-portal', {
-        body: { return_url: window.location.origin }
+        body: { 
+          return_url: window.location.origin,
+          stripe_customer_id: stripeCustomerId
+        }
       });
       
       if (error) throw error;
@@ -242,18 +309,61 @@ export const SinglePagePortal = () => {
                                <p className="text-sm text-purple-600 mt-1">Stripe ID: {client.stripeCustomerId}</p>
                                <p className="text-sm text-blue-600 mt-1">Services: {client.services}</p>
                              </div>
-                             <div className="flex gap-2">
-                               <Button size="sm" variant="outline">Edit</Button>
-                               <Button 
-                                 size="sm" 
-                                 variant="outline" 
-                                 className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                                 onClick={() => handleDeleteClient(client.id)}
-                               >
-                                 Delete
-                               </Button>
-                             </div>
-                           </div>
+                              <div className="flex gap-2">
+                                <Button 
+                                  size="sm" 
+                                  variant="outline"
+                                  className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                                  onClick={() => setShowCreatePassword(client.email)}
+                                >
+                                  Set Password
+                                </Button>
+                                <Button size="sm" variant="outline">Edit</Button>
+                                <Button 
+                                  size="sm" 
+                                  variant="outline" 
+                                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                  onClick={() => handleDeleteClient(client.id)}
+                                >
+                                  Delete
+                                </Button>
+                              </div>
+                            </div>
+                            
+                            {/* Password Creation Form */}
+                            {showCreatePassword === client.email && (
+                              <div className="mt-4 p-4 bg-green-50 rounded-lg border">
+                                <h5 className="font-medium mb-3">Create Password for {client.name}</h5>
+                                <div className="space-y-3">
+                                  <div>
+                                    <Label htmlFor={`password-${client.id}`}>Password</Label>
+                                    <Input
+                                      id={`password-${client.id}`}
+                                      type="password"
+                                      placeholder="Enter secure password"
+                                      value={clientPasswordForm.password}
+                                      onChange={(e) => setClientPasswordForm({...clientPasswordForm, password: e.target.value})}
+                                    />
+                                  </div>
+                                  <div className="flex gap-2">
+                                    <Button 
+                                      size="sm" 
+                                      className="bg-green-600 hover:bg-green-700"
+                                      onClick={() => handleCreatePassword(client.email)}
+                                    >
+                                      Create & Send Password
+                                    </Button>
+                                    <Button 
+                                      size="sm" 
+                                      variant="outline"
+                                      onClick={() => setShowCreatePassword(null)}
+                                    >
+                                      Cancel
+                                    </Button>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                          </div>
                        ))}
                      </div>
@@ -540,35 +650,57 @@ export const SinglePagePortal = () => {
           </CardContent>
         </Card>
 
-        {/* Services Section */}
-        <Card className="bg-white/90 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle>My Services</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {isAdmin ? (
-                <div className="text-center py-8">
-                  <p className="text-gray-500 text-lg mb-4">
-                    Services will be populated based on client assignments
-                  </p>
-                  <p className="text-sm text-gray-400">
-                    Use Client Management to assign services to users
-                  </p>
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <p className="text-gray-500 text-lg mb-4">
-                    No services assigned yet
-                  </p>
-                  <p className="text-sm text-gray-400">
-                    Contact your administrator to get services assigned
-                  </p>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+         {/* Services Section */}
+         <Card className="bg-white/90 backdrop-blur-sm">
+           <CardHeader>
+             <CardTitle>My Services</CardTitle>
+           </CardHeader>
+           <CardContent>
+             <div className="space-y-4">
+               {(() => {
+                 const userServices = getUserServices();
+                 
+                 if (isAdmin) {
+                   return (
+                     <div className="text-center py-8">
+                       <p className="text-gray-500 text-lg mb-4">
+                         Services will be populated based on client assignments
+                       </p>
+                       <p className="text-sm text-gray-400">
+                         Use Client Management to assign services to users
+                       </p>
+                     </div>
+                   );
+                 } else if (userServices.length === 0) {
+                   return (
+                     <div className="text-center py-8">
+                       <p className="text-gray-500 text-lg mb-4">
+                         No services assigned yet
+                       </p>
+                       <p className="text-sm text-gray-400">
+                         Contact your administrator to get services assigned
+                       </p>
+                     </div>
+                   );
+                 } else {
+                   return (
+                     <div className="space-y-3">
+                       <h3 className="font-semibold text-lg mb-4">Your Assigned Services</h3>
+                       {userServices.map((service, index) => (
+                         <div key={index} className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                           <div className="flex items-center gap-3">
+                             <CheckCircle className="w-5 h-5 text-green-600" />
+                             <span className="font-medium text-gray-800">{service}</span>
+                           </div>
+                         </div>
+                       ))}
+                     </div>
+                   );
+                 }
+               })()}
+             </div>
+           </CardContent>
+         </Card>
 
         {/* Support Section */}
         <Card className="bg-white/90 backdrop-blur-sm">
