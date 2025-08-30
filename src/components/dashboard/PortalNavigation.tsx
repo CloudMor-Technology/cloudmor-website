@@ -30,7 +30,6 @@ export const PortalNavigation = ({ activeTab, onTabChange }: PortalNavigationPro
     { id: 'services', label: 'Services', icon: '⚙️' },
     { id: 'account', label: 'Account', icon: '⚙️' },
     ...(profile?.role === 'admin' ? [
-      { id: 'clients', label: 'Client Management', icon: '👥' },
       { id: 'admin', label: 'Admin', icon: '⚡' }
     ] : [])
   ];

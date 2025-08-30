@@ -7,7 +7,7 @@ import { BillingTab } from './tabs/BillingTab';
 import { SupportTab } from './tabs/SupportTab';
 import { ServicesTab } from './tabs/ServicesTab';
 import { AccountTab } from './tabs/AccountTab';
-import { ClientManagementTab } from './tabs/ClientManagementTab';
+
 import { AdminTab } from './tabs/AdminTab';
 
 export const ModernDashboard = () => {
@@ -27,8 +27,6 @@ export const ModernDashboard = () => {
         return <ServicesTab />;
       case 'account':
         return <AccountTab />;
-      case 'clients':
-        return <ClientManagementTab />;
       case 'admin':
         return <AdminTab />;
       default:
