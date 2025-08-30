@@ -115,29 +115,62 @@ serve(async (req) => {
     console.log('User ID:', user.id);
     console.log('Target email:', targetEmail);
     
-    const { data: profileData, error: profileError } = await supabaseClient
+    let { data: profileData, error: profileError } = await supabaseClient
       .from('profiles')
-      .select('stripe_customer_id')
+      .select('stripe_customer_id, email, full_name')
       .eq('id', user.id)
       .single();
 
+    console.log('Profile query completed');
+    console.log('Profile error:', profileError);
+    console.log('Raw profile data:', profileData);
+    
     if (profileError) {
       console.error('Error fetching profile:', profileError);
+      // Try alternative lookup by email as fallback
+      console.log('Trying fallback lookup by email...');
+      const { data: fallbackProfile, error: fallbackError } = await supabaseClient
+        .from('profiles')
+        .select('stripe_customer_id, email, full_name')
+        .eq('email', targetEmail)
+        .single();
+      
+      console.log('Fallback profile data:', fallbackProfile);
+      console.log('Fallback error:', fallbackError);
+      
+      if (fallbackProfile?.stripe_customer_id) {
+        console.log('Using fallback profile data');
+        profileData = fallbackProfile;
+      }
     }
 
-    console.log('Raw profile data:', profileData);
     let customerId = profileData?.stripe_customer_id?.trim();
     
     console.log('Profile customer ID from admin settings:', customerId);
+    console.log('Profile data used:', {
+      email: profileData?.email,
+      hasCustomerId: !!customerId,
+      customerIdLength: customerId?.length
+    });
 
     if (!customerId || customerId === '') {
       console.log('No customer ID found in profile for:', targetEmail);
+      console.log('Profile lookup details:', {
+        userId: user.id,
+        targetEmail: targetEmail,
+        profileData: profileData,
+        hasProfile: !!profileData,
+        customerIdRaw: profileData?.stripe_customer_id
+      });
+      
       return new Response(JSON.stringify({
         success: true,
         data: {
           customer: { email: targetEmail },
           thisMonthTotal: 0,
           totalSpentThisYear: 0,
+          totalSpent2024: 0,
+          totalSpent2025: 0,
           nextBillingDate: 'No active subscription',
           subscriptions: [],
           paymentMethods: [],
@@ -148,7 +181,7 @@ serve(async (req) => {
           isImpersonating,
           adminEmail: user.email,
           targetEmail,
-          message: 'No Stripe Customer ID configured by admin. Please contact your administrator to set up your Stripe Customer ID.'
+          message: `No Stripe Customer ID configured by admin. Please contact your administrator to set up your Stripe Customer ID. Debug: UserID=${user.id}, Email=${targetEmail}, ProfileFound=${!!profileData}`
         }
       }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
