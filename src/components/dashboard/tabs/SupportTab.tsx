@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Globe, Mail, Phone, MessageCircle } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
+import { ClientSupportDocuments } from './support/ClientSupportDocuments';
 
 // Declare JSDWidget type for TypeScript
 declare global {
@@ -50,10 +51,10 @@ export const SupportTab = () => {
     {
       title: 'Email Support',
       description: 'Send us an email for assistance',
-      url: 'supportcard.com',
+      url: 'support@cloudmor.com',
       icon: Mail,
       color: 'green',
-      action: () => window.open('mailto:support@supportcard.com', '_blank')
+      action: () => window.open('mailto:support@cloudmor.com', '_blank')
     },
     {
       title: 'Live Chat Support',
@@ -124,17 +125,21 @@ export const SupportTab = () => {
       </Card>
 
       {/* Support Portal Access */}
-      <Card className="bg-white/90 backdrop-blur-sm">
+      <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200">
         <CardHeader>
-          <CardTitle className="text-2xl">Support Portal Access</CardTitle>
-          <p className="text-gray-600 text-lg">Connect to our Jira support system</p>
+          <CardTitle className="text-2xl text-blue-800 flex items-center gap-2">
+            <Globe className="w-6 h-6" />
+            Support Portal Access
+          </CardTitle>
+          <p className="text-blue-600 text-lg">Connect to our Jira support system</p>
         </CardHeader>
         <CardContent>
           <div className="text-center space-y-4">
             <Button 
               onClick={() => window.open('https://support.cloudmor.com', '_blank')}
-              className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-3 mr-4"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg px-8 py-3 mr-4"
             >
+              <Globe className="w-5 h-5 mr-2" />
               Open Support Portal
             </Button>
             <Button 
@@ -143,13 +148,17 @@ export const SupportTab = () => {
                   window.JSDWidget.show();
                 }
               }}
-              className="bg-purple-600 hover:bg-purple-700 text-white text-lg px-8 py-3"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg px-8 py-3"
             >
+              <MessageCircle className="w-5 h-5 mr-2" />
               Start Chat Support
             </Button>
           </div>
         </CardContent>
       </Card>
+
+      {/* Client-Specific Support Documents */}
+      <ClientSupportDocuments />
 
       {isAdmin && (
         <Card className="bg-orange-50 border-orange-200">

@@ -3,132 +3,40 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/useAuth';
-import { User, UserPlus, Settings, Phone, Mail, AlertTriangle, CheckCircle, Eye, CreditCard, Lock, LogOut, Globe, MessageCircle } from 'lucide-react';
+import { User, Settings, Phone, CheckCircle, Eye, CreditCard, Lock, LogOut, Building2, Headphones, Shield } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { ServicesTab } from './tabs/ServicesTab';
+import { SupportTab } from './tabs/SupportTab';
+import { AdminTab } from './tabs/AdminTab';
 
-// Declare JSDWidget type for TypeScript
-declare global {
-  interface Window {
-    JSDWidget?: {
-      show: () => void;
-      hide: () => void;
-    };
-  }
-}
 export const SinglePagePortal = () => {
   const { profile, user, signOut } = useAuth();
   const isAdmin = profile?.role === 'admin';
   const [isChangingPassword, setIsChangingPassword] = useState(false);
-  const [showClientManagement, setShowClientManagement] = useState(false);
-  
-  // Initialize clients from localStorage or start empty
-  const [clients, setClients] = useState(() => {
-    const savedClients = localStorage.getItem('portalClients');
-    return savedClients ? JSON.parse(savedClients) : [];
-  });
-
-  // Save clients to localStorage whenever clients change
-  useEffect(() => {
-    localStorage.setItem('portalClients', JSON.stringify(clients));
-  }, [clients]);
-  const [clientForm, setClientForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    companyWebsite: '',
-    companyAddress: '',
-    stripeCustomerId: '',
-    stripeEmail: '',
-    jiraEmail: '',
-    services: '',
-    password: ''
-  });
   const [passwordForm, setPasswordForm] = useState({
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
   });
-  const [showCreatePassword, setShowCreatePassword] = useState<string | null>(null);
-  const [clientPasswordForm, setClientPasswordForm] = useState({
-    email: '',
-    password: ''
-  });
 
-  // Get user services - mock for now, would come from database
-  const getUserServices = () => {
-    if (isAdmin) {
-      return []; // Admins don't have assigned services
-    }
-    
-    // For regular users, find their services from clients list
-    // This would normally come from a database query
-    const userServices = clients
-      .filter(client => client.email === user?.email)
-      .map(client => client.services)
-      .join(', ');
-    
-    return userServices ? userServices.split(', ').map(service => service.trim()) : [];
-  };
+  // Check for impersonation
+  const impersonationData = localStorage.getItem('impersonating_client');
+  const isImpersonating = impersonationData && isAdmin;
+  const impersonatedClient = isImpersonating ? JSON.parse(impersonationData) : null;
 
   const handleSignOut = async () => {
     try {
+      // Clear impersonation if active
+      if (isImpersonating) {
+        localStorage.removeItem('impersonating_client');
+      }
       await signOut();
       toast.success('Signed out successfully');
     } catch (error) {
       toast.error('Failed to sign out');
-    }
-  };
-
-  const handleAddClient = async () => {
-    try {
-      // Create new client with unique ID
-      const newClient = {
-        id: Date.now(), // Simple ID generation for demo
-        ...clientForm
-      };
-      
-      // Add new client to the beginning of the list
-      setClients([newClient, ...clients]);
-      
-      console.log('Adding client:', clientForm);
-      toast.success('Client added successfully');
-      
-      // Reset form
-      setClientForm({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        companyWebsite: '',
-        companyAddress: '',
-        stripeCustomerId: '',
-        stripeEmail: '',
-        jiraEmail: '',
-        services: '',
-        password: ''
-      });
-    } catch (error) {
-      toast.error('Failed to add client');
-    }
-  };
-
-  const handleDeleteClient = (clientId: number) => {
-    setClients(clients.filter(client => client.id !== clientId));
-    toast.success('Client deleted successfully');
-  };
-
-  const handleCreatePassword = async (clientEmail: string) => {
-    try {
-      // Here you would implement the logic to create password for the client
-      console.log('Creating password for:', clientEmail);
-      toast.success('Password created and sent to client via email');
-      setShowCreatePassword(null);
-      setClientPasswordForm({ email: '', password: '' });
-    } catch (error) {
-      toast.error('Failed to create password');
     }
   };
 
@@ -137,7 +45,6 @@ export const SinglePagePortal = () => {
       toast.error('New passwords do not match');
       return;
     }
-    // Here you would implement the actual password change logic
     toast.success('Password updated successfully');
     setIsChangingPassword(false);
     setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
@@ -145,14 +52,7 @@ export const SinglePagePortal = () => {
 
   const handleViewInvoices = async () => {
     try {
-      // Determine the correct stripe customer ID based on user type
       let stripeCustomerId = profile?.stripe_customer_id;
-      
-      // If not admin and no stripe ID in profile, check if they're in the clients list
-      if (!stripeCustomerId && !isAdmin) {
-        const clientRecord = clients.find(client => client.email === user?.email);
-        stripeCustomerId = clientRecord?.stripeCustomerId;
-      }
       
       if (!stripeCustomerId) {
         toast.error('No billing information found. Please contact your administrator.');
@@ -179,14 +79,7 @@ export const SinglePagePortal = () => {
 
   const handleManagePayment = async () => {
     try {
-      // Determine the correct stripe customer ID based on user type
       let stripeCustomerId = profile?.stripe_customer_id;
-      
-      // If not admin and no stripe ID in profile, check if they're in the clients list
-      if (!stripeCustomerId && !isAdmin) {
-        const clientRecord = clients.find(client => client.email === user?.email);
-        stripeCustomerId = clientRecord?.stripeCustomerId;
-      }
       
       if (!stripeCustomerId) {
         toast.error('No billing information found. Please contact your administrator.');
@@ -211,85 +104,6 @@ export const SinglePagePortal = () => {
     }
   };
 
-  // Load Jira Service Desk widget
-  useEffect(() => {
-    // Remove any existing Jira scripts first
-    const existingScripts = document.querySelectorAll('script[src*="jsd-widget.atlassian.com"]');
-    existingScripts.forEach(script => script.remove());
-
-    // Create and load the Jira Service Desk widget script
-    const script = document.createElement('script');
-    script.setAttribute('data-jsd-embedded', '');
-    script.setAttribute('data-key', '7266fae8-8b7d-4231-8579-bce9a92270b2');
-    script.setAttribute('data-base-url', 'https://jsd-widget.atlassian.com');
-    script.src = 'https://jsd-widget.atlassian.com/assets/embed.js';
-    script.async = true;
-    
-    // Add load event listener to ensure widget is ready
-    script.onload = () => {
-      console.log('Jira Service Desk widget loaded successfully');
-    };
-    
-    script.onerror = () => {
-      console.error('Failed to load Jira Service Desk widget');
-    };
-    
-    document.head.appendChild(script);
-    
-    return () => {
-      // Cleanup on unmount
-      const scriptToRemove = document.querySelector('script[src*="jsd-widget.atlassian.com"]');
-      if (scriptToRemove) {
-        scriptToRemove.remove();
-      }
-    };
-  }, []);
-
-  const supportOptions = [
-    {
-      title: 'CloudMor Support Portal',
-      description: 'Submit tickets through our online portal',
-      url: 'support.cloudmor.com',
-      icon: Globe,
-      color: 'blue',
-      action: () => window.open('https://support.cloudmor.com', '_blank')
-    },
-    {
-      title: 'Email Support',
-      description: 'Send us an email for assistance',
-      url: 'supportcard.com',
-      icon: Mail,
-      color: 'green',
-      action: () => window.open('mailto:support@supportcard.com', '_blank')
-    },
-    {
-      title: 'Live Chat Support',
-      description: 'Chat with our support team instantly',
-      url: 'Start Chat Session',
-      icon: MessageCircle,
-      color: 'purple',
-      action: () => {
-        console.log('Attempting to open Jira Service Desk widget');
-        // Wait a bit for the widget to be fully loaded
-        setTimeout(() => {
-          if (window.JSDWidget) {
-            console.log('JSDWidget found, opening widget');
-            window.JSDWidget.show();
-          } else {
-            console.error('JSDWidget not available');
-            // Fallback - try to find and click the widget button if it exists
-            const jiraButton = document.querySelector('[data-jsd-embedded]') as HTMLElement;
-            if (jiraButton && typeof jiraButton.click === 'function') {
-              jiraButton.click();
-            } else {
-              alert('Chat support is loading. Please try again in a moment.');
-            }
-          }
-        }, 1000);
-      }
-    }
-  ];
-
   return (
     <div 
       className="min-h-screen bg-cover bg-center bg-no-repeat relative"
@@ -301,540 +115,368 @@ export const SinglePagePortal = () => {
       <div className="absolute inset-0 bg-black/20"></div>
       
       {/* Content */}
-      <div className="relative z-10 max-w-[95%] mx-auto px-6 sm:px-8 lg:px-12 py-10 space-y-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        {/* Admin Controls Section (only for admins) */}
-        {isAdmin && (
-          <Card className="bg-white/90 backdrop-blur-sm border-orange-200">
-            <CardHeader>
-              <CardTitle className="text-2xl text-orange-800 flex items-center gap-2">
-                <Settings className="w-6 h-6" />
-                Administrator Controls
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-4">
-                <Button 
-                  onClick={() => setShowClientManagement(!showClientManagement)}
-                  className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
-                >
-                  <User className="w-4 h-4" />
-                  Client Management
-                </Button>
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              CloudMor Client Portal
+            </h1>
+            <p className="text-white/80 text-lg mt-2">
+              Welcome, {isImpersonating ? `${impersonatedClient.company_name} (${impersonatedClient.contact_name})` : (profile?.full_name || user?.email)}
+            </p>
+            {isImpersonating && (
+              <div className="bg-orange-100 border border-orange-300 rounded-lg px-3 py-1 mt-2 inline-block">
+                <span className="text-orange-800 text-sm font-medium">Admin Impersonation Active</span>
               </div>
-              
-              {/* Client Management Section */}
-              {showClientManagement && (
-                <div className="mt-6 space-y-6">
-                   {/* Existing Clients List */}
-                   <div className="p-6 bg-white rounded-lg border">
-                     <h3 className="text-lg font-semibold mb-4">Existing Clients</h3>
-                     <div className="space-y-3">
-                       {clients.map((client) => (
-                         <div key={client.id} className="p-4 border rounded-lg hover:bg-gray-50">
-                           <div className="flex justify-between items-start">
-                             <div className="flex-1">
-                               <h4 className="font-semibold text-lg">{client.name}</h4>
-                               <p className="text-gray-600">{client.email}</p>
-                               <p className="text-gray-600">{client.phone}</p>
-                               <p className="text-gray-600">{client.company}</p>
-                               <p className="text-gray-600">{client.companyWebsite}</p>
-                               <p className="text-gray-600">{client.companyAddress}</p>
-                               <p className="text-sm text-purple-600 mt-1">Stripe ID: {client.stripeCustomerId}</p>
-                               <p className="text-sm text-blue-600 mt-1">Services: {client.services}</p>
-                             </div>
-                              <div className="flex gap-2">
-                                <Button 
-                                  size="sm" 
-                                  variant="outline"
-                                  className="text-green-600 hover:text-green-700 hover:bg-green-50"
-                                  onClick={() => setShowCreatePassword(client.email)}
-                                >
-                                  Set Password
-                                </Button>
-                                <Button size="sm" variant="outline">Edit</Button>
-                                <Button 
-                                  size="sm" 
-                                  variant="outline" 
-                                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                                  onClick={() => handleDeleteClient(client.id)}
-                                >
-                                  Delete
-                                </Button>
-                              </div>
-                            </div>
-                            
-                            {/* Password Creation Form */}
-                            {showCreatePassword === client.email && (
-                              <div className="mt-4 p-4 bg-green-50 rounded-lg border">
-                                <h5 className="font-medium mb-3">Create Password for {client.name}</h5>
-                                <div className="space-y-3">
-                                  <div>
-                                    <Label htmlFor={`password-${client.id}`}>Password</Label>
-                                    <Input
-                                      id={`password-${client.id}`}
-                                      type="password"
-                                      placeholder="Enter secure password"
-                                      value={clientPasswordForm.password}
-                                      onChange={(e) => setClientPasswordForm({...clientPasswordForm, password: e.target.value})}
-                                    />
-                                  </div>
-                                  <div className="flex gap-2">
-                                    <Button 
-                                      size="sm" 
-                                      className="bg-green-600 hover:bg-green-700"
-                                      onClick={() => handleCreatePassword(client.email)}
-                                    >
-                                      Create & Send Password
-                                    </Button>
-                                    <Button 
-                                      size="sm" 
-                                      variant="outline"
-                                      onClick={() => setShowCreatePassword(null)}
-                                    >
-                                      Cancel
-                                    </Button>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                         </div>
-                       ))}
-                     </div>
-                   </div>
+            )}
+          </div>
+          <Button
+            onClick={handleSignOut}
+            className="bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Sign Out
+          </Button>
+        </div>
 
-                  {/* Add New Client Form */}
-                  <div className="p-6 bg-gray-50 rounded-lg border">
-                    <h3 className="text-lg font-semibold mb-4">Add New Client</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="clientName">Client Name</Label>
-                        <Input
-                          id="clientName"
-                          value={clientForm.name}
-                          onChange={(e) => setClientForm({...clientForm, name: e.target.value})}
-                          placeholder="Enter client name"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="clientEmail">Email</Label>
-                        <Input
-                          id="clientEmail"
-                          type="email"
-                          value={clientForm.email}
-                          onChange={(e) => setClientForm({...clientForm, email: e.target.value})}
-                          placeholder="client@example.com"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="clientPhone">Phone Number</Label>
-                        <Input
-                          id="clientPhone"
-                          value={clientForm.phone}
-                          onChange={(e) => setClientForm({...clientForm, phone: e.target.value})}
-                          placeholder="(555) 123-4567"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="clientCompany">Company</Label>
-                        <Input
-                          id="clientCompany"
-                          value={clientForm.company}
-                          onChange={(e) => setClientForm({...clientForm, company: e.target.value})}
-                          placeholder="Company Name"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="companyWebsite">Company Website</Label>
-                        <Input
-                          id="companyWebsite"
-                          value={clientForm.companyWebsite}
-                          onChange={(e) => setClientForm({...clientForm, companyWebsite: e.target.value})}
-                          placeholder="www.company.com"
-                        />
-                      </div>
-                       
-                       <div>
-                         <Label htmlFor="stripeCustomerId">Stripe Customer ID</Label>
-                         <Input
-                           id="stripeCustomerId"
-                           value={clientForm.stripeCustomerId}
-                           onChange={(e) => setClientForm({...clientForm, stripeCustomerId: e.target.value})}
-                           placeholder="cus_abc123..."
-                         />
-                       </div>
+        {/* Main Tabs */}
+        <Tabs defaultValue={isAdmin && !isImpersonating ? "admin" : "dashboard"} className="w-full">
+          <TabsList className="grid w-full grid-cols-6 bg-white/20 backdrop-blur-sm h-16 mb-8">
+            {(!isAdmin || isImpersonating) && (
+              <>
+                <TabsTrigger value="dashboard" className="text-white data-[state=active]:bg-white/30 text-sm py-4">
+                  <User className="w-5 h-5 mr-2 text-blue-400" />
+                  <span className="font-semibold">Dashboard</span>
+                </TabsTrigger>
+                <TabsTrigger value="services" className="text-white data-[state=active]:bg-white/30 text-sm py-4">
+                  <Settings className="w-5 h-5 mr-2 text-green-400" />
+                  <span className="font-semibold">My Services</span>
+                </TabsTrigger>
+                <TabsTrigger value="billing" className="text-white data-[state=active]:bg-white/30 text-sm py-4">
+                  <CreditCard className="w-5 h-5 mr-2 text-purple-400" />
+                  <span className="font-semibold">Billing</span>
+                </TabsTrigger>
+                <TabsTrigger value="support" className="text-white data-[state=active]:bg-white/30 text-sm py-4">
+                  <Headphones className="w-5 h-5 mr-2 text-orange-400" />
+                  <span className="font-semibold">Support</span>
+                </TabsTrigger>
+                <TabsTrigger value="account" className="text-white data-[state=active]:bg-white/30 text-sm py-4">
+                  <Shield className="w-5 h-5 mr-2 text-red-400" />
+                  <span className="font-semibold">Account</span>
+                </TabsTrigger>
+              </>
+            )}
+            {isAdmin && !isImpersonating && (
+              <TabsTrigger value="admin" className="text-white data-[state=active]:bg-white/30 text-sm py-4 col-span-6">
+                <Building2 className="w-5 h-5 mr-2 text-orange-400" />
+                <span className="font-semibold">Administrator Panel</span>
+              </TabsTrigger>
+            )}
+          </TabsList>
 
-                       <div>
-                         <Label htmlFor="stripeEmail">Stripe Email</Label>
-                         <Input
-                           id="stripeEmail"
-                           type="email"
-                           value={clientForm.stripeEmail}
-                           onChange={(e) => setClientForm({...clientForm, stripeEmail: e.target.value})}
-                           placeholder="billing@company.com"
-                         />
-                       </div>
-                      
+          {/* Admin Tab */}
+          {isAdmin && !isImpersonating && (
+            <TabsContent value="admin">
+              <AdminTab />
+            </TabsContent>
+          )}
+
+          {/* Dashboard Tab */}
+          {(!isAdmin || isImpersonating) && (
+            <TabsContent value="dashboard">
+              <div className="space-y-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+                  {/* Account Overview */}
+                  <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200">
+                    <CardHeader>
+                      <CardTitle className="text-xl text-blue-800 flex items-center gap-2">
+                        <User className="w-6 h-6 text-blue-600" />
+                        Account Overview
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
                       <div>
-                        <Label htmlFor="jiraEmail">Jira Email</Label>
-                        <Input
-                          id="jiraEmail"
-                          type="email"
-                          value={clientForm.jiraEmail}
-                          onChange={(e) => setClientForm({...clientForm, jiraEmail: e.target.value})}
-                          placeholder="support@company.com"
-                        />
+                        <p className="text-sm text-blue-600 font-medium">Full Name</p>
+                        <p className="text-blue-800 font-semibold">
+                          {isImpersonating ? impersonatedClient.contact_name : (profile?.full_name || 'Not provided')}
+                        </p>
                       </div>
-                    </div>
-                    
-                    <div className="mt-4">
-                      <Label htmlFor="companyAddress">Company Address</Label>
-                      <Input
-                        id="companyAddress"
-                        value={clientForm.companyAddress}
-                        onChange={(e) => setClientForm({...clientForm, companyAddress: e.target.value})}
-                        placeholder="Full company address"
-                        className="w-full"
-                      />
-                    </div>
-                    
-                     <div className="mt-4">
-                       <Label htmlFor="clientServices">Services Provided</Label>
-                       <Input
-                         id="clientServices"
-                         value={clientForm.services}
-                         onChange={(e) => setClientForm({...clientForm, services: e.target.value})}
-                         placeholder="Enter services separated by commas (e.g., Managed IT Services, Cloud Hosting, Cybersecurity)"
-                         className="w-full"
-                       />
-                       <p className="text-sm text-gray-500 mt-1">
-                         Type the services you provide to this client, separated by commas
-                       </p>
-                     </div>
-                     
-                     <div className="mt-4">
-                       <Label htmlFor="clientPassword">Account Password</Label>
-                       <Input
-                         id="clientPassword"
-                         type="password"
-                         value={clientForm.password || ''}
-                         onChange={(e) => setClientForm({...clientForm, password: e.target.value})}
-                         placeholder="Create a secure password for this client"
-                         className="w-full"
-                       />
-                       <p className="text-sm text-gray-500 mt-1">
-                         This password will be used for the client's portal access
-                       </p>
-                     </div>
-                    
-                    <div className="flex gap-3 mt-6">
-                      <Button onClick={handleAddClient} className="bg-green-600 hover:bg-green-700">
-                        Add Client
+                      <div>
+                        <p className="text-sm text-blue-600 font-medium">Email</p>
+                        <p className="text-blue-800 font-semibold">
+                          {isImpersonating ? impersonatedClient.contact_email : user?.email}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-blue-600 font-medium">Role</p>
+                        <p className="text-blue-800 font-semibold capitalize">
+                          {isImpersonating ? 'Client' : (profile?.role || 'Client')}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Quick Actions */}
+                  <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-200">
+                    <CardHeader>
+                      <CardTitle className="text-xl text-green-800 flex items-center gap-2">
+                        <Settings className="w-6 h-6 text-green-600" />
+                        Quick Actions
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <Button 
+                        onClick={handleViewInvoices}
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+                      >
+                        <CreditCard className="w-4 h-4 mr-2" />
+                        View Invoices
                       </Button>
                       <Button 
-                        variant="outline" 
-                        onClick={() => setShowClientManagement(false)}
+                        onClick={handleManagePayment}
+                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
                       >
-                        Cancel
+                        <Settings className="w-4 h-4 mr-2" />
+                        Manage Payment Methods
                       </Button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
+                      <Button 
+                        onClick={() => window.open('https://support.cloudmor.com', '_blank')}
+                        className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white"
+                      >
+                        <Headphones className="w-4 h-4 mr-2" />
+                        Contact Support
+                      </Button>
+                    </CardContent>
+                  </Card>
 
-        {/* Account Information Section */}
-        <Card className="bg-white/90 backdrop-blur-sm">
-          <CardHeader>
-            <div className="flex justify-between items-center">
-              <CardTitle className="flex items-center gap-2">
-                <User className="w-5 h-5" />
-                Account Information
-              </CardTitle>
-              <Button 
-                onClick={handleSignOut}
-                variant="outline"
-                className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
-              >
-                <LogOut className="w-4 h-4" />
-                Sign Out
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-                <User className="w-8 h-8 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">{profile?.full_name || 'User'}</h3>
-                <p className="text-gray-500">{user?.email}</p>
-                <p className="text-sm text-gray-400 capitalize">{profile?.role || 'Client'} Account</p>
-              </div>
-            </div>
-            
-            {/* Always expanded profile details */}
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Phone</p>
-                  <p className="font-medium">{profile?.phone || 'Not set'}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Job Title</p>
-                  <p className="font-medium">{profile?.job_title || 'Not set'}</p>
+                  {/* System Status */}
+                  <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200">
+                    <CardHeader>
+                      <CardTitle className="text-xl text-green-800 flex items-center gap-2">
+                        <CheckCircle className="w-6 h-6 text-green-600" />
+                        System Status
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-green-700">All Services</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                          <span className="text-green-800 font-semibold">Operational</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-green-700">Support Portal</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                          <span className="text-green-800 font-semibold">Online</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-green-700">Billing System</span>
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                          <span className="text-green-800 font-semibold">Active</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Company Name</p>
-                  <p className="font-medium">CloudMor</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Company Website</p>
-                  <p className="font-medium">www.cloudmor.com</p>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Company Address</p>
-                  <p className="font-medium">27632 Falkirk, Mission Viejo, CA 92691</p>
-                </div>
-              </div>
-              
-              <div className="flex justify-between items-center pt-4 border-t">
-                <h4 className="font-semibold">Security</h4>
-                <Button 
-                  onClick={() => setIsChangingPassword(!isChangingPassword)}
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-2"
-                >
-                  <Lock className="w-4 h-4" />
-                  Change Password
-                </Button>
-              </div>
-              
-              {isChangingPassword && (
-                <div className="space-y-3 p-4 bg-gray-50 rounded-lg">
+            </TabsContent>
+          )}
+
+          {/* Services Tab */}
+          {(!isAdmin || isImpersonating) && (
+            <TabsContent value="services">
+              <ServicesTab />
+            </TabsContent>
+          )}
+
+          {/* Billing Tab */}
+          {(!isAdmin || isImpersonating) && (
+            <TabsContent value="billing">
+              <div className="space-y-8">
+                <div className="flex justify-between items-center">
                   <div>
-                    <Label htmlFor="currentPassword">Current Password</Label>
-                    <Input
-                      id="currentPassword"
-                      type="password"
-                      value={passwordForm.currentPassword}
-                      onChange={(e) => setPasswordForm({...passwordForm, currentPassword: e.target.value})}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="newPassword">New Password</Label>
-                    <Input
-                      id="newPassword"
-                      type="password"
-                      value={passwordForm.newPassword}
-                      onChange={(e) => setPasswordForm({...passwordForm, newPassword: e.target.value})}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                    <Input
-                      id="confirmPassword"
-                      type="password"
-                      value={passwordForm.confirmPassword}
-                      onChange={(e) => setPasswordForm({...passwordForm, confirmPassword: e.target.value})}
-                    />
-                  </div>
-                  <div className="flex gap-2">
-                    <Button onClick={handlePasswordChange} size="sm" className="bg-green-600 hover:bg-green-700">
-                      Update Password
-                    </Button>
-                    <Button 
-                      onClick={() => {
-                        setIsChangingPassword(false);
-                        setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
-                      }}
-                      variant="outline" 
-                      size="sm"
-                    >
-                      Cancel
-                    </Button>
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                      Billing & Payments
+                    </h2>
+                    <p className="text-white/70 text-lg">Manage your billing information and payment methods</p>
                   </div>
                 </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* Billing Section */}
-        <Card className="bg-white/90 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle>Billing</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex gap-4">
-              <Button 
-                onClick={handleViewInvoices}
-                className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2"
-              >
-                <Eye className="w-4 h-4" />
-                View Invoices
-              </Button>
-              <Button 
-                onClick={handleManagePayment}
-                variant="outline"
-                className="flex items-center gap-2"
-              >
-                <CreditCard className="w-4 h-4" />
-                Manage Payment Method
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200">
+                    <CardHeader>
+                      <CardTitle className="text-2xl text-purple-800 flex items-center gap-2">
+                        <Eye className="w-6 h-6" />
+                        View Invoices
+                      </CardTitle>
+                      <p className="text-purple-600">Access your billing history and download invoices</p>
+                    </CardHeader>
+                    <CardContent>
+                      <Button 
+                        onClick={handleViewInvoices}
+                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg py-3"
+                      >
+                        <Eye className="w-5 h-5 mr-2" />
+                        Open Billing Portal
+                      </Button>
+                    </CardContent>
+                  </Card>
 
-         {/* Services Section */}
-         <Card className="bg-white/90 backdrop-blur-sm">
-           <CardHeader>
-             <CardTitle>My Services</CardTitle>
-           </CardHeader>
-           <CardContent>
-             <div className="space-y-4">
-               {(() => {
-                 const userServices = getUserServices();
-                 
-                 if (isAdmin) {
-                   return (
-                     <div className="text-center py-8">
-                       <p className="text-gray-500 text-lg mb-4">
-                         Services will be populated based on client assignments
-                       </p>
-                       <p className="text-sm text-gray-400">
-                         Use Client Management to assign services to users
-                       </p>
-                     </div>
-                   );
-                 } else if (userServices.length === 0) {
-                   return (
-                     <div className="text-center py-8">
-                       <p className="text-gray-500 text-lg mb-4">
-                         No services assigned yet
-                       </p>
-                       <p className="text-sm text-gray-400">
-                         Contact your administrator to get services assigned
-                       </p>
-                     </div>
-                   );
-                 } else {
-                   return (
-                     <div className="space-y-3">
-                       <h3 className="font-semibold text-lg mb-4">Your Assigned Services</h3>
-                       {userServices.map((service, index) => (
-                         <div key={index} className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                           <div className="flex items-center gap-3">
-                             <CheckCircle className="w-5 h-5 text-green-600" />
-                             <span className="font-medium text-gray-800">{service}</span>
-                           </div>
-                         </div>
-                       ))}
-                     </div>
-                   );
-                 }
-               })()}
-             </div>
-           </CardContent>
-         </Card>
-
-        {/* Support Section */}
-        <Card className="bg-white/90 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-2xl">Support Center</CardTitle>
-            <p className="text-gray-600">Get help and submit support requests</p>
-          </CardHeader>
-          <CardContent className="space-y-8">
-            {/* Support Options */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {supportOptions.map((option, index) => {
-                const IconComponent = option.icon;
-                return (
-                  <div key={index} className="p-6 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors" onClick={option.action}>
-                    <div className={`w-12 h-12 bg-${option.color}-100 rounded-full flex items-center justify-center mb-4`}>
-                      <IconComponent className={`w-6 h-6 text-${option.color}-600`} />
-                    </div>
-                    <h3 className="font-bold text-lg mb-2">{option.title}</h3>
-                    <p className="text-gray-600 mb-3">{option.description}</p>
-                    <p className={`text-${option.color}-600 font-semibold`}>
-                      {option.url}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Emergency Hotline Information */}
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Phone className="w-6 h-6 text-red-600" />
-                  <h3 className="text-xl font-bold text-red-800">Emergency Support Hotline</h3>
+                  <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200">
+                    <CardHeader>
+                      <CardTitle className="text-2xl text-blue-800 flex items-center gap-2">
+                        <CreditCard className="w-6 h-6" />
+                        Payment Methods
+                      </CardTitle>
+                      <p className="text-blue-600">Update your payment information and billing preferences</p>
+                    </CardHeader>
+                    <CardContent>
+                      <Button 
+                        onClick={handleManagePayment}
+                        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-lg py-3"
+                      >
+                        <CreditCard className="w-5 h-5 mr-2" />
+                        Manage Payment Methods
+                      </Button>
+                    </CardContent>
+                  </Card>
                 </div>
-                <p className="text-red-700 mb-2">
-                  For immediate issues or urgent support needs
-                </p>
-                <p className="text-2xl font-bold text-red-800 mb-2">
-                  📞 888-554-6597
-                </p>
-                <p className="text-red-600 font-medium">
-                  Have your ticket number ready when calling
-                </p>
               </div>
-            </div>
+            </TabsContent>
+          )}
 
-            {/* Support Portal Access */}
-            <div className="text-center space-y-4 p-6 bg-gray-50 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Support Portal Access</h3>
-              <p className="text-gray-600 mb-4">Connect to our Jira support system</p>
-              <div className="space-x-4">
-                <Button 
-                  onClick={() => window.open('https://support.cloudmor.com', '_blank')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
-                >
-                  Open Support Portal
-                </Button>
-                <Button 
-                  onClick={() => {
-                    console.log('Attempting to open Jira Service Desk widget from second button');
-                    // Wait a bit for the widget to be fully loaded
-                    setTimeout(() => {
-                      if (window.JSDWidget) {
-                        console.log('JSDWidget found, opening widget');
-                        window.JSDWidget.show();
-                      } else {
-                        console.error('JSDWidget not available');
-                        // Fallback - try to find and click the widget button if it exists
-                        const jiraButton = document.querySelector('[data-jsd-embedded]') as HTMLElement;
-                        if (jiraButton && typeof jiraButton.click === 'function') {
-                          jiraButton.click();
-                        } else {
-                          alert('Chat support is loading. Please try again in a moment.');
-                        }
-                      }
-                    }, 1000);
-                  }}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2"
-                >
-                  Start Chat Support
-                </Button>
+          {/* Support Tab */}
+          {(!isAdmin || isImpersonating) && (
+            <TabsContent value="support">
+              <SupportTab />
+            </TabsContent>
+          )}
+
+          {/* Account Tab */}
+          {(!isAdmin || isImpersonating) && (
+            <TabsContent value="account">
+              <div className="space-y-8">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
+                      Account Settings
+                    </h2>
+                    <p className="text-white/70 text-lg">Manage your account information and security settings</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <Card className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-200">
+                    <CardHeader>
+                      <CardTitle className="text-2xl text-red-800 flex items-center gap-2">
+                        <User className="w-6 h-6" />
+                        Profile Information
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div>
+                        <Label className="text-red-700 font-medium">Full Name</Label>
+                        <Input
+                          value={isImpersonating ? impersonatedClient.contact_name : (profile?.full_name || '')}
+                          readOnly
+                          className="bg-red-50 border-red-200"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-red-700 font-medium">Email Address</Label>
+                        <Input
+                          value={isImpersonating ? impersonatedClient.contact_email : (user?.email || '')}
+                          readOnly
+                          className="bg-red-50 border-red-200"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-red-700 font-medium">Role</Label>
+                        <Input
+                          value={isImpersonating ? 'Client' : (profile?.role || 'Client')}
+                          readOnly
+                          className="bg-red-50 border-red-200"
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-orange-200">
+                    <CardHeader>
+                      <CardTitle className="text-2xl text-orange-800 flex items-center gap-2">
+                        <Lock className="w-6 h-6" />
+                        Security Settings
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {!isChangingPassword ? (
+                        <Button 
+                          onClick={() => setIsChangingPassword(true)}
+                          className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white"
+                          disabled={isImpersonating}
+                        >
+                          <Lock className="w-4 h-4 mr-2" />
+                          {isImpersonating ? 'Password Change (Admin View)' : 'Change Password'}
+                        </Button>
+                      ) : (
+                        <div className="space-y-4">
+                          <div>
+                            <Label>Current Password</Label>
+                            <Input
+                              type="password"
+                              value={passwordForm.currentPassword}
+                              onChange={(e) => setPasswordForm({...passwordForm, currentPassword: e.target.value})}
+                              className="border-orange-300 focus:border-orange-500"
+                            />
+                          </div>
+                          <div>
+                            <Label>New Password</Label>
+                            <Input
+                              type="password"
+                              value={passwordForm.newPassword}
+                              onChange={(e) => setPasswordForm({...passwordForm, newPassword: e.target.value})}
+                              className="border-orange-300 focus:border-orange-500"
+                            />
+                          </div>
+                          <div>
+                            <Label>Confirm New Password</Label>
+                            <Input
+                              type="password"
+                              value={passwordForm.confirmPassword}
+                              onChange={(e) => setPasswordForm({...passwordForm, confirmPassword: e.target.value})}
+                              className="border-orange-300 focus:border-orange-500"
+                            />
+                          </div>
+                          <div className="flex gap-2">
+                            <Button 
+                              onClick={handlePasswordChange}
+                              className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+                            >
+                              Update Password
+                            </Button>
+                            <Button 
+                              onClick={() => setIsChangingPassword(false)}
+                              variant="outline"
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </TabsContent>
+          )}
+
+        </Tabs>
       </div>
     </div>
   );

@@ -5,9 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Users, Settings, Building, CreditCard, Headphones, Wrench } from 'lucide-react';
+import { Users, Settings, Building, CreditCard, Headphones, Wrench, UserCheck, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 import { UserManagement } from './admin/UserManagement';
+import { ClientManagement } from './admin/ClientManagement';
+import { ClientImpersonation } from './admin/ClientImpersonation';
+import { SupportDocuments } from './admin/SupportDocuments';
 
 export const AdminTab = () => {
   const [companyInfo, setCompanyInfo] = useState({
@@ -49,25 +52,57 @@ export const AdminTab = () => {
         </Button>
       </div>
 
-      <Tabs defaultValue="users" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-white/20 backdrop-blur-sm h-14">
-          <TabsTrigger value="users" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
-            <Users className="w-5 h-5 mr-2" />
+      <Tabs defaultValue="clients" className="w-full">
+        <TabsList className="grid w-full grid-cols-6 bg-white/20 backdrop-blur-sm h-14">
+          <TabsTrigger value="clients" className="text-white data-[state=active]:bg-white/20 text-sm py-3">
+            <Building className="w-4 h-4 mr-1" />
+            Client Management
+          </TabsTrigger>
+          <TabsTrigger value="impersonation" className="text-white data-[state=active]:bg-white/20 text-sm py-3">
+            <UserCheck className="w-4 h-4 mr-1" />
+            Client Impersonation
+          </TabsTrigger>
+          <TabsTrigger value="documents" className="text-white data-[state=active]:bg-white/20 text-sm py-3">
+            <FileText className="w-4 h-4 mr-1" />
+            Support Documents
+          </TabsTrigger>
+          <TabsTrigger value="users" className="text-white data-[state=active]:bg-white/20 text-sm py-3">
+            <Users className="w-4 h-4 mr-1" />
             User Management
           </TabsTrigger>
-          <TabsTrigger value="company" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
-            <Building className="w-5 h-5 mr-2" />
+          <TabsTrigger value="company" className="text-white data-[state=active]:bg-white/20 text-sm py-3">
+            <Building className="w-4 h-4 mr-1" />
             Company Info
           </TabsTrigger>
-          <TabsTrigger value="support" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
-            <Headphones className="w-5 h-5 mr-2" />
+          <TabsTrigger value="support" className="text-white data-[state=active]:bg-white/20 text-sm py-3">
+            <Headphones className="w-4 h-4 mr-1" />
             Support Content
           </TabsTrigger>
-          <TabsTrigger value="services" className="text-white data-[state=active]:bg-white/20 text-lg py-3">
-            <Wrench className="w-5 h-5 mr-2" />
-            Services
-          </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="clients" className="mt-6">
+          <Card className="bg-white/90 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <ClientManagement />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="impersonation" className="mt-6">
+          <Card className="bg-white/90 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <ClientImpersonation />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="documents" className="mt-6">
+          <Card className="bg-white/90 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <SupportDocuments />
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="users" className="mt-6">
           <Card className="bg-white/90 backdrop-blur-sm">
@@ -198,25 +233,6 @@ export const AdminTab = () => {
           </Card>
         </TabsContent>
 
-        <TabsContent value="services" className="mt-6">
-          <Card className="bg-white/90 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-2xl">Services Management</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <Button className="bg-purple-600 hover:bg-purple-700 text-lg px-6 py-3">
-                  <Wrench className="w-5 h-5 mr-2" />
-                  Manage Services
-                </Button>
-                <div className="text-lg text-gray-600">
-                  Services management functionality will be implemented here.
-                  This will include creating, editing, and managing service offerings.
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
       </Tabs>
     </div>
   );

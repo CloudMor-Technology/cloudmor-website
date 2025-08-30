@@ -14,6 +14,83 @@ export type Database = {
   }
   public: {
     Tables: {
+      client_services: {
+        Row: {
+          client_id: string | null
+          created_at: string
+          id: string
+          service_description: string | null
+          service_name: string
+          status: string | null
+        }
+        Insert: {
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          service_description?: string | null
+          service_name: string
+          status?: string | null
+        }
+        Update: {
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          service_description?: string | null
+          service_name?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_services_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clients: {
+        Row: {
+          address: string | null
+          company_name: string
+          contact_email: string
+          contact_name: string | null
+          created_at: string
+          id: string
+          jira_email: string | null
+          phone: string | null
+          stripe_customer_id: string | null
+          stripe_email: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          company_name: string
+          contact_email: string
+          contact_name?: string | null
+          created_at?: string
+          id?: string
+          jira_email?: string | null
+          phone?: string | null
+          stripe_customer_id?: string | null
+          stripe_email?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          company_name?: string
+          contact_email?: string
+          contact_name?: string | null
+          created_at?: string
+          id?: string
+          jira_email?: string | null
+          phone?: string | null
+          stripe_customer_id?: string | null
+          stripe_email?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       companies: {
         Row: {
           address: string | null
@@ -278,6 +355,41 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      support_documents: {
+        Row: {
+          client_id: string | null
+          created_at: string
+          description: string | null
+          id: string
+          title: string
+          url: string
+        }
+        Insert: {
+          client_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          title: string
+          url: string
+        }
+        Update: {
+          client_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          title?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_documents_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
