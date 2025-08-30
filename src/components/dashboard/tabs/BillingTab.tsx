@@ -225,7 +225,7 @@ export const BillingTab = () => {
       )}
 
       {/* Billing Overview Cards */}
-      <div className="grid gap-6 md:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-5">
         <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">This Month</CardTitle>
@@ -243,7 +243,7 @@ export const BillingTab = () => {
 
         <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 border-green-200 dark:border-green-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">This Year</CardTitle>
+            <CardTitle className="text-sm font-medium">This Year (2025)</CardTitle>
             <DollarSign className="h-4 w-4 text-green-600 dark:text-green-400" />
           </CardHeader>
           <CardContent>
@@ -251,7 +251,22 @@ export const BillingTab = () => {
               {loading ? '...' : formatCurrency(dashboardData?.totalSpentThisYear || 0)}
             </div>
             <p className="text-xs text-green-600 dark:text-green-400">
-              Total spent in 2024
+              Current year total
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-950 dark:to-amber-900 border-amber-200 dark:border-amber-800">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">2024 Total</CardTitle>
+            <TrendingUp className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-amber-700 dark:text-amber-300">
+              {loading ? '...' : formatCurrency(dashboardData?.totalSpent2024 || 0)}
+            </div>
+            <p className="text-xs text-amber-600 dark:text-amber-400">
+              Previous year total
             </p>
           </CardContent>
         </Card>

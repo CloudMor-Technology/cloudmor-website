@@ -191,25 +191,56 @@ serve(async (req) => {
 
     console.log('Fetching comprehensive dashboard data for:', customer.id);
 
-    // Fetch all data in parallel
-    const [customerDetails, subscriptions, invoices, paymentMethods] = await Promise.allSettled([
+    // Fetch all data in parallel with better error handling
+    const [customerDetails, subscriptions, invoices, paymentMethods, allInvoices] = await Promise.allSettled([
       stripe.customers.retrieve(customer.id),
       stripe.subscriptions.list({ 
         customer: customer.id, 
-        limit: 5,
+        limit: 100,  // Increased limit
+        status: 'all', // Get all statuses
         expand: ['data.items.data.price.product']
       }),
       stripe.invoices.list({ 
         customer: customer.id, 
-        limit: 20 
+        limit: 100  // Increased for recent invoices
       }),
       stripe.paymentMethods.list({ 
+        customer: customer.id
+        // Removed type restriction to get all payment methods
+      }),
+      // Fetch more invoices for yearly calculation
+      stripe.invoices.list({ 
         customer: customer.id, 
-        type: 'card' 
+        limit: 100,
+        created: {
+          gte: Math.floor(new Date('2024-01-01').getTime() / 1000), // From 2024
+        }
       })
     ]);
 
-    console.log('All data fetched successfully');
+    console.log('Subscription fetch result:', subscriptions.status);
+    if (subscriptions.status === 'fulfilled') {
+      console.log('Found subscriptions:', subscriptions.value.data.length);
+      subscriptions.value.data.forEach(sub => {
+        console.log(`Subscription ${sub.id}: status=${sub.status}, amount=${sub.items.data[0]?.price?.unit_amount}`);
+      });
+    } else {
+      console.error('Subscription fetch failed:', subscriptions.reason);
+    }
+
+    console.log('Invoice fetch result:', invoices.status);
+    if (invoices.status === 'fulfilled') {
+      console.log('Found invoices:', invoices.value.data.length);
+    } else {
+      console.error('Invoice fetch failed:', invoices.reason);
+    }
+
+    console.log('Payment methods fetch result:', paymentMethods.status);
+    if (paymentMethods.status === 'fulfilled') {
+      console.log('Found payment methods:', paymentMethods.value.data.length);
+    } else {
+      console.error('Payment methods fetch failed:', paymentMethods.reason);
+    }
 
     // Try to get upcoming invoice
     let upcomingInvoice = null;
@@ -223,7 +254,7 @@ serve(async (req) => {
       upcomingInvoice = null;
     }
 
-    // Calculate this month's total
+    // Calculate this month's total using recent invoices
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
     let thisMonthTotal = 0;
@@ -239,18 +270,38 @@ serve(async (req) => {
 
     console.log('This month total calculated:', thisMonthTotal);
 
-    // Calculate total spent this year
+    // Calculate total spent across 2024 and 2025 using all invoices
     let totalSpentThisYear = 0;
-    if (invoices.status === 'fulfilled') {
-      invoices.value.data.forEach(invoice => {
+    let totalSpent2024 = 0;
+    let totalSpent2025 = 0;
+    
+    // Use the larger invoice dataset for yearly calculations
+    const yearlyInvoices = allInvoices.status === 'fulfilled' ? allInvoices.value : invoices.value;
+    
+    if (yearlyInvoices && yearlyInvoices.status !== 'rejected') {
+      yearlyInvoices.data.forEach(invoice => {
         const invoiceDate = new Date(invoice.created * 1000);
-        if (invoiceDate.getFullYear() === currentYear && invoice.status === 'paid') {
-          totalSpentThisYear += (invoice.amount_paid || 0);
+        const invoiceYear = invoiceDate.getFullYear();
+        
+        if (invoice.status === 'paid') {
+          if (invoiceYear === 2024) {
+            totalSpent2024 += (invoice.amount_paid || 0);
+          } else if (invoiceYear === 2025) {
+            totalSpent2025 += (invoice.amount_paid || 0);
+          }
+          
+          // Current year total
+          if (invoiceYear === currentYear) {
+            totalSpentThisYear += (invoice.amount_paid || 0);
+          }
         }
       });
     }
 
-    console.log('Total spent this year:', totalSpentThisYear);
+    console.log('Yearly totals calculated:');
+    console.log('2024 total:', totalSpent2024);
+    console.log('2025 total:', totalSpent2025);
+    console.log('This year total:', totalSpentThisYear);
 
     // Determine next billing date
     let nextBillingDate = 'No active subscription';
@@ -283,9 +334,9 @@ serve(async (req) => {
         }))
       : [];
 
-    // Process invoices data
+    // Process invoices data - use more comprehensive list
     const processedInvoices = invoices.status === 'fulfilled' 
-      ? invoices.value.data.slice(0, 10).map(invoice => ({
+      ? invoices.value.data.map(invoice => ({
           id: invoice.id,
           number: invoice.number,
           status: invoice.status,
@@ -301,11 +352,12 @@ serve(async (req) => {
             year: 'numeric',
             month: 'short',
             day: 'numeric'
-          })
+          }),
+          year: new Date(invoice.created * 1000).getFullYear()
         }))
       : [];
 
-    // Process payment methods data
+    // Process payment methods data - handle all types
     const processedPaymentMethods = paymentMethods.status === 'fulfilled' 
       ? paymentMethods.value.data.map(pm => ({
           id: pm.id,
@@ -317,11 +369,18 @@ serve(async (req) => {
             exp_year: pm.card.exp_year,
             funding: pm.card.funding
           } : null,
+          // Handle other payment method types
+          bank_account: pm.type === 'us_bank_account' ? pm.us_bank_account : null,
+          sepa_debit: pm.type === 'sepa_debit' ? pm.sepa_debit : null,
           created: pm.created
         }))
       : [];
 
     console.log('Dashboard data prepared successfully');
+    console.log('Final processed data counts:');
+    console.log('Subscriptions:', processedSubscriptions.length);
+    console.log('Invoices:', processedInvoices.length);
+    console.log('Payment Methods:', processedPaymentMethods.length);
 
     // Return comprehensive dashboard data
     const dashboardData = {
@@ -339,6 +398,8 @@ serve(async (req) => {
       upcomingInvoice,
       thisMonthTotal,
       totalSpentThisYear,
+      totalSpent2024,
+      totalSpent2025,
       nextBillingDate,
       clientEmail: targetEmail,
       customerId: customer.id,
