@@ -20,10 +20,9 @@ export const SinglePagePortal = () => {
     company: '',
     companyWebsite: '',
     companyAddress: '',
-    taxId: '',
     stripeEmail: '',
     jiraEmail: '',
-    services: []
+    services: ''
   });
   const [passwordForm, setPasswordForm] = useState({
     currentPassword: '',
@@ -52,33 +51,42 @@ export const SinglePagePortal = () => {
         company: '',
         companyWebsite: '',
         companyAddress: '',
-        taxId: '',
         stripeEmail: '',
         jiraEmail: '',
-        services: []
+        services: ''
       });
-      setShowClientManagement(false);
     } catch (error) {
       toast.error('Failed to add client');
     }
   };
 
-  const availableServices = [
-    { id: 1, name: 'Managed IT Services', phone: '(555) 123-4567', extension: '101' },
-    { id: 2, name: 'Cloud Hosting', phone: '(555) 123-4567', extension: '102' },
-    { id: 3, name: 'Cybersecurity Services', phone: '(555) 123-4567', extension: '103' },
-    { id: 4, name: 'Web Development', phone: '(555) 123-4567', extension: '104' },
-    { id: 5, name: 'Network Management', phone: '(555) 123-4567', extension: '105' }
+  // Mock existing clients data (replace with real data from database)
+  const existingClients = [
+    {
+      id: 1,
+      name: 'John Doe',
+      email: 'john@example.com',
+      phone: '(555) 123-4567',
+      company: 'Tech Solutions Inc',
+      services: 'Managed IT Services, Cloud Hosting'
+    },
+    {
+      id: 2,
+      name: 'Jane Smith',
+      email: 'jane@company.com',
+      phone: '(555) 987-6543',
+      company: 'Digital Corp',
+      services: 'Cybersecurity Services, Web Development'
+    },
+    {
+      id: 3,
+      name: 'Bob Johnson',
+      email: 'bob@business.com',
+      phone: '(555) 456-7890',
+      company: 'Business Solutions LLC',
+      services: 'Network Management, Technical Support'
+    }
   ];
-
-  const handleServiceToggle = (serviceId) => {
-    setClientForm(prev => ({
-      ...prev,
-      services: prev.services.includes(serviceId) 
-        ? prev.services.filter(id => id !== serviceId)
-        : [...prev.services, serviceId]
-    }));
-  };
 
   const handlePasswordChange = async () => {
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
@@ -184,139 +192,147 @@ export const SinglePagePortal = () => {
                 </Button>
               </div>
               
-              {/* Client Management Form */}
+              {/* Client Management Section */}
               {showClientManagement && (
-                <div className="mt-6 p-6 bg-gray-50 rounded-lg border">
-                  <h3 className="text-lg font-semibold mb-4">Add New Client</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="clientName">Client Name</Label>
-                      <Input
-                        id="clientName"
-                        value={clientForm.name}
-                        onChange={(e) => setClientForm({...clientForm, name: e.target.value})}
-                        placeholder="Enter client name"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="clientEmail">Email</Label>
-                      <Input
-                        id="clientEmail"
-                        type="email"
-                        value={clientForm.email}
-                        onChange={(e) => setClientForm({...clientForm, email: e.target.value})}
-                        placeholder="client@example.com"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="clientPhone">Phone Number</Label>
-                      <Input
-                        id="clientPhone"
-                        value={clientForm.phone}
-                        onChange={(e) => setClientForm({...clientForm, phone: e.target.value})}
-                        placeholder="(555) 123-4567"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="clientCompany">Company</Label>
-                      <Input
-                        id="clientCompany"
-                        value={clientForm.company}
-                        onChange={(e) => setClientForm({...clientForm, company: e.target.value})}
-                        placeholder="Company Name"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="companyWebsite">Company Website</Label>
-                      <Input
-                        id="companyWebsite"
-                        value={clientForm.companyWebsite}
-                        onChange={(e) => setClientForm({...clientForm, companyWebsite: e.target.value})}
-                        placeholder="www.company.com"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="taxId">Tax ID</Label>
-                      <Input
-                        id="taxId"
-                        value={clientForm.taxId}
-                        onChange={(e) => setClientForm({...clientForm, taxId: e.target.value})}
-                        placeholder="Tax ID Number"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="stripeEmail">Stripe Email</Label>
-                      <Input
-                        id="stripeEmail"
-                        type="email"
-                        value={clientForm.stripeEmail}
-                        onChange={(e) => setClientForm({...clientForm, stripeEmail: e.target.value})}
-                        placeholder="billing@company.com"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="jiraEmail">Jira Email</Label>
-                      <Input
-                        id="jiraEmail"
-                        type="email"
-                        value={clientForm.jiraEmail}
-                        onChange={(e) => setClientForm({...clientForm, jiraEmail: e.target.value})}
-                        placeholder="support@company.com"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4">
-                    <Label htmlFor="companyAddress">Company Address</Label>
-                    <Input
-                      id="companyAddress"
-                      value={clientForm.companyAddress}
-                      onChange={(e) => setClientForm({...clientForm, companyAddress: e.target.value})}
-                      placeholder="Full company address"
-                      className="w-full"
-                    />
-                  </div>
-                  
-                  <div className="mt-6">
-                    <Label>Available Services</Label>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-                      {availableServices.map((service) => (
-                        <div key={service.id} className="flex items-center space-x-2 p-3 border rounded-lg">
-                          <input
-                            type="checkbox"
-                            id={`service-${service.id}`}
-                            checked={clientForm.services.includes(service.id)}
-                            onChange={() => handleServiceToggle(service.id)}
-                            className="rounded"
-                          />
-                          <label htmlFor={`service-${service.id}`} className="flex-1">
-                            <div className="font-medium">{service.name}</div>
-                            <div className="text-sm text-gray-500">
-                              Phone: {service.phone} Ext: {service.extension}
+                <div className="mt-6 space-y-6">
+                  {/* Existing Clients List */}
+                  <div className="p-6 bg-white rounded-lg border">
+                    <h3 className="text-lg font-semibold mb-4">Existing Clients</h3>
+                    <div className="space-y-3">
+                      {existingClients.map((client) => (
+                        <div key={client.id} className="p-4 border rounded-lg hover:bg-gray-50">
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-lg">{client.name}</h4>
+                              <p className="text-gray-600">{client.email}</p>
+                              <p className="text-gray-600">{client.phone}</p>
+                              <p className="text-gray-600">{client.company}</p>
+                              <p className="text-sm text-blue-600 mt-1">Services: {client.services}</p>
                             </div>
-                          </label>
+                            <div className="flex gap-2">
+                              <Button size="sm" variant="outline">Edit</Button>
+                              <Button size="sm" variant="outline" className="text-red-600">Delete</Button>
+                            </div>
+                          </div>
                         </div>
                       ))}
                     </div>
                   </div>
-                  
-                  <div className="flex gap-3 mt-6">
-                    <Button onClick={handleAddClient} className="bg-green-600 hover:bg-green-700">
-                      Add Client
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => setShowClientManagement(false)}
-                    >
-                      Cancel
-                    </Button>
+
+                  {/* Add New Client Form */}
+                  <div className="p-6 bg-gray-50 rounded-lg border">
+                    <h3 className="text-lg font-semibold mb-4">Add New Client</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="clientName">Client Name</Label>
+                        <Input
+                          id="clientName"
+                          value={clientForm.name}
+                          onChange={(e) => setClientForm({...clientForm, name: e.target.value})}
+                          placeholder="Enter client name"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="clientEmail">Email</Label>
+                        <Input
+                          id="clientEmail"
+                          type="email"
+                          value={clientForm.email}
+                          onChange={(e) => setClientForm({...clientForm, email: e.target.value})}
+                          placeholder="client@example.com"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="clientPhone">Phone Number</Label>
+                        <Input
+                          id="clientPhone"
+                          value={clientForm.phone}
+                          onChange={(e) => setClientForm({...clientForm, phone: e.target.value})}
+                          placeholder="(555) 123-4567"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="clientCompany">Company</Label>
+                        <Input
+                          id="clientCompany"
+                          value={clientForm.company}
+                          onChange={(e) => setClientForm({...clientForm, company: e.target.value})}
+                          placeholder="Company Name"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="companyWebsite">Company Website</Label>
+                        <Input
+                          id="companyWebsite"
+                          value={clientForm.companyWebsite}
+                          onChange={(e) => setClientForm({...clientForm, companyWebsite: e.target.value})}
+                          placeholder="www.company.com"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="stripeEmail">Stripe Email</Label>
+                        <Input
+                          id="stripeEmail"
+                          type="email"
+                          value={clientForm.stripeEmail}
+                          onChange={(e) => setClientForm({...clientForm, stripeEmail: e.target.value})}
+                          placeholder="billing@company.com"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="jiraEmail">Jira Email</Label>
+                        <Input
+                          id="jiraEmail"
+                          type="email"
+                          value={clientForm.jiraEmail}
+                          onChange={(e) => setClientForm({...clientForm, jiraEmail: e.target.value})}
+                          placeholder="support@company.com"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4">
+                      <Label htmlFor="companyAddress">Company Address</Label>
+                      <Input
+                        id="companyAddress"
+                        value={clientForm.companyAddress}
+                        onChange={(e) => setClientForm({...clientForm, companyAddress: e.target.value})}
+                        placeholder="Full company address"
+                        className="w-full"
+                      />
+                    </div>
+                    
+                    <div className="mt-4">
+                      <Label htmlFor="clientServices">Services Provided</Label>
+                      <Input
+                        id="clientServices"
+                        value={clientForm.services}
+                        onChange={(e) => setClientForm({...clientForm, services: e.target.value})}
+                        placeholder="Enter services separated by commas (e.g., Managed IT Services, Cloud Hosting, Cybersecurity)"
+                        className="w-full"
+                      />
+                      <p className="text-sm text-gray-500 mt-1">
+                        Type the services you provide to this client, separated by commas
+                      </p>
+                    </div>
+                    
+                    <div className="flex gap-3 mt-6">
+                      <Button onClick={handleAddClient} className="bg-green-600 hover:bg-green-700">
+                        Add Client
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        onClick={() => setShowClientManagement(false)}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
                   </div>
                 </div>
               )}
