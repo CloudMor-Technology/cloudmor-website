@@ -18,11 +18,8 @@ import {
   AlertCircle,
   User,
   Settings,
-  TrendingUp,
-  ChevronDown,
-  ChevronUp
+  TrendingUp
 } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -33,7 +30,6 @@ export const BillingTab = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [companyName, setCompanyName] = useState<string>('');
-  const [invoicesOpen, setInvoicesOpen] = useState(false);
   const [selectedYear, setSelectedYear] = useState<string>('all');
 
   useEffect(() => {
@@ -212,6 +208,19 @@ export const BillingTab = () => {
     }).format((amountInCents || 0) / 100);
   };
 
+  const getUniqueYears = (invoices: any[]) => {
+    if (!invoices || invoices.length === 0) return [];
+    const years = invoices.map(invoice => invoice.year).filter(Boolean);
+    const uniqueYears = [...new Set(years)].sort((a, b) => b - a);
+    return uniqueYears;
+  };
+
+  const shouldShowYearFilter = (invoices: any[]) => {
+    const uniqueYears = getUniqueYears(invoices);
+    const currentYear = new Date().getFullYear();
+    return uniqueYears.length > 1 || (uniqueYears.length === 1 && uniqueYears[0] !== currentYear);
+  };
+
   if (!user) {
     return (
       <div className="space-y-6">
@@ -350,104 +359,6 @@ export const BillingTab = () => {
         </Card>
       </div>
 
-      {/* Customer Information */}
-      {dashboardData?.customer && (
-        <Card className="bg-white/90 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <User className="h-5 w-5" />
-              Account Information
-            </CardTitle>
-            <CardDescription>
-              Your account details and customer information
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Stripe Customer ID</p>
-              <p className="text-sm text-muted-foreground font-mono">{profile?.stripe_customer_id || 'Not configured by admin'}</p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Email</p>
-              <p className="text-sm text-muted-foreground">{dashboardData.clientEmail}</p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Company</p>
-              <p className="text-sm text-muted-foreground">{companyName}</p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Account Created</p>
-              <p className="text-sm text-muted-foreground">
-                {dashboardData.customer.created ? new Date(dashboardData.customer.created * 1000).toLocaleDateString() : 'N/A'}
-              </p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Currency</p>
-              <p className="text-sm text-muted-foreground">{dashboardData.customer.currency?.toUpperCase() || 'USD'}</p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Current Subscriptions */}
-      <Card className="bg-white/90 backdrop-blur-sm">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="h-5 w-5" />
-            Current Subscriptions
-          </CardTitle>
-          <CardDescription>
-            Your active subscription plans and payment details
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {loading ? (
-            <div className="space-y-3">
-              <div className="h-4 bg-muted animate-pulse rounded" />
-              <div className="h-4 bg-muted animate-pulse rounded w-3/4" />
-            </div>
-          ) : dashboardData?.subscriptions && dashboardData.subscriptions.length > 0 ? (
-            <div className="space-y-4">
-              {dashboardData.subscriptions.map((subscription: any) => (
-                <div key={subscription.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div>
-                    <p className="font-medium">{subscription.plan_name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {formatCurrency(subscription.amount)}/{subscription.interval}
-                    </p>
-                    <Badge 
-                      variant={subscription.status === 'active' ? 'default' : 'secondary'}
-                      className="mt-2"
-                    >
-                      {subscription.status}
-                    </Badge>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium">
-                      Next: {new Date(subscription.current_period_end * 1000).toLocaleDateString()}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {formatCurrency(subscription.amount)} / {subscription.interval}
-                    </p>
-                    {subscription.cancel_at_period_end && (
-                      <Badge variant="destructive" className="mt-1">
-                        Canceling
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-6">
-              <Settings className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-medium">No active subscriptions</h3>
-              <p className="text-muted-foreground">You don't have any active subscriptions at the moment</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
       {/* Customer Portal Access */}
       <Card className="bg-white/90 backdrop-blur-sm">
         <CardHeader>
@@ -471,183 +382,118 @@ export const BillingTab = () => {
         </CardContent>
       </Card>
 
-      {/* Payment Methods */}
+      {/* Invoice History */}
       <Card className="bg-white/90 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <CreditCard className="h-5 w-5" />
-            Payment Methods
+            <FileText className="h-5 w-5" />
+            Invoice History
           </CardTitle>
           <CardDescription>
-            Your saved payment methods and billing information
+            View and download your invoices and billing history
           </CardDescription>
         </CardHeader>
         <CardContent>
           {loading ? (
             <div className="space-y-3">
-              <div className="h-4 bg-muted animate-pulse rounded" />
-              <div className="h-4 bg-muted animate-pulse rounded w-3/4" />
-            </div>
-          ) : dashboardData?.paymentMethods && dashboardData.paymentMethods.length > 0 ? (
-            <div className="space-y-4">
-              {dashboardData.paymentMethods.map((method: any) => (
-                <div key={method.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <CreditCard className="h-8 w-8 text-muted-foreground" />
-                    <div>
-                      <p className="font-medium">
-                        {method.card?.brand?.toUpperCase()} •••• {method.card?.last4}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        Expires {method.card?.exp_month}/{method.card?.exp_year}
-                      </p>
-                      <Badge variant="outline" className="text-xs mt-1">
-                        {method.card?.funding}
-                      </Badge>
-                    </div>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="flex items-center justify-between p-4 border rounded-lg animate-pulse">
+                  <div className="space-y-2">
+                    <div className="h-4 bg-muted rounded w-32" />
+                    <div className="h-3 bg-muted rounded w-24" />
                   </div>
-                  <Badge variant="outline">Active</Badge>
+                  <div className="h-8 bg-muted rounded w-16" />
                 </div>
               ))}
+            </div>
+          ) : dashboardData?.invoices && dashboardData.invoices.length > 0 ? (
+            <div className="space-y-4">
+              {shouldShowYearFilter(dashboardData.invoices) && (
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm font-medium">Filter by year:</label>
+                    <Select value={selectedYear} onValueChange={setSelectedYear}>
+                      <SelectTrigger className="w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Years</SelectItem>
+                        {getUniqueYears(dashboardData.invoices).map((year) => (
+                          <SelectItem key={year} value={year.toString()}>
+                            {year}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              )}
+              <ScrollArea className="h-96 w-full">
+                <div className="space-y-3 pr-4">
+                  {dashboardData.invoices
+                    .filter((invoice: any) => {
+                      if (selectedYear === 'all') return true;
+                      return invoice.year?.toString() === selectedYear;
+                    })
+                    .map((invoice: any) => (
+                    <div key={invoice.id} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="space-y-1">
+                        <p className="font-medium">{invoice.number || `Invoice ${invoice.id.slice(-8)}`}</p>
+                        <p className="text-sm text-muted-foreground">{invoice.date}</p>
+                        <div className="flex gap-2">
+                          <Badge 
+                            variant={invoice.status === 'paid' ? 'default' : 'secondary'}
+                            className="text-xs"
+                          >
+                            {invoice.status}
+                          </Badge>
+                          <Badge variant="outline" className="text-xs">
+                            {invoice.currency?.toUpperCase() || 'USD'}
+                          </Badge>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="text-right">
+                          <p className="font-medium">{formatCurrency(invoice.amount_paid || invoice.amount_due)}</p>
+                        </div>
+                        <div className="flex gap-2">
+                          {invoice.invoice_pdf && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => window.open(invoice.invoice_pdf, '_blank')}
+                            >
+                              <Download className="h-4 w-4" />
+                            </Button>
+                          )}
+                          {invoice.hosted_invoice_url && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => window.open(invoice.hosted_invoice_url, '_blank')}
+                            >
+                              <ExternalLink className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
               <Separator />
               <Button variant="outline" onClick={handleManagePayments}>
-                Manage Payment Methods
+                View All Invoices in Portal
               </Button>
             </div>
           ) : (
             <div className="text-center py-6">
-              <CreditCard className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-medium">No payment methods</h3>
-              <p className="text-muted-foreground mb-4">Add a payment method to get started</p>
-              <Button onClick={handleManagePayments}>
-                Add Payment Method
-              </Button>
+              <FileText className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="text-lg font-medium">No invoices yet</h3>
+              <p className="text-muted-foreground">Your invoices will appear here once you have charges</p>
             </div>
           )}
         </CardContent>
-      </Card>
-
-      {/* Invoice History */}
-      <Card className="bg-white/90 backdrop-blur-sm">
-        <Collapsible open={invoicesOpen} onOpenChange={setInvoicesOpen}>
-          <CardHeader>
-            <CollapsibleTrigger asChild>
-              <div className="flex items-center justify-between w-full cursor-pointer">
-                <div className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  <CardTitle>Invoice History</CardTitle>
-                </div>
-                <Button variant="ghost" size="sm">
-                  {invoicesOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                </Button>
-              </div>
-            </CollapsibleTrigger>
-            <CardDescription>
-              View and download your invoices and billing history
-            </CardDescription>
-          </CardHeader>
-          <CollapsibleContent>
-            <CardContent>
-              {loading ? (
-                <div className="space-y-3">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="flex items-center justify-between p-4 border rounded-lg animate-pulse">
-                      <div className="space-y-2">
-                        <div className="h-4 bg-muted rounded w-32" />
-                        <div className="h-3 bg-muted rounded w-24" />
-                      </div>
-                      <div className="h-8 bg-muted rounded w-16" />
-                    </div>
-                  ))}
-                </div>
-              ) : dashboardData?.invoices && dashboardData.invoices.length > 0 ? (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <label className="text-sm font-medium">Filter by year:</label>
-                      <Select value={selectedYear} onValueChange={setSelectedYear}>
-                        <SelectTrigger className="w-32">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Years</SelectItem>
-                          <SelectItem value="2025">2025</SelectItem>
-                          <SelectItem value="2024">2024</SelectItem>
-                          <SelectItem value="2023">2023</SelectItem>
-                          <SelectItem value="2022">2022</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                  <ScrollArea className="h-96 w-full">
-                    <div className="space-y-3 pr-4">
-                      {dashboardData.invoices
-                        .filter((invoice: any) => {
-                          if (selectedYear === 'all') return true;
-                          const invoiceYear = new Date(invoice.created * 1000).getFullYear().toString();
-                          return invoiceYear === selectedYear;
-                        })
-                        .map((invoice: any) => (
-                        <div key={invoice.id} className="flex items-center justify-between p-4 border rounded-lg">
-                          <div className="space-y-1">
-                            <p className="font-medium">{invoice.number || `Invoice ${invoice.id.slice(-8)}`}</p>
-                            <p className="text-sm text-muted-foreground">{invoice.date}</p>
-                            <div className="flex gap-2">
-                              <Badge 
-                                variant={invoice.status === 'paid' ? 'default' : 'secondary'}
-                                className="text-xs"
-                              >
-                                {invoice.status}
-                              </Badge>
-                              <Badge variant="outline" className="text-xs">
-                                {invoice.currency?.toUpperCase() || 'USD'}
-                              </Badge>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-4">
-                            <div className="text-right">
-                              <p className="font-medium">{formatCurrency(invoice.amount_paid || invoice.amount_due)}</p>
-                            </div>
-                            <div className="flex gap-2">
-                              {invoice.invoice_pdf && (
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => window.open(invoice.invoice_pdf, '_blank')}
-                                >
-                                  <Download className="h-4 w-4" />
-                                </Button>
-                              )}
-                              {invoice.hosted_invoice_url && (
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => window.open(invoice.hosted_invoice_url, '_blank')}
-                                >
-                                  <ExternalLink className="h-4 w-4" />
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </ScrollArea>
-                  <Separator />
-                  <Button variant="outline" onClick={handleManagePayments}>
-                    View All Invoices in Portal
-                  </Button>
-                </div>
-              ) : (
-                <div className="text-center py-6">
-                  <FileText className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-medium">No invoices yet</h3>
-                  <p className="text-muted-foreground">Your invoices will appear here once you have charges</p>
-                </div>
-              )}
-            </CardContent>
-          </CollapsibleContent>
-        </Collapsible>
       </Card>
     </div>
   );
