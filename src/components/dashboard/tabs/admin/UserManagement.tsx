@@ -76,6 +76,7 @@ export const UserManagement = () => {
         email: formData.email,
         password: formData.password,
         options: {
+          emailRedirectTo: `${window.location.origin}/portal`,
           data: {
             full_name: formData.full_name,
           }
@@ -99,9 +100,31 @@ export const UserManagement = () => {
           .eq('id', authData.user.id);
 
         if (profileError) throw profileError;
+
+        // Send credentials email
+        try {
+          const { error: emailError } = await supabase.functions.invoke('send-user-credentials', {
+            body: {
+              email: formData.email,
+              full_name: formData.full_name,
+              password: formData.password,
+              company_name: formData.company_name,
+              role: formData.role
+            }
+          });
+
+          if (emailError) {
+            console.error('Email sending failed:', emailError);
+            toast.success('User created successfully, but email notification failed');
+          } else {
+            toast.success('User created and credentials sent via email');
+          }
+        } catch (emailError) {
+          console.error('Email error:', emailError);
+          toast.success('User created successfully, but email notification failed');
+        }
       }
 
-      toast.success('User created successfully');
       setShowCreateForm(false);
       resetForm();
       fetchUsers();
