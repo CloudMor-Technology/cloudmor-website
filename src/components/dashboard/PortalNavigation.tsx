@@ -29,7 +29,7 @@ export const PortalNavigation = ({ activeTab, onTabChange }: PortalNavigationPro
     { id: 'services', label: 'Services', icon: '⚙️' },
     { id: 'account', label: 'My Account', icon: '⚙️' },
     ...(profile?.role === 'admin' ? [
-      { id: 'admin', label: 'Admin', icon: '⚡' }
+      { id: 'admin', label: 'Client Management', icon: '⚡' }
     ] : [])
   ];
 
@@ -68,11 +68,6 @@ export const PortalNavigation = ({ activeTab, onTabChange }: PortalNavigationPro
           <div className="flex items-center space-x-4">
             <div className="text-white/90 text-lg">
               <span className="font-medium">{profile?.full_name || user?.email}</span>
-              {profile?.role === 'admin' && (
-                <span className="ml-2 px-3 py-1 bg-orange-500 text-white text-sm rounded-full">
-                  Admin
-                </span>
-              )}
             </div>
             <Button
               variant="outline"
