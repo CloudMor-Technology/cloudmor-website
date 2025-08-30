@@ -118,33 +118,59 @@ serve(async (req) => {
       limit: 1
     });
 
+    let customer;
     if (customers.data.length === 0) {
-      console.log('No customer found, returning default billing data');
-      return new Response(JSON.stringify({
-        success: true,
-        data: {
-          customer: { email: targetEmail },
-          thisMonthTotal: 0,
-          totalSpentThisYear: 0,
-          nextBillingDate: 'No active subscription',
-          subscriptions: [],
-          paymentMethods: [],
-          invoices: [],
-          upcomingInvoice: null,
-          clientEmail: targetEmail,
-          customerId: null,
-          isImpersonating,
-          adminEmail: user.email,
-          targetEmail
+      console.log('No customer found, creating new customer for:', targetEmail);
+      // Create a new Stripe customer
+      try {
+        customer = await stripe.customers.create({
+          email: targetEmail,
+          name: isImpersonating ? (requestBody as any).userName || 'User' : user.user_metadata?.full_name || 'User'
+        });
+        console.log('Created new Stripe customer:', customer.id);
+        
+        // Update the profile with the new customer ID
+        const supabaseService = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+        const { error: updateError } = await supabaseService
+          .from('profiles')
+          .update({ stripe_customer_id: customer.id })
+          .eq('email', targetEmail);
+          
+        if (updateError) {
+          console.error('Failed to update profile with customer ID:', updateError);
+        } else {
+          console.log('Updated profile with new Stripe customer ID');
         }
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
-      });
+      } catch (createError) {
+        console.error('Failed to create Stripe customer:', createError);
+        return new Response(JSON.stringify({
+          success: true,
+          data: {
+            customer: { email: targetEmail },
+            thisMonthTotal: 0,
+            totalSpentThisYear: 0,
+            nextBillingDate: 'No active subscription',
+            subscriptions: [],
+            paymentMethods: [],
+            invoices: [],
+            upcomingInvoice: null,
+            clientEmail: targetEmail,
+            customerId: null,
+            isImpersonating,
+            adminEmail: user.email,
+            targetEmail,
+            message: 'New customer account created. Billing data will be available after first purchase.'
+          }
+        }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 200,
+        });
+      }
+    } else {
+      customer = customers.data[0];
     }
 
-    const customer = customers.data[0];
-    console.log('Found customer ID:', customer.id);
+    console.log('Using customer ID:', customer.id);
 
     console.log('Fetching comprehensive dashboard data for:', customer.id);
 

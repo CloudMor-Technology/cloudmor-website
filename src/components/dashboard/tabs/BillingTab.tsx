@@ -70,9 +70,10 @@ export const BillingTab = () => {
       console.log('Comprehensive billing data received:', data.data);
       setDashboardData(data.data);
 
+      const message = data.data.message || "Successfully refreshed your complete billing information.";
       toast({
         title: "Billing dashboard updated",
-        description: "Successfully refreshed your complete billing information.",
+        description: message,
       });
 
     } catch (error) {
