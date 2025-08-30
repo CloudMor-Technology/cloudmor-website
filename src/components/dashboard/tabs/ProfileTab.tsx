@@ -46,8 +46,7 @@ export const ProfileTab = () => {
   const [formData, setFormData] = useState({
     full_name: '',
     phone: '',
-    job_title: '',
-    stripe_customer_id: ''
+    job_title: ''
   });
   const [companyFormData, setCompanyFormData] = useState({
     name: '',
@@ -84,8 +83,7 @@ export const ProfileTab = () => {
       setFormData({
         full_name: profileData.full_name || '',
         phone: profileData.phone || '',
-        job_title: profileData.job_title || '',
-        stripe_customer_id: profileData.stripe_customer_id || ''
+        job_title: profileData.job_title || ''
       });
 
       // Fetch company data if user has a company
@@ -177,7 +175,6 @@ export const ProfileTab = () => {
           full_name: formData.full_name,
           phone: formData.phone,
           job_title: formData.job_title,
-          stripe_customer_id: formData.stripe_customer_id.trim() || null,
           updated_at: new Date().toISOString()
         })
         .eq('id', user?.id);
@@ -394,71 +391,33 @@ export const ProfileTab = () => {
           </CardContent>
         </Card>
 
-        {/* Stripe Integration Card */}
-        <Card className="bg-white/10 backdrop-blur-md border-white/20">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
-              <CreditCard className="h-5 w-5" />
-              Stripe Customer Data
-            </CardTitle>
-            <CardDescription className="text-white/70">
-              Sync your profile with Stripe customer information
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {stripeCustomer ? (
-              <div className="space-y-3">
-                <div className="p-4 bg-green-500/20 border border-green-400/30 rounded-lg">
-                  <h4 className="font-medium text-green-300 mb-2">Stripe Customer Found</h4>
-                  <div className="space-y-1 text-sm text-green-200">
-                    <p><strong>Customer ID:</strong> {stripeCustomer.id}</p>
-                    <p><strong>Name:</strong> {stripeCustomer.name}</p>
-                    <p><strong>Email:</strong> {stripeCustomer.email}</p>
-                  </div>
-                </div>
+        {/* Stripe Integration Card - Hidden from regular users */}
+        {profile?.role === 'admin' && (
+          <Card className="bg-white/10 backdrop-blur-md border-white/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white">
+                <CreditCard className="h-5 w-5" />
+                Stripe Customer Data (Admin Only)
+              </CardTitle>
+              <CardDescription className="text-white/70">
+                Admin view - Stripe customer information
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label className="text-white">Stripe Customer ID</Label>
+                <Input
+                  value={profile?.stripe_customer_id || 'Not set'}
+                  disabled
+                  className="bg-white/5 border-white/10 text-white/70"
+                />
               </div>
-            ) : (
-              <div className="p-4 bg-yellow-500/20 border border-yellow-400/30 rounded-lg">
-                <h4 className="font-medium text-yellow-300 mb-2">No Stripe Customer Found</h4>
-                <p className="text-sm text-yellow-200">
-                  Click the sync button below to find and link your Stripe customer account.
-                </p>
-              </div>
-            )}
-
-            <div className="space-y-2">
-              <Label className="text-white">Stripe Customer ID</Label>
-              <Input
-                value={formData.stripe_customer_id}
-                onChange={(e) => setFormData(prev => ({ ...prev, stripe_customer_id: e.target.value }))}
-                placeholder="Enter your Stripe Customer ID (e.g., cus_...)"
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-              />
               <p className="text-xs text-white/50">
-                Enter your existing Stripe Customer ID to view billing information
+                Customer ID is managed through User Management for regular users
               </p>
-            </div>
-
-            <Button 
-              onClick={syncWithStripe} 
-              disabled={syncing}
-              variant="outline"
-              className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
-            >
-              {syncing ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                  Syncing...
-                </>
-              ) : (
-                <>
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Sync with Stripe
-                </>
-              )}
-            </Button>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
