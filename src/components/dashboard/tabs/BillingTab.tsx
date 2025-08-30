@@ -183,23 +183,30 @@ export const BillingTab = () => {
       }
 
       if (data?.url) {
-        console.log('Opening billing info portal in popup:', data.url);
-        // Open in popup window
-        const popup = window.open(
+        console.log('Opening billing info portal in new window:', data.url);
+        
+        // Calculate center position
+        const width = 1200;
+        const height = 800;
+        const left = (window.screen.width - width) / 2;
+        const top = (window.screen.height - height) / 2;
+        
+        // Open in new window centered and properly sized
+        const billingWindow = window.open(
           data.url, 
-          'stripe-billing-popup', 
-          'width=800,height=600,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no'
+          'stripe-billing-window', 
+          `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no`
         );
         
-        if (popup) {
-          // Focus on the popup
-          popup.focus();
+        if (billingWindow) {
+          // Focus on the window
+          billingWindow.focus();
           
-          // Optional: Listen for popup close and refresh data
+          // Optional: Listen for window close and refresh data
           const checkClosed = setInterval(() => {
-            if (popup.closed) {
+            if (billingWindow.closed) {
               clearInterval(checkClosed);
-              console.log('Billing popup closed, refreshing data...');
+              console.log('Billing window closed, refreshing data...');
               fetchBillingData();
             }
           }, 1000);
@@ -234,23 +241,30 @@ export const BillingTab = () => {
       }
 
       if (data?.url) {
-        console.log('Opening payment method portal in popup:', data.url);
-        // Open in popup window
-        const popup = window.open(
+        console.log('Opening payment method portal in new window:', data.url);
+        
+        // Calculate center position
+        const width = 1200;
+        const height = 800;
+        const left = (window.screen.width - width) / 2;
+        const top = (window.screen.height - height) / 2;
+        
+        // Open in new window centered and properly sized
+        const paymentWindow = window.open(
           data.url, 
-          'stripe-payment-popup', 
-          'width=800,height=600,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no'
+          'stripe-payment-window', 
+          `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no`
         );
         
-        if (popup) {
-          // Focus on the popup
-          popup.focus();
+        if (paymentWindow) {
+          // Focus on the window
+          paymentWindow.focus();
           
-          // Optional: Listen for popup close and refresh data
+          // Optional: Listen for window close and refresh data
           const checkClosed = setInterval(() => {
-            if (popup.closed) {
+            if (paymentWindow.closed) {
               clearInterval(checkClosed);
-              console.log('Payment popup closed, refreshing data...');
+              console.log('Payment window closed, refreshing data...');
               fetchBillingData();
             }
           }, 1000);
