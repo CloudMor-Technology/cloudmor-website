@@ -55,24 +55,33 @@ export type Database = {
           client_id: string | null
           created_at: string
           id: string
+          is_active: boolean | null
+          notes: string | null
           service_description: string | null
           service_name: string
+          service_provider_id: string | null
           status: string | null
         }
         Insert: {
           client_id?: string | null
           created_at?: string
           id?: string
+          is_active?: boolean | null
+          notes?: string | null
           service_description?: string | null
           service_name: string
+          service_provider_id?: string | null
           status?: string | null
         }
         Update: {
           client_id?: string | null
           created_at?: string
           id?: string
+          is_active?: boolean | null
+          notes?: string | null
           service_description?: string | null
           service_name?: string
+          service_provider_id?: string | null
           status?: string | null
         }
         Relationships: [
@@ -84,6 +93,81 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      client_support_document_assignments: {
+        Row: {
+          client_id: string
+          created_at: string
+          document_id: string
+          id: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          document_id: string
+          id?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          document_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_support_document_assignments_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_support_document_assignments_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "client_support_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_support_documents: {
+        Row: {
+          assigned_to_all: boolean | null
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean | null
+          role: string | null
+          title: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          assigned_to_all?: boolean | null
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          role?: string | null
+          title: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          assigned_to_all?: boolean | null
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          role?: string | null
+          title?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
       }
       clients: {
         Row: {
