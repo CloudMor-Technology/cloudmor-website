@@ -23,6 +23,9 @@ import AliRahimi from "./pages/AliRahimi";
 import Portal from "./pages/Portal";
 import Profile from "./pages/Profile";
 
+// Support Pages
+import SpeedTest from "./pages/support/SpeedTest";
+
 // Service Pages
 import ManagedIT from "./pages/services/ManagedIT";
 import Cybersecurity from "./pages/services/Cybersecurity";
@@ -73,6 +76,7 @@ const App = () => (
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/sitemap" element={<Sitemap />} />
             <Route path="/case-studies/baleen-specialty" element={<BaleenSpecialty />} />
+            <Route path="/support/speed-test" element={<SpeedTest />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

@@ -5,12 +5,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
-interface LoginFormProps {
-  onToggleMode: () => void;
-}
-export const LoginForm = ({
-  onToggleMode
-}: LoginFormProps) => {
+
+export const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -43,7 +39,16 @@ export const LoginForm = ({
             <Input id="email" type="email" placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} className="bg-white/80 border-gray-300 focus:border-blue-500 focus:ring-blue-500 h-12 text-base rounded-lg" required />
           </div>
           <div className="space-y-3">
-            <Label htmlFor="password" className="text-gray-700 font-medium text-base">Password</Label>
+            <div className="flex justify-between items-center">
+              <Label htmlFor="password" className="text-gray-700 font-medium text-base">Password</Label>
+              <button 
+                type="button" 
+                className="text-sm text-blue-600 hover:underline font-medium"
+                onClick={() => window.open('mailto:welcome@cloudmor.com?subject=Password Reset Request', '_blank')}
+              >
+                Forgot password?
+              </button>
+            </div>
             <Input id="password" type="password" placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)} className="bg-white/80 border-gray-300 focus:border-blue-500 focus:ring-blue-500 h-12 text-base rounded-lg" required />
           </div>
         </CardContent>
@@ -52,10 +57,10 @@ export const LoginForm = ({
             {loading ? 'Signing In...' : 'Log in Now'}
           </Button>
           <p className="text-base text-center text-gray-600">
-            Don't have an account?{' '}
-            <button type="button" onClick={onToggleMode} className="text-blue-600 hover:underline font-medium">
-              Sign up here
-            </button>
+            Need access? Contact your administrator or email{' '}
+            <a href="mailto:welcome@cloudmor.com" className="text-blue-600 hover:underline font-medium">
+              welcome@cloudmor.com
+            </a>
           </p>
         </CardFooter>
       </form>

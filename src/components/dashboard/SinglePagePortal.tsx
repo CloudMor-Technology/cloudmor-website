@@ -594,6 +594,29 @@ export const SinglePagePortal = () => {
                   <p className="font-medium text-white/90">Helpful guides and troubleshooting resources</p>
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  {/* Phone Call Quality - Full Width */}
+                  <div className="bg-white/10 rounded-lg p-6 border border-white/20 hover:bg-white/15 transition-colors">
+                    <h4 className="text-blue-900 font-bold text-xl mb-3 flex items-center gap-3">
+                      <Phone className="w-4 h-4 text-blue-400" />
+                      Phone Call Quality
+                    </h4>
+                    <p className="text-white/90 text-base font-medium mb-4">How to Check Your Internet Speed for Better call quality?</p>
+                    <div className="text-white/80 text-sm space-y-2 mb-4">
+                      <p>1. Click Go to start the speed test link to check your Internet speed.</p>
+                      <p>3. Once the test is complete, take a screenshot of the results.</p>
+                      <p>4. If you are still experiencing problems, submit a support ticket and attach the screenshot of your speed test. This will help our support team quickly identify if the issue is related to your internet connection or something else.</p>
+                    </div>
+                    <Button 
+                      size="sm" 
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium border-0"
+                      onClick={() => window.open('/support/speed-test', '_blank')}
+                    >
+                      <ExternalLink className="w-3 h-3 mr-1" />
+                      View Resource
+                    </Button>
+                  </div>
+                  
+                  {/* Other Support Tips - Grid Layout */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {clientSupportDocs.length > 0 ? clientSupportDocs.map(doc => <div key={doc.id} className="bg-white/10 rounded-lg p-4 border border-white/20 hover:bg-white/15 transition-colors">
                           <h4 className="font-bold text-lg mb-2 text-blue-900">{doc.title}</h4>
@@ -603,13 +626,6 @@ export const SinglePagePortal = () => {
                               View Resource
                             </Button>}
                         </div>) : <>
-        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
-          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
-            <Phone className="w-5 h-5 text-green-400" />
-            Phone System Help
-          </h4>
-          <p className="text-white/90 text-base font-medium">Need help with your phone extensions or voicemail? Check our phone system guide.</p>
-        </div>
         <div className="bg-white/10 rounded-lg p-4 border border-white/20">
           <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
             <Wifi className="w-5 h-5 text-blue-400" />
