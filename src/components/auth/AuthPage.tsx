@@ -22,7 +22,7 @@ export const AuthPage = () => {
       <div className="flex flex-col items-center relative z-10 max-w-2xl mx-auto px-8 space-y-8">
         {/* Welcome Text - Top */}
         <div className="text-center">
-          <h1 className="text-7xl mb-8 leading-tight text-[#183a85] font-bold lg:text-8xl">
+          <h1 className="text-5xl mb-8 leading-tight text-[#183a85] font-bold lg:text-6xl">
             Welcome to CloudMor Client Portal
           </h1>
         </div>
