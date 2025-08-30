@@ -23,6 +23,20 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+// Utility functions for invoice filtering
+const getUniqueYears = (invoices: any[]) => {
+  if (!invoices || invoices.length === 0) return [];
+  const years = invoices.map(invoice => invoice.year).filter(Boolean);
+  const uniqueYears = [...new Set(years)].sort((a, b) => b - a);
+  return uniqueYears;
+};
+
+const shouldShowYearFilter = (invoices: any[]) => {
+  const uniqueYears = getUniqueYears(invoices);
+  const currentYear = new Date().getFullYear();
+  return uniqueYears.length > 1 || (uniqueYears.length === 1 && uniqueYears[0] !== currentYear);
+};
+
 export const BillingTab = () => {
   const { user, isImpersonating, profile } = useAuth();
   const { toast } = useToast();
@@ -206,19 +220,6 @@ export const BillingTab = () => {
       style: 'currency',
       currency: 'USD',
     }).format((amountInCents || 0) / 100);
-  };
-
-  const getUniqueYears = (invoices: any[]) => {
-    if (!invoices || invoices.length === 0) return [];
-    const years = invoices.map(invoice => invoice.year).filter(Boolean);
-    const uniqueYears = [...new Set(years)].sort((a, b) => b - a);
-    return uniqueYears;
-  };
-
-  const shouldShowYearFilter = (invoices: any[]) => {
-    const uniqueYears = getUniqueYears(invoices);
-    const currentYear = new Date().getFullYear();
-    return uniqueYears.length > 1 || (uniqueYears.length === 1 && uniqueYears[0] !== currentYear);
   };
 
   if (!user) {
