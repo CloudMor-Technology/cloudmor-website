@@ -40,9 +40,16 @@ export const BillingTab = () => {
       setError(null);
       
       console.log('Fetching comprehensive billing dashboard...');
+      console.log('Current auth state:', { 
+        isImpersonating, 
+        profileEmail: profile?.email,
+        userEmail: user?.email 
+      });
       
       const session = await supabase.auth.getSession();
       const requestBody = isImpersonating ? { impersonateEmail: profile?.email } : {};
+      
+      console.log('Request body for billing:', requestBody);
       
       const { data, error } = await supabase.functions.invoke('get-billing-info', {
         headers: {
