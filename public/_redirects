@@ -3,3 +3,17 @@
 /colores       /index.html   200
 /bc            /index.html   200
 /alirahimi     /index.html   200
+/portal        /index.html   200
+/profile       /index.html   200
+/services/*    /index.html   200
+/about         /index.html   200
+/contact       /index.html   200
+/industries/*  /index.html   200
+/insights/*    /index.html   200
+/case-studies/* /index.html  200
+/careers       /index.html   200
+/privacy-policy /index.html  200
+/sitemap       /index.html   200
+
+# Catch-all rule for client-side routing (MUST be last)
+/*             /index.html   200
