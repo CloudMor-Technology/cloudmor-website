@@ -114,7 +114,8 @@ serve(async (req) => {
           clientEmail: targetEmail,
           customerId: null,
           isImpersonating,
-          adminEmail: targetEmail
+          adminEmail: user.email,
+          targetEmail
         }
       }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -279,7 +280,8 @@ serve(async (req) => {
       clientEmail: targetEmail,
       customerId: customer.id,
       isImpersonating,
-      adminEmail: user.email
+      adminEmail: user.email,
+      targetEmail
     };
 
     return new Response(JSON.stringify({
