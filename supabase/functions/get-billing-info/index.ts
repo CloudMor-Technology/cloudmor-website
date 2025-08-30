@@ -101,16 +101,21 @@ serve(async (req) => {
     if (customers.data.length === 0) {
       console.log('No customer found, returning default billing data');
       return new Response(JSON.stringify({
-        customer: { email: targetEmail },
-        monthlySpending: 0,
-        yearlySpending: 0,
-        nextBillingDate: null,
-        balance: 0,
-        subscriptions: [],
-        paymentMethods: [],
-        invoices: [],
-        isImpersonating,
-        targetEmail
+        success: true,
+        data: {
+          customer: { email: targetEmail },
+          thisMonthTotal: 0,
+          totalSpentThisYear: 0,
+          nextBillingDate: 'No active subscription',
+          subscriptions: [],
+          paymentMethods: [],
+          invoices: [],
+          upcomingInvoice: null,
+          clientEmail: targetEmail,
+          customerId: null,
+          isImpersonating,
+          adminEmail: targetEmail
+        }
       }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
