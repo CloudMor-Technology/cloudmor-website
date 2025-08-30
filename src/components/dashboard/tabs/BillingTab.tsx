@@ -167,6 +167,108 @@ export const BillingTab = () => {
     }
   };
 
+  const handleUpdateBillingInfo = async () => {
+    try {
+      console.log('Creating customer portal session for billing info...');
+      
+      const { data, error } = await supabase.functions.invoke('create-customer-portal', {
+        headers: {
+          Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+        },
+      });
+
+      if (error) {
+        console.error('Portal creation error:', error);
+        throw new Error(`Portal error: ${error.message}`);
+      }
+
+      if (data?.url) {
+        console.log('Opening billing info portal in popup:', data.url);
+        // Open in popup window
+        const popup = window.open(
+          data.url, 
+          'stripe-billing-popup', 
+          'width=800,height=600,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no'
+        );
+        
+        if (popup) {
+          // Focus on the popup
+          popup.focus();
+          
+          // Optional: Listen for popup close and refresh data
+          const checkClosed = setInterval(() => {
+            if (popup.closed) {
+              clearInterval(checkClosed);
+              console.log('Billing popup closed, refreshing data...');
+              fetchBillingData();
+            }
+          }, 1000);
+        }
+      } else {
+        throw new Error('No portal URL received');
+      }
+
+    } catch (error) {
+      console.error('Error opening billing info portal:', error);
+      toast({
+        title: "Error",
+        description: "Failed to open billing information portal. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleUpdatePaymentMethod = async () => {
+    try {
+      console.log('Creating customer portal session for payment method...');
+      
+      const { data, error } = await supabase.functions.invoke('create-customer-portal', {
+        headers: {
+          Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+        },
+      });
+
+      if (error) {
+        console.error('Portal creation error:', error);
+        throw new Error(`Portal error: ${error.message}`);
+      }
+
+      if (data?.url) {
+        console.log('Opening payment method portal in popup:', data.url);
+        // Open in popup window
+        const popup = window.open(
+          data.url, 
+          'stripe-payment-popup', 
+          'width=800,height=600,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no'
+        );
+        
+        if (popup) {
+          // Focus on the popup
+          popup.focus();
+          
+          // Optional: Listen for popup close and refresh data
+          const checkClosed = setInterval(() => {
+            if (popup.closed) {
+              clearInterval(checkClosed);
+              console.log('Payment popup closed, refreshing data...');
+              fetchBillingData();
+            }
+          }, 1000);
+        }
+      } else {
+        throw new Error('No portal URL received');
+      }
+
+    } catch (error) {
+      console.error('Error opening payment method portal:', error);
+      toast({
+        title: "Error",
+        description: "Failed to open payment method portal. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const testStripeConnection = async () => {
     try {
       console.log('Testing Stripe connection...');
@@ -496,6 +598,53 @@ export const BillingTab = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Billing Information & Payment Method Update */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card className="bg-white/90 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <User className="h-5 w-5" />
+              Billing Information
+            </CardTitle>
+            <CardDescription>
+              Update your billing address, contact information, and company details
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button 
+              onClick={handleUpdateBillingInfo}
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
+              size="lg"
+            >
+              <Settings className="h-4 w-4" />
+              Update Billing Information
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-white/90 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <CreditCard className="h-5 w-5" />
+              Payment Methods
+            </CardTitle>
+            <CardDescription>
+              Add, remove, or update your payment methods and default card
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button 
+              onClick={handleUpdatePaymentMethod}
+              className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700"
+              size="lg"
+            >
+              <CreditCard className="h-4 w-4" />
+              Update Payment Method
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
