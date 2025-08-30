@@ -178,6 +178,13 @@ export const SinglePagePortal = () => {
                   <p className="font-medium">CloudMor</p>
                 </div>
                 <div>
+                  <p className="text-sm text-gray-500">Company Website</p>
+                  <p className="font-medium">www.cloudmor.com</p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-4">
+                <div>
                   <p className="text-sm text-gray-500">Company Address</p>
                   <p className="font-medium">27632 Falkirk, Mission Viejo, CA 92691</p>
                 </div>
