@@ -84,18 +84,19 @@ export const ClientManagement = () => {
     }
 
     try {
-      // First create the Supabase auth user
-      const { data: authData, error: authError } = await supabase.auth.admin.createUser({
-        email: formData.contact_email,
-        password: formData.password,
-        email_confirm: true,
-        user_metadata: {
+      // Create user using admin edge function
+      const { data: authResult, error: authError } = await supabase.functions.invoke('admin-user-management', {
+        body: {
+          action: 'create_user',
+          email: formData.contact_email,
+          password: formData.password,
           full_name: formData.contact_name,
           company_name: formData.company_name
         }
       });
 
       if (authError) throw authError;
+      if (!authResult.success) throw new Error('Failed to create user account');
 
       // Then create the client record
       const { data: clientData, error: clientError } = await supabase
@@ -125,31 +126,11 @@ export const ClientManagement = () => {
           .from('client_services')
           .insert(serviceInserts);
 
-        if (serviceError) throw serviceError;
+      if (serviceError) throw serviceError;
       }
 
-      // Send welcome email with credentials
-      try {
-        const { error: emailError } = await supabase.functions.invoke('send-user-credentials', {
-          body: {
-            email: formData.contact_email,
-            full_name: formData.contact_name || formData.company_name,
-            password: formData.password,
-            company_name: formData.company_name,
-            role: 'client'
-          }
-        });
-
-        if (emailError) {
-          console.error('Error sending welcome email:', emailError);
-          toast.warning('Client created but welcome email failed to send');
-        } else {
-          toast.success('Client created and welcome email sent successfully');
-        }
-      } catch (emailError) {
-        console.error('Error sending welcome email:', emailError);
-        toast.warning('Client created but welcome email failed to send');
-      }
+      // Welcome email is automatically sent by the admin-user-management function
+      toast.success('Client created successfully and welcome email sent!');
 
       fetchClients();
       resetForm();
@@ -169,39 +150,21 @@ export const ClientManagement = () => {
     }
 
     try {
-      // First, find the user by email to get their UUID
-      const { data: users, error: getUserError } = await supabase.auth.admin.listUsers();
-      if (getUserError) throw getUserError;
-      
-      const user = users.users.find((u: any) => u.email === client.contact_email);
-      if (!user) {
-        toast.error('User not found in authentication system');
-        return;
-      }
+      // Reset password using admin edge function
+      const { data: resetResult, error: resetError } = await supabase.functions.invoke('admin-user-management', {
+        body: {
+          action: 'reset_password',
+          email: client.contact_email,
+          new_password: newPassword,
+          full_name: client.contact_name,
+          company_name: client.company_name
+        }
+      });
 
-      // Update the user's password using their UUID
-      const { error } = await supabase.auth.admin.updateUserById(
-        user.id, // Using UUID as identifier
-        { password: newPassword }
-      );
+      if (resetError) throw resetError;
+      if (!resetResult.success) throw new Error('Failed to reset password');
 
-      if (error) throw error;
-
-      // Send new credentials email
-      try {
-        await supabase.functions.invoke('send-user-credentials', {
-          body: {
-            email: client.contact_email,
-            full_name: client.contact_name || client.company_name,
-            password: newPassword,
-            company_name: client.company_name,
-            role: 'client'
-          }
-        });
-        toast.success('Password reset and new credentials sent via email');
-      } catch (emailError) {
-        toast.success('Password reset successfully (email sending failed)');
-      }
+      toast.success('Password reset successfully and confirmation email sent!');
     } catch (error) {
       console.error('Error resetting password:', error);
       toast.error('Failed to reset password: ' + (error as any).message);

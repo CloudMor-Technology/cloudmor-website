@@ -30,3 +30,5 @@ verify_jwt = false
 [functions.delete-user]
 
 [functions.cleanup-orphaned-users]
+
+[functions.admin-user-management]
