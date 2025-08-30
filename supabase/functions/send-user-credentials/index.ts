@@ -28,7 +28,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('Sending credentials email to:', email);
 
     const emailResponse = await resend.emails.send({
-      from: "CloudMor Portal <noreply@cloudmor.com>",
+      from: "CloudMor Portal <onboarding@resend.dev>",
       to: [email],
       subject: "Your CloudMor Portal Access",
       html: `

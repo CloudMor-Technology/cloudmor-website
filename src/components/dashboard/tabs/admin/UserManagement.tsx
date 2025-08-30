@@ -228,21 +228,19 @@ export const UserManagement = () => {
     }
 
     try {
-      // Delete from auth.users (this will cascade to profiles due to foreign key)
-      const { error: authError } = await supabase.auth.admin.deleteUser(user.id);
-      
-      if (authError) {
-        console.error('Auth delete error:', authError);
-        // If auth delete fails, try deleting from profiles table directly
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .delete()
-          .eq('id', user.id);
-          
-        if (profileError) throw profileError;
-      }
+      // Use the edge function for proper user deletion
+      const { data, error } = await supabase.functions.invoke('delete-user', {
+        body: { userId: user.id }
+      });
 
-      toast.success(`User ${user.full_name || user.email} deleted successfully`);
+      if (error) throw error;
+
+      if (data.warning) {
+        toast.success(`User deleted with warning: ${data.warning}`);
+      } else {
+        toast.success(`User ${user.full_name || user.email} deleted successfully`);
+      }
+      
       fetchUsers(); // Refresh the user list
     } catch (error) {
       console.error('Error deleting user:', error);
@@ -250,21 +248,48 @@ export const UserManagement = () => {
     }
   };
 
+  const handleCleanupOrphanedUsers = async () => {
+    if (!confirm('This will remove any auth users that don\'t have corresponding profiles. Continue?')) {
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase.functions.invoke('cleanup-orphaned-users');
+
+      if (error) throw error;
+
+      toast.success(`Cleanup completed: ${data.summary.deleted} orphaned users removed`);
+      console.log('Cleanup results:', data);
+    } catch (error) {
+      console.error('Error during cleanup:', error);
+      toast.error('Failed to cleanup orphaned users');
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h3 className="text-2xl font-bold">User Management</h3>
-        <Button 
-          onClick={() => {
-            setShowCreateForm(true);
-            setEditingUser(null);
-            resetForm();
-          }}
-          className="bg-blue-600 hover:bg-blue-700"
-        >
-          <Plus className="w-5 h-5 mr-2" />
-          Create User
-        </Button>
+        <div className="flex space-x-3">
+          <Button 
+            onClick={handleCleanupOrphanedUsers}
+            variant="outline"
+            className="text-orange-600 hover:text-orange-700"
+          >
+            Cleanup Orphaned Users
+          </Button>
+          <Button 
+            onClick={() => {
+              setShowCreateForm(true);
+              setEditingUser(null);
+              resetForm();
+            }}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            Create User
+          </Button>
+        </div>
       </div>
 
       {/* Create/Edit User Form */}

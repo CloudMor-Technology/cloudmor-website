@@ -26,3 +26,7 @@ verify_jwt = false
 [functions.get-billing-info]
 
 [functions.send-user-credentials]
+
+[functions.delete-user]
+
+[functions.cleanup-orphaned-users]
