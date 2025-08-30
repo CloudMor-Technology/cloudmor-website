@@ -68,28 +68,50 @@ serve(async (req) => {
       apiVersion: "2023-10-16",
     });
 
-    const customerId = Deno.env.get("Customer ID");
-    if (!customerId) {
-      console.error('Customer ID not found in environment');
-      throw new Error("Customer ID not configured");
+    // Look up customer by email instead of using hardcoded ID
+    console.log('Looking up Stripe customer for:', user.email);
+    
+    const customers = await stripe.customers.list({
+      email: user.email,
+      limit: 1
+    });
+
+    if (customers.data.length === 0) {
+      console.log('No customer found, returning default billing data');
+      return new Response(JSON.stringify({
+        customer: { email: user.email },
+        monthlySpending: 0,
+        yearlySpending: 0,
+        nextBillingDate: null,
+        balance: 0,
+        subscriptions: [],
+        paymentMethods: [],
+        invoices: []
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
     }
 
-    console.log('Fetching comprehensive dashboard data for:', customerId);
+    const customer = customers.data[0];
+    console.log('Found customer ID:', customer.id);
+
+    console.log('Fetching comprehensive dashboard data for:', customer.id);
 
     // Fetch all data in parallel
-    const [customer, subscriptions, invoices, paymentMethods] = await Promise.allSettled([
-      stripe.customers.retrieve(customerId),
+    const [customerDetails, subscriptions, invoices, paymentMethods] = await Promise.allSettled([
+      stripe.customers.retrieve(customer.id),
       stripe.subscriptions.list({ 
-        customer: customerId, 
+        customer: customer.id, 
         limit: 5,
         expand: ['data.items.data.price.product']
       }),
       stripe.invoices.list({ 
-        customer: customerId, 
+        customer: customer.id, 
         limit: 20 
       }),
       stripe.paymentMethods.list({ 
-        customer: customerId, 
+        customer: customer.id, 
         type: 'card' 
       })
     ]);
@@ -100,7 +122,7 @@ serve(async (req) => {
     let upcomingInvoice = null;
     try {
       upcomingInvoice = await stripe.invoices.retrieveUpcoming({
-        customer: customerId,
+        customer: customer.id,
       });
       console.log('Upcoming invoice found');
     } catch (e) {
@@ -210,13 +232,13 @@ serve(async (req) => {
 
     // Return comprehensive dashboard data
     const dashboardData = {
-      customer: customer.status === 'fulfilled' ? {
-        id: (customer.value as any).id,
-        name: (customer.value as any).name,
-        email: (customer.value as any).email,
-        balance: (customer.value as any).balance || 0,
-        created: (customer.value as any).created,
-        currency: (customer.value as any).currency || 'usd'
+      customer: customerDetails.status === 'fulfilled' ? {
+        id: (customerDetails.value as any).id,
+        name: (customerDetails.value as any).name,
+        email: (customerDetails.value as any).email,
+        balance: (customerDetails.value as any).balance || 0,
+        created: (customerDetails.value as any).created,
+        currency: (customerDetails.value as any).currency || 'usd'
       } : null,
       subscriptions: processedSubscriptions,
       invoices: processedInvoices,
@@ -226,7 +248,7 @@ serve(async (req) => {
       totalSpentThisYear,
       nextBillingDate,
       clientEmail: user.email,
-      customerId
+      customerId: customer.id
     };
 
     return new Response(JSON.stringify({

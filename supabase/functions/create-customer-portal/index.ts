@@ -57,13 +57,20 @@ serve(async (req) => {
       apiVersion: "2023-10-16",
     });
 
-    const customerId = Deno.env.get("Customer ID");
-    if (!customerId) {
-      console.error('Customer ID not found in environment');
-      throw new Error("Customer ID not configured");
+    // Look up customer by email instead of using hardcoded ID
+    console.log('Looking up Stripe customer for:', user.email);
+    
+    const customers = await stripe.customers.list({
+      email: user.email,
+      limit: 1
+    });
+
+    if (customers.data.length === 0) {
+      throw new Error("No Stripe customer found for this user. Please make a purchase first.");
     }
 
-    console.log('Creating customer portal session for:', customerId);
+    const customerId = customers.data[0].id;
+    console.log('Found customer ID:', customerId);
 
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
