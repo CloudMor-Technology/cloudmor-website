@@ -13,6 +13,47 @@ export const SinglePagePortal = () => {
   const isAdmin = profile?.role === 'admin';
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [showClientManagement, setShowClientManagement] = useState(false);
+  const [clients, setClients] = useState([
+    {
+      id: 1,
+      name: 'John Doe',
+      email: 'john@example.com',
+      phone: '(555) 123-4567',
+      company: 'Tech Solutions Inc',
+      companyWebsite: 'www.techsolutions.com',
+      companyAddress: '123 Tech Street, NY 10001',
+      stripeCustomerId: 'cus_abc123',
+      stripeEmail: 'billing@techsolutions.com',
+      jiraEmail: 'support@techsolutions.com',
+      services: 'Managed IT Services, Cloud Hosting'
+    },
+    {
+      id: 2,
+      name: 'Jane Smith',
+      email: 'jane@company.com',
+      phone: '(555) 987-6543',
+      company: 'Digital Corp',
+      companyWebsite: 'www.digitalcorp.com',
+      companyAddress: '456 Digital Ave, CA 90210',
+      stripeCustomerId: 'cus_def456',
+      stripeEmail: 'accounting@digitalcorp.com',
+      jiraEmail: 'help@digitalcorp.com',
+      services: 'Cybersecurity Services, Web Development'
+    },
+    {
+      id: 3,
+      name: 'Bob Johnson',
+      email: 'bob@business.com',
+      phone: '(555) 456-7890',
+      company: 'Business Solutions LLC',
+      companyWebsite: 'www.bizsolut.com',
+      companyAddress: '789 Business Blvd, TX 75001',
+      stripeCustomerId: 'cus_ghi789',
+      stripeEmail: 'finance@bizsolut.com',
+      jiraEmail: 'tickets@bizsolut.com',
+      services: 'Network Management, Technical Support'
+    }
+  ]);
   const [clientForm, setClientForm] = useState({
     name: '',
     email: '',
@@ -20,6 +61,7 @@ export const SinglePagePortal = () => {
     company: '',
     companyWebsite: '',
     companyAddress: '',
+    stripeCustomerId: '',
     stripeEmail: '',
     jiraEmail: '',
     services: ''
@@ -41,9 +83,19 @@ export const SinglePagePortal = () => {
 
   const handleAddClient = async () => {
     try {
-      // Here you would implement the logic to save client to database
+      // Create new client with unique ID
+      const newClient = {
+        id: Date.now(), // Simple ID generation for demo
+        ...clientForm
+      };
+      
+      // Add new client to the beginning of the list
+      setClients([newClient, ...clients]);
+      
       console.log('Adding client:', clientForm);
       toast.success('Client added successfully');
+      
+      // Reset form
       setClientForm({
         name: '',
         email: '',
@@ -51,6 +103,7 @@ export const SinglePagePortal = () => {
         company: '',
         companyWebsite: '',
         companyAddress: '',
+        stripeCustomerId: '',
         stripeEmail: '',
         jiraEmail: '',
         services: ''
@@ -60,33 +113,10 @@ export const SinglePagePortal = () => {
     }
   };
 
-  // Mock existing clients data (replace with real data from database)
-  const existingClients = [
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
-      phone: '(555) 123-4567',
-      company: 'Tech Solutions Inc',
-      services: 'Managed IT Services, Cloud Hosting'
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane@company.com',
-      phone: '(555) 987-6543',
-      company: 'Digital Corp',
-      services: 'Cybersecurity Services, Web Development'
-    },
-    {
-      id: 3,
-      name: 'Bob Johnson',
-      email: 'bob@business.com',
-      phone: '(555) 456-7890',
-      company: 'Business Solutions LLC',
-      services: 'Network Management, Technical Support'
-    }
-  ];
+  const handleDeleteClient = (clientId: number) => {
+    setClients(clients.filter(client => client.id !== clientId));
+    toast.success('Client deleted successfully');
+  };
 
   const handlePasswordChange = async () => {
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
@@ -195,29 +225,39 @@ export const SinglePagePortal = () => {
               {/* Client Management Section */}
               {showClientManagement && (
                 <div className="mt-6 space-y-6">
-                  {/* Existing Clients List */}
-                  <div className="p-6 bg-white rounded-lg border">
-                    <h3 className="text-lg font-semibold mb-4">Existing Clients</h3>
-                    <div className="space-y-3">
-                      {existingClients.map((client) => (
-                        <div key={client.id} className="p-4 border rounded-lg hover:bg-gray-50">
-                          <div className="flex justify-between items-start">
-                            <div className="flex-1">
-                              <h4 className="font-semibold text-lg">{client.name}</h4>
-                              <p className="text-gray-600">{client.email}</p>
-                              <p className="text-gray-600">{client.phone}</p>
-                              <p className="text-gray-600">{client.company}</p>
-                              <p className="text-sm text-blue-600 mt-1">Services: {client.services}</p>
-                            </div>
-                            <div className="flex gap-2">
-                              <Button size="sm" variant="outline">Edit</Button>
-                              <Button size="sm" variant="outline" className="text-red-600">Delete</Button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                   {/* Existing Clients List */}
+                   <div className="p-6 bg-white rounded-lg border">
+                     <h3 className="text-lg font-semibold mb-4">Existing Clients</h3>
+                     <div className="space-y-3">
+                       {clients.map((client) => (
+                         <div key={client.id} className="p-4 border rounded-lg hover:bg-gray-50">
+                           <div className="flex justify-between items-start">
+                             <div className="flex-1">
+                               <h4 className="font-semibold text-lg">{client.name}</h4>
+                               <p className="text-gray-600">{client.email}</p>
+                               <p className="text-gray-600">{client.phone}</p>
+                               <p className="text-gray-600">{client.company}</p>
+                               <p className="text-gray-600">{client.companyWebsite}</p>
+                               <p className="text-gray-600">{client.companyAddress}</p>
+                               <p className="text-sm text-purple-600 mt-1">Stripe ID: {client.stripeCustomerId}</p>
+                               <p className="text-sm text-blue-600 mt-1">Services: {client.services}</p>
+                             </div>
+                             <div className="flex gap-2">
+                               <Button size="sm" variant="outline">Edit</Button>
+                               <Button 
+                                 size="sm" 
+                                 variant="outline" 
+                                 className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                 onClick={() => handleDeleteClient(client.id)}
+                               >
+                                 Delete
+                               </Button>
+                             </div>
+                           </div>
+                         </div>
+                       ))}
+                     </div>
+                   </div>
 
                   {/* Add New Client Form */}
                   <div className="p-6 bg-gray-50 rounded-lg border">
@@ -273,17 +313,27 @@ export const SinglePagePortal = () => {
                           placeholder="www.company.com"
                         />
                       </div>
-                      
-                      <div>
-                        <Label htmlFor="stripeEmail">Stripe Email</Label>
-                        <Input
-                          id="stripeEmail"
-                          type="email"
-                          value={clientForm.stripeEmail}
-                          onChange={(e) => setClientForm({...clientForm, stripeEmail: e.target.value})}
-                          placeholder="billing@company.com"
-                        />
-                      </div>
+                       
+                       <div>
+                         <Label htmlFor="stripeCustomerId">Stripe Customer ID</Label>
+                         <Input
+                           id="stripeCustomerId"
+                           value={clientForm.stripeCustomerId}
+                           onChange={(e) => setClientForm({...clientForm, stripeCustomerId: e.target.value})}
+                           placeholder="cus_abc123..."
+                         />
+                       </div>
+
+                       <div>
+                         <Label htmlFor="stripeEmail">Stripe Email</Label>
+                         <Input
+                           id="stripeEmail"
+                           type="email"
+                           value={clientForm.stripeEmail}
+                           onChange={(e) => setClientForm({...clientForm, stripeEmail: e.target.value})}
+                           placeholder="billing@company.com"
+                         />
+                       </div>
                       
                       <div>
                         <Label htmlFor="jiraEmail">Jira Email</Label>
