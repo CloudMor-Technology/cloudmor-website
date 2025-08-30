@@ -93,7 +93,8 @@ export const UserManagement = () => {
             job_title: formData.job_title,
             role: formData.role,
             stripe_customer_id: formData.stripe_customer_id,
-            jira_email: formData.jira_email
+            jira_email: formData.jira_email,
+            access_permissions: formData.access_permissions
           })
           .eq('id', authData.user.id);
 
@@ -120,7 +121,8 @@ export const UserManagement = () => {
           job_title: formData.job_title,
           role: formData.role,
           stripe_customer_id: formData.stripe_customer_id,
-          jira_email: formData.jira_email
+          jira_email: formData.jira_email,
+          access_permissions: formData.access_permissions
         })
         .eq('id', editingUser.id);
 
@@ -169,7 +171,7 @@ export const UserManagement = () => {
       role: user.role || 'client',
       stripe_customer_id: user.stripe_customer_id || '',
       jira_email: user.jira_email || '',
-      access_permissions: {
+      access_permissions: user.access_permissions || {
         dashboard: true,
         billing: false,
         support: false,

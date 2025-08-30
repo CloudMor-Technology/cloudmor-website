@@ -198,6 +198,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          access_permissions: Json | null
           company_id: string | null
           created_at: string
           email: string
@@ -212,6 +213,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          access_permissions?: Json | null
           company_id?: string | null
           created_at?: string
           email: string
@@ -226,6 +228,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          access_permissions?: Json | null
           company_id?: string | null
           created_at?: string
           email?: string
