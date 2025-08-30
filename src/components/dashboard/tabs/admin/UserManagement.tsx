@@ -23,6 +23,8 @@ export const UserManagement = () => {
     job_title: '',
     company_id: '',
     role: 'client',
+    stripe_customer_id: '',
+    jira_email: '',
     access_permissions: {
       dashboard: true,
       billing: false,
@@ -90,7 +92,9 @@ export const UserManagement = () => {
             phone: formData.phone,
             job_title: formData.job_title,
             company_id: formData.company_id,
-            role: formData.role
+            role: formData.role,
+            stripe_customer_id: formData.stripe_customer_id,
+            jira_email: formData.jira_email
           })
           .eq('id', authData.user.id);
 
@@ -116,7 +120,9 @@ export const UserManagement = () => {
           phone: formData.phone,
           job_title: formData.job_title,
           company_id: formData.company_id,
-          role: formData.role
+          role: formData.role,
+          stripe_customer_id: formData.stripe_customer_id,
+          jira_email: formData.jira_email
         })
         .eq('id', editingUser.id);
 
@@ -141,6 +147,8 @@ export const UserManagement = () => {
       job_title: '',
       company_id: '',
       role: 'client',
+      stripe_customer_id: '',
+      jira_email: '',
       access_permissions: {
         dashboard: true,
         billing: false,
@@ -161,6 +169,8 @@ export const UserManagement = () => {
       job_title: user.job_title || '',
       company_id: user.company_id || '',
       role: user.role || 'client',
+      stripe_customer_id: user.stripe_customer_id || '',
+      jira_email: user.jira_email || '',
       access_permissions: {
         dashboard: true,
         billing: false,
@@ -281,6 +291,28 @@ export const UserManagement = () => {
                     <SelectItem value="admin">Admin</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="stripeCustomerId">Stripe Customer ID</Label>
+                <Input
+                  id="stripeCustomerId"
+                  value={formData.stripe_customer_id}
+                  onChange={(e) => setFormData({...formData, stripe_customer_id: e.target.value})}
+                  placeholder="Enter Stripe Customer ID"
+                />
+              </div>
+              <div>
+                <Label htmlFor="jiraEmail">Jira Email Address</Label>
+                <Input
+                  id="jiraEmail"
+                  type="email"
+                  value={formData.jira_email}
+                  onChange={(e) => setFormData({...formData, jira_email: e.target.value})}
+                  placeholder="Enter Jira email address"
+                />
               </div>
             </div>
 
