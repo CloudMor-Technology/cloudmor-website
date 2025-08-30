@@ -213,6 +213,11 @@ export const SinglePagePortal = () => {
 
   // Load Jira Service Desk widget
   useEffect(() => {
+    // Remove any existing Jira scripts first
+    const existingScripts = document.querySelectorAll('script[src*="jsd-widget.atlassian.com"]');
+    existingScripts.forEach(script => script.remove());
+
+    // Create and load the Jira Service Desk widget script
     const script = document.createElement('script');
     script.setAttribute('data-jsd-embedded', '');
     script.setAttribute('data-key', '7266fae8-8b7d-4231-8579-bce9a92270b2');
@@ -220,11 +225,22 @@ export const SinglePagePortal = () => {
     script.src = 'https://jsd-widget.atlassian.com/assets/embed.js';
     script.async = true;
     
-    document.body.appendChild(script);
+    // Add load event listener to ensure widget is ready
+    script.onload = () => {
+      console.log('Jira Service Desk widget loaded successfully');
+    };
+    
+    script.onerror = () => {
+      console.error('Failed to load Jira Service Desk widget');
+    };
+    
+    document.head.appendChild(script);
     
     return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
+      // Cleanup on unmount
+      const scriptToRemove = document.querySelector('script[src*="jsd-widget.atlassian.com"]');
+      if (scriptToRemove) {
+        scriptToRemove.remove();
       }
     };
   }, []);
@@ -253,9 +269,23 @@ export const SinglePagePortal = () => {
       icon: MessageCircle,
       color: 'purple',
       action: () => {
-        if (window.JSDWidget) {
-          window.JSDWidget.show();
-        }
+        console.log('Attempting to open Jira Service Desk widget');
+        // Wait a bit for the widget to be fully loaded
+        setTimeout(() => {
+          if (window.JSDWidget) {
+            console.log('JSDWidget found, opening widget');
+            window.JSDWidget.show();
+          } else {
+            console.error('JSDWidget not available');
+            // Fallback - try to find and click the widget button if it exists
+            const jiraButton = document.querySelector('[data-jsd-embedded]') as HTMLElement;
+            if (jiraButton && typeof jiraButton.click === 'function') {
+              jiraButton.click();
+            } else {
+              alert('Chat support is loading. Please try again in a moment.');
+            }
+          }
+        }, 1000);
       }
     }
   ];
@@ -779,9 +809,23 @@ export const SinglePagePortal = () => {
                 </Button>
                 <Button 
                   onClick={() => {
-                    if (window.JSDWidget) {
-                      window.JSDWidget.show();
-                    }
+                    console.log('Attempting to open Jira Service Desk widget from second button');
+                    // Wait a bit for the widget to be fully loaded
+                    setTimeout(() => {
+                      if (window.JSDWidget) {
+                        console.log('JSDWidget found, opening widget');
+                        window.JSDWidget.show();
+                      } else {
+                        console.error('JSDWidget not available');
+                        // Fallback - try to find and click the widget button if it exists
+                        const jiraButton = document.querySelector('[data-jsd-embedded]') as HTMLElement;
+                        if (jiraButton && typeof jiraButton.click === 'function') {
+                          jiraButton.click();
+                        } else {
+                          alert('Chat support is loading. Please try again in a moment.');
+                        }
+                      }
+                    }, 1000);
                   }}
                   className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2"
                 >
