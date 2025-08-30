@@ -27,12 +27,40 @@ export const BillingTab = () => {
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [companyName, setCompanyName] = useState<string>('');
 
   useEffect(() => {
     if (user) {
       fetchBillingData();
+      fetchCompanyInfo();
     }
-  }, [user, isImpersonating, profile?.email]);
+  }, [user, isImpersonating, profile?.email, profile?.company_id]);
+
+  const fetchCompanyInfo = async () => {
+    if (!profile?.company_id) {
+      setCompanyName('No company assigned');
+      return;
+    }
+
+    try {
+      const { data: company, error } = await supabase
+        .from('companies')
+        .select('name')
+        .eq('id', profile.company_id)
+        .single();
+
+      if (error) {
+        console.error('Error fetching company:', error);
+        setCompanyName('Error loading company');
+        return;
+      }
+
+      setCompanyName(company?.name || 'Unknown company');
+    } catch (error) {
+      console.error('Error fetching company info:', error);
+      setCompanyName('Error loading company');
+    }
+  };
 
   const fetchBillingData = async () => {
     try {
@@ -274,11 +302,15 @@ export const BillingTab = () => {
           <CardContent className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <p className="text-sm font-medium">Customer ID</p>
-              <p className="text-sm text-muted-foreground font-mono">{dashboardData.customerId}</p>
+              <p className="text-sm text-muted-foreground font-mono">{dashboardData.customerId || 'Not configured'}</p>
             </div>
             <div className="space-y-2">
               <p className="text-sm font-medium">Email</p>
               <p className="text-sm text-muted-foreground">{dashboardData.clientEmail}</p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm font-medium">Company</p>
+              <p className="text-sm text-muted-foreground">{companyName}</p>
             </div>
             <div className="space-y-2">
               <p className="text-sm font-medium">Account Created</p>
