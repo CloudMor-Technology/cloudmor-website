@@ -46,7 +46,8 @@ export const ProfileTab = () => {
   const [formData, setFormData] = useState({
     full_name: '',
     phone: '',
-    job_title: ''
+    job_title: '',
+    stripe_customer_id: ''
   });
   const [companyFormData, setCompanyFormData] = useState({
     name: '',
@@ -83,7 +84,8 @@ export const ProfileTab = () => {
       setFormData({
         full_name: profileData.full_name || '',
         phone: profileData.phone || '',
-        job_title: profileData.job_title || ''
+        job_title: profileData.job_title || '',
+        stripe_customer_id: profileData.stripe_customer_id || ''
       });
 
       // Fetch company data if user has a company
@@ -175,6 +177,7 @@ export const ProfileTab = () => {
           full_name: formData.full_name,
           phone: formData.phone,
           job_title: formData.job_title,
+          stripe_customer_id: formData.stripe_customer_id.trim() || null,
           updated_at: new Date().toISOString()
         })
         .eq('id', user?.id);
@@ -426,10 +429,14 @@ export const ProfileTab = () => {
             <div className="space-y-2">
               <Label className="text-white">Stripe Customer ID</Label>
               <Input
-                value={profile?.stripe_customer_id || 'Not linked'}
-                disabled
-                className="bg-white/5 border-white/10 text-white/70"
+                value={formData.stripe_customer_id}
+                onChange={(e) => setFormData(prev => ({ ...prev, stripe_customer_id: e.target.value }))}
+                placeholder="Enter your Stripe Customer ID (e.g., cus_...)"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
               />
+              <p className="text-xs text-white/50">
+                Enter your existing Stripe Customer ID to view billing information
+              </p>
             </div>
 
             <Button 
