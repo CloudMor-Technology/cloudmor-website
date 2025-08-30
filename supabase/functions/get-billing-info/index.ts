@@ -14,136 +14,212 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Starting billing info request...');
-    
-    // Initialize Supabase with anon key for authentication
+    console.log('Starting comprehensive billing dashboard request...');
+
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_ANON_KEY") ?? ""
     );
 
+    console.log('Getting user from token...');
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
-      console.log('No authorization header');
       throw new Error("No authorization header provided");
     }
 
     const token = authHeader.replace("Bearer ", "");
-    console.log('Getting user from token...');
-    
-    const { data, error: authError } = await supabaseClient.auth.getUser(token);
-    if (authError) {
-      console.log('Auth error:', authError);
-      throw new Error(`Authentication failed: ${authError.message}`);
-    }
-    
+    const { data } = await supabaseClient.auth.getUser(token);
     const user = data.user;
+    
     if (!user?.email) {
-      console.log('No user or email found');
-      throw new Error("User not authenticated or email not available");
+      throw new Error("User not authenticated");
     }
 
     console.log('User authenticated:', user.email);
+    console.log('Initializing Stripe...');
 
     const stripeKey = Deno.env.get("Stripe API Key");
     if (!stripeKey) {
-      console.log('Stripe key not found');
       throw new Error("Stripe API Key not configured");
     }
 
-    console.log('Initializing Stripe...');
     const stripe = new Stripe(stripeKey, {
       apiVersion: "2023-10-16",
     });
 
-    // Get customer ID from environment
     const customerId = Deno.env.get("Customer ID");
     if (!customerId) {
-      console.log('Customer ID not found');
       throw new Error("Customer ID not configured");
     }
 
-    console.log('Fetching customer data for:', customerId);
+    console.log('Fetching comprehensive dashboard data for:', customerId);
 
+    // Fetch all data in parallel
+    const [customer, subscriptions, invoices, paymentMethods] = await Promise.allSettled([
+      stripe.customers.retrieve(customerId),
+      stripe.subscriptions.list({ 
+        customer: customerId, 
+        limit: 5,
+        expand: ['data.items.data.price.product']
+      }),
+      stripe.invoices.list({ 
+        customer: customerId, 
+        limit: 20 
+      }),
+      stripe.paymentMethods.list({ 
+        customer: customerId, 
+        type: 'card' 
+      })
+    ]);
+
+    console.log('All data fetched successfully');
+
+    // Try to get upcoming invoice
+    let upcomingInvoice = null;
     try {
-      // Fetch customer data
-      const customer = await stripe.customers.retrieve(customerId);
-      console.log('Customer retrieved successfully');
-      
-      // Fetch invoices
-      const invoices = await stripe.invoices.list({
+      upcomingInvoice = await stripe.invoices.retrieveUpcoming({
         customer: customerId,
-        limit: 10
       });
-      console.log('Invoices retrieved:', invoices.data.length);
-
-      // Fetch payment methods
-      const paymentMethods = await stripe.paymentMethods.list({
-        customer: customerId,
-        type: 'card'
-      });
-      console.log('Payment methods retrieved:', paymentMethods.data.length);
-
-      // Calculate total spent this year
-      const thisYear = new Date().getFullYear();
-      const totalSpent = invoices.data
-        .filter(invoice => invoice.status === 'paid' && new Date(invoice.created * 1000).getFullYear() === thisYear)
-        .reduce((sum, invoice) => sum + (invoice.amount_paid || 0), 0);
-
-      console.log('Total spent calculated:', totalSpent);
-
-      // Get next billing date from active subscriptions
-      const subscriptions = await stripe.subscriptions.list({
-        customer: customerId,
-        status: 'active',
-        limit: 1
-      });
-
-      const nextBilling = subscriptions.data.length > 0 
-        ? new Date(subscriptions.data[0].current_period_end * 1000).toLocaleDateString()
-        : 'No active subscription';
-
-      console.log('Next billing date:', nextBilling);
-
-      // Prepare billing data
-      const billingData = {
-        totalSpent: `$${(totalSpent / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`,
-        nextBilling,
-        balance: `$${Math.abs((customer as any).balance || 0) / 100}`,
-        currentPeriod: new Date().toLocaleString('en-US', { month: 'long', year: 'numeric' }),
-        paymentMethods: paymentMethods.data.map(pm => ({
-          id: pm.id,
-          last4: pm.card?.last4,
-          exp_month: pm.card?.exp_month,
-          exp_year: pm.card?.exp_year,
-          brand: pm.card?.brand
-        })),
-        invoices: invoices.data.slice(0, 5).map(invoice => ({
-          id: invoice.number || invoice.id,
-          date: new Date(invoice.created * 1000).toLocaleDateString(),
-          amount: `$${(invoice.amount_paid || 0) / 100}`,
-          status: invoice.status === 'paid' ? 'Paid' : 'Unpaid',
-          url: invoice.hosted_invoice_url
-        }))
-      };
-
-      console.log('Billing data prepared successfully');
-      
-      return new Response(JSON.stringify(billingData), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
-      });
-
-    } catch (stripeError) {
-      console.log('Stripe error:', stripeError);
-      throw new Error(`Stripe API error: ${stripeError.message}`);
+      console.log('Upcoming invoice found');
+    } catch (e) {
+      console.log('No upcoming invoice found (normal)');
+      upcomingInvoice = null;
     }
 
+    // Calculate this month's total
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    let thisMonthTotal = 0;
+
+    if (invoices.status === 'fulfilled') {
+      invoices.value.data.forEach(invoice => {
+        const invoiceDate = new Date(invoice.created * 1000);
+        if (invoiceDate.getMonth() === currentMonth && invoiceDate.getFullYear() === currentYear && invoice.status === 'paid') {
+          thisMonthTotal += (invoice.amount_paid || 0);
+        }
+      });
+    }
+
+    console.log('This month total calculated:', thisMonthTotal);
+
+    // Calculate total spent this year
+    let totalSpentThisYear = 0;
+    if (invoices.status === 'fulfilled') {
+      invoices.value.data.forEach(invoice => {
+        const invoiceDate = new Date(invoice.created * 1000);
+        if (invoiceDate.getFullYear() === currentYear && invoice.status === 'paid') {
+          totalSpentThisYear += (invoice.amount_paid || 0);
+        }
+      });
+    }
+
+    console.log('Total spent this year:', totalSpentThisYear);
+
+    // Determine next billing date
+    let nextBillingDate = 'No active subscription';
+    if (subscriptions.status === 'fulfilled' && subscriptions.value.data.length > 0) {
+      const activeSubscription = subscriptions.value.data.find(sub => sub.status === 'active');
+      if (activeSubscription) {
+        nextBillingDate = new Date(activeSubscription.current_period_end * 1000).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+      }
+    }
+
+    console.log('Next billing date determined:', nextBillingDate);
+
+    // Process subscriptions data
+    const processedSubscriptions = subscriptions.status === 'fulfilled' 
+      ? subscriptions.value.data.map(sub => ({
+          id: sub.id,
+          status: sub.status,
+          current_period_start: sub.current_period_start,
+          current_period_end: sub.current_period_end,
+          cancel_at_period_end: sub.cancel_at_period_end,
+          plan_name: sub.items.data[0]?.price?.nickname || 
+                    sub.items.data[0]?.price?.product?.name || 
+                    'Unknown Plan',
+          amount: sub.items.data[0]?.price?.unit_amount || 0,
+          interval: sub.items.data[0]?.price?.recurring?.interval || 'month'
+        }))
+      : [];
+
+    // Process invoices data
+    const processedInvoices = invoices.status === 'fulfilled' 
+      ? invoices.value.data.slice(0, 10).map(invoice => ({
+          id: invoice.id,
+          number: invoice.number,
+          status: invoice.status,
+          amount_due: invoice.amount_due,
+          amount_paid: invoice.amount_paid,
+          created: invoice.created,
+          period_start: invoice.period_start,
+          period_end: invoice.period_end,
+          invoice_pdf: invoice.invoice_pdf,
+          hosted_invoice_url: invoice.hosted_invoice_url,
+          currency: invoice.currency,
+          date: new Date(invoice.created * 1000).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          })
+        }))
+      : [];
+
+    // Process payment methods data
+    const processedPaymentMethods = paymentMethods.status === 'fulfilled' 
+      ? paymentMethods.value.data.map(pm => ({
+          id: pm.id,
+          type: pm.type,
+          card: pm.card ? {
+            brand: pm.card.brand,
+            last4: pm.card.last4,
+            exp_month: pm.card.exp_month,
+            exp_year: pm.card.exp_year,
+            funding: pm.card.funding
+          } : null,
+          created: pm.created
+        }))
+      : [];
+
+    console.log('Dashboard data prepared successfully');
+
+    // Return comprehensive dashboard data
+    const dashboardData = {
+      customer: customer.status === 'fulfilled' ? {
+        id: (customer.value as any).id,
+        name: (customer.value as any).name,
+        email: (customer.value as any).email,
+        balance: (customer.value as any).balance || 0,
+        created: (customer.value as any).created,
+        currency: (customer.value as any).currency || 'usd'
+      } : null,
+      subscriptions: processedSubscriptions,
+      invoices: processedInvoices,
+      paymentMethods: processedPaymentMethods,
+      upcomingInvoice,
+      thisMonthTotal,
+      totalSpentThisYear,
+      nextBillingDate,
+      clientEmail: user.email,
+      customerId
+    };
+
+    return new Response(JSON.stringify({
+      success: true,
+      data: dashboardData
+    }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 200,
+    });
+
   } catch (error) {
-    console.error('Error in get-billing-info:', error);
+    console.error('Error in billing dashboard:', error);
     return new Response(JSON.stringify({ 
-      error: error.message,
-      details: 'Check the function logs for more information'
+      success: false,
+      error: error.message 
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
