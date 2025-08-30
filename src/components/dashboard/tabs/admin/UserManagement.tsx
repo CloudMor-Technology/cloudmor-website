@@ -87,11 +87,38 @@ export const UserManagement = () => {
 
       // Update profile with additional data
       if (authData.user) {
+        let company_id = null;
+        
+        // Handle company assignment
+        if (formData.company_name.trim()) {
+          // Check if company exists
+          let { data: existingCompany } = await supabase
+            .from('companies')
+            .select('id')
+            .eq('name', formData.company_name.trim())
+            .single();
+          
+          if (existingCompany) {
+            company_id = existingCompany.id;
+          } else {
+            // Create new company
+            const { data: newCompany, error: companyError } = await supabase
+              .from('companies')
+              .insert({ name: formData.company_name.trim() })
+              .select('id')
+              .single();
+            
+            if (companyError) throw companyError;
+            company_id = newCompany.id;
+          }
+        }
+
         const { error: profileError } = await supabase
           .from('profiles')
           .update({
             phone: formData.phone,
             job_title: formData.job_title,
+            company_id: company_id,
             role: formData.role,
             stripe_customer_id: formData.stripe_customer_id,
             jira_email: formData.jira_email,
@@ -136,12 +163,39 @@ export const UserManagement = () => {
 
   const handleUpdateUser = async () => {
     try {
+      let company_id = null;
+      
+      // Handle company assignment
+      if (formData.company_name.trim()) {
+        // Check if company exists
+        let { data: existingCompany } = await supabase
+          .from('companies')
+          .select('id')
+          .eq('name', formData.company_name.trim())
+          .single();
+        
+        if (existingCompany) {
+          company_id = existingCompany.id;
+        } else {
+          // Create new company
+          const { data: newCompany, error: companyError } = await supabase
+            .from('companies')
+            .insert({ name: formData.company_name.trim() })
+            .select('id')
+            .single();
+          
+          if (companyError) throw companyError;
+          company_id = newCompany.id;
+        }
+      }
+
       const { error } = await supabase
         .from('profiles')
         .update({
           full_name: formData.full_name,
           phone: formData.phone,
           job_title: formData.job_title,
+          company_id: company_id,
           role: formData.role,
           stripe_customer_id: formData.stripe_customer_id,
           jira_email: formData.jira_email,
@@ -155,6 +209,7 @@ export const UserManagement = () => {
       setEditingUser(null);
       resetForm();
       fetchUsers();
+      fetchCompanies(); // Refresh companies list
     } catch (error) {
       console.error('Error updating user:', error);
       toast.error('Failed to update user');
