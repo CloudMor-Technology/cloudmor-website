@@ -35,6 +35,7 @@ interface ClientService {
 export const ClientManagement = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [serviceNotes, setServiceNotes] = useState<{[key: string]: string}>({});
   const [showForm, setShowForm] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [formData, setFormData] = useState({
@@ -141,14 +142,16 @@ export const ClientManagement = () => {
         const serviceInserts = selectedServices.map(serviceName => ({
           client_id: clientData.id,
           service_name: serviceName,
-          service_description: serviceOptions.find(s => s.name === serviceName)?.description || `${serviceName} for ${formData.company_name}`
+          service_description: serviceOptions.find(s => s.name === serviceName)?.description || `${serviceName} for ${formData.company_name}`,
+          notes: serviceNotes[serviceName] || null,
+          is_active: true
         }));
 
         const { error: serviceError } = await supabase
           .from('client_services')
           .insert(serviceInserts);
 
-      if (serviceError) throw serviceError;
+        if (serviceError) throw serviceError;
       }
 
       // Welcome email is automatically sent by the admin-user-management function
@@ -225,7 +228,9 @@ export const ClientManagement = () => {
         const serviceInserts = selectedServices.map(serviceName => ({
           client_id: editingClient.id,
           service_name: serviceName,
-          service_description: serviceOptions.find(s => s.name === serviceName)?.description || `${serviceName} for ${formData.company_name}`
+          service_description: serviceOptions.find(s => s.name === serviceName)?.description || `${serviceName} for ${formData.company_name}`,
+          notes: serviceNotes[serviceName] || null,
+          is_active: true
         }));
 
         const { error: serviceError } = await supabase
@@ -290,6 +295,7 @@ export const ClientManagement = () => {
       serviceNotes: ''
     });
     setSelectedServices([]);
+    setServiceNotes({});
     setShowForm(false);
     setEditingClient(null);
   };
@@ -307,6 +313,12 @@ export const ClientManagement = () => {
       if (error) throw error;
       
       const existingServices = clientServices?.map(s => s.service_name) || [];
+      const existingNotes: {[key: string]: string} = {};
+      clientServices?.forEach(service => {
+        if (service.notes) {
+          existingNotes[service.service_name] = service.notes;
+        }
+      });
       
       setFormData({
         company_name: client.company_name,
@@ -320,6 +332,7 @@ export const ClientManagement = () => {
         serviceNotes: ''
       });
       setSelectedServices(existingServices);
+      setServiceNotes(existingNotes);
       setShowForm(true);
     } catch (error) {
       console.error('Error fetching client services:', error);
@@ -496,9 +509,21 @@ export const ClientManagement = () => {
                       <Label htmlFor={service.name} className="font-medium text-sm">{service.name}</Label>
                     </div>
                     {selectedServices.includes(service.name) && (
-                      <p className="text-xs text-gray-600 ml-6 bg-blue-50 p-2 rounded border-l-2 border-blue-400">
-                        {service.description}
-                      </p>
+                      <>
+                        <p className="text-xs text-gray-600 ml-6 bg-blue-50 p-2 rounded border-l-2 border-blue-400 mb-2">
+                          {service.description}
+                        </p>
+                        <div className="ml-6">
+                          <Label htmlFor={`notes-${service.name}`} className="text-xs font-medium">Service Notes</Label>
+                          <Input
+                            id={`notes-${service.name}`}
+                            placeholder="Add specific notes for this service..."
+                            className="text-xs mt-1"
+                            value={serviceNotes[service.name] || ''}
+                            onChange={(e) => setServiceNotes(prev => ({...prev, [service.name]: e.target.value}))}
+                          />
+                        </div>
+                      </>
                     )}
                   </div>
                 ))}

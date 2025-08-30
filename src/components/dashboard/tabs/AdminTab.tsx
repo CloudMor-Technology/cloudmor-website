@@ -9,7 +9,7 @@ import { Users, Settings, Building, CreditCard, Headphones, Wrench, UserCheck, F
 import { toast } from 'sonner';
 import { ClientManagement } from './admin/ClientManagement';
 import { ClientImpersonation } from './admin/ClientImpersonation';
-import { SupportDocuments } from './admin/SupportDocuments';
+import { ClientSupportDocuments } from './admin/ClientSupportDocuments';
 
 export const AdminTab = () => {
   const [companyInfo, setCompanyInfo] = useState({
@@ -92,7 +92,7 @@ export const AdminTab = () => {
         <TabsContent value="documents" className="mt-6">
           <Card className="bg-white/90 backdrop-blur-sm">
             <CardContent className="p-6">
-              <SupportDocuments />
+              <ClientSupportDocuments />
             </CardContent>
           </Card>
         </TabsContent>

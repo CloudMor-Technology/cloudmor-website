@@ -16,6 +16,7 @@ interface ClientService {
   service_name: string;
   service_description: string | null;
   status: string | null;
+  notes: string | null;
   created_at: string;
 }
 
@@ -27,12 +28,14 @@ interface PhoneExtension {
   is_active: boolean;
 }
 
-interface AdminSupportDocument {
+interface ClientSupportDocument {
   id: string;
   title: string;
   description: string | null;
   url: string | null;
   category: string | null;
+  role: string;
+  assigned_to_all: boolean;
   is_active: boolean;
   created_at: string;
 }
@@ -48,7 +51,7 @@ export const SinglePagePortal = () => {
   });
   const [clientServices, setClientServices] = useState<ClientService[]>([]);
   const [phoneExtensions, setPhoneExtensions] = useState<PhoneExtension[]>([]);
-  const [adminSupportDocs, setAdminSupportDocs] = useState<AdminSupportDocument[]>([]);
+  const [clientSupportDocs, setClientSupportDocs] = useState<ClientSupportDocument[]>([]);
   const [servicesLoading, setServicesLoading] = useState(true);
 
   // Check for impersonation
@@ -61,7 +64,7 @@ export const SinglePagePortal = () => {
       fetchClientServices();
       fetchPhoneExtensions();
     }
-    fetchAdminSupportDocs();
+    fetchClientSupportDocs();
   }, [profile, isAdmin, isImpersonating]);
 
   const fetchClientServices = async () => {
@@ -127,19 +130,50 @@ export const SinglePagePortal = () => {
     }
   };
 
-  const fetchAdminSupportDocs = async () => {
+  const fetchClientSupportDocs = async () => {
     try {
+      // Get client-specific and all-client documents
+      let clientEmail = profile?.email;
+      
+      if (isImpersonating && profile?.role === 'admin') {
+        const impersonatedClient = JSON.parse(localStorage.getItem('impersonating_client') || '{}');
+        clientEmail = impersonatedClient.contact_email;
+      }
+
       const { data, error } = await supabase
-        .from('admin_support_documents')
+        .from('client_support_documents')
         .select('*')
         .eq('is_active', true)
-        .eq('category', 'quick_tips')
+        .or(`assigned_to_all.eq.true,id.in.(${await getClientAssignedDocIds(clientEmail)})`)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setAdminSupportDocs(data || []);
+      setClientSupportDocs(data || []);
     } catch (error) {
-      console.error('Error fetching admin support documents:', error);
+      console.error('Error fetching client support documents:', error);
+    }
+  };
+
+  const getClientAssignedDocIds = async (clientEmail?: string) => {
+    if (!clientEmail) return '';
+    
+    try {
+      const { data: clientData } = await supabase
+        .from('clients')
+        .select('id')
+        .eq('contact_email', clientEmail)
+        .single();
+
+      if (!clientData) return '';
+
+      const { data: assignments } = await supabase
+        .from('client_support_document_assignments')
+        .select('document_id')
+        .eq('client_id', clientData.id);
+
+      return assignments?.map(a => a.document_id).join(',') || '';
+    } catch (error) {
+      return '';
     }
   };
 
@@ -308,11 +342,8 @@ export const SinglePagePortal = () => {
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
                   CloudMor Client Portal
                 </h1>
-                <p className="text-white text-lg mt-2 font-medium">
-                  Welcome, {isImpersonating ? `${impersonatedClient.company_name} (${impersonatedClient.contact_name})` : (profile?.full_name || user?.email)}
-                </p>
-                <p className="text-blue-300 text-sm mt-1">
-                  📞 {profile?.phone || 'No phone number on file'}
+                <p className="text-white/90 font-medium">
+                  Welcome, {isImpersonating ? `${impersonatedClient.contact_name}` : (profile?.full_name || user?.email?.split('@')[0])}
                 </p>
                 {isImpersonating && (
                   <div className="bg-orange-100 border border-orange-300 rounded-lg px-3 py-1 mt-2 inline-block">
@@ -539,6 +570,17 @@ export const SinglePagePortal = () => {
                           <p className="text-white/90 text-base font-medium">{service.service_description}</p>
                         )}
                         
+                        {/* Service Notes */}
+                        {service.notes && (
+                          <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+                            <h5 className="font-bold text-white text-lg mb-2 flex items-center gap-2">
+                              <FileText className="w-4 h-4" />
+                              Service Notes
+                            </h5>
+                            <p className="text-white/90 text-base font-medium">{service.notes}</p>
+                          </div>
+                        )}
+                        
                         {/* Phone Extensions for Business Phone Systems */}
                         {service.service_name.toLowerCase().includes('phone') && phoneExtensions.length > 0 && (
                           <div className="bg-white/10 rounded-lg p-4 border border-white/20">
@@ -666,26 +708,16 @@ export const SinglePagePortal = () => {
                       <MessageCircle className="w-4 h-4 mr-2" />
                       Start Live Chat
                     </Button>
-                    <Button
-                      onClick={() => window.open('tel:+19497694428', '_self')}
-                      className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium"
-                    >
-                      <Phone className="w-4 h-4 mr-2" />
-                      Call Support: (949) 769-4428
-                    </Button>
+                     <Button
+                       onClick={() => window.open('tel:888-554-6597', '_self')}
+                       className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium"
+                     >
+                       <Phone className="w-4 h-4 mr-2" />
+                       Call Support: 888-554-6597
+                     </Button>
                   </div>
                   
-                  {/* Emergency Section */}
-                  <div className="border-t border-white/20 pt-4 mt-4">
-                    <div className="text-center bg-red-500/20 p-4 rounded-lg border border-red-500/30">
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <AlertTriangle className="w-5 h-5 text-red-400" />
-                        <span className="text-white font-bold text-lg">Emergency Hotline</span>
-                      </div>
-                      <div className="text-3xl font-bold text-white mb-1">📞 888-554-6597</div>
-                      <p className="text-white/90 text-base font-medium">Have your ticket number ready</p>
-                    </div>
-                  </div>
+                  {/* Emergency Section - Removed as requested by user */}
                 </CardContent>
               </Card>
             </div>
@@ -702,8 +734,8 @@ export const SinglePagePortal = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {adminSupportDocs.length > 0 ? (
-                      adminSupportDocs.map((doc) => (
+                    {clientSupportDocs.length > 0 ? (
+                      clientSupportDocs.map((doc) => (
                         <div key={doc.id} className="bg-white/10 rounded-lg p-4 border border-white/20 hover:bg-white/15 transition-colors">
                           <h4 className="text-white font-bold text-lg mb-2">{doc.title}</h4>
                           {doc.description && (
@@ -721,38 +753,38 @@ export const SinglePagePortal = () => {
                           )}
                         </div>
                       ))
-                    ) : (
-                      <>
-                        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
-                          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
-                            <Phone className="w-5 h-5 text-green-400" />
-                            Phone System Help
-                          </h4>
-                          <p className="text-white/90 text-base font-medium">Need help with your phone extensions or voicemail? Check our phone system guide.</p>
-                        </div>
-                        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
-                          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
-                            <Wifi className="w-5 h-5 text-blue-400" />
-                            Network Issues
-                          </h4>
-                          <p className="text-white/90 text-base font-medium">Experiencing connectivity problems? Run our network diagnostics tool first.</p>
-                        </div>
-                        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
-                          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
-                            <Shield className="w-5 h-5 text-orange-400" />
-                            Security Best Practices
-                          </h4>
-                          <p className="text-white/90 text-base font-medium">Keep your business secure with our cybersecurity guidelines and tips.</p>
-                        </div>
-                        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
-                          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
-                            <Cloud className="w-5 h-5 text-purple-400" />
-                            Cloud Services
-                          </h4>
-                          <p className="text-white/90 text-base font-medium">Learn how to maximize your cloud infrastructure and backup solutions.</p>
-                        </div>
-                      </>
-                    )}
+    ) : (
+      <>
+        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+            <Phone className="w-5 h-5 text-green-400" />
+            Phone System Help
+          </h4>
+          <p className="text-white/90 text-base font-medium">Need help with your phone extensions or voicemail? Check our phone system guide.</p>
+        </div>
+        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+            <Wifi className="w-5 h-5 text-blue-400" />
+            Network Issues
+          </h4>
+          <p className="text-white/90 text-base font-medium">Experiencing connectivity problems? Run our network diagnostics tool first.</p>
+        </div>
+        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+            <Shield className="w-5 h-5 text-orange-400" />
+            Security Best Practices
+          </h4>
+          <p className="text-white/90 text-base font-medium">Keep your business secure with our cybersecurity guidelines and tips.</p>
+        </div>
+        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+            <Cloud className="w-5 h-5 text-purple-400" />
+            Cloud Services
+          </h4>
+          <p className="text-white/90 text-base font-medium">Learn how to maximize your cloud infrastructure and backup solutions.</p>
+        </div>
+      </>
+    )}
                   </div>
                 </CardContent>
               </Card>
