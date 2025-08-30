@@ -7,7 +7,7 @@ export const AuthPage = () => {
   const toggleMode = () => setIsLogin(!isLogin);
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat relative" style={{
+    <div className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat relative" style={{
       backgroundImage: 'url(/lovable-uploads/20cd0b55-8167-4f6a-acfc-85fe6cab38a2.png)'
     }}>
       {/* Background overlay for better readability */}
@@ -19,20 +19,24 @@ export const AuthPage = () => {
       </div>
       
       {/* Centered content container */}
-      <div className="flex items-center gap-12 relative z-10 max-w-6xl mx-auto px-8">
-        {/* Welcome Text */}
-        <div className="flex-1">
-          <h1 className="text-7xl mb-8 leading-tight text-[#183a85] font-bold lg:text-8xl text-center">
+      <div className="flex flex-col items-center relative z-10 max-w-2xl mx-auto px-8 space-y-8">
+        {/* Welcome Text - Top */}
+        <div className="text-center">
+          <h1 className="text-7xl mb-8 leading-tight text-[#183a85] font-bold lg:text-8xl">
             Welcome to CloudMor Client Portal
           </h1>
-          <p className="text-2xl mb-8 leading-relaxed text-[#397ee6] font-semibold text-center lg:text-3xl">
-            Access Company info, services, billing, and support in one secure place
-          </p>
         </div>
 
-        {/* Login form */}
-        <div className="w-full max-w-lg relative z-10">
+        {/* Login form - Center */}
+        <div className="w-full max-w-lg">
           {isLogin ? <LoginForm onToggleMode={toggleMode} /> : <SignUpForm onToggleMode={toggleMode} />}
+        </div>
+
+        {/* Description Text - Bottom */}
+        <div className="text-center">
+          <p className="text-2xl leading-relaxed text-[#397ee6] font-semibold lg:text-3xl">
+            Access Company info, services, billing, and support in one secure place
+          </p>
         </div>
       </div>
     </div>
