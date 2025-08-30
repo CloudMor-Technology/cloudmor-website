@@ -8,7 +8,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Users, Plus, Edit, Eye, Trash2, Building2 } from 'lucide-react';
+import { Users, Plus, Edit, Eye, Trash2, Building2, RotateCcw, Mail } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -44,6 +44,7 @@ export const ClientManagement = () => {
     phone: '',
     address: '',
     stripe_customer_id: '',
+    password: '',
     services: [] as string[]
   });
 
@@ -77,7 +78,26 @@ export const ClientManagement = () => {
   };
 
   const handleCreateClient = async () => {
+    if (!formData.password.trim()) {
+      toast.error('Password is required for new clients');
+      return;
+    }
+
     try {
+      // First create the Supabase auth user
+      const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+        email: formData.contact_email,
+        password: formData.password,
+        email_confirm: true,
+        user_metadata: {
+          full_name: formData.contact_name,
+          company_name: formData.company_name
+        }
+      });
+
+      if (authError) throw authError;
+
+      // Then create the client record
       const { data: clientData, error: clientError } = await supabase
         .from('clients')
         .insert({
@@ -108,12 +128,73 @@ export const ClientManagement = () => {
         if (serviceError) throw serviceError;
       }
 
-      toast.success('Client created successfully');
+      // Send welcome email with credentials
+      try {
+        const { error: emailError } = await supabase.functions.invoke('send-user-credentials', {
+          body: {
+            email: formData.contact_email,
+            full_name: formData.contact_name || formData.company_name,
+            password: formData.password,
+            company_name: formData.company_name,
+            role: 'client'
+          }
+        });
+
+        if (emailError) {
+          console.error('Error sending welcome email:', emailError);
+          toast.warning('Client created but welcome email failed to send');
+        } else {
+          toast.success('Client created and welcome email sent successfully');
+        }
+      } catch (emailError) {
+        console.error('Error sending welcome email:', emailError);
+        toast.warning('Client created but welcome email failed to send');
+      }
+
       fetchClients();
       resetForm();
     } catch (error) {
       console.error('Error creating client:', error);
-      toast.error('Failed to create client');
+      toast.error('Failed to create client: ' + (error as any).message);
+    }
+  };
+
+  const handleResetPassword = async (client: Client) => {
+    const newPassword = prompt(`Enter new password for ${client.contact_name || client.company_name}:`);
+    
+    if (!newPassword) return;
+    if (newPassword.length < 6) {
+      toast.error('Password must be at least 6 characters long');
+      return;
+    }
+
+    try {
+      // Update the user's password in Supabase auth
+      const { error } = await supabase.auth.admin.updateUserById(
+        client.contact_email, // Using email as identifier
+        { password: newPassword }
+      );
+
+      if (error) throw error;
+
+      // Send new credentials email
+      try {
+        await supabase.functions.invoke('send-user-credentials', {
+          body: {
+            email: client.contact_email,
+            full_name: client.contact_name || client.company_name,
+            password: newPassword,
+            company_name: client.company_name,
+            role: 'client'
+          }
+        });
+        toast.success('Password reset and new credentials sent via email');
+      } catch (emailError) {
+        toast.success('Password reset successfully (email sending failed)');
+      }
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      toast.error('Failed to reset password: ' + (error as any).message);
     }
   };
 
@@ -185,6 +266,7 @@ export const ClientManagement = () => {
       phone: '',
       address: '',
       stripe_customer_id: '',
+      password: '',
       services: []
     });
     setSelectedServices([]);
@@ -201,6 +283,7 @@ export const ClientManagement = () => {
       phone: client.phone || '',
       address: client.address || '',
       stripe_customer_id: client.stripe_customer_id || '',
+      password: '',
       services: []
     });
     setShowForm(true);
@@ -327,6 +410,20 @@ export const ClientManagement = () => {
 
             {!editingClient && (
               <div>
+                <Label htmlFor="password">Password *</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                  className="border-blue-300 focus:border-blue-500"
+                  placeholder="Password for client login"
+                />
+              </div>
+            )}
+
+            {!editingClient && (
+              <div>
                 <Label>Services Provided</Label>
                 <div className="grid grid-cols-2 gap-2 mt-2">
                   {serviceOptions.map((service) => (
@@ -391,14 +488,25 @@ export const ClientManagement = () => {
                           size="sm"
                           variant="outline"
                           className="text-blue-600 border-blue-600 hover:bg-blue-50"
+                          title="Edit Client"
                         >
                           <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          onClick={() => handleResetPassword(client)}
+                          size="sm"
+                          variant="outline"
+                          className="text-orange-600 border-orange-600 hover:bg-orange-50"
+                          title="Reset Password"
+                        >
+                          <RotateCcw className="w-4 h-4" />
                         </Button>
                         <Button
                           onClick={() => handleImpersonateClient(client)}
                           size="sm"
                           variant="outline"
                           className="text-purple-600 border-purple-600 hover:bg-purple-50"
+                          title="Impersonate Client"
                         >
                           <Eye className="w-4 h-4" />
                         </Button>
@@ -407,6 +515,7 @@ export const ClientManagement = () => {
                           size="sm"
                           variant="outline"
                           className="text-red-600 border-red-600 hover:bg-red-50"
+                          title="Delete Client"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
