@@ -38,9 +38,9 @@ serve(async (req) => {
     console.log('User authenticated:', user.email);
     console.log('Initializing Stripe...');
 
-    const stripeKey = Deno.env.get("Stripe API Key");
+    const stripeKey = Deno.env.get("Stripe Secret Key");
     if (!stripeKey) {
-      throw new Error("Stripe API Key not configured");
+      throw new Error("Stripe Secret Key not configured");
     }
 
     const stripe = new Stripe(stripeKey, {
