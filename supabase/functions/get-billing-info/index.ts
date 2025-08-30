@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@14.21.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
@@ -17,6 +16,18 @@ serve(async (req) => {
 
   try {
     console.log('Starting billing dashboard request...');
+
+    // Parse request body first
+    let requestBody = {};
+    try {
+      const bodyText = await req.text();
+      if (bodyText) {
+        requestBody = JSON.parse(bodyText);
+        console.log('Request body parsed:', requestBody);
+      }
+    } catch (e) {
+      console.log('No request body or parse error:', e);
+    }
 
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
@@ -69,14 +80,13 @@ serve(async (req) => {
     let isImpersonating = false;
 
     // If admin, check for impersonation parameter
-    if (adminProfile?.role === 'admin') {
-      const requestBody = await req.json().catch(() => ({}));
-      if (requestBody.impersonateEmail) {
-        targetEmail = requestBody.impersonateEmail;
-        isImpersonating = true;
-        console.log('Admin impersonating user:', targetEmail);
-      }
+    if (adminProfile?.role === 'admin' && (requestBody as any).impersonateEmail) {
+      targetEmail = (requestBody as any).impersonateEmail;
+      isImpersonating = true;
+      console.log('Admin impersonating user:', targetEmail);
     }
+
+    console.log('Final target email:', targetEmail, 'Impersonating:', isImpersonating);
 
     // Initialize Stripe
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
@@ -269,7 +279,7 @@ serve(async (req) => {
         balance: (customerDetails.value as any).balance || 0,
         created: (customerDetails.value as any).created,
         currency: (customerDetails.value as any).currency || 'usd'
-      } : null,
+      } : { email: targetEmail },
       subscriptions: processedSubscriptions,
       invoices: processedInvoices,
       paymentMethods: processedPaymentMethods,
@@ -283,6 +293,8 @@ serve(async (req) => {
       adminEmail: user.email,
       targetEmail
     };
+
+    console.log('Returning dashboard data with clientEmail:', targetEmail, 'isImpersonating:', isImpersonating);
 
     return new Response(JSON.stringify({
       success: true,
