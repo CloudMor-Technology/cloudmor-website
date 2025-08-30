@@ -21,6 +21,7 @@ import Colores from "./pages/Colores";
 import BusinessCards from "./pages/BusinessCards";
 import AliRahimi from "./pages/AliRahimi";
 import Portal from "./pages/Portal";
+import Profile from "./pages/Profile";
 
 // Service Pages
 import ManagedIT from "./pages/services/ManagedIT";
@@ -47,6 +48,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/portal" element={<Portal />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/web-design" element={<WebDesignLanding />} />
             <Route path="/colores" element={<Colores />} />
             <Route path="/bc" element={<BusinessCards />} />
