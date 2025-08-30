@@ -301,8 +301,8 @@ export const BillingTab = () => {
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <p className="text-sm font-medium">Customer ID</p>
-              <p className="text-sm text-muted-foreground font-mono">{dashboardData.customerId || 'Not configured'}</p>
+              <p className="text-sm font-medium">Stripe Customer ID</p>
+              <p className="text-sm text-muted-foreground font-mono">{profile?.stripe_customer_id || 'Not configured by admin'}</p>
             </div>
             <div className="space-y-2">
               <p className="text-sm font-medium">Email</p>
