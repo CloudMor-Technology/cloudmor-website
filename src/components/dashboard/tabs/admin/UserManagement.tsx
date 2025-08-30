@@ -21,7 +21,7 @@ export const UserManagement = () => {
     password: '',
     phone: '',
     job_title: '',
-    company_id: '',
+    company_name: '',
     role: 'client',
     stripe_customer_id: '',
     jira_email: '',
@@ -91,7 +91,6 @@ export const UserManagement = () => {
           .update({
             phone: formData.phone,
             job_title: formData.job_title,
-            company_id: formData.company_id,
             role: formData.role,
             stripe_customer_id: formData.stripe_customer_id,
             jira_email: formData.jira_email
@@ -119,7 +118,6 @@ export const UserManagement = () => {
           full_name: formData.full_name,
           phone: formData.phone,
           job_title: formData.job_title,
-          company_id: formData.company_id,
           role: formData.role,
           stripe_customer_id: formData.stripe_customer_id,
           jira_email: formData.jira_email
@@ -145,7 +143,7 @@ export const UserManagement = () => {
       password: '',
       phone: '',
       job_title: '',
-      company_id: '',
+      company_name: '',
       role: 'client',
       stripe_customer_id: '',
       jira_email: '',
@@ -167,7 +165,7 @@ export const UserManagement = () => {
       password: '',
       phone: user.phone || '',
       job_title: user.job_title || '',
-      company_id: user.company_id || '',
+      company_name: user.companies?.name || '',
       role: user.role || 'client',
       stripe_customer_id: user.stripe_customer_id || '',
       jira_email: user.jira_email || '',
@@ -261,21 +259,12 @@ export const UserManagement = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="company">Company</Label>
-                <Select 
-                  value={formData.company_id} 
-                  onValueChange={(value) => setFormData({...formData, company_id: value})}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select company" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {companies.map((company) => (
-                      <SelectItem key={company.id} value={company.id}>
-                        {company.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Input
+                  id="company"
+                  value={formData.company_name}
+                  onChange={(e) => setFormData({...formData, company_name: e.target.value})}
+                  placeholder="Enter company name"
+                />
               </div>
               <div>
                 <Label htmlFor="role">Role</Label>
