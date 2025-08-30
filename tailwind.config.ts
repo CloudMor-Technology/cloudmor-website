@@ -63,14 +63,13 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// CloudMor Brand Colors
-				cloudmor: {
-					'blue': '207 90% 54%',
-					'blue-dark': '207 90% 44%', 
-					'blue-light': '207 85% 64%',
-					'orange': '32 95% 44%',
-					'orange-light': '32 95% 54%',
-					'navy': '207 70% 34%'
+				// Custom brand colors for GowithSupport
+				gowith: {
+					'dark-blue': '#003366',
+					'medium-blue': '#005EA6',
+					'light-blue': '#00B3E6',
+					'orange': '#FFA500',
+					'orange-hover': '#FF8C00',
 				}
 			},
 			borderRadius: {
@@ -104,34 +103,12 @@ export default {
 						opacity: '1',
 						transform: 'translateY(0)'
 					}
-				},
-				'slide-up': {
-					'0%': { 
-						opacity: '0',
-						transform: 'translateY(20px)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					}
-				},
-				'scale-in': {
-					'0%': { 
-						opacity: '0',
-						transform: 'scale(0.95)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'scale(1)'
-					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.3s ease-out',
-				'slide-up': 'slide-up 0.4s ease-out',
-				'scale-in': 'scale-in 0.2s ease-out'
+				'fade-in': 'fade-in 0.3s ease-out'
 			},
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],

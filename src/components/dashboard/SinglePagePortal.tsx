@@ -291,56 +291,26 @@ export const SinglePagePortal = () => {
   ];
 
   return (
-    <div className="min-h-screen gradient-bg relative">
-      {/* Background overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/10"></div>
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: 'url(/lovable-uploads/9da9a140-1484-41e8-9ec7-94b7528611ad.png)'
+      }}
+    >
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-black/20"></div>
       
       {/* Content */}
       <div className="relative z-10 max-w-[95%] mx-auto px-6 sm:px-8 lg:px-12 py-10 space-y-8">
         
-        {/* Header with CloudMor Branding */}
-        <div className="gradient-card rounded-2xl shadow-xl p-8 animate-fade-in border-0">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-4xl font-bold text-primary mb-3">
-                Welcome to CloudMor Portal
-              </h1>
-              <p className="text-lg text-gray-600">
-                Hello, <span className="font-semibold text-primary">{profile?.full_name || 'User'}</span> 
-                {profile?.job_title && <span className="text-gray-500 ml-2">• {profile.job_title}</span>}
-              </p>
-              <div className="flex items-center gap-4 mt-3">
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10">
-                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-                  <span className="text-sm font-medium text-primary">Online</span>
-                </div>
-                <div className="text-sm text-gray-500">
-                  Last login: {profile?.last_login ? new Date(profile.last_login).toLocaleString() : 'N/A'}
-                </div>
-              </div>
-            </div>
-            <Button 
-              onClick={handleSignOut}
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 px-6 py-3 text-lg"
-            >
-              <LogOut className="w-5 h-5 mr-2" />
-              Logout
-            </Button>
-          </div>
-        </div>
-        
         {/* Admin Controls Section (only for admins) */}
         {isAdmin && (
-          <Card className="gradient-card border-0 shadow-xl animate-slide-up">
+          <Card className="bg-white/90 backdrop-blur-sm border-orange-200">
             <CardHeader>
-              <CardTitle className="text-2xl text-accent flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
-                  <Settings className="w-5 h-5 text-accent" />
-                </div>
+              <CardTitle className="text-2xl text-orange-800 flex items-center gap-2">
+                <Settings className="w-6 h-6" />
                 Administrator Controls
               </CardTitle>
-              <p className="text-gray-600">Manage client accounts and portal settings</p>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-4">
@@ -580,17 +550,22 @@ export const SinglePagePortal = () => {
         )}
 
         {/* Account Information Section */}
-        <Card className="gradient-card border-0 shadow-xl animate-scale-in">
+        <Card className="bg-white/90 backdrop-blur-sm">
           <CardHeader>
             <div className="flex justify-between items-center">
-              <CardTitle className="text-2xl text-gray-800 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <User className="w-5 h-5 text-primary" />
-                </div>
+              <CardTitle className="flex items-center gap-2">
+                <User className="w-5 h-5" />
                 Account Information
               </CardTitle>
+              <Button 
+                onClick={handleSignOut}
+                variant="outline"
+                className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </Button>
             </div>
-            <p className="text-gray-600 mt-2">Manage your profile and security settings</p>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center space-x-4">
@@ -699,30 +674,25 @@ export const SinglePagePortal = () => {
         </Card>
 
         {/* Billing Section */}
-        <Card className="gradient-card border-0 shadow-xl animate-scale-in">
+        <Card className="bg-white/90 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-2xl text-gray-800 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                <CreditCard className="w-5 h-5 text-primary" />
-              </div>
-              Billing & Payments
-            </CardTitle>
-            <p className="text-gray-600">Manage your invoices and payment methods</p>
+            <CardTitle>Billing</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex gap-4">
               <Button 
                 onClick={handleViewInvoices}
-                className="btn-primary px-6 py-3 text-lg font-semibold hover:shadow-lg transition-all duration-300"
+                className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2"
               >
-                <Eye className="w-5 h-5 mr-2" />
+                <Eye className="w-4 h-4" />
                 View Invoices
               </Button>
               <Button 
                 onClick={handleManagePayment}
-                className="btn-accent px-6 py-3 text-lg font-semibold hover:shadow-lg transition-all duration-300"
+                variant="outline"
+                className="flex items-center gap-2"
               >
-                <CreditCard className="w-5 h-5 mr-2" />
+                <CreditCard className="w-4 h-4" />
                 Manage Payment Method
               </Button>
             </div>
@@ -781,105 +751,90 @@ export const SinglePagePortal = () => {
            </CardContent>
          </Card>
 
-            {/* Support Section */}
-            <Card className="gradient-card border-0 shadow-xl animate-scale-in">
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-2xl text-gray-800 flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
-                        <Phone className="w-5 h-5 text-accent" />
-                      </div>
-                      Support Center
-                    </CardTitle>
-                    <p className="text-gray-600">Get help and submit support requests</p>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Support Options */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  {supportOptions.map((option, index) => {
-                    const IconComponent = option.icon;
-                    return (
-                      <div key={index} className="p-4 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 hover:from-primary/5 hover:to-primary/10 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-md border border-gray-200 hover:border-primary/30" onClick={option.action}>
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className={`w-10 h-10 rounded-lg bg-${option.color === 'blue' ? 'primary' : option.color === 'green' ? 'emerald-500' : 'purple-500'}/10 flex items-center justify-center`}>
-                            <IconComponent className={`w-5 h-5 text-${option.color === 'blue' ? 'primary' : option.color === 'green' ? 'emerald-500' : 'purple-500'}`} />
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-gray-800">{option.title}</h3>
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-600 mb-2">{option.description}</p>
-                        <p className={`text-sm font-semibold text-${option.color === 'blue' ? 'primary' : option.color === 'green' ? 'emerald-500' : 'purple-500'}`}>
-                          {option.url}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Emergency Hotline - Enhanced Design */}
-                <div className="rounded-xl bg-gradient-to-r from-red-50 to-red-100 border border-red-200 p-6 shadow-lg">
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-3 mb-4">
-                      <div className="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center">
-                        <Phone className="w-6 h-6 text-white" />
-                      </div>
-                      <h3 className="text-xl font-bold text-red-800">Emergency Support Hotline</h3>
+        {/* Support Section */}
+        <Card className="bg-white/90 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="text-2xl">Support Center</CardTitle>
+            <p className="text-gray-600">Get help and submit support requests</p>
+          </CardHeader>
+          <CardContent className="space-y-8">
+            {/* Support Options */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {supportOptions.map((option, index) => {
+                const IconComponent = option.icon;
+                return (
+                  <div key={index} className="p-6 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors" onClick={option.action}>
+                    <div className={`w-12 h-12 bg-${option.color}-100 rounded-full flex items-center justify-center mb-4`}>
+                      <IconComponent className={`w-6 h-6 text-${option.color}-600`} />
                     </div>
-                    <p className="text-red-700 mb-3 text-lg">
-                      For immediate issues or urgent support needs
-                    </p>
-                    <div className="text-3xl font-bold text-red-800 mb-3 tracking-wider">
-                      📞 888-554-6597
-                    </div>
-                    <p className="text-red-600 font-medium bg-red-50 rounded-lg p-2 inline-block">
-                      Have your ticket number ready when calling
+                    <h3 className="font-bold text-lg mb-2">{option.title}</h3>
+                    <p className="text-gray-600 mb-3">{option.description}</p>
+                    <p className={`text-${option.color}-600 font-semibold`}>
+                      {option.url}
                     </p>
                   </div>
-                </div>
+                );
+              })}
+            </div>
 
-                {/* Support Portal Access - Enhanced Design */}
-                <div className="rounded-xl bg-gradient-to-br from-primary/5 to-accent/5 border border-primary/20 p-6 shadow-lg">
-                  <h3 className="text-xl font-semibold text-gray-800 text-center mb-2">Support Portal Access</h3>
-                  <p className="text-gray-600 text-center mb-6">Connect to our Jira support system</p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                    <Button 
-                      onClick={() => window.open('https://support.cloudmor.com', '_blank')}
-                      className="btn-primary px-6 py-3 text-lg font-semibold hover:shadow-lg transition-all duration-300"
-                    >
-                      <Globe className="w-5 h-5 mr-2" />
-                      Open Support Portal
-                    </Button>
-                    <Button 
-                      onClick={() => {
-                        console.log('Attempting to open Jira Service Desk widget from second button');
-                        setTimeout(() => {
-                          if (window.JSDWidget) {
-                            console.log('JSDWidget found, opening widget');
-                            window.JSDWidget.show();
-                          } else {
-                            console.error('JSDWidget not available');
-                            const jiraButton = document.querySelector('[data-jsd-embedded]') as HTMLElement;
-                            if (jiraButton && typeof jiraButton.click === 'function') {
-                              jiraButton.click();
-                            } else {
-                              alert('Chat support is loading. Please try again in a moment.');
-                            }
-                          }
-                        }, 1000);
-                      }}
-                      className="btn-accent px-6 py-3 text-lg font-semibold hover:shadow-lg transition-all duration-300"
-                    >
-                      <MessageCircle className="w-5 h-5 mr-2" />
-                      Start Chat Support
-                    </Button>
-                  </div>
+            {/* Emergency Hotline Information */}
+            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <Phone className="w-6 h-6 text-red-600" />
+                  <h3 className="text-xl font-bold text-red-800">Emergency Support Hotline</h3>
                 </div>
-              </CardContent>
-            </Card>
+                <p className="text-red-700 mb-2">
+                  For immediate issues or urgent support needs
+                </p>
+                <p className="text-2xl font-bold text-red-800 mb-2">
+                  📞 888-554-6597
+                </p>
+                <p className="text-red-600 font-medium">
+                  Have your ticket number ready when calling
+                </p>
+              </div>
+            </div>
+
+            {/* Support Portal Access */}
+            <div className="text-center space-y-4 p-6 bg-gray-50 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">Support Portal Access</h3>
+              <p className="text-gray-600 mb-4">Connect to our Jira support system</p>
+              <div className="space-x-4">
+                <Button 
+                  onClick={() => window.open('https://support.cloudmor.com', '_blank')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+                >
+                  Open Support Portal
+                </Button>
+                <Button 
+                  onClick={() => {
+                    console.log('Attempting to open Jira Service Desk widget from second button');
+                    // Wait a bit for the widget to be fully loaded
+                    setTimeout(() => {
+                      if (window.JSDWidget) {
+                        console.log('JSDWidget found, opening widget');
+                        window.JSDWidget.show();
+                      } else {
+                        console.error('JSDWidget not available');
+                        // Fallback - try to find and click the widget button if it exists
+                        const jiraButton = document.querySelector('[data-jsd-embedded]') as HTMLElement;
+                        if (jiraButton && typeof jiraButton.click === 'function') {
+                          jiraButton.click();
+                        } else {
+                          alert('Chat support is loading. Please try again in a moment.');
+                        }
+                      }
+                    }, 1000);
+                  }}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2"
+                >
+                  Start Chat Support
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
