@@ -4,10 +4,19 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
-import { User, UserPlus, Settings, Phone, Mail, AlertTriangle, CheckCircle, Eye, CreditCard, Lock, LogOut } from 'lucide-react';
+import { User, UserPlus, Settings, Phone, Mail, AlertTriangle, CheckCircle, Eye, CreditCard, Lock, LogOut, Globe, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 
+// Declare JSDWidget type for TypeScript
+declare global {
+  interface Window {
+    JSDWidget?: {
+      show: () => void;
+      hide: () => void;
+    };
+  }
+}
 export const SinglePagePortal = () => {
   const { profile, user, signOut } = useAuth();
   const isAdmin = profile?.role === 'admin';
@@ -202,29 +211,52 @@ export const SinglePagePortal = () => {
     }
   };
 
-  const supportChannels = [
+  // Load Jira Service Desk widget
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.setAttribute('data-jsd-embedded', '');
+    script.setAttribute('data-key', '7266fae8-8b7d-4231-8579-bce9a92270b2');
+    script.setAttribute('data-base-url', 'https://jsd-widget.atlassian.com');
+    script.src = 'https://jsd-widget.atlassian.com/assets/embed.js';
+    script.async = true;
+    
+    document.body.appendChild(script);
+    
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
+
+  const supportOptions = [
     {
-      title: 'Emergency Support (24/7)',
-      phone: '(866) 123-4567',
-      email: 'emergency@cloudmor.com',
-      description: 'For critical system and security incidents',
-      icon: AlertTriangle,
-      color: 'red'
+      title: 'CloudMor Support Portal',
+      description: 'Submit tickets through our online portal',
+      url: 'support.cloudmor.com',
+      icon: Globe,
+      color: 'blue',
+      action: () => window.open('https://support.cloudmor.com', '_blank')
     },
     {
-      title: 'General Support',
-      phone: '(855) 123-4567', 
-      email: 'support@cloudmor.com',
-      description: 'For general questions and non-critical issues',
-      icon: Phone,
-      color: 'blue'
-    },
-    {
-      title: 'Billing & Account',
-      email: 'billing@cloudmor.com',
-      description: 'For billing questions and account changes',
+      title: 'Email Support',
+      description: 'Send us an email for assistance',
+      url: 'supportcard.com',
       icon: Mail,
-      color: 'green'
+      color: 'green',
+      action: () => window.open('mailto:support@supportcard.com', '_blank')
+    },
+    {
+      title: 'Live Chat Support',
+      description: 'Chat with our support team instantly',
+      url: 'Start Chat Session',
+      icon: MessageCircle,
+      color: 'purple',
+      action: () => {
+        if (window.JSDWidget) {
+          window.JSDWidget.show();
+        }
+      }
     }
   ];
 
@@ -692,80 +724,69 @@ export const SinglePagePortal = () => {
         {/* Support Section */}
         <Card className="bg-white/90 backdrop-blur-sm">
           <CardHeader>
-            <div className="flex justify-between items-center">
-              <CardTitle className="text-2xl">Support Center</CardTitle>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                + New Support Ticket
-              </Button>
-            </div>
+            <CardTitle className="text-2xl">Support Center</CardTitle>
+            <p className="text-gray-600">Get help and submit support requests</p>
           </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Support Process */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 border-2 border-dashed border-gray-200 rounded-lg">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                    1
-                  </div>
-                </div>
-                <h4 className="font-semibold mb-2">Submit Ticket</h4>
-                <p className="text-sm text-gray-600">Create a support ticket</p>
-              </div>
-              
-              <div className="text-center p-4 border-2 border-dashed border-gray-200 rounded-lg">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <div className="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                    2
-                  </div>
-                </div>
-                <h4 className="font-semibold mb-2">Email Support</h4>
-                <p className="text-sm text-gray-600">Email for urgent issues</p>
-              </div>
-              
-              <div className="text-center p-4 border-2 border-dashed border-gray-200 rounded-lg">
-                <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <div className="w-6 h-6 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                    3
-                  </div>
-                </div>
-                <h4 className="font-semibold mb-2">Call with Ticket</h4>
-                <p className="text-sm text-gray-600">Call with your ticket number</p>
-              </div>
-            </div>
-
-            {/* Support Channels */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {supportChannels.map((channel, index) => {
-                const IconComponent = channel.icon;
+          <CardContent className="space-y-8">
+            {/* Support Options */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {supportOptions.map((option, index) => {
+                const IconComponent = option.icon;
                 return (
-                  <div key={index} className="p-6 bg-gray-50 rounded-lg">
-                    <div className={`w-12 h-12 bg-${channel.color}-100 rounded-full flex items-center justify-center mb-4`}>
-                      <IconComponent className={`w-6 h-6 text-${channel.color}-600`} />
+                  <div key={index} className="p-6 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors" onClick={option.action}>
+                    <div className={`w-12 h-12 bg-${option.color}-100 rounded-full flex items-center justify-center mb-4`}>
+                      <IconComponent className={`w-6 h-6 text-${option.color}-600`} />
                     </div>
-                    <h4 className="font-bold mb-2">{channel.title}</h4>
-                    {channel.phone && (
-                      <p className={`text-${channel.color}-600 font-semibold mb-1`}>📞 {channel.phone}</p>
-                    )}
-                    <p className={`text-${channel.color}-600 font-semibold mb-2`}>✉️ {channel.email}</p>
-                    <p className="text-sm text-gray-600">{channel.description}</p>
+                    <h3 className="font-bold text-lg mb-2">{option.title}</h3>
+                    <p className="text-gray-600 mb-3">{option.description}</p>
+                    <p className={`text-${option.color}-600 font-semibold`}>
+                      {option.url}
+                    </p>
                   </div>
                 );
               })}
             </div>
 
-            {/* Ticket Status */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-blue-50 rounded-lg">
-                <div className="text-2xl font-bold text-blue-600">2</div>
-                <div className="text-gray-600">Open Tickets</div>
+            {/* Emergency Hotline Information */}
+            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <Phone className="w-6 h-6 text-red-600" />
+                  <h3 className="text-xl font-bold text-red-800">Emergency Support Hotline</h3>
+                </div>
+                <p className="text-red-700 mb-2">
+                  For immediate issues or urgent support needs
+                </p>
+                <p className="text-2xl font-bold text-red-800 mb-2">
+                  📞 888-554-6597
+                </p>
+                <p className="text-red-600 font-medium">
+                  Have your ticket number ready when calling
+                </p>
               </div>
-              <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                <div className="text-2xl font-bold text-yellow-600">1</div>
-                <div className="text-gray-600">In Progress</div>
-              </div>
-              <div className="text-center p-4 bg-green-50 rounded-lg">
-                <div className="text-2xl font-bold text-green-600">15</div>
-                <div className="text-gray-600">Resolved</div>
+            </div>
+
+            {/* Support Portal Access */}
+            <div className="text-center space-y-4 p-6 bg-gray-50 rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">Support Portal Access</h3>
+              <p className="text-gray-600 mb-4">Connect to our Jira support system</p>
+              <div className="space-x-4">
+                <Button 
+                  onClick={() => window.open('https://support.cloudmor.com', '_blank')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+                >
+                  Open Support Portal
+                </Button>
+                <Button 
+                  onClick={() => {
+                    if (window.JSDWidget) {
+                      window.JSDWidget.show();
+                    }
+                  }}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2"
+                >
+                  Start Chat Support
+                </Button>
               </div>
             </div>
           </CardContent>
