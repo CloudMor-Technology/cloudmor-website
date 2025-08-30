@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
-import { User, Settings, Phone, CheckCircle, Eye, CreditCard, Lock, LogOut, Building2, Headphones, Shield, Globe, Mail, MessageCircle, FileText, ExternalLink, Folder, TrendingUp, Activity, DollarSign, Calendar, RefreshCcw, AlertCircle } from 'lucide-react';
+import { User, Settings, Phone, CheckCircle, Eye, CreditCard, Lock, LogOut, Building2, Headphones, Shield, Globe, Mail, MessageCircle, FileText, ExternalLink, Folder, TrendingUp, Activity, DollarSign, Calendar, RefreshCcw, AlertCircle, Wifi, Cloud } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { AdminTab } from './tabs/AdminTab';
@@ -599,6 +599,13 @@ export const SinglePagePortal = () => {
                     <MessageCircle className="w-4 h-4 mr-2" />
                     Start Live Chat
                   </Button>
+                  <Button
+                    onClick={() => window.open('tel:+19497694428', '_self')}
+                    className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white text-lg py-3"
+                  >
+                    <Phone className="w-5 h-5 mr-2" />
+                    Call Support: (949) 769-4428
+                  </Button>
                 </CardContent>
               </Card>
 
@@ -614,10 +621,55 @@ export const SinglePagePortal = () => {
                 <CardContent className="space-y-4">
                   <div className="bg-white/5 rounded-lg p-4 text-center">
                     <p className="text-white/70 mb-2">Emergency Hotline</p>
-                    <p className="text-2xl font-bold text-white">📞 888-554-6597</p>
-                    <p className="text-white/60 text-sm mt-1">Have your ticket number ready</p>
+                    <p className="text-3xl font-bold text-white">📞 888-554-6597</p>
+                    <p className="text-white/60 text-lg mt-1">Have your ticket number ready</p>
                   </div>
                   <ClientSupportDocuments />
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Support Tips Section */}
+            <div className="mt-8">
+              <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+                <CardHeader>
+                  <CardTitle className="text-2xl text-white flex items-center gap-2">
+                    <FileText className="w-6 h-6 text-blue-400" />
+                    Quick Support Tips
+                  </CardTitle>
+                  <p className="text-white/70">Helpful guides and troubleshooting resources</p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-white/5 rounded-lg p-4">
+                      <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                        <Phone className="w-4 h-4 text-green-400" />
+                        Phone System Help
+                      </h4>
+                      <p className="text-white/70 text-sm">Need help with your phone extensions or voicemail? Check our phone system guide.</p>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-4">
+                      <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                        <Wifi className="w-4 h-4 text-blue-400" />
+                        Network Issues
+                      </h4>
+                      <p className="text-white/70 text-sm">Experiencing connectivity problems? Run our network diagnostics tool first.</p>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-4">
+                      <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                        <Shield className="w-4 h-4 text-orange-400" />
+                        Security Best Practices
+                      </h4>
+                      <p className="text-white/70 text-sm">Keep your business secure with our cybersecurity guidelines and tips.</p>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-4">
+                      <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                        <Cloud className="w-4 h-4 text-purple-400" />
+                        Cloud Services
+                      </h4>
+                      <p className="text-white/70 text-sm">Learn how to maximize your cloud infrastructure and backup solutions.</p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>

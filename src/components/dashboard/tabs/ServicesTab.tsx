@@ -1,8 +1,7 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, Settings, Activity } from 'lucide-react';
+import { TrendingUp, Settings, Activity, Phone, Users } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
@@ -15,14 +14,43 @@ interface ClientService {
   created_at: string;
 }
 
+interface PhoneExtension {
+  id: string;
+  extension_number: string;
+  user_name: string;
+  voicemail_email: string | null;
+  is_active: boolean;
+}
+
 export const ServicesTab = () => {
   const [clientServices, setClientServices] = useState<ClientService[]>([]);
+  const [phoneExtensions, setPhoneExtensions] = useState<PhoneExtension[]>([]);
   const [loading, setLoading] = useState(true);
   const { profile } = useAuth();
 
   useEffect(() => {
     fetchClientServices();
+    fetchPhoneExtensions();
   }, [profile]);
+
+  const fetchPhoneExtensions = async () => {
+    if (!profile?.company_id) return;
+
+    try {
+      const { data: extensionsData, error: extensionsError } = await supabase
+        .from('phone_extensions')
+        .select('*')
+        .eq('company_id', profile.company_id)
+        .eq('is_active', true)
+        .order('extension_number');
+
+      if (extensionsError) throw extensionsError;
+
+      setPhoneExtensions(extensionsData || []);
+    } catch (error) {
+      console.error('Error fetching phone extensions:', error);
+    }
+  };
 
   const fetchClientServices = async () => {
     if (!profile?.email) return;
@@ -81,7 +109,7 @@ export const ServicesTab = () => {
   };
 
   const getStatusColor = (status: string) => {
-    return status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800';
+    return status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800';
   };
 
   return (
@@ -95,7 +123,6 @@ export const ServicesTab = () => {
           Service Settings
         </Button>
       </div>
-
 
       {/* Services Grid */}
       {loading ? (
@@ -123,7 +150,7 @@ export const ServicesTab = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {clientServices.map((service, index) => {
             const color = getServiceIcon(service.service_name);
-            const status = service.status || 'ACTIVE';
+            const status = service.status || 'active';
             
             return (
               <Card key={service.id} className="bg-white/80 backdrop-blur-sm hover:shadow-lg transition-shadow">
@@ -138,13 +165,9 @@ export const ServicesTab = () => {
                       <div>
                         <CardTitle className="text-lg">{service.service_name}</CardTitle>
                         <Badge className={getStatusColor(status)}>
-                          {status}
+                          {status.toUpperCase()}
                         </Badge>
                       </div>
-                    </div>
-                    <div className="text-right">
-                      <p className={`text-2xl font-bold text-${color}-600`}>99.9%</p>
-                      <p className="text-xs text-gray-500">Uptime</p>
                     </div>
                   </div>
                 </CardHeader>
@@ -153,9 +176,27 @@ export const ServicesTab = () => {
                     <p className="text-gray-600 text-sm">{service.service_description}</p>
                   )}
                   
+                  {/* Show phone extensions for Business Phone Systems */}
+                  {service.service_name.toLowerCase().includes('phone') && phoneExtensions.length > 0 && (
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <h5 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                        <Phone className="w-4 h-4" />
+                        Phone Extensions
+                      </h5>
+                      <div className="space-y-2">
+                        {phoneExtensions.map((ext) => (
+                          <div key={ext.id} className="flex justify-between items-center text-sm">
+                            <span className="font-medium">Ext. {ext.extension_number}</span>
+                            <span className="text-gray-600">{ext.user_name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
                   <div className="flex justify-between items-center text-xs text-gray-500">
                     <span>Added: {new Date(service.created_at).toLocaleDateString()}</span>
-                    <span>Active Service</span>
+                    <span>Status: {status}</span>
                   </div>
 
                   <Button variant="outline" size="sm" className="w-full">
