@@ -207,6 +207,7 @@ export type Database = {
           last_login: string | null
           phone: string | null
           role: string
+          stripe_customer_id: string | null
           updated_at: string
         }
         Insert: {
@@ -219,6 +220,7 @@ export type Database = {
           last_login?: string | null
           phone?: string | null
           role?: string
+          stripe_customer_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -231,6 +233,7 @@ export type Database = {
           last_login?: string | null
           phone?: string | null
           role?: string
+          stripe_customer_id?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -275,7 +278,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: {
+        Args: { user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
