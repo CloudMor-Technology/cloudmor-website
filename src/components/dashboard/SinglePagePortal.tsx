@@ -305,10 +305,10 @@ export const SinglePagePortal = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex justify-between items-center">
               <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-[gowith-dark-blue] text-sky-200">
+              <h1 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-[gowith-dark-blue] text-sky-200">
                 CloudMor Client Portal
               </h1>
-              <p className="text-sm font-medium text-gowith-orange">
+              <p className="text-xs font-medium text-gowith-orange">
                 Welcome, {isImpersonating ? `${impersonatedClient.contact_name}` : profile?.full_name || user?.email?.split('@')[0]}
               </p>
                 {isImpersonating && <div className="bg-orange-100 border border-orange-300 rounded-lg px-3 py-1 mt-2 inline-block">
@@ -346,7 +346,7 @@ export const SinglePagePortal = () => {
           {/* Dashboard Section */}
           <section id="dashboard" className="space-y-8">
             <div className="text-center mb-8">
-              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-amber-500 text-[gowith-orange-hover]">
+              <h2 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-amber-500 text-[gowith-orange-hover]">
                 Dashboard Overview
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full mx-auto"></div>
@@ -356,27 +356,27 @@ export const SinglePagePortal = () => {
               {/* Account Overview */}
               <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-[gowith-dark-blue] text-blue-900">
-                    <User className="w-6 h-6 text-blue-400" />
+                  <CardTitle className="flex items-center gap-2 text-[gowith-dark-blue] text-blue-900 text-sm">
+                    <User className="w-4 h-4 text-blue-400" />
                     Account Information
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-blue-900">Full Name</p>
-                     <p className="text-white font-semibold text-lg">
+                     <p className="text-white font-semibold text-sm">
                        {isImpersonating ? impersonatedClient.contact_name : profile?.full_name || 'Not provided'}
                      </p>
                    </div>
                    <div>
                      <p className="text-sm font-semibold text-blue-900">Email</p>
-                     <p className="text-white font-semibold text-lg">
+                     <p className="text-white font-semibold text-sm">
                        {isImpersonating ? impersonatedClient.contact_email : user?.email}
                      </p>
                    </div>
                    <div>
                      <p className="text-sm font-semibold text-blue-900">Role</p>
-                     <p className="text-white font-semibold text-lg capitalize">
+                     <p className="text-white font-semibold text-sm capitalize">
                        {isImpersonating ? 'Client' : profile?.role || 'Client'}
                      </p>
                    </div>
@@ -386,8 +386,8 @@ export const SinglePagePortal = () => {
               {/* Quick Actions */}
               <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                 <CardHeader>
-                  <CardTitle className="text-xl flex items-center gap-2 text-blue-900">
-                    <Settings className="w-6 h-6 text-orange-400" />
+                  <CardTitle className="text-sm flex items-center gap-2 text-blue-900">
+                    <Settings className="w-4 h-4 text-orange-400" />
                     Quick Actions
                   </CardTitle>
                 </CardHeader>
@@ -406,8 +406,8 @@ export const SinglePagePortal = () => {
               {/* Services Overview */}
               <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                 <CardHeader>
-                  <CardTitle className="text-xl flex items-center gap-2 text-blue-900">
-                    <Activity className="w-6 h-6 text-blue-400" />
+                  <CardTitle className="text-sm flex items-center gap-2 text-blue-900">
+                    <Activity className="w-4 h-4 text-blue-400" />
                     Services Overview
                   </CardTitle>
                 </CardHeader>
@@ -415,7 +415,7 @@ export const SinglePagePortal = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-slate-50">Active Services</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-white font-bold text-2xl">{clientServices.length}</span>
+                      <span className="text-white font-bold text-lg">{clientServices.length}</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
@@ -603,32 +603,6 @@ export const SinglePagePortal = () => {
                   {/* Support Documents - Full Width */}
                   <ClientSupportDocuments />
                   
-                  {/* Other Support Tips - Grid Layout */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <>
-        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
-          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
-            <Wifi className="w-5 h-5 text-blue-400" />
-            Network Issues
-          </h4>
-          <p className="text-white/90 text-base font-medium">Experiencing connectivity problems? Run our network diagnostics tool first.</p>
-        </div>
-        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
-          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
-            <Shield className="w-5 h-5 text-orange-400" />
-            Security Best Practices
-          </h4>
-          <p className="text-white/90 text-base font-medium">Keep your business secure with our cybersecurity guidelines and tips.</p>
-        </div>
-        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
-          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
-            <Cloud className="w-5 h-5 text-purple-400" />
-            Cloud Services
-          </h4>
-          <p className="text-white/90 text-base font-medium">Learn how to maximize your cloud infrastructure and backup solutions.</p>
-        </div>
-      </>
-                  </div>
                 </CardContent>
               </Card>
             </div>
