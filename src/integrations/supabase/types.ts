@@ -203,6 +203,7 @@ export type Database = {
           email: string
           full_name: string
           id: string
+          jira_email: string | null
           job_title: string | null
           last_login: string | null
           phone: string | null
@@ -216,6 +217,7 @@ export type Database = {
           email: string
           full_name: string
           id: string
+          jira_email?: string | null
           job_title?: string | null
           last_login?: string | null
           phone?: string | null
@@ -229,6 +231,7 @@ export type Database = {
           email?: string
           full_name?: string
           id?: string
+          jira_email?: string | null
           job_title?: string | null
           last_login?: string | null
           phone?: string | null
