@@ -12,6 +12,19 @@ export const SinglePagePortal = () => {
   const { profile, user, signOut } = useAuth();
   const isAdmin = profile?.role === 'admin';
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [showClientManagement, setShowClientManagement] = useState(false);
+  const [clientForm, setClientForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    companyWebsite: '',
+    companyAddress: '',
+    taxId: '',
+    stripeEmail: '',
+    jiraEmail: '',
+    services: []
+  });
   const [passwordForm, setPasswordForm] = useState({
     currentPassword: '',
     newPassword: '',
@@ -25,6 +38,46 @@ export const SinglePagePortal = () => {
     } catch (error) {
       toast.error('Failed to sign out');
     }
+  };
+
+  const handleAddClient = async () => {
+    try {
+      // Here you would implement the logic to save client to database
+      console.log('Adding client:', clientForm);
+      toast.success('Client added successfully');
+      setClientForm({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        companyWebsite: '',
+        companyAddress: '',
+        taxId: '',
+        stripeEmail: '',
+        jiraEmail: '',
+        services: []
+      });
+      setShowClientManagement(false);
+    } catch (error) {
+      toast.error('Failed to add client');
+    }
+  };
+
+  const availableServices = [
+    { id: 1, name: 'Managed IT Services', phone: '(555) 123-4567', extension: '101' },
+    { id: 2, name: 'Cloud Hosting', phone: '(555) 123-4567', extension: '102' },
+    { id: 3, name: 'Cybersecurity Services', phone: '(555) 123-4567', extension: '103' },
+    { id: 4, name: 'Web Development', phone: '(555) 123-4567', extension: '104' },
+    { id: 5, name: 'Network Management', phone: '(555) 123-4567', extension: '105' }
+  ];
+
+  const handleServiceToggle = (serviceId) => {
+    setClientForm(prev => ({
+      ...prev,
+      services: prev.services.includes(serviceId) 
+        ? prev.services.filter(id => id !== serviceId)
+        : [...prev.services, serviceId]
+    }));
   };
 
   const handlePasswordChange = async () => {
@@ -122,19 +175,151 @@ export const SinglePagePortal = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-4">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
-                  <UserPlus className="w-4 h-4" />
-                  Create Client User
-                </Button>
-                <Button className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2">
+                <Button 
+                  onClick={() => setShowClientManagement(!showClientManagement)}
+                  className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
+                >
                   <User className="w-4 h-4" />
                   Client Management
                 </Button>
-                <Button className="bg-purple-600 hover:bg-purple-700 text-white flex items-center gap-2">
-                  <Settings className="w-4 h-4" />
-                  System Administration
-                </Button>
               </div>
+              
+              {/* Client Management Form */}
+              {showClientManagement && (
+                <div className="mt-6 p-6 bg-gray-50 rounded-lg border">
+                  <h3 className="text-lg font-semibold mb-4">Add New Client</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="clientName">Client Name</Label>
+                      <Input
+                        id="clientName"
+                        value={clientForm.name}
+                        onChange={(e) => setClientForm({...clientForm, name: e.target.value})}
+                        placeholder="Enter client name"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="clientEmail">Email</Label>
+                      <Input
+                        id="clientEmail"
+                        type="email"
+                        value={clientForm.email}
+                        onChange={(e) => setClientForm({...clientForm, email: e.target.value})}
+                        placeholder="client@example.com"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="clientPhone">Phone Number</Label>
+                      <Input
+                        id="clientPhone"
+                        value={clientForm.phone}
+                        onChange={(e) => setClientForm({...clientForm, phone: e.target.value})}
+                        placeholder="(555) 123-4567"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="clientCompany">Company</Label>
+                      <Input
+                        id="clientCompany"
+                        value={clientForm.company}
+                        onChange={(e) => setClientForm({...clientForm, company: e.target.value})}
+                        placeholder="Company Name"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="companyWebsite">Company Website</Label>
+                      <Input
+                        id="companyWebsite"
+                        value={clientForm.companyWebsite}
+                        onChange={(e) => setClientForm({...clientForm, companyWebsite: e.target.value})}
+                        placeholder="www.company.com"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="taxId">Tax ID</Label>
+                      <Input
+                        id="taxId"
+                        value={clientForm.taxId}
+                        onChange={(e) => setClientForm({...clientForm, taxId: e.target.value})}
+                        placeholder="Tax ID Number"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="stripeEmail">Stripe Email</Label>
+                      <Input
+                        id="stripeEmail"
+                        type="email"
+                        value={clientForm.stripeEmail}
+                        onChange={(e) => setClientForm({...clientForm, stripeEmail: e.target.value})}
+                        placeholder="billing@company.com"
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="jiraEmail">Jira Email</Label>
+                      <Input
+                        id="jiraEmail"
+                        type="email"
+                        value={clientForm.jiraEmail}
+                        onChange={(e) => setClientForm({...clientForm, jiraEmail: e.target.value})}
+                        placeholder="support@company.com"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4">
+                    <Label htmlFor="companyAddress">Company Address</Label>
+                    <Input
+                      id="companyAddress"
+                      value={clientForm.companyAddress}
+                      onChange={(e) => setClientForm({...clientForm, companyAddress: e.target.value})}
+                      placeholder="Full company address"
+                      className="w-full"
+                    />
+                  </div>
+                  
+                  <div className="mt-6">
+                    <Label>Available Services</Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                      {availableServices.map((service) => (
+                        <div key={service.id} className="flex items-center space-x-2 p-3 border rounded-lg">
+                          <input
+                            type="checkbox"
+                            id={`service-${service.id}`}
+                            checked={clientForm.services.includes(service.id)}
+                            onChange={() => handleServiceToggle(service.id)}
+                            className="rounded"
+                          />
+                          <label htmlFor={`service-${service.id}`} className="flex-1">
+                            <div className="font-medium">{service.name}</div>
+                            <div className="text-sm text-gray-500">
+                              Phone: {service.phone} Ext: {service.extension}
+                            </div>
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3 mt-6">
+                    <Button onClick={handleAddClient} className="bg-green-600 hover:bg-green-700">
+                      Add Client
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setShowClientManagement(false)}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         )}
@@ -296,39 +481,25 @@ export const SinglePagePortal = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="p-4 border rounded-lg">
-                  <h4 className="font-semibold text-green-600">Active</h4>
-                  <h3 className="text-lg font-bold">Managed IT Services</h3>
-                  <p className="text-sm text-gray-500">Monthly Plan</p>
-                  <p className="text-sm text-gray-600">Next billing: Jan 15, 2025</p>
+              {isAdmin ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 text-lg mb-4">
+                    Services will be populated based on client assignments
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    Use Client Management to assign services to users
+                  </p>
                 </div>
-                
-                <div className="p-4 border rounded-lg">
-                  <h4 className="font-semibold text-green-600">Active</h4>
-                  <h3 className="text-lg font-bold">Cloud Hosting</h3>
-                  <p className="text-sm text-gray-500">Annual Plan</p>
-                  <p className="text-sm text-gray-600">Expires: Dec 31, 2025</p>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 text-lg mb-4">
+                    No services assigned yet
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    Contact your administrator to get services assigned
+                  </p>
                 </div>
-                
-                <div className="p-4 border rounded-lg">
-                  <h4 className="font-semibold text-blue-600">Pending</h4>
-                  <h3 className="text-lg font-bold">Cybersecurity Audit</h3>
-                  <p className="text-sm text-gray-500">One-time Service</p>
-                  <p className="text-sm text-gray-600">Scheduled: Feb 1, 2025</p>
-                </div>
-              </div>
-              
-              <div className="pt-4 border-t">
-                <div className="flex justify-between items-center">
-                  <h4 className="font-semibold">Service Summary</h4>
-                  <div className="flex gap-4 text-sm">
-                    <span className="text-green-600">● 2 Active</span>
-                    <span className="text-blue-600">● 1 Pending</span>
-                    <span className="text-gray-500">● 0 Inactive</span>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </CardContent>
         </Card>
