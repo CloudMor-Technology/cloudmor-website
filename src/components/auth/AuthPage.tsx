@@ -13,8 +13,8 @@ export const AuthPage = () => {
       {/* Background overlay for better readability */}
       <div className="absolute inset-0 bg-black/10"></div>
       
-      {/* Logo positioned at top left */}
-      <div className="absolute top-8 left-8 z-20">
+      {/* Logo positioned at center top */}
+      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20">
         <img src="/lovable-uploads/d7e7b224-06ca-4c59-a5df-1699995031a9.png" alt="CloudMor Logo" className="h-20 w-auto" />
       </div>
       
@@ -34,7 +34,7 @@ export const AuthPage = () => {
 
         {/* Description Text - Bottom */}
         <div className="text-center">
-          <p className="text-2xl leading-relaxed text-[#397ee6] font-semibold lg:text-3xl">
+          <p className="text-2xl leading-relaxed text-orange-500 font-semibold lg:text-3xl">
             Access Company info, services, billing, and support in one secure place
           </p>
         </div>
