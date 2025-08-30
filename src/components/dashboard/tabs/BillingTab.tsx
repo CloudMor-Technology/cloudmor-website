@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 
 export const BillingTab = () => {
-  const { user } = useAuth();
+  const { user, isImpersonating, profile } = useAuth();
   const { toast } = useToast();
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ export const BillingTab = () => {
     if (user) {
       fetchBillingData();
     }
-  }, [user]);
+  }, [user, isImpersonating, profile?.email]);
 
   const fetchBillingData = async () => {
     try {
@@ -41,10 +41,14 @@ export const BillingTab = () => {
       
       console.log('Fetching comprehensive billing dashboard...');
       
+      const session = await supabase.auth.getSession();
+      const requestBody = isImpersonating ? { impersonateEmail: profile?.email } : {};
+      
       const { data, error } = await supabase.functions.invoke('get-billing-info', {
         headers: {
-          Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+          Authorization: `Bearer ${session.data.session?.access_token}`,
         },
+        body: requestBody
       });
 
       if (error) {

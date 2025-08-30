@@ -56,6 +56,28 @@ serve(async (req) => {
 
     console.log('User authenticated:', user.email);
 
+    // Check if admin is impersonating another user
+    const { data: adminProfile } = await supabaseClient
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+
+    console.log('Admin profile role:', adminProfile?.role);
+    
+    let targetEmail = user.email;
+    let isImpersonating = false;
+
+    // If admin, check for impersonation parameter
+    if (adminProfile?.role === 'admin') {
+      const requestBody = await req.json().catch(() => ({}));
+      if (requestBody.impersonateEmail) {
+        targetEmail = requestBody.impersonateEmail;
+        isImpersonating = true;
+        console.log('Admin impersonating user:', targetEmail);
+      }
+    }
+
     // Initialize Stripe
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) {
@@ -68,25 +90,27 @@ serve(async (req) => {
       apiVersion: "2023-10-16",
     });
 
-    // Look up customer by email instead of using hardcoded ID
-    console.log('Looking up Stripe customer for:', user.email);
+    // Look up customer by target email
+    console.log('Looking up Stripe customer for:', targetEmail);
     
     const customers = await stripe.customers.list({
-      email: user.email,
+      email: targetEmail,
       limit: 1
     });
 
     if (customers.data.length === 0) {
       console.log('No customer found, returning default billing data');
       return new Response(JSON.stringify({
-        customer: { email: user.email },
+        customer: { email: targetEmail },
         monthlySpending: 0,
         yearlySpending: 0,
         nextBillingDate: null,
         balance: 0,
         subscriptions: [],
         paymentMethods: [],
-        invoices: []
+        invoices: [],
+        isImpersonating,
+        targetEmail
       }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
@@ -247,8 +271,10 @@ serve(async (req) => {
       thisMonthTotal,
       totalSpentThisYear,
       nextBillingDate,
-      clientEmail: user.email,
-      customerId: customer.id
+      clientEmail: targetEmail,
+      customerId: customer.id,
+      isImpersonating,
+      adminEmail: user.email
     };
 
     return new Response(JSON.stringify({

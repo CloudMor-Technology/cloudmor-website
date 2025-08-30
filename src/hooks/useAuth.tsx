@@ -1,4 +1,3 @@
-
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { User, Session } from '@supabase/supabase-js';
@@ -11,10 +10,13 @@ interface AuthContextType {
   profile: Profile | null;
   session: Session | null;
   loading: boolean;
+  isImpersonating: boolean;
+  originalProfile: Profile | null;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, fullName: string) => Promise<void>;
   signOut: () => Promise<void>;
   updateProfile: (updates: Partial<Profile>) => Promise<void>;
+  stopImpersonating: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -36,12 +38,41 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isImpersonating, setIsImpersonating] = useState(false);
+  const [originalProfile, setOriginalProfile] = useState<Profile | null>(null);
 
-  console.log('Auth state:', { user: !!user, profile: !!profile, session: !!session, loading });
+  console.log('Auth state:', { user: !!user, profile: !!profile, session: !!session, loading, isImpersonating });
 
   const fetchProfile = async (userId: string) => {
     try {
       console.log('Fetching profile for user:', userId);
+      
+      // Check for impersonation first
+      const impersonatingData = localStorage.getItem('impersonating_user');
+      
+      if (impersonatingData) {
+        const impersonatedUser = JSON.parse(impersonatingData);
+        
+        // Fetch the current user's actual profile (admin)
+        const { data: adminProfile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', userId)
+          .maybeSingle();
+        
+        // Only allow impersonation if the current user is an admin
+        if (adminProfile?.role === 'admin') {
+          setOriginalProfile(adminProfile);
+          setIsImpersonating(true);
+          return impersonatedUser;
+        } else {
+          // Clear impersonation if user is not admin
+          localStorage.removeItem('impersonating_user');
+          setIsImpersonating(false);
+        }
+      }
+
+      // Fetch normal profile
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -54,6 +85,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
 
       console.log('Profile fetched:', data);
+      setIsImpersonating(false);
+      setOriginalProfile(null);
       return data;
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -135,6 +168,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           }
         } else {
           setProfile(null);
+          // Clear impersonation on logout
+          localStorage.removeItem('impersonating_user');
+          setIsImpersonating(false);
+          setOriginalProfile(null);
         }
         
         setLoading(false);
@@ -173,6 +210,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const signOut = async () => {
+    // Clear impersonation on logout
+    localStorage.removeItem('impersonating_user');
+    setIsImpersonating(false);
+    setOriginalProfile(null);
+    
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
   };
@@ -192,15 +234,29 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setProfile(updatedProfile);
   };
 
+  const stopImpersonating = () => {
+    localStorage.removeItem('impersonating_user');
+    setIsImpersonating(false);
+    if (originalProfile) {
+      setProfile(originalProfile);
+      setOriginalProfile(null);
+    }
+    // Force a refresh to reload with admin view
+    window.location.reload();
+  };
+
   const value = {
     user,
     profile,
     session,
     loading,
+    isImpersonating,
+    originalProfile,
     signIn,
     signUp,
     signOut,
     updateProfile,
+    stopImpersonating,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

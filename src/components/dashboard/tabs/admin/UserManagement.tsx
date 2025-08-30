@@ -180,6 +180,23 @@ export const UserManagement = () => {
     setShowCreateForm(true);
   };
 
+  const handleImpersonate = (user) => {
+    // Store impersonation data in localStorage
+    localStorage.setItem('impersonating_user', JSON.stringify({
+      id: user.id,
+      email: user.email,
+      full_name: user.full_name,
+      role: user.role,
+      company_id: user.company_id,
+      stripe_customer_id: user.stripe_customer_id
+    }));
+    
+    toast.success(`Now viewing as ${user.full_name || user.email}`);
+    
+    // Redirect to dashboard to see user's view
+    window.location.href = '/portal';
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -379,6 +396,14 @@ export const UserManagement = () => {
                     onClick={() => startEdit(user)}
                   >
                     <Edit className="w-4 h-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => handleImpersonate(user)}
+                    className="text-blue-600 hover:text-blue-700"
+                  >
+                    <Eye className="w-4 h-4" />
                   </Button>
                   <Button 
                     variant="outline" 

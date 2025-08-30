@@ -11,7 +11,7 @@ interface PortalNavigationProps {
 }
 
 export const PortalNavigation = ({ activeTab, onTabChange }: PortalNavigationProps) => {
-  const { user, profile, signOut } = useAuth();
+  const { user, profile, signOut, isImpersonating, stopImpersonating } = useAuth();
 
   const handleSignOut = async () => {
     try {
@@ -66,6 +66,20 @@ export const PortalNavigation = ({ activeTab, onTabChange }: PortalNavigationPro
 
           {/* User Menu */}
           <div className="flex items-center space-x-4">
+            {/* Impersonation indicator */}
+            {isImpersonating && (
+              <div className="bg-orange-500 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+                <User className="w-4 h-4" />
+                <span className="text-sm font-medium">Viewing as: {profile?.full_name || profile?.email}</span>
+                <button
+                  onClick={stopImpersonating}
+                  className="ml-2 bg-white/20 hover:bg-white/30 px-2 py-1 rounded text-xs transition-colors"
+                >
+                  Exit
+                </button>
+              </div>
+            )}
+            
             <div className="text-white/90 text-lg">
               <span className="font-medium">{profile?.full_name || user?.email}</span>
             </div>
