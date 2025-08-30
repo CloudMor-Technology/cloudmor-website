@@ -59,6 +59,9 @@ export const ProfileTab = () => {
   useEffect(() => {
     if (user) {
       fetchProfile();
+      // Force refresh every time the component mounts to avoid caching issues
+      const refreshTimer = setTimeout(fetchProfile, 100);
+      return () => clearTimeout(refreshTimer);
     }
   }, [user]);
 

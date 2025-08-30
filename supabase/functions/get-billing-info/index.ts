@@ -122,80 +122,68 @@ serve(async (req) => {
       console.error('Error fetching profile:', profileError);
     }
 
-    let customer;
-    let customerId = profileData?.stripe_customer_id;
+    let customerId = profileData?.stripe_customer_id?.trim();
     
-    console.log('Profile customer ID:', customerId);
+    console.log('Profile customer ID from admin settings:', customerId);
 
-    if (customerId && customerId.trim() !== '') {
-      // User has a customer ID in their profile, use it directly
-      console.log('Using existing customer ID from profile:', customerId);
-      try {
-        customer = await stripe.customers.retrieve(customerId);
-        console.log('Successfully retrieved customer:', customer.id);
-      } catch (error) {
-        console.error('Failed to retrieve customer with ID:', customerId, error);
-        // Customer ID is invalid, try to find by email
-        customerId = null;
-      }
-    }
-    
-    if (!customerId) {
-      // Look up customer by target email
-      console.log('Looking up Stripe customer by email:', targetEmail);
-      
-      const customers = await stripe.customers.list({
-        email: targetEmail,
-        limit: 1
-      });
-
-      if (customers.data.length === 0) {
-        console.log('No customer found for email:', targetEmail);
-        return new Response(JSON.stringify({
-          success: true,
-          data: {
-            customer: { email: targetEmail },
-            thisMonthTotal: 0,
-            totalSpentThisYear: 0,
-            nextBillingDate: 'No active subscription',
-            subscriptions: [],
-            paymentMethods: [],
-            invoices: [],
-            upcomingInvoice: null,
-            clientEmail: targetEmail,
-            customerId: null,
-            isImpersonating,
-            adminEmail: user.email,
-            targetEmail,
-            message: 'No Stripe customer found. Please add your Stripe Customer ID in your profile settings.'
-          }
-        }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-          status: 200,
-        });
-      }
-
-      customer = customers.data[0];
-      customerId = customer.id;
-      console.log('Found customer by email:', customerId);
-      
-      // Update profile with found customer ID
-      if (profileData) {
-        const supabaseService = createClient(supabaseUrl, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
-        const { error: updateError } = await supabaseService
-          .from('profiles')
-          .update({ stripe_customer_id: customerId })
-          .eq('email', targetEmail);
-          
-        if (updateError) {
-          console.error('Failed to update profile with customer ID:', updateError);
-        } else {
-          console.log('Updated profile with found customer ID');
+    if (!customerId || customerId === '') {
+      console.log('No customer ID found in profile for:', targetEmail);
+      return new Response(JSON.stringify({
+        success: true,
+        data: {
+          customer: { email: targetEmail },
+          thisMonthTotal: 0,
+          totalSpentThisYear: 0,
+          nextBillingDate: 'No active subscription',
+          subscriptions: [],
+          paymentMethods: [],
+          invoices: [],
+          upcomingInvoice: null,
+          clientEmail: targetEmail,
+          customerId: null,
+          isImpersonating,
+          adminEmail: user.email,
+          targetEmail,
+          message: 'No Stripe Customer ID configured by admin. Please contact your administrator to set up your Stripe Customer ID.'
         }
-      }
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
     }
 
-    console.log('Using customer for billing data:', customerId);
+    // Use ONLY the customer ID from the profile - never create or lookup by email
+    let customer;
+    try {
+      customer = await stripe.customers.retrieve(customerId);
+      console.log('Successfully retrieved customer using admin-configured ID:', customerId);
+    } catch (error) {
+      console.error('Failed to retrieve customer with admin ID:', customerId, error);
+      return new Response(JSON.stringify({
+        success: true,
+        data: {
+          customer: { email: targetEmail },
+          thisMonthTotal: 0,
+          totalSpentThisYear: 0,
+          nextBillingDate: 'No active subscription',
+          subscriptions: [],
+          paymentMethods: [],
+          invoices: [],
+          upcomingInvoice: null,
+          clientEmail: targetEmail,
+          customerId: customerId,
+          isImpersonating,
+          adminEmail: user.email,
+          targetEmail,
+          message: `Invalid Stripe Customer ID (${customerId}) configured by admin. Please contact your administrator to correct the Stripe Customer ID.`
+        }
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
+
+    console.log('Using admin-configured customer ID for billing:', customerId);
 
     console.log('Fetching comprehensive dashboard data for:', customer.id);
 
