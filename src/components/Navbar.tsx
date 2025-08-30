@@ -328,15 +328,10 @@ const Navbar = () => {
         {/* Updated CTA Buttons */}
         <div className="hidden md:flex items-center space-x-4">
           <Button className="bg-[#007bff] hover:bg-[#0056b3] text-white font-bold transition-colors">
-            <a 
-              href="https://billing.stripe.com/p/login/3cs2aGbQ55aZ6jK288"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2"
-            >
+            <Link to="/portal" className="flex items-center gap-2">
               <User size={18} />
               Client Portal
-            </a>
+            </Link>
           </Button>
           
           <Button className="bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold transition-colors">
@@ -487,15 +482,13 @@ const Navbar = () => {
             
             <div className="px-4 py-2 space-y-3">
               <Button className="bg-[#007bff] hover:bg-[#0056b3] text-white font-bold w-full" onClick={() => setIsOpen(false)}>
-                <a 
-                  href="https://billing.stripe.com/p/login/3cs2aGbQ55aZ6jK288"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link 
+                  to="/portal"
                   className="w-full flex items-center justify-center gap-2"
                 >
                   <User size={18} />
                   Client Portal
-                </a>
+                </Link>
               </Button>
               
               <Button className="bg-gowith-orange hover:bg-gowith-orange-hover text-white font-bold w-full" onClick={() => setIsOpen(false)}>
