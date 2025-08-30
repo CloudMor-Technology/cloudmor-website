@@ -605,7 +605,7 @@ export const SinglePagePortal = () => {
                   
                   {/* Other Support Tips - Grid Layout */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {clientSupportDocs.length > 0 ? clientSupportDocs.map(doc => {}) : <>
+                    <>
         <div className="bg-white/10 rounded-lg p-4 border border-white/20">
           <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
             <Wifi className="w-5 h-5 text-blue-400" />
@@ -627,7 +627,7 @@ export const SinglePagePortal = () => {
           </h4>
           <p className="text-white/90 text-base font-medium">Learn how to maximize your cloud infrastructure and backup solutions.</p>
         </div>
-      </>}
+      </>
                   </div>
                 </CardContent>
               </Card>
