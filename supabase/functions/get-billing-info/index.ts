@@ -9,46 +9,68 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  console.log('Function started, method:', req.method);
+  
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log('Starting comprehensive billing dashboard request...');
+    console.log('Starting billing dashboard request...');
 
-    const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? ""
-    );
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
+    
+    console.log('Environment check:', {
+      hasUrl: !!supabaseUrl,
+      hasAnonKey: !!supabaseAnonKey,
+      url: supabaseUrl?.substring(0, 20) + '...'
+    });
 
-    console.log('Getting user from token...');
+    if (!supabaseUrl || !supabaseAnonKey) {
+      throw new Error("Supabase configuration missing");
+    }
+
+    const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+
+    // Get and validate user
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
       throw new Error("No authorization header provided");
     }
 
     const token = authHeader.replace("Bearer ", "");
-    const { data } = await supabaseClient.auth.getUser(token);
-    const user = data.user;
+    console.log('Getting user from token...');
     
+    const { data, error: userError } = await supabaseClient.auth.getUser(token);
+    if (userError) {
+      console.error('User auth error:', userError);
+      throw new Error(`Authentication failed: ${userError.message}`);
+    }
+    
+    const user = data.user;
     if (!user?.email) {
-      throw new Error("User not authenticated");
+      throw new Error("User not authenticated or missing email");
     }
 
     console.log('User authenticated:', user.email);
-    console.log('Initializing Stripe...');
 
+    // Initialize Stripe
     const stripeKey = Deno.env.get("Stripe Secret Key");
     if (!stripeKey) {
+      console.error('Stripe Secret Key not found in environment');
       throw new Error("Stripe Secret Key not configured");
     }
 
+    console.log('Initializing Stripe...');
     const stripe = new Stripe(stripeKey, {
       apiVersion: "2023-10-16",
     });
 
     const customerId = Deno.env.get("Customer ID");
     if (!customerId) {
+      console.error('Customer ID not found in environment');
       throw new Error("Customer ID not configured");
     }
 

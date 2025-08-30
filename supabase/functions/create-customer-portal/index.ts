@@ -9,6 +9,8 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  console.log('Customer portal function started, method:', req.method);
+  
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -16,10 +18,15 @@ serve(async (req) => {
   try {
     console.log('Starting customer portal request...');
 
-    const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? ""
-    );
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
+    
+    if (!supabaseUrl || !supabaseAnonKey) {
+      throw new Error("Supabase configuration missing");
+    }
+
+    const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
 
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
@@ -27,17 +34,22 @@ serve(async (req) => {
     }
 
     const token = authHeader.replace("Bearer ", "");
-    const { data } = await supabaseClient.auth.getUser(token);
-    const user = data.user;
+    const { data, error: userError } = await supabaseClient.auth.getUser(token);
+    if (userError) {
+      console.error('User auth error:', userError);
+      throw new Error(`Authentication failed: ${userError.message}`);
+    }
     
+    const user = data.user;
     if (!user?.email) {
-      throw new Error("User not authenticated");
+      throw new Error("User not authenticated or missing email");
     }
 
     console.log('User authenticated:', user.email);
 
     const stripeKey = Deno.env.get("Stripe Secret Key");
     if (!stripeKey) {
+      console.error('Stripe Secret Key not found in environment');
       throw new Error("Stripe Secret Key not configured");
     }
 
@@ -46,8 +58,8 @@ serve(async (req) => {
     });
 
     const customerId = Deno.env.get("Customer ID");
-    
     if (!customerId) {
+      console.error('Customer ID not found in environment');
       throw new Error("Customer ID not configured");
     }
 
