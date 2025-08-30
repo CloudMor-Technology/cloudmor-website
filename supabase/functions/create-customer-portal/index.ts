@@ -47,11 +47,14 @@ serve(async (req) => {
 
     console.log('User authenticated:', user.email);
 
-    const stripeKey = Deno.env.get("Stripe Secret Key");
+    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY") || Deno.env.get("Stripe Secret Key") || Deno.env.get("Stripe API Key");
     if (!stripeKey) {
       console.error('Stripe Secret Key not found in environment');
+      console.log('Available env vars:', Object.keys(Deno.env.toObject()));
       throw new Error("Stripe Secret Key not configured");
     }
+    
+    console.log('Using Stripe key:', stripeKey.substring(0, 8) + '...');
 
     const stripe = new Stripe(stripeKey, {
       apiVersion: "2023-10-16",

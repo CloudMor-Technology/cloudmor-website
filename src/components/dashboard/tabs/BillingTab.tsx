@@ -462,28 +462,6 @@ export const BillingTab = () => {
         </Card>
       </div>
 
-      {/* Customer Portal Access */}
-      <Card className="bg-white/90 backdrop-blur-sm">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="h-5 w-5" />
-            Manage Your Account
-          </CardTitle>
-          <CardDescription>
-            Access your customer portal to manage subscriptions, payments, and download invoices.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button 
-            onClick={handleManagePayments}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
-            size="lg"
-          >
-            <ExternalLink className="h-4 w-4" />
-            Open Stripe Customer Portal
-          </Button>
-        </CardContent>
-      </Card>
 
       {/* Invoice History */}
       <Card className="bg-white/90 backdrop-blur-sm">
