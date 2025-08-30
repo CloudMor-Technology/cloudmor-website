@@ -22,7 +22,7 @@ export const AuthPage = () => {
           <h1 className="text-6xl mb-6 leading-tight text-[#183a85] font-bold lg:text-7xl text-left">
             Welcome to CloudMor Client Portal
           </h1>
-          <p className="text-xl mb-8 leading-relaxed font-extrabold text-blue-900 mx-0 py-0 text-center lg:text-7xl">Welcome to  
+          <p className="text-xl mb-8 leading-relaxed font-extrabold text-blue-900 mx-0 py-0 text-center lg:text-8xl">Welcome to  
 CloudMor 
 Client Portal </p>
         </div>
