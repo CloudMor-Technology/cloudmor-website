@@ -202,6 +202,7 @@ export const SupportDocuments = () => {
                   <SelectValue placeholder="Select a client..." />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="all">All Clients</SelectItem>
                   {clients.map((client) => (
                     <SelectItem key={client.id} value={client.id}>
                       {client.company_name}
@@ -278,7 +279,7 @@ export const SupportDocuments = () => {
                       <div className="space-y-2 flex-1">
                         <h4 className="font-bold text-lg text-green-800">{document.title}</h4>
                         <p className="text-gray-600">
-                          Client: {document.clients?.company_name}
+                          Client: {document.client_id === 'all' ? 'All Clients' : document.clients?.company_name}
                         </p>
                         {document.description && (
                           <p className="text-gray-600 text-sm">{document.description}</p>

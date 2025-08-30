@@ -45,7 +45,8 @@ export const ClientManagement = () => {
     address: '',
     stripe_customer_id: '',
     password: '',
-    services: [] as string[]
+    services: [] as string[],
+    serviceNotes: ''
   });
 
   const serviceOptions = [
@@ -261,7 +262,8 @@ export const ClientManagement = () => {
       address: '',
       stripe_customer_id: '',
       password: '',
-      services: []
+      services: [],
+      serviceNotes: ''
     });
     setSelectedServices([]);
     setShowForm(false);
@@ -278,7 +280,8 @@ export const ClientManagement = () => {
       address: client.address || '',
       stripe_customer_id: client.stripe_customer_id || '',
       password: '',
-      services: []
+      services: [],
+      serviceNotes: ''
     });
     setShowForm(true);
   };
@@ -460,6 +463,20 @@ export const ClientManagement = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {selectedServices.length > 0 && (
+              <div>
+                <Label htmlFor="serviceNotes">Additional Service Notes</Label>
+                <Textarea
+                  id="serviceNotes"
+                  value={formData.serviceNotes}
+                  onChange={(e) => setFormData({...formData, serviceNotes: e.target.value})}
+                  className="border-blue-300 focus:border-blue-500"
+                  rows={3}
+                  placeholder="Add any specific notes or details about the selected services..."
+                />
               </div>
             )}
 

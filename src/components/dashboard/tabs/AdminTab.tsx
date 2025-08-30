@@ -15,10 +15,8 @@ export const AdminTab = () => {
   const [companyInfo, setCompanyInfo] = useState({
     name: 'CloudMor',
     email: 'support@cloudmor.com',
-    phone: '(855) 123-4567',
-    address: '123 Business Ave, Suite 100, City, State 12345',
-    emergencyPhone: '(866) 123-4567',
-    emergencyEmail: 'emergency@cloudmor.com'
+    supportPhone: '(855) 123-4567',
+    websiteUrl: 'https://cloudmor.com'
   });
 
   const [supportContent, setSupportContent] = useState({
@@ -116,7 +114,7 @@ export const AdminTab = () => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="companyEmail" className="text-lg">Company Email</Label>
+                  <Label htmlFor="companyEmail" className="text-lg">Company Support Email</Label>
                   <Input
                     id="companyEmail"
                     value={companyInfo.email}
@@ -128,34 +126,24 @@ export const AdminTab = () => {
               
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <Label htmlFor="companyPhone" className="text-lg">Company Phone</Label>
+                  <Label htmlFor="supportPhone" className="text-lg">Support Phone Line</Label>
                   <Input
-                    id="companyPhone"
-                    value={companyInfo.phone}
-                    onChange={(e) => setCompanyInfo({...companyInfo, phone: e.target.value})}
+                    id="supportPhone"
+                    value={companyInfo.supportPhone}
+                    onChange={(e) => setCompanyInfo({...companyInfo, supportPhone: e.target.value})}
                     className="text-lg py-3"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="emergencyPhone" className="text-lg">Emergency Phone</Label>
+                  <Label htmlFor="websiteUrl" className="text-lg">Company Website URL</Label>
                   <Input
-                    id="emergencyPhone"
-                    value={companyInfo.emergencyPhone}
-                    onChange={(e) => setCompanyInfo({...companyInfo, emergencyPhone: e.target.value})}
+                    id="websiteUrl"
+                    value={companyInfo.websiteUrl}
+                    onChange={(e) => setCompanyInfo({...companyInfo, websiteUrl: e.target.value})}
                     className="text-lg py-3"
+                    placeholder="https://example.com"
                   />
                 </div>
-              </div>
-
-              <div>
-                <Label htmlFor="companyAddress" className="text-lg">Company Address</Label>
-                <Textarea
-                  id="companyAddress"
-                  value={companyInfo.address}
-                  onChange={(e) => setCompanyInfo({...companyInfo, address: e.target.value})}
-                  className="text-lg py-3"
-                  rows={3}
-                />
               </div>
 
               <Button onClick={handleUpdateCompanyInfo} className="bg-blue-600 hover:bg-blue-700 text-lg px-6 py-3">
