@@ -5,12 +5,12 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
-
 interface LoginFormProps {
   onForgotPassword?: () => void;
 }
-
-export const LoginForm = ({ onForgotPassword }: LoginFormProps) => {
+export const LoginForm = ({
+  onForgotPassword
+}: LoginFormProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -45,11 +45,7 @@ export const LoginForm = ({ onForgotPassword }: LoginFormProps) => {
           <div className="space-y-3">
             <div className="flex justify-between items-center">
               <Label htmlFor="password" className="text-gray-700 font-medium text-base">Password</Label>
-              <button 
-                type="button" 
-                className="text-sm text-blue-600 hover:underline font-medium"
-                onClick={onForgotPassword}
-              >
+              <button type="button" className="text-sm text-blue-600 hover:underline font-medium" onClick={onForgotPassword}>
                 Forgot password?
               </button>
             </div>
@@ -60,12 +56,7 @@ export const LoginForm = ({ onForgotPassword }: LoginFormProps) => {
           <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 text-lg rounded-full transition-all duration-200 h-14" disabled={loading}>
             {loading ? 'Signing In...' : 'Log in Now'}
           </Button>
-          <p className="text-base text-center text-gray-600">
-            Need access? Contact your administrator or email{' '}
-            <a href="mailto:welcome@cloudmor.com" className="text-blue-600 hover:underline font-medium">
-              welcome@cloudmor.com
-            </a>
-          </p>
+          
         </CardFooter>
       </form>
     </Card>;
