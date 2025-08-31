@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { LoginForm } from './LoginForm';
+import { ForgotPasswordForm } from './ForgotPasswordForm';
 
 export const AuthPage = () => {
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat relative" style={{
       backgroundImage: 'url(/lovable-uploads/20cd0b55-8167-4f6a-acfc-85fe6cab38a2.png)'
@@ -24,7 +27,11 @@ export const AuthPage = () => {
 
         {/* Login form - Center */}
         <div className="w-full max-w-lg">
-          <LoginForm />
+          {showForgotPassword ? (
+            <ForgotPasswordForm onBackToLogin={() => setShowForgotPassword(false)} />
+          ) : (
+            <LoginForm onForgotPassword={() => setShowForgotPassword(true)} />
+          )}
         </div>
 
         {/* Description Text - Bottom */}

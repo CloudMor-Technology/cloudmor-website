@@ -14,42 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      admin_support_documents: {
-        Row: {
-          category: string | null
-          created_at: string
-          description: string | null
-          id: string
-          is_active: boolean | null
-          target_audience: string | null
-          title: string
-          updated_at: string
-          url: string | null
-        }
-        Insert: {
-          category?: string | null
-          created_at?: string
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          target_audience?: string | null
-          title: string
-          updated_at?: string
-          url?: string | null
-        }
-        Update: {
-          category?: string | null
-          created_at?: string
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          target_audience?: string | null
-          title?: string
-          updated_at?: string
-          url?: string | null
-        }
-        Relationships: []
-      }
       client_services: {
         Row: {
           client_id: string | null
@@ -124,53 +88,7 @@ export type Database = {
             referencedRelation: "clients"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "client_support_document_assignments_document_id_fkey"
-            columns: ["document_id"]
-            isOneToOne: false
-            referencedRelation: "client_support_documents"
-            referencedColumns: ["id"]
-          },
         ]
-      }
-      client_support_documents: {
-        Row: {
-          assigned_to_all: boolean | null
-          category: string | null
-          created_at: string
-          description: string | null
-          id: string
-          is_active: boolean | null
-          role: string | null
-          title: string
-          updated_at: string
-          url: string | null
-        }
-        Insert: {
-          assigned_to_all?: boolean | null
-          category?: string | null
-          created_at?: string
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          role?: string | null
-          title: string
-          updated_at?: string
-          url?: string | null
-        }
-        Update: {
-          assigned_to_all?: boolean | null
-          category?: string | null
-          created_at?: string
-          description?: string | null
-          id?: string
-          is_active?: boolean | null
-          role?: string | null
-          title?: string
-          updated_at?: string
-          url?: string | null
-        }
-        Relationships: []
       }
       clients: {
         Row: {
@@ -408,6 +326,9 @@ export type Database = {
           job_title: string | null
           last_login: string | null
           phone: string | null
+          reset_token_expires_at: string | null
+          reset_token_hash: string | null
+          reset_token_used_at: string | null
           role: string
           stripe_customer_id: string | null
           updated_at: string
@@ -423,6 +344,9 @@ export type Database = {
           job_title?: string | null
           last_login?: string | null
           phone?: string | null
+          reset_token_expires_at?: string | null
+          reset_token_hash?: string | null
+          reset_token_used_at?: string | null
           role?: string
           stripe_customer_id?: string | null
           updated_at?: string
@@ -438,6 +362,9 @@ export type Database = {
           job_title?: string | null
           last_login?: string | null
           phone?: string | null
+          reset_token_expires_at?: string | null
+          reset_token_hash?: string | null
+          reset_token_used_at?: string | null
           role?: string
           stripe_customer_id?: string | null
           updated_at?: string

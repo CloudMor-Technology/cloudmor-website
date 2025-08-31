@@ -6,7 +6,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 
-export const LoginForm = () => {
+interface LoginFormProps {
+  onForgotPassword?: () => void;
+}
+
+export const LoginForm = ({ onForgotPassword }: LoginFormProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -44,7 +48,7 @@ export const LoginForm = () => {
               <button 
                 type="button" 
                 className="text-sm text-blue-600 hover:underline font-medium"
-                onClick={() => window.open('mailto:welcome@cloudmor.com?subject=Password Reset Request', '_blank')}
+                onClick={onForgotPassword}
               >
                 Forgot password?
               </button>

@@ -22,6 +22,7 @@ import BusinessCards from "./pages/BusinessCards";
 import AliRahimi from "./pages/AliRahimi";
 import Portal from "./pages/Portal";
 import Profile from "./pages/Profile";
+import ResetPassword from "./pages/ResetPassword";
 
 // Support Pages
 import SpeedTest from "./pages/support/SpeedTest";
@@ -52,6 +53,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/portal" element={<Portal />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/auth" element={<Portal />} />
             <Route path="/web-design" element={<WebDesignLanding />} />
             <Route path="/colores" element={<Colores />} />
             <Route path="/bc" element={<BusinessCards />} />
