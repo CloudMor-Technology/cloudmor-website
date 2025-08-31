@@ -44,20 +44,38 @@ export const SupportTab = () => {
     try {
       // Check if user is impersonating a client
       const impersonationData = localStorage.getItem('impersonating_client');
-      let clientEmail = profile?.email;
+      let clientJiraEmail = null;
       
       if (impersonationData && profile?.role === 'admin') {
         const impersonatedClient = JSON.parse(impersonationData);
-        clientEmail = impersonatedClient.contact_email;
+        clientJiraEmail = impersonatedClient.jira_email;
+      } else {
+        // Fetch the client's Jira email from the database
+        const { data: clientData, error } = await supabase
+          .from('clients')
+          .select('jira_email')
+          .eq('contact_email', profile?.email)
+          .single();
+        
+        if (error) {
+          console.error('Error fetching client Jira email:', error);
+        } else {
+          clientJiraEmail = clientData?.jira_email;
+        }
       }
 
-      if (!clientEmail) {
+      if (!clientJiraEmail) {
+        console.error('No client Jira email available, using contact email as fallback');
+        clientJiraEmail = profile?.email;
+      }
+
+      if (!clientJiraEmail) {
         console.error('No client email available');
         window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
         return;
       }
 
-      console.log('Opening Jira portal with SSO for email:', clientEmail);
+      console.log('Opening Jira portal with SSO for Jira email:', clientJiraEmail);
 
       // Call the Jira SSO edge function
       const { data: { user } } = await supabase.auth.getUser();
@@ -74,7 +92,7 @@ export const SupportTab = () => {
 
       const response = await supabase.functions.invoke('jira-sso-login', {
         body: { 
-          userEmail: clientEmail,
+          userEmail: clientJiraEmail,
           redirectUrl: 'https://support.cloudmor.com/servicedesk/customer/portals'
         },
         headers: {
