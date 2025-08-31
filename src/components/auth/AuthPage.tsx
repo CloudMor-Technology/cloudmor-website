@@ -21,7 +21,7 @@ export const AuthPage = () => {
         {/* Welcome Text - Top */}
         <div className="text-center">
           <h1 className="text-5xl mb-8 leading-tight text-[#183a85] font-bold lg:text-6xl">
-            Welcome to CloudMor Client Portal
+            Welcome to the Client Portal
           </h1>
         </div>
 
