@@ -305,10 +305,10 @@ export const SinglePagePortal = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex justify-between items-center">
               <div>
-              <h1 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-[gowith-dark-blue] text-sky-200">
+              <h1 className="font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-sky-200 text-2xl">
                 CloudMor Client Portal
               </h1>
-              <p className="text-xs font-medium text-gowith-orange">
+              <p className="font-medium text-gowith-orange text-base">
                 Welcome, {isImpersonating ? `${impersonatedClient.contact_name}` : profile?.full_name || user?.email?.split('@')[0]}
               </p>
                 {isImpersonating && <div className="bg-orange-100 border border-orange-300 rounded-lg px-3 py-1 mt-2 inline-block">
@@ -346,7 +346,7 @@ export const SinglePagePortal = () => {
           {/* Dashboard Section */}
           <section id="dashboard" className="space-y-8">
             <div className="text-center mb-8">
-              <h2 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-amber-500 text-[gowith-orange-hover]">
+              <h2 className="font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-amber-500 text-2xl">
                 Dashboard Overview
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full mx-auto"></div>
@@ -440,7 +440,7 @@ export const SinglePagePortal = () => {
           {/* Services Section */}
           <section id="services" className="space-y-8">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
+              <h2 className="font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange text-2xl">
                 My Services
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full mx-auto"></div>
@@ -523,7 +523,7 @@ export const SinglePagePortal = () => {
           {/* Billing & Support Section - Side by Side */}
           <section className="space-y-8">
             <div className="text-center mb-8">
-              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange">
+              <h2 className="font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text mb-2 text-gowith-orange text-2xl">
                 Billing & Support
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full mx-auto"></div>
@@ -594,7 +594,7 @@ export const SinglePagePortal = () => {
               <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                 <CardHeader>
                   <CardTitle className="text-2xl flex items-center gap-2 text-blue-900">
-                    <BookOpen className="w-6 h-6 text-blue-400" />
+                    <BookOpen className="w-6 h-6 text-blue-400 bg-transparent" />
                     Quick Support Tips
                   </CardTitle>
                   <p className="font-medium text-white/90">Helpful guides and troubleshooting resources</p>
