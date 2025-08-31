@@ -5,6 +5,7 @@ import { Globe, Mail, Phone, MessageCircle } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import { ClientSupportDocuments } from './support/ClientSupportDocuments';
+import { supabase } from '@/integrations/supabase/client';
 
 // Declare JSDWidget type for TypeScript
 declare global {
@@ -40,17 +41,63 @@ export const SupportTab = () => {
   }, []);
 
   const openJiraPortal = async () => {
-    // Check if user is impersonating a client
-    const impersonationData = localStorage.getItem('impersonating_client');
-    let clientEmail = profile?.email;
-    
-    if (impersonationData && profile?.role === 'admin') {
-      const impersonatedClient = JSON.parse(impersonationData);
-      clientEmail = impersonatedClient.contact_email;
-    }
+    try {
+      // Check if user is impersonating a client
+      const impersonationData = localStorage.getItem('impersonating_client');
+      let clientEmail = profile?.email;
+      
+      if (impersonationData && profile?.role === 'admin') {
+        const impersonatedClient = JSON.parse(impersonationData);
+        clientEmail = impersonatedClient.contact_email;
+      }
 
-    // For now, open the portal directly - Jira auto-login integration would require backend setup
-    window.open(`https://support.cloudmor.com?email=${encodeURIComponent(clientEmail || '')}`, '_blank');
+      if (!clientEmail) {
+        console.error('No client email available');
+        window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
+        return;
+      }
+
+      console.log('Opening Jira portal with SSO for email:', clientEmail);
+
+      // Call the Jira SSO edge function
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        console.error('User not authenticated');
+        return;
+      }
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.error('No active session');
+        return;
+      }
+
+      const response = await supabase.functions.invoke('jira-sso-login', {
+        body: { 
+          userEmail: clientEmail,
+          redirectUrl: 'https://support.cloudmor.com/servicedesk/customer/portals'
+        },
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (response.error) {
+        console.error('Jira SSO error:', response.error);
+        // Fallback to direct portal access
+        window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
+        return;
+      }
+
+      const { redirectUrl } = response.data;
+      console.log('Opening Jira portal:', redirectUrl);
+      window.open(redirectUrl, '_blank');
+
+    } catch (error) {
+      console.error('Error opening Jira portal:', error);
+      // Fallback to direct portal access
+      window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
+    }
   };
 
   const supportOptions = [

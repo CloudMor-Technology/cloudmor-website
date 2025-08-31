@@ -39,8 +39,8 @@ export const ModernDashboard = () => {
         backgroundImage: 'url(/lovable-uploads/9da9a140-1484-41e8-9ec7-94b7528611ad.png)'
       }}
     >
-      {/* Background overlay */}
-      <div className="absolute inset-0 bg-black/50"></div>
+      {/* Background overlay - darker for better text readability */}
+      <div className="absolute inset-0 bg-black/70"></div>
       
       {/* Content */}
       <div className="relative z-10">
