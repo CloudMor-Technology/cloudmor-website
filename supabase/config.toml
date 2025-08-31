@@ -32,3 +32,7 @@ verify_jwt = false
 [functions.cleanup-orphaned-users]
 
 [functions.admin-user-management]
+
+[functions.forgot-password]
+
+[functions.reset-password]

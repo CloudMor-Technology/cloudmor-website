@@ -1,0 +1,2 @@
+-- Update the config.toml to include the new edge functions
+-- This is handled automatically by the edge function creation
