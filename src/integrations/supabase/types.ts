@@ -98,7 +98,14 @@ export type Database = {
           contact_name: string | null
           created_at: string
           id: string
+          jira_access_token: string | null
+          jira_base_url: string | null
+          jira_cloud_id: string | null
+          jira_connected: boolean | null
           jira_email: string | null
+          jira_expires_at: string | null
+          jira_last_sync: string | null
+          jira_refresh_token: string | null
           phone: string | null
           stripe_customer_id: string | null
           stripe_email: string | null
@@ -111,7 +118,14 @@ export type Database = {
           contact_name?: string | null
           created_at?: string
           id?: string
+          jira_access_token?: string | null
+          jira_base_url?: string | null
+          jira_cloud_id?: string | null
+          jira_connected?: boolean | null
           jira_email?: string | null
+          jira_expires_at?: string | null
+          jira_last_sync?: string | null
+          jira_refresh_token?: string | null
           phone?: string | null
           stripe_customer_id?: string | null
           stripe_email?: string | null
@@ -124,7 +138,14 @@ export type Database = {
           contact_name?: string | null
           created_at?: string
           id?: string
+          jira_access_token?: string | null
+          jira_base_url?: string | null
+          jira_cloud_id?: string | null
+          jira_connected?: boolean | null
           jira_email?: string | null
+          jira_expires_at?: string | null
+          jira_last_sync?: string | null
+          jira_refresh_token?: string | null
           phone?: string | null
           stripe_customer_id?: string | null
           stripe_email?: string | null
