@@ -297,6 +297,33 @@ export type Database = {
         }
         Relationships: []
       }
+      oauth_sessions: {
+        Row: {
+          code_verifier: string
+          created_at: string
+          expires_at: string
+          id: string
+          state: string
+          user_id: string
+        }
+        Insert: {
+          code_verifier: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          state: string
+          user_id: string
+        }
+        Update: {
+          code_verifier?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          state?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       phone_extensions: {
         Row: {
           company_id: string | null

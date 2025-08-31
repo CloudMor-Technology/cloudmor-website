@@ -36,3 +36,10 @@ verify_jwt = false
 [functions.forgot-password]
 
 [functions.reset-password]
+
+[functions.jira-sso-login]
+
+[functions.jira-oauth-init]
+
+[functions.jira-oauth-callback]
+verify_jwt = false

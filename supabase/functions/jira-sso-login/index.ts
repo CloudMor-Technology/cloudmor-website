@@ -9,6 +9,7 @@ const corsHeaders = {
 interface JiraSSORequest {
   userEmail: string;
   redirectUrl?: string;
+  forceReconnect?: boolean;
 }
 
 serve(async (req) => {
@@ -49,7 +50,7 @@ serve(async (req) => {
 
     console.log('User authenticated:', user.email);
 
-    const { userEmail, redirectUrl } = await req.json() as JiraSSORequest;
+    const { userEmail, redirectUrl, forceReconnect } = await req.json() as JiraSSORequest;
     
     if (!userEmail) {
       return new Response(
@@ -62,6 +63,62 @@ serve(async (req) => {
     }
 
     console.log('Processing Jira SSO for email:', userEmail);
+
+    // Check if client has OAuth connection first
+    const { data: clientData, error: clientError } = await supabaseClient
+      .from('clients')
+      .select('jira_base_url, jira_cloud_id, jira_access_token, jira_refresh_token, jira_connected, jira_expires_at')
+      .eq('contact_email', userEmail)
+      .single();
+
+    if (clientError) {
+      console.error('Error fetching client data:', clientError);
+    }
+
+    // If client has OAuth connection and tokens are valid
+    if (clientData && clientData.jira_connected && !forceReconnect) {
+      const expiresAt = new Date(clientData.jira_expires_at);
+      const now = new Date();
+      
+      console.log('Found OAuth connection for client:', userEmail);
+      console.log('Token expires at:', expiresAt);
+      console.log('Current time:', now);
+      
+      // If token is still valid (with 5 minute buffer)
+      if (expiresAt > new Date(now.getTime() + 5 * 60 * 1000)) {
+        const jiraPortalUrl = `${clientData.jira_base_url}/servicedesk/customer/portals`;
+        console.log('Using OAuth connection, redirecting to:', jiraPortalUrl);
+        
+        return new Response(
+          JSON.stringify({ 
+            success: true,
+            redirectUrl: jiraPortalUrl,
+            connectionType: 'oauth',
+            message: 'Using OAuth connection'
+          }),
+          { 
+            status: 200, 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+          }
+        );
+      } else {
+        console.log('OAuth token expired, need to refresh or reconnect');
+        // TODO: Implement token refresh logic here
+        return new Response(
+          JSON.stringify({ 
+            needsReconnect: true,
+            message: 'OAuth token expired, please reconnect'
+          }),
+          { 
+            status: 200, 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+          }
+        );
+      }
+    }
+
+    // Fallback to existing Jira API method if no OAuth connection
+    console.log('No OAuth connection found, using fallback method');
 
     // Get Jira credentials from environment
     const jiraDomain = Deno.env.get('JIRA_DOMAIN') || 'cloudmorsystems.atlassian.net';

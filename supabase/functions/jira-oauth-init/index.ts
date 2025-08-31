@@ -73,6 +73,7 @@ serve(async (req) => {
       .from('oauth_sessions')
       .insert([{
         user_id: user.id,
+        user_email: user.email, // Add user email for easier lookup
         state: state,
         code_verifier: codeVerifier,
         expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString() // 10 minutes
