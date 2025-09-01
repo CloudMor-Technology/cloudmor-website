@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth, AuthProvider } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,7 @@ interface StripeCustomer {
   phone?: string;
 }
 
-const Profile = () => {
+const ProfileContent = () => {
   const { user } = useAuth();
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [stripeCustomer, setStripeCustomer] = useState<StripeCustomer | null>(null);
@@ -338,6 +338,14 @@ const Profile = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Profile = () => {
+  return (
+    <AuthProvider>
+      <ProfileContent />
+    </AuthProvider>
   );
 };
 
