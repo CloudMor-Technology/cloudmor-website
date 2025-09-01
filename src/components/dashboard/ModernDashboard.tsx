@@ -2,13 +2,12 @@
 import { useState } from 'react';
 import { PortalNavigation } from './PortalNavigation';
 import { DashboardTab } from './tabs/DashboardTab';
-
 import { BillingTab } from './tabs/BillingTab';
 import { SupportTab } from './tabs/SupportTab';
 import { ServicesTab } from './tabs/ServicesTab';
 import { AccountTab } from './tabs/AccountTab';
-
 import { AdminTab } from './tabs/AdminTab';
+import { JiraSettingsTab } from './tabs/JiraSettingsTab';
 
 export const ModernDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -27,6 +26,8 @@ export const ModernDashboard = () => {
         return <AccountTab />;
       case 'admin':
         return <AdminTab />;
+      case 'jira-settings':
+        return <JiraSettingsTab />;
       default:
         return <DashboardTab />;
     }

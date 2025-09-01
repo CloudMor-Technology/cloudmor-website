@@ -98,14 +98,12 @@ export type Database = {
           contact_name: string | null
           created_at: string
           id: string
-          jira_access_token: string | null
+          jira_api_token: string | null
           jira_base_url: string | null
-          jira_cloud_id: string | null
           jira_connected: boolean | null
           jira_email: string | null
-          jira_expires_at: string | null
           jira_last_sync: string | null
-          jira_refresh_token: string | null
+          jira_last_test: string | null
           phone: string | null
           stripe_customer_id: string | null
           stripe_email: string | null
@@ -118,14 +116,12 @@ export type Database = {
           contact_name?: string | null
           created_at?: string
           id?: string
-          jira_access_token?: string | null
+          jira_api_token?: string | null
           jira_base_url?: string | null
-          jira_cloud_id?: string | null
           jira_connected?: boolean | null
           jira_email?: string | null
-          jira_expires_at?: string | null
           jira_last_sync?: string | null
-          jira_refresh_token?: string | null
+          jira_last_test?: string | null
           phone?: string | null
           stripe_customer_id?: string | null
           stripe_email?: string | null
@@ -138,14 +134,12 @@ export type Database = {
           contact_name?: string | null
           created_at?: string
           id?: string
-          jira_access_token?: string | null
+          jira_api_token?: string | null
           jira_base_url?: string | null
-          jira_cloud_id?: string | null
           jira_connected?: boolean | null
           jira_email?: string | null
-          jira_expires_at?: string | null
           jira_last_sync?: string | null
-          jira_refresh_token?: string | null
+          jira_last_test?: string | null
           phone?: string | null
           stripe_customer_id?: string | null
           stripe_email?: string | null
@@ -294,36 +288,6 @@ export type Database = {
           subject?: string | null
           subscribe_newsletter?: boolean | null
           updated_at?: string
-        }
-        Relationships: []
-      }
-      oauth_sessions: {
-        Row: {
-          code_verifier: string
-          created_at: string
-          expires_at: string
-          id: string
-          state: string
-          user_email: string | null
-          user_id: string
-        }
-        Insert: {
-          code_verifier: string
-          created_at?: string
-          expires_at: string
-          id?: string
-          state: string
-          user_email?: string | null
-          user_id: string
-        }
-        Update: {
-          code_verifier?: string
-          created_at?: string
-          expires_at?: string
-          id?: string
-          state?: string
-          user_email?: string | null
-          user_id?: string
         }
         Relationships: []
       }

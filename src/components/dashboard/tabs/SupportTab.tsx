@@ -1,514 +1,294 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Globe, Mail, Phone, MessageCircle, Settings, CheckCircle, XCircle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/useAuth';
-import { useEffect, useState } from 'react';
-import { ClientSupportDocuments } from './support/ClientSupportDocuments';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-
-// Declare JSDWidget type for TypeScript
-declare global {
-  interface Window {
-    JSDWidget?: {
-      show: () => void;
-      hide: () => void;
-    };
-  }
-}
+import { 
+  ExternalLink, 
+  Mail, 
+  MessageCircle, 
+  Phone, 
+  Clock, 
+  CheckCircle,
+  XCircle,
+  RefreshCw,
+  Settings
+} from 'lucide-react';
+import { ClientSupportDocuments } from './support/ClientSupportDocuments';
 
 export const SupportTab = () => {
   const { profile } = useAuth();
   const { toast } = useToast();
-  const isAdmin = profile?.role === 'admin';
+  
   const [jiraConnectionStatus, setJiraConnectionStatus] = useState<{
     connected: boolean;
     loading: boolean;
-    lastSync?: string;
-  }>({ connected: false, loading: true });
-
-  // Check Jira connection status on component mount and when profile changes
-  useEffect(() => {
-    if (profile) {
-      console.log('Profile loaded, checking Jira status for:', profile.email);
-      checkJiraConnectionStatus();
-    }
-  }, [profile?.email, profile?.role]);
+    lastTest?: string;
+  }>({
+    connected: false,
+    loading: true
+  });
 
   const checkJiraConnectionStatus = async () => {
-    if (!profile?.email) {
-      console.log('Profile email not available yet, skipping Jira check');
-      setJiraConnectionStatus({ connected: false, loading: false });
-      return;
-    }
+    if (!profile?.email) return;
 
     try {
       setJiraConnectionStatus(prev => ({ ...prev, loading: true }));
 
-      // Check if user is impersonating a client
-      const impersonationData = localStorage.getItem('impersonating_client');
-      let clientEmail = profile.email;
-      
-      if (impersonationData && profile.role === 'admin') {
-        try {
-          const impersonatedClient = JSON.parse(impersonationData);
-          clientEmail = impersonatedClient.contact_email || profile.email;
-        } catch (e) {
-          console.error('Error parsing impersonation data:', e);
-          clientEmail = profile.email;
-        }
-      }
-
-      console.log('Checking Jira connection for email:', clientEmail);
-
-      const { data: clientData, error } = await supabase
+      const { data, error } = await supabase
         .from('clients')
-        .select('jira_connected, jira_last_sync, jira_expires_at')
-        .eq('contact_email', clientEmail)
-        .single();
+        .select('jira_connected, jira_last_test')
+        .eq('contact_email', profile.email)
+        .maybeSingle();
 
       if (error) {
-        console.error('Error fetching Jira connection status:', error);
-        setJiraConnectionStatus({ connected: false, loading: false });
+        console.error('Error checking Jira connection:', error);
+        setJiraConnectionStatus({
+          connected: false,
+          loading: false
+        });
         return;
       }
-
-      const isConnected = clientData?.jira_connected && 
-        (!clientData?.jira_expires_at || new Date(clientData.jira_expires_at) > new Date());
-
-      console.log('Jira connection status:', { isConnected, clientData });
 
       setJiraConnectionStatus({
-        connected: isConnected,
+        connected: data?.jira_connected || false,
         loading: false,
-        lastSync: clientData?.jira_last_sync,
-      });
-    } catch (error) {
-      console.error('Error checking Jira connection status:', error);
-      setJiraConnectionStatus({ connected: false, loading: false });
-    }
-  };
-
-  const connectToJira = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast({
-          title: "Authentication Required",
-          description: "Please log in to connect to Jira.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        toast({
-          title: "Session Error",
-          description: "No active session found.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Call OAuth init edge function
-      const response = await supabase.functions.invoke('jira-oauth-init', {
-        body: { clientId: 'jira-oauth' },
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`,
-        },
+        lastTest: data?.jira_last_test
       });
 
-      if (response.error) {
-        console.error('OAuth init error:', response.error);
-        toast({
-          title: "Connection Error",
-          description: "Failed to initialize Jira connection.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      const { authUrl, state, codeVerifier } = response.data;
-
-      // Store OAuth state for fallback
-      localStorage.setItem('jira_oauth_state', JSON.stringify({
-        state,
-        codeVerifier,
-        userEmail: profile?.email,
-      }));
-
-      // Open OAuth popup
-      const popup = window.open(
-        authUrl,
-        'jira-oauth',
-        'width=600,height=700,scrollbars=yes,resizable=yes'
-      );
-
-      // Listen for OAuth completion
-      const handleMessage = (event: MessageEvent) => {
-        if (event.origin !== window.location.origin && !event.origin.includes('atlassian.com')) {
-          return;
-        }
-
-        if (event.data.success) {
-          toast({
-            title: "Jira Connected!",
-            description: "You can now access your Jira portal seamlessly.",
-          });
-          checkJiraConnectionStatus(); // Refresh connection status
-          localStorage.removeItem('jira_oauth_state');
-        } else if (event.data.error) {
-          toast({
-            title: "Connection Failed",
-            description: event.data.error || "Failed to connect to Jira.",
-            variant: "destructive",
-          });
-        }
-
-        window.removeEventListener('message', handleMessage);
-        if (popup) popup.close();
-      };
-
-      window.addEventListener('message', handleMessage);
-
-      // Close popup after 10 minutes if still open
-      setTimeout(() => {
-        if (popup && !popup.closed) {
-          popup.close();
-          window.removeEventListener('message', handleMessage);
-          toast({
-            title: "Connection Timeout",
-            description: "OAuth connection timed out. Please try again.",
-            variant: "destructive",
-          });
-        }
-      }, 600000);
-
     } catch (error) {
-      console.error('Error connecting to Jira:', error);
-      toast({
-        title: "Connection Error",
-        description: "An error occurred while connecting to Jira.",
-        variant: "destructive",
+      console.error('Error checking Jira connection:', error);
+      setJiraConnectionStatus({
+        connected: false,
+        loading: false
       });
     }
   };
 
   useEffect(() => {
-    // Load Jira Service Desk widget
-    const script = document.createElement('script');
-    script.setAttribute('data-jsd-embedded', '');
-    script.setAttribute('data-key', '7266fae8-8b7d-4231-8579-bce9a92270b2');
-    script.setAttribute('data-base-url', 'https://jsd-widget.atlassian.com');
-    script.src = 'https://jsd-widget.atlassian.com/assets/embed.js';
-    script.async = true;
-    
-    document.body.appendChild(script);
-    
-    return () => {
-      // Cleanup - check if script exists before removing
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
-  }, []);
+    checkJiraConnectionStatus();
+  }, [profile]);
 
   const openJiraPortal = async () => {
     try {
-      console.log('Starting Jira portal access for user:', profile?.email);
+      console.log('Opening Jira portal...');
       
-      if (!profile?.email) {
-        console.error('No profile email available');
+      const { data, error } = await supabase.functions.invoke('jira-portal-access');
+
+      if (error) {
+        console.error('Portal access error:', error);
         toast({
-          title: "Authentication Error",
-          description: "User profile not loaded. Please refresh the page.",
-          variant: "destructive",
+          title: "Connection Required",
+          description: "Please configure your Jira settings first.",
+          variant: "destructive"
         });
         return;
       }
 
-      // Use profile email directly as the Jira email
-      const userEmail = profile.email;
-      console.log('Using email for Jira SSO:', userEmail);
-
-      // Get current session
-      console.log('Getting current session...');
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      
-      if (sessionError) {
-        console.error('Session error:', sessionError);
-        throw new Error('Failed to get session');
-      }
-
-      if (!session?.access_token) {
-        console.error('No active session found');
-        throw new Error('No active session');
-      }
-
-      console.log('Session found, calling Jira SSO function...');
-
-      // Call the Jira SSO function
-      const { data, error } = await supabase.functions.invoke('jira-sso-login', {
-        body: { 
-          userEmail: userEmail,
-          redirectUrl: 'https://support.cloudmor.com/servicedesk/customer/portals'
-        },
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`,
-        },
-      });
-
-      console.log('Jira SSO function response:', { data, error });
-
-      if (error) {
-        console.error('Jira SSO function error:', error);
-        throw new Error(`SSO function failed: ${error.message}`);
-      }
-
-      if (data?.redirectUrl) {
-        console.log('SSO successful, opening portal:', data.redirectUrl);
+      if (data.success && data.portalUrl) {
+        window.open(data.portalUrl, '_blank');
         toast({
-          title: "Portal Opening",
-          description: "Opening your support portal...",
+          title: "Success",
+          description: "Opening Jira portal in a new window.",
         });
-        window.open(data.redirectUrl, '_blank');
       } else {
-        console.error('No redirect URL in response:', data);
-        throw new Error('Invalid response from SSO function');
+        toast({
+          title: "Connection Error",
+          description: data.error || "Failed to access Jira portal.",
+          variant: "destructive"
+        });
       }
-
     } catch (error) {
-      console.error('Error in openJiraPortal:', error);
+      console.error('Error opening Jira portal:', error);
       toast({
-        title: "Portal Access Error",
-        description: `Failed to open portal: ${error.message}. Opening fallback portal.`,
-        variant: "destructive",
+        title: "Error",
+        description: "Failed to access Jira portal. Please try again.",
+        variant: "destructive"
       });
-      // Fallback to direct portal access
-      window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
     }
   };
 
   const supportOptions = [
     {
-      title: 'CloudMor Support Portal',
-      description: 'Submit tickets through our online portal',
-      url: 'support.cloudmor.com',
-      icon: Globe,
-      color: 'blue',
-      action: openJiraPortal
+      title: 'Support Portal',
+      description: 'Access our Jira Service Management portal for tickets and requests',
+      icon: <ExternalLink className="w-6 h-6" />,
+      action: jiraConnectionStatus.connected ? openJiraPortal : () => {
+        toast({
+          title: "Setup Required",
+          description: "Please configure your Jira connection in settings first.",
+          variant: "destructive"
+        });
+      },
+      primary: true,
+      disabled: !jiraConnectionStatus.connected
     },
     {
       title: 'Email Support',
-      description: 'Send us an email for assistance',
-      url: 'support@cloudmor.com',
-      icon: Mail,
-      color: 'green',
-      action: () => window.open('mailto:support@cloudmor.com', '_blank')
+      description: 'Send us an email and we\'ll get back to you within 24 hours',
+      icon: <Mail className="w-6 h-6" />,
+      action: () => window.location.href = 'mailto:support@cloudmor.com?subject=Support Request',
+      primary: false,
+      disabled: false
     },
     {
-      title: 'Live Chat Support',
-      description: 'Chat with our support team instantly',
-      url: 'Start Chat Session',
-      icon: MessageCircle,
-      color: 'purple',
+      title: 'Live Chat',
+      description: 'Chat with our support team in real-time',
+      icon: <MessageCircle className="w-6 h-6" />,
       action: () => {
-        // Trigger Jira Service Desk widget
-        if (window.JSDWidget) {
-          window.JSDWidget.show();
-        }
-      }
+        toast({
+          title: "Live Chat",
+          description: "Please use email support or the Jira portal for assistance.",
+        });
+      },
+      primary: false,
+      disabled: false
     }
   ];
 
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-3xl font-bold text-white">Support Center</h2>
-          <p className="text-white/70 text-lg">Get help and submit support requests</p>
-        </div>
-      </div>
-
+    <div className="space-y-6">
       {/* Jira Connection Status */}
-      <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-200">
+      <Card>
         <CardHeader>
-          <CardTitle className="text-2xl text-green-800 flex items-center gap-2">
-            <Settings className="w-6 h-6" />
-            Jira Connection Status
-            {jiraConnectionStatus.loading ? (
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-green-600"></div>
-            ) : jiraConnectionStatus.connected ? (
-              <CheckCircle className="w-5 h-5 text-green-600" />
-            ) : (
-              <XCircle className="w-5 h-5 text-red-600" />
-            )}
+          <CardTitle className="flex items-center justify-between">
+            <span>Jira Service Management</span>
+            <div className="flex items-center gap-2">
+              {jiraConnectionStatus.loading ? (
+                <RefreshCw className="w-4 h-4 animate-spin" />
+              ) : jiraConnectionStatus.connected ? (
+                <Badge variant="default" className="bg-green-500">
+                  <CheckCircle className="w-3 h-3 mr-1" />
+                  Connected
+                </Badge>
+              ) : (
+                <Badge variant="destructive">
+                  <XCircle className="w-3 h-3 mr-1" />
+                  Not Connected
+                </Badge>
+              )}
+            </div>
           </CardTitle>
-          <p className="text-green-600 text-lg">
-            {jiraConnectionStatus.loading 
-              ? 'Checking connection status...' 
-              : jiraConnectionStatus.connected 
-                ? 'Connected - Instant portal access enabled'
-                : 'Not connected - Click to set up seamless access'
+          <CardDescription>
+            {jiraConnectionStatus.connected 
+              ? 'Your Jira connection is active and ready for support requests.'
+              : 'Configure your Jira API token to access the support portal.'
             }
-          </p>
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="text-center space-y-4">
-            {!jiraConnectionStatus.loading && (
-              <>
-                {jiraConnectionStatus.connected ? (
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-center gap-2 text-green-700">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Connected to Jira</span>
-                    </div>
-                    {jiraConnectionStatus.lastSync && (
-                      <p className="text-sm text-green-600">
-                        Last sync: {new Date(jiraConnectionStatus.lastSync).toLocaleDateString()}
-                      </p>
-                    )}
-                    <div className="flex gap-2 justify-center">
-                      <Button 
-                        onClick={openJiraPortal}
-                        className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-6 py-2"
-                      >
-                        <Globe className="w-4 h-4 mr-2" />
-                        Open Portal
-                      </Button>
-                      <Button 
-                        onClick={() => connectToJira()}
-                        variant="outline"
-                        className="border-green-300 text-green-700 hover:bg-green-50"
-                      >
-                        <Settings className="w-4 h-4 mr-2" />
-                        Reconnect
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-center gap-2 text-red-700">
-                      <XCircle className="w-4 h-4" />
-                      <span>Not connected to Jira</span>
-                    </div>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Connect once for instant access to your support portal
-                    </p>
-                    <Button 
-                      onClick={connectToJira}
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2"
-                    >
-                      <Settings className="w-4 h-4 mr-2" />
-                      Connect to Jira
-                    </Button>
-                  </div>
-                )}
-              </>
-            )}
+          <div className="flex items-center justify-between">
+            <div className="text-sm text-muted-foreground">
+              {jiraConnectionStatus.lastTest && (
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  Last tested: {new Date(jiraConnectionStatus.lastTest).toLocaleString()}
+                </div>
+              )}
+            </div>
+            <div className="flex gap-2">
+              <Button 
+                onClick={checkJiraConnectionStatus}
+                variant="outline" 
+                size="sm"
+                disabled={jiraConnectionStatus.loading}
+              >
+                <RefreshCw className={`w-4 h-4 mr-2 ${jiraConnectionStatus.loading ? 'animate-spin' : ''}`} />
+                Refresh
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Support Options */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {supportOptions.map((option, index) => {
-          const IconComponent = option.icon;
-          return (
-            <Card 
-              key={index} 
-              className="bg-white/90 backdrop-blur-sm hover:shadow-2xl transform hover:scale-105 transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-blue-300 animate-pulse hover:animate-none" 
-              onClick={option.action}
-            >
-              <CardContent className="p-8 text-center">
-                <div className={`w-16 h-16 bg-gradient-to-br from-${option.color}-400 to-${option.color}-600 rounded-full flex items-center justify-center mb-6 mx-auto shadow-lg animate-bounce hover:animate-none`}>
-                  <IconComponent className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="font-bold text-xl mb-3 text-gray-800">{option.title}</h3>
-                <p className="text-gray-600 text-lg mb-4">{option.description}</p>
-                <div className={`bg-gradient-to-r from-${option.color}-500 to-${option.color}-700 text-white px-4 py-2 rounded-full font-bold text-lg shadow-md`}>
-                  ✨ {option.url} ✨
-                </div>
-                <p className="text-xs text-gray-500 mt-2 font-semibold">👆 CLICK HERE TO ACCESS 👆</p>
-              </CardContent>
-            </Card>
-          );
-        })}
+      <div className="grid md:grid-cols-3 gap-6">
+        {supportOptions.map((option, index) => (
+          <Card key={index} className="group hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                {option.icon}
+                {option.title}
+              </CardTitle>
+              <CardDescription>
+                {option.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button
+                onClick={option.action}
+                variant={option.primary ? "default" : "outline"}
+                className="w-full"
+                size="lg"
+                disabled={option.disabled}
+              >
+                {option.icon}
+                <span className="ml-2">{option.title}</span>
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
-      {/* Emergency Hotline Information */}
-      <Card className="bg-red-50 border-red-200">
+      {/* Emergency Hotline */}
+      <Card className="border-red-200 bg-red-50">
         <CardHeader>
-          <CardTitle className="text-2xl text-red-800 flex items-center gap-2">
-            <Phone className="w-6 h-6" />
+          <CardTitle className="flex items-center gap-2 text-red-800">
+            <Phone className="w-5 h-5" />
             Emergency Support Hotline
           </CardTitle>
+          <CardDescription className="text-red-600">
+            For critical issues requiring immediate attention
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="text-center">
-            <p className="text-red-700 text-lg mb-2">
-              For immediate issues or urgent support needs
-            </p>
             <p className="text-2xl font-bold text-red-800 mb-2">
               📞 888-554-6597
             </p>
-            <p className="text-red-600 font-medium">
-              Have your ticket number ready when calling
+            <p className="text-red-600">
+              Available 24/7 for urgent support needs
             </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* Support Portal Access */}
-      <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200">
-        <CardHeader>
-          <CardTitle className="text-2xl text-blue-800 flex items-center gap-2">
-            <Globe className="w-6 h-6" />
-            Support Portal Access
-          </CardTitle>
-          <p className="text-blue-600 text-lg">Connect to our Jira support system</p>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center space-y-4">
-            <Button 
-              onClick={openJiraPortal}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg px-8 py-3 mr-4 shadow-lg transform hover:scale-105 transition-all duration-300 animate-pulse hover:animate-none"
-            >
-              <Globe className="w-5 h-5 mr-2" />
-              ✨ Open Support Portal ✨
-            </Button>
-            <Button 
-              onClick={() => {
-                if (window.JSDWidget) {
-                  window.JSDWidget.show();
-                }
-              }}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg px-8 py-3 shadow-lg transform hover:scale-105 transition-all duration-300 animate-pulse hover:animate-none"
-            >
-              <MessageCircle className="w-5 h-5 mr-2" />
-              ✨ Start Chat Support ✨
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Client-Specific Support Documents */}
+      {/* Support Documents */}
       <ClientSupportDocuments />
 
-      {isAdmin && (
-        <Card className="bg-orange-50 border-orange-200">
+      {/* Jira Settings Access */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Settings className="w-5 h-5" />
+            Jira Settings
+          </CardTitle>
+          <CardDescription>
+            Configure your Jira API token and connection settings
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground mb-4">
+            Set up your Jira Service Management connection using API tokens for secure access to support tickets.
+          </p>
+        </CardContent>
+      </Card>
+
+      {profile?.role === 'admin' && (
+        <Card>
           <CardHeader>
-            <CardTitle className="text-2xl text-orange-800">Admin: Support Management</CardTitle>
+            <CardTitle>Admin Support Management</CardTitle>
+            <CardDescription>
+              Manage support documents and client assignments
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-orange-700 text-lg mb-4">
-              As an administrator, you can modify all support content from the Admin panel.
+            <p className="text-sm text-muted-foreground mb-4">
+              As an admin, you can manage support documents that are available to clients.
+              Use the Admin tab to configure support content and client document assignments.
             </p>
-            <Button className="bg-orange-600 hover:bg-orange-700 text-white text-lg px-6 py-3">
-              Manage Support Content
-            </Button>
           </CardContent>
         </Card>
       )}
