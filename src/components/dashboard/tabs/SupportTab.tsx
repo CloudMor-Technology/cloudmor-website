@@ -201,6 +201,8 @@ export const SupportTab = () => {
 
   const openJiraPortal = async () => {
     try {
+      console.log('Starting Jira portal access...');
+      
       // Check if user is impersonating a client
       const impersonationData = localStorage.getItem('impersonating_client');
       let clientJiraEmail = null;
@@ -208,6 +210,7 @@ export const SupportTab = () => {
       if (impersonationData && profile?.role === 'admin') {
         const impersonatedClient = JSON.parse(impersonationData);
         clientJiraEmail = impersonatedClient.jira_email;
+        console.log('Using impersonated client Jira email:', clientJiraEmail);
       } else {
         // Fetch the client's Jira email from the database
         const { data: clientData, error } = await supabase
@@ -220,32 +223,46 @@ export const SupportTab = () => {
           console.error('Error fetching client Jira email:', error);
         } else {
           clientJiraEmail = clientData?.jira_email;
+          console.log('Found client Jira email:', clientJiraEmail);
         }
       }
 
       if (!clientJiraEmail) {
-        console.error('No client Jira email available, using contact email as fallback');
+        console.log('No Jira email found, using profile email as fallback:', profile?.email);
         clientJiraEmail = profile?.email;
       }
 
       if (!clientJiraEmail) {
-        console.error('No client email available');
+        console.error('No email available for Jira access');
+        toast({
+          title: "Portal Access Error",
+          description: "No email found for Jira access. Contact support.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Check connection status first
+      if (!jiraConnectionStatus.connected) {
+        console.log('Jira not connected, opening direct portal');
+        toast({
+          title: "Portal Opening",
+          description: "Opening support portal. You may need to login manually.",
+        });
         window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
         return;
       }
 
-      console.log('Opening Jira portal with SSO for Jira email:', clientJiraEmail);
-
-      // Call the Jira SSO edge function
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        console.error('User not authenticated');
-        return;
-      }
+      console.log('Attempting SSO login for:', clientJiraEmail);
 
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        console.error('No active session');
+      if (!session?.access_token) {
+        console.error('No active session found');
+        toast({
+          title: "Authentication Error",
+          description: "Please refresh the page and try again.",
+          variant: "destructive",
+        });
         return;
       }
 
@@ -259,20 +276,38 @@ export const SupportTab = () => {
         },
       });
 
+      console.log('SSO response:', response);
+
       if (response.error) {
         console.error('Jira SSO error:', response.error);
-        // Fallback to direct portal access
+        toast({
+          title: "SSO Login Failed",
+          description: "Opening portal with manual login required.",
+          variant: "destructive",
+        });
         window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
         return;
       }
 
       const { redirectUrl } = response.data;
-      console.log('Opening Jira portal:', redirectUrl);
-      window.open(redirectUrl, '_blank');
+      if (redirectUrl) {
+        console.log('Opening Jira portal via SSO:', redirectUrl);
+        toast({
+          title: "Portal Opening",
+          description: "Opening your support portal...",
+        });
+        window.open(redirectUrl, '_blank');
+      } else {
+        throw new Error('No redirect URL received from SSO');
+      }
 
     } catch (error) {
       console.error('Error opening Jira portal:', error);
-      // Fallback to direct portal access
+      toast({
+        title: "Portal Access Error",
+        description: "Opening fallback portal. Manual login may be required.",
+        variant: "destructive",
+      });
       window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
     }
   };

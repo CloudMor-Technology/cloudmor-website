@@ -175,22 +175,34 @@ export const BillingTab = () => {
     try {
       console.log('Creating customer portal session for billing info...');
       
+      const session = await supabase.auth.getSession();
+      if (!session.data.session?.access_token) {
+        throw new Error('No active session found');
+      }
+
       const { data, error } = await supabase.functions.invoke('create-customer-portal', {
         headers: {
-          Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+          Authorization: `Bearer ${session.data.session.access_token}`,
         },
       });
 
       if (error) {
         console.error('Portal creation error:', error);
-        throw new Error(`Portal error: ${error.message}`);
+        throw new Error(`Portal error: ${error.message || 'Unknown error'}`);
       }
 
       if (data?.url) {
-        console.log('Opening billing info portal inline:', data.url);
-        setStripePortalUrl(data.url);
-        setPortalType('billing');
-        setShowStripePortal(true);
+        console.log('Portal URL received:', data.url);
+        // Try opening in new tab first, fallback to embedded if blocked
+        const newWindow = window.open(data.url, '_blank');
+        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+          console.log('Popup blocked, opening embedded portal instead');
+          setStripePortalUrl(data.url);
+          setPortalType('billing');
+          setShowStripePortal(true);
+        } else {
+          console.log('Opened billing portal in new tab');
+        }
       } else {
         throw new Error('No portal URL received');
       }
@@ -198,8 +210,8 @@ export const BillingTab = () => {
     } catch (error) {
       console.error('Error opening billing info portal:', error);
       toast({
-        title: "Error",
-        description: "Failed to open billing information portal. Please try again.",
+        title: "Billing Portal Error",
+        description: `Failed to open billing portal: ${error.message}`,
         variant: "destructive",
       });
     }
