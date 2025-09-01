@@ -1,7 +1,7 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import { AuthPage } from './auth/AuthPage';
-import { SinglePagePortal } from './dashboard/SinglePagePortal';
+import { ModernDashboard } from './dashboard/ModernDashboard';
 
 export const ClientPortal = () => {
   const { user, loading } = useAuth();
@@ -25,5 +25,5 @@ export const ClientPortal = () => {
   }
 
   console.log('User authenticated, showing dashboard');
-  return <SinglePagePortal />;
+  return <ModernDashboard />;
 };
