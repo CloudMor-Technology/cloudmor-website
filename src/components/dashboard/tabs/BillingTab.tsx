@@ -143,70 +143,30 @@ export const BillingTab = () => {
     try {
       console.log('Creating customer portal session...');
       
-      const session = await supabase.auth.getSession();
-      if (!session.data.session?.access_token) {
-        throw new Error('No active session found. Please refresh and try again.');
-      }
-
       const { data, error } = await supabase.functions.invoke('create-customer-portal', {
         headers: {
-          Authorization: `Bearer ${session.data.session.access_token}`,
+          Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
         },
       });
 
       if (error) {
         console.error('Portal creation error:', error);
-        throw new Error(`Portal error: ${error.message || 'Failed to create portal session'}`);
+        throw new Error(`Failed to create portal session`);
       }
 
       if (data?.url) {
-        console.log('Portal URL received:', data.url);
-        
-        // Try opening in new tab first
-        const newWindow = window.open(data.url, '_blank', 'noopener,noreferrer');
-        
-        // Check if popup was blocked
-        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-          console.log('Popup blocked, showing URL to copy');
-          
-          toast({
-            title: "Popup Blocked",
-            description: "Please copy the URL below to access your billing portal:",
-            action: (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  navigator.clipboard.writeText(data.url);
-                  toast({ title: "URL Copied!", description: "Portal URL copied to clipboard" });
-                }}
-              >
-                Copy URL
-              </Button>
-            ),
-          });
-          
-          // Also try direct navigation as fallback
-          setTimeout(() => {
-            if (confirm('Open billing portal in current tab?')) {
-              window.location.href = data.url;
-            }
-          }, 2000);
-        } else {
-          toast({
-            title: "Portal Opening",
-            description: "Opening your billing portal in a new tab...",
-          });
-        }
+        console.log('Opening billing portal:', data.url);
+        // Direct navigation to avoid popup blocking
+        window.location.href = data.url;
       } else {
-        throw new Error('No portal URL received from server');
+        throw new Error('No portal URL received');
       }
 
     } catch (error) {
       console.error('Error opening customer portal:', error);
       toast({
-        title: "Billing Portal Error",
-        description: `Failed to open billing portal: ${error.message}`,
+        title: "Error",
+        description: "Failed to open billing portal. Please try again.",
         variant: "destructive",
       });
     }

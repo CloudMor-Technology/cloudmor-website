@@ -258,16 +258,8 @@ export const SupportTab = () => {
         return;
       }
 
-      // Check connection status first
-      if (!jiraConnectionStatus.connected) {
-        console.log('Jira not connected, opening direct portal');
-        toast({
-          title: "Portal Opening",
-          description: "Opening support portal. You may need to login manually.",
-        });
-        window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
-        return;
-      }
+      // Always try SSO first, regardless of connection status
+      console.log('Attempting Jira SSO for email:', clientJiraEmail);
 
       console.log('Attempting SSO login for:', clientJiraEmail);
 
