@@ -28,13 +28,20 @@ export const SupportTab = () => {
     lastSync?: string;
   }>({ connected: false, loading: true });
 
-  // Check Jira connection status on component mount
+  // Check Jira connection status on component mount and when profile changes
   useEffect(() => {
-    checkJiraConnectionStatus();
-  }, [profile]);
+    if (profile) {
+      console.log('Profile loaded, checking Jira status for:', profile.email);
+      checkJiraConnectionStatus();
+    }
+  }, [profile?.email, profile?.role]);
 
   const checkJiraConnectionStatus = async () => {
-    if (!profile?.email) return;
+    if (!profile?.email) {
+      console.log('Profile email not available yet, skipping Jira check');
+      setJiraConnectionStatus({ connected: false, loading: false });
+      return;
+    }
 
     try {
       setJiraConnectionStatus(prev => ({ ...prev, loading: true }));
@@ -44,9 +51,16 @@ export const SupportTab = () => {
       let clientEmail = profile.email;
       
       if (impersonationData && profile.role === 'admin') {
-        const impersonatedClient = JSON.parse(impersonationData);
-        clientEmail = impersonatedClient.contact_email;
+        try {
+          const impersonatedClient = JSON.parse(impersonationData);
+          clientEmail = impersonatedClient.contact_email || profile.email;
+        } catch (e) {
+          console.error('Error parsing impersonation data:', e);
+          clientEmail = profile.email;
+        }
       }
+
+      console.log('Checking Jira connection for email:', clientEmail);
 
       const { data: clientData, error } = await supabase
         .from('clients')
@@ -62,6 +76,8 @@ export const SupportTab = () => {
 
       const isConnected = clientData?.jira_connected && 
         (!clientData?.jira_expires_at || new Date(clientData.jira_expires_at) > new Date());
+
+      console.log('Jira connection status:', { isConnected, clientData });
 
       setJiraConnectionStatus({
         connected: isConnected,
