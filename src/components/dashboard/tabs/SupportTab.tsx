@@ -217,66 +217,42 @@ export const SupportTab = () => {
 
   const openJiraPortal = async () => {
     try {
-      console.log('Starting Jira portal access...');
+      console.log('Starting Jira portal access for user:', profile?.email);
       
-      // Check if user is impersonating a client
-      const impersonationData = localStorage.getItem('impersonating_client');
-      let clientJiraEmail = null;
-      
-      if (impersonationData && profile?.role === 'admin') {
-        const impersonatedClient = JSON.parse(impersonationData);
-        clientJiraEmail = impersonatedClient.jira_email;
-        console.log('Using impersonated client Jira email:', clientJiraEmail);
-      } else {
-        // Fetch the client's Jira email from the database
-        const { data: clientData, error } = await supabase
-          .from('clients')
-          .select('jira_email')
-          .eq('contact_email', profile?.email)
-          .single();
-        
-        if (error) {
-          console.error('Error fetching client Jira email:', error);
-        } else {
-          clientJiraEmail = clientData?.jira_email;
-          console.log('Found client Jira email:', clientJiraEmail);
-        }
-      }
-
-      if (!clientJiraEmail) {
-        console.log('No Jira email found, using profile email as fallback:', profile?.email);
-        clientJiraEmail = profile?.email;
-      }
-
-      if (!clientJiraEmail) {
-        console.error('No email available for Jira access');
-        toast({
-          title: "Portal Access Error",
-          description: "No email found for Jira access. Contact support.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Always try SSO first, regardless of connection status
-      console.log('Attempting Jira SSO for email:', clientJiraEmail);
-
-      console.log('Attempting SSO login for:', clientJiraEmail);
-
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session?.access_token) {
-        console.error('No active session found');
+      if (!profile?.email) {
+        console.error('No profile email available');
         toast({
           title: "Authentication Error",
-          description: "Please refresh the page and try again.",
+          description: "User profile not loaded. Please refresh the page.",
           variant: "destructive",
         });
         return;
       }
 
-      const response = await supabase.functions.invoke('jira-sso-login', {
+      // Use profile email directly as the Jira email
+      const userEmail = profile.email;
+      console.log('Using email for Jira SSO:', userEmail);
+
+      // Get current session
+      console.log('Getting current session...');
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError) {
+        console.error('Session error:', sessionError);
+        throw new Error('Failed to get session');
+      }
+
+      if (!session?.access_token) {
+        console.error('No active session found');
+        throw new Error('No active session');
+      }
+
+      console.log('Session found, calling Jira SSO function...');
+
+      // Call the Jira SSO function
+      const { data, error } = await supabase.functions.invoke('jira-sso-login', {
         body: { 
-          userEmail: clientJiraEmail,
+          userEmail: userEmail,
           redirectUrl: 'https://support.cloudmor.com/servicedesk/customer/portals'
         },
         headers: {
@@ -284,38 +260,33 @@ export const SupportTab = () => {
         },
       });
 
-      console.log('SSO response:', response);
+      console.log('Jira SSO function response:', { data, error });
 
-      if (response.error) {
-        console.error('Jira SSO error:', response.error);
-        toast({
-          title: "SSO Login Failed",
-          description: "Opening portal with manual login required.",
-          variant: "destructive",
-        });
-        window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
-        return;
+      if (error) {
+        console.error('Jira SSO function error:', error);
+        throw new Error(`SSO function failed: ${error.message}`);
       }
 
-      const { redirectUrl } = response.data;
-      if (redirectUrl) {
-        console.log('Opening Jira portal via SSO:', redirectUrl);
+      if (data?.redirectUrl) {
+        console.log('SSO successful, opening portal:', data.redirectUrl);
         toast({
           title: "Portal Opening",
           description: "Opening your support portal...",
         });
-        window.open(redirectUrl, '_blank');
+        window.open(data.redirectUrl, '_blank');
       } else {
-        throw new Error('No redirect URL received from SSO');
+        console.error('No redirect URL in response:', data);
+        throw new Error('Invalid response from SSO function');
       }
 
     } catch (error) {
-      console.error('Error opening Jira portal:', error);
+      console.error('Error in openJiraPortal:', error);
       toast({
         title: "Portal Access Error",
-        description: "Opening fallback portal. Manual login may be required.",
+        description: `Failed to open portal: ${error.message}. Opening fallback portal.`,
         variant: "destructive",
       });
+      // Fallback to direct portal access
       window.open('https://support.cloudmor.com/servicedesk/customer/portals', '_blank');
     }
   };
