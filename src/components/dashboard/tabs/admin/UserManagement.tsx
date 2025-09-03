@@ -338,6 +338,35 @@ export const UserManagement = () => {
     }
   };
 
+  const handleCleanupClientUsers = async () => {
+    if (!confirm('This will remove all client authentication users while preserving admin accounts. This action cannot be undone. Continue?')) {
+      return;
+    }
+
+    try {
+      toast.info('Starting client user cleanup...');
+      
+      const { data, error } = await supabase.functions.invoke('cleanup-client-users');
+
+      if (error) throw error;
+
+      const { deletedCount, totalUsersFound, errors } = data;
+      
+      if (errors && errors.length > 0) {
+        toast.warning(`Cleanup completed with warnings: ${deletedCount} users deleted. Check console for details.`);
+        console.warn('Cleanup warnings:', errors);
+      } else {
+        toast.success(`Cleanup completed successfully: ${deletedCount} client users removed from authentication.`);
+      }
+      
+      console.log('Client cleanup results:', data);
+      fetchUsers(); // Refresh the user list
+    } catch (error) {
+      console.error('Error during client cleanup:', error);
+      toast.error('Failed to cleanup client users: ' + (error as any).message);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -349,6 +378,13 @@ export const UserManagement = () => {
             className="text-orange-600 hover:text-orange-700"
           >
             Cleanup Orphaned Users
+          </Button>
+          <Button 
+            onClick={handleCleanupClientUsers}
+            variant="outline"
+            className="text-red-600 hover:text-red-700"
+          >
+            Cleanup Client Users
           </Button>
           <Button 
             onClick={() => {

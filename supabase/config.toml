@@ -31,6 +31,8 @@ verify_jwt = false
 
 [functions.cleanup-orphaned-users]
 
+[functions.cleanup-client-users]
+
 [functions.admin-user-management]
 
 [functions.forgot-password]
