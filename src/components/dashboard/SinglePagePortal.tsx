@@ -81,7 +81,7 @@ export const SinglePagePortal = () => {
         .from('clients')
         .select('stripe_portal_url')
         .eq('contact_email', clientEmail)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
       setClientData(data);
@@ -215,27 +215,21 @@ export const SinglePagePortal = () => {
   // Enhanced Stripe portal functions to avoid popup blockers
   const handleViewInvoices = async () => {
     try {
-      // First, check if we have a stored portal URL from client data
-      if (clientData?.stripe_portal_url) {
-        toast.success('Opening billing portal...');
-        window.open(clientData.stripe_portal_url, '_blank');
-        return;
-      }
-
-      // For impersonated clients or regular users, get the appropriate customer ID
       let stripeCustomerId = profile?.stripe_customer_id;
+      let clientEmail = profile?.email;
       
       // Check if admin is impersonating a client
       const impersonationData = localStorage.getItem('impersonating_client');
       if (impersonationData && profile?.role === 'admin') {
         const impersonatedClient = JSON.parse(impersonationData);
+        clientEmail = impersonatedClient.contact_email;
         
         // Try to get the client record to find their stripe info
         const { data: clientRecord, error: clientError } = await supabase
           .from('clients')
           .select('stripe_customer_id, stripe_portal_url')
           .eq('contact_email', impersonatedClient.contact_email)
-          .single();
+          .maybeSingle();
           
         if (clientError) {
           console.error('Error fetching impersonated client data:', clientError);
@@ -243,14 +237,9 @@ export const SinglePagePortal = () => {
           return;
         }
         
-        // Use the impersonated client's stripe info
-        if (clientRecord?.stripe_portal_url) {
-          toast.success('Opening billing portal...');
-          window.open(clientRecord.stripe_portal_url, '_blank');
-          return;
+        if (clientRecord) {
+          stripeCustomerId = clientRecord.stripe_customer_id;
         }
-        
-        stripeCustomerId = clientRecord?.stripe_customer_id;
       }
       
       if (!stripeCustomerId) {
@@ -258,7 +247,7 @@ export const SinglePagePortal = () => {
         return;
       }
 
-      // Fallback to creating a new portal session
+      // Always create a new authenticated portal session for seamless access
       toast.loading('Opening billing portal...');
       const {
         data,
@@ -269,13 +258,19 @@ export const SinglePagePortal = () => {
           stripe_customer_id: stripeCustomerId
         }
       });
+      
       if (error) throw error;
+      
       if (data?.url) {
-        window.location.href = data.url;
+        // Open in new tab for better user experience
+        window.open(data.url, '_blank');
+        toast.success('Billing portal opened!');
+      } else {
+        throw new Error('No portal URL received');
       }
     } catch (error) {
       console.error('Error creating customer portal session:', error);
-      toast.error('Failed to open billing portal');
+      toast.error('Failed to open billing portal: ' + error.message);
     }
   };
   const handleManagePayment = async () => {
