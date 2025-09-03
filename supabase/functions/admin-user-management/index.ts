@@ -157,7 +157,8 @@ async function resetUserPassword(data: any) {
     
     const user = users.users.find((u: any) => u.email === email);
     if (!user) {
-      throw new Error('User not found in authentication system');
+      console.log(`User with email ${email} not found in auth system. Available users:`, users.users.map(u => u.email));
+      throw new Error(`User with email ${email} not found in authentication system. The user may need to be created first in the Auth system.`);
     }
 
     // Update password

@@ -10,6 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Users, Plus, Edit, Eye, Trash2, Building2, RotateCcw, Mail, CalendarIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
@@ -56,6 +57,12 @@ export const ClientManagement = () => {
   const [serviceStartDates, setServiceStartDates] = useState<{[key: string]: Date}>({});
   const [showForm, setShowForm] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
+  const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [passwordData, setPasswordData] = useState({
+    newPassword: '',
+    confirmPassword: ''
+  });
   const [formData, setFormData] = useState({
     company_name: '',
     contact_email: '',
@@ -184,12 +191,27 @@ export const ClientManagement = () => {
     }
   };
 
-  const handleResetPassword = async (client: Client) => {
-    const newPassword = prompt(`Enter new password for ${client.contact_name || client.company_name}:`);
+  const handleResetPassword = (client: Client) => {
+    setSelectedClient(client);
+    setPasswordData({ newPassword: '', confirmPassword: '' });
+    setShowPasswordDialog(true);
+  };
+
+  const handlePasswordReset = async () => {
+    if (!selectedClient) return;
     
-    if (!newPassword) return;
-    if (newPassword.length < 1) {
+    if (!passwordData.newPassword.trim()) {
       toast.error('Password cannot be empty');
+      return;
+    }
+    
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      toast.error('Password must be at least 6 characters long');
       return;
     }
 
@@ -198,10 +220,10 @@ export const ClientManagement = () => {
       const { data: resetResult, error: resetError } = await supabase.functions.invoke('admin-user-management', {
         body: {
           action: 'reset_password',
-          email: client.contact_email,
-          new_password: newPassword,
-          full_name: client.contact_name,
-          company_name: client.company_name
+          email: selectedClient.contact_email,
+          new_password: passwordData.newPassword,
+          full_name: selectedClient.contact_name,
+          company_name: selectedClient.company_name
         }
       });
 
@@ -209,6 +231,9 @@ export const ClientManagement = () => {
       if (!resetResult.success) throw new Error('Failed to reset password');
 
       toast.success('Password reset successfully and confirmation email sent!');
+      setShowPasswordDialog(false);
+      setPasswordData({ newPassword: '', confirmPassword: '' });
+      setSelectedClient(null);
     } catch (error) {
       console.error('Error resetting password:', error);
       toast.error('Failed to reset password: ' + (error as any).message);
@@ -700,6 +725,48 @@ export const ClientManagement = () => {
           </ScrollArea>
         </CardContent>
       </Card>
+
+      {/* Password Reset Dialog */}
+      <Dialog open={showPasswordDialog} onOpenChange={setShowPasswordDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Reset Password</DialogTitle>
+            <DialogDescription>
+              Enter new password for {selectedClient?.contact_name || selectedClient?.company_name}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="newPassword">New Password</Label>
+              <Input
+                id="newPassword"
+                type="password"
+                value={passwordData.newPassword}
+                onChange={(e) => setPasswordData({...passwordData, newPassword: e.target.value})}
+                placeholder="Enter new password"
+              />
+            </div>
+            <div>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                value={passwordData.confirmPassword}
+                onChange={(e) => setPasswordData({...passwordData, confirmPassword: e.target.value})}
+                placeholder="Confirm new password"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowPasswordDialog(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handlePasswordReset}>
+              Reset Password
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
