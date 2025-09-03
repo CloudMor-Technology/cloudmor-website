@@ -13,23 +13,6 @@ const resendApiKey = Deno.env.get('RESEND_API_KEY');
 // Create Supabase client with service role key for admin operations
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-// Initialize Resend only if API key is available
-let resend: any = null;
-const initializeResend = async () => {
-  if (resendApiKey && !resend) {
-    try {
-      const { Resend } = await import("npm:resend@2.0.0");
-      resend = new Resend(resendApiKey);
-      console.log('Resend client initialized successfully');
-    } catch (error) {
-      console.error('Failed to initialize Resend client:', error);
-    }
-  }
-};
-
-// Initialize on module load
-initializeResend();
-
 const welcomeEmailTemplate = (clientName: string, email: string, password: string, companyName: string) => `
 <!DOCTYPE html>
 <html>
@@ -163,10 +146,14 @@ async function createUserWithEmail(data: any) {
       );
     }
 
-    // Send welcome email if Resend is available
+    // Send welcome email if Resend API key is available
     let emailSent = false;
-    if (resend) {
+    if (resendApiKey) {
       try {
+        // Dynamically import and initialize Resend
+        const { Resend } = await import("npm:resend@2.0.0");
+        const resend = new Resend(resendApiKey);
+        
         const emailResponse = await resend.emails.send({
           from: "CloudMor Support <support@cloudmor.com>",
           to: [email],
@@ -181,7 +168,7 @@ async function createUserWithEmail(data: any) {
         // Don't fail the user creation if email fails
       }
     } else {
-      console.warn('Skipping welcome email - Resend not configured');
+      console.warn('Skipping welcome email - RESEND_API_KEY not configured');
     }
 
     return new Response(
@@ -242,10 +229,14 @@ async function resetUserPassword(data: any) {
 
     if (updateError) throw updateError;
 
-    // Send password reset confirmation email if Resend is available
+    // Send password reset confirmation email if Resend API key is available
     let emailSent = false;
-    if (resend) {
+    if (resendApiKey) {
       try {
+        // Dynamically import and initialize Resend
+        const { Resend } = await import("npm:resend@2.0.0");
+        const resend = new Resend(resendApiKey);
+        
         const emailResponse = await resend.emails.send({
           from: "CloudMor Support <support@cloudmor.com>",
           to: [email],
@@ -298,7 +289,7 @@ async function resetUserPassword(data: any) {
         // Don't fail the password reset if email fails
       }
     } else {
-      console.warn('Skipping password reset email - Resend not configured');
+      console.warn('Skipping password reset email - RESEND_API_KEY not configured');
     }
 
     return new Response(
