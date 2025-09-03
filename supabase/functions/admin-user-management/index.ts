@@ -1,6 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.56.0';
-import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -14,17 +13,22 @@ const resendApiKey = Deno.env.get('RESEND_API_KEY');
 // Create Supabase client with service role key for admin operations
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-// Only initialize Resend if API key is available
+// Initialize Resend only if API key is available
 let resend: any = null;
-if (resendApiKey) {
-  try {
-    resend = new Resend(resendApiKey);
-  } catch (error) {
-    console.error('Failed to initialize Resend client:', error);
+const initializeResend = async () => {
+  if (resendApiKey && !resend) {
+    try {
+      const { Resend } = await import("npm:resend@2.0.0");
+      resend = new Resend(resendApiKey);
+      console.log('Resend client initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize Resend client:', error);
+    }
   }
-} else {
-  console.warn('RESEND_API_KEY not found in environment variables. Email functionality will be disabled.');
-}
+};
+
+// Initialize on module load
+initializeResend();
 
 const welcomeEmailTemplate = (clientName: string, email: string, password: string, companyName: string) => `
 <!DOCTYPE html>
