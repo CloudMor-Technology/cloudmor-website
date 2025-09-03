@@ -331,7 +331,7 @@ export const SinglePagePortal = () => {
                     <Button onClick={handlePasswordChange} size="sm" className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700">
                       Update
                     </Button>
-                    <Button onClick={() => setIsChangingPassword(false)} size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                    <Button onClick={() => setIsChangingPassword(false)} size="sm" variant="outline" className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 font-extralight text-emerald-50 bg-cyan-800 hover:bg-cyan-700">
                       Cancel
                     </Button>
                   </div>}
