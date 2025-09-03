@@ -67,13 +67,51 @@ serve(async (req) => {
     });
 
     if (customers.data.length === 0) {
-      logStep("No Stripe customer found for email");
+      // Create new Stripe customer if none exists
+      logStep("No Stripe customer found, creating new one", { email: user.email });
+      
+      const newCustomer = await stripe.customers.create({
+        email: user.email,
+        name: user.user_metadata?.full_name || user.email,
+        metadata: {
+          supabase_user_id: user.id
+        }
+      });
+      
+      logStep("Created new Stripe customer", { customerId: newCustomer.id });
+      
+      // Update profile with new Stripe customer ID
+      const { error: updateError } = await supabaseClient
+        .from('profiles')
+        .update({ 
+          stripe_customer_id: newCustomer.id,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', user.id);
+
+      if (updateError) {
+        logStep("Profile update error", { error: updateError });
+        throw new Error(`Failed to update profile: ${updateError.message}`);
+      }
+
+      logStep("Profile updated successfully with new Stripe customer ID");
+
+      // Return new customer data
+      const customerData = {
+        id: newCustomer.id,
+        stripe_customer_id: newCustomer.id,
+        name: newCustomer.name || '',
+        email: newCustomer.email || '',
+        phone: newCustomer.phone || ''
+      };
+
       return new Response(JSON.stringify({ 
-        error: "No Stripe customer found for this email address",
-        customer: null 
+        success: true,
+        customer: customerData,
+        message: "New Stripe customer created and profile synced successfully"
       }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 404,
+        status: 200,
       });
     }
 
@@ -99,6 +137,7 @@ serve(async (req) => {
     // Return customer data
     const customerData = {
       id: customer.id,
+      stripe_customer_id: customer.id,
       name: customer.name || '',
       email: customer.email || '',
       phone: customer.phone || ''

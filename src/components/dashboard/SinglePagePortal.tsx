@@ -238,20 +238,44 @@ export const SinglePagePortal = () => {
           throw new Error('Failed to find client billing information');
         }
         
-        if (!clientRecord?.stripe_customer_id) {
-          throw new Error('No billing information found for this client. Please contact administrator to set up billing.');
-        }
-        
-        stripeCustomerId = clientRecord.stripe_customer_id;
+        stripeCustomerId = clientRecord?.stripe_customer_id;
         console.log('Using impersonated client billing:', {
-          company: clientRecord.company_name,
+          company: clientRecord?.company_name,
           email: clientEmail,
           customerId: stripeCustomerId
         });
       }
       
+      // If no stripe_customer_id, sync with Stripe to create/find customer
       if (!stripeCustomerId) {
-        throw new Error('No billing information found. Please contact your administrator to set up billing.');
+        console.log('No Stripe customer ID found, syncing with Stripe...');
+        toast.dismiss(loadingToast);
+        const syncingToast = toast.loading('Setting up billing profile...');
+        
+        try {
+          const { data: syncData, error: syncError } = await supabase.functions.invoke('sync-profile-stripe');
+          
+          if (syncError) {
+            console.error('Sync error:', syncError);
+            throw new Error('Failed to set up billing profile. Please try again.');
+          }
+          
+          if (syncData?.stripe_customer_id) {
+            stripeCustomerId = syncData.stripe_customer_id;
+            console.log('Successfully synced Stripe customer:', stripeCustomerId);
+            
+            // Refresh profile to get updated stripe_customer_id
+            window.location.reload();
+            return;
+          } else {
+            throw new Error('Failed to create billing profile. Please contact support.');
+          }
+        } catch (syncError) {
+          toast.dismiss(syncingToast);
+          throw syncError;
+        } finally {
+          toast.dismiss(syncingToast);
+        }
       }
 
       // Always create a new authenticated portal session for seamless access
