@@ -296,18 +296,50 @@ export const SinglePagePortal = () => {
         throw new Error('No portal URL received from Stripe');
       }
 
-      // Open in new tab with popup blocker handling
-      const newWindow = window.open(data.url, '_blank');
-      if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-        // Fallback: show URL if popup is blocked
-        console.warn('Popup blocked, showing URL to user');
-        toast.dismiss(loadingToast);
-        toast.error('Popup blocked. Please allow popups and try again, or copy this URL: ' + data.url);
-        return;
-      }
+      // Attempt to open in new tab with advanced popup blocker detection
+      const newWindow = window.open(data.url, '_blank', 'noopener,noreferrer');
       
-      toast.dismiss(loadingToast);
-      toast.success('Billing portal opened! Check the new tab.');
+      // Advanced popup blocker detection with automatic fallback
+      setTimeout(() => {
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+          console.warn('Popup blocked by browser, providing automatic fallback');
+          
+          // Automatically open in same tab with user confirmation
+          const userChoice = confirm(
+            'Popup was blocked by your browser.\n\n' +
+            'Would you like to open the billing portal in this tab instead?\n\n' +
+            'Click OK to continue or Cancel to copy the link.'
+          );
+          
+          if (userChoice) {
+            // Open in same tab
+            window.location.href = data.url;
+          } else {
+            // Copy to clipboard as fallback
+            navigator.clipboard.writeText(data.url).then(() => {
+              toast.success('Billing portal URL copied to clipboard!');
+            }).catch(() => {
+              // Fallback if clipboard API fails
+              const textArea = document.createElement('textarea');
+              textArea.value = data.url;
+              document.body.appendChild(textArea);
+              textArea.select();
+              try {
+                document.execCommand('copy');
+                toast.success('Billing portal URL copied to clipboard!');
+              } catch (err) {
+                toast.error('Please manually copy this URL: ' + data.url);
+              }
+              document.body.removeChild(textArea);
+            });
+          }
+        } else {
+          // Popup opened successfully
+          toast.success('Billing portal opened successfully in new tab!');
+        }
+        
+        toast.dismiss(loadingToast);
+      }, 1000); // Wait 1 second to detect if popup was blocked
       
     } catch (error: any) {
       console.error('Error creating customer portal session:', error);
