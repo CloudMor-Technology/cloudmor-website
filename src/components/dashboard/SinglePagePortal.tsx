@@ -215,21 +215,50 @@ export const SinglePagePortal = () => {
   // Enhanced Stripe portal functions to avoid popup blockers
   const handleViewInvoices = async () => {
     try {
-      // First, check if we have a stored portal URL
+      // First, check if we have a stored portal URL from client data
       if (clientData?.stripe_portal_url) {
         toast.success('Opening billing portal...');
         window.open(clientData.stripe_portal_url, '_blank');
         return;
       }
 
-      // Fallback to creating a new portal session
+      // For impersonated clients or regular users, get the appropriate customer ID
       let stripeCustomerId = profile?.stripe_customer_id;
+      
+      // Check if admin is impersonating a client
+      const impersonationData = localStorage.getItem('impersonating_client');
+      if (impersonationData && profile?.role === 'admin') {
+        const impersonatedClient = JSON.parse(impersonationData);
+        
+        // Try to get the client record to find their stripe info
+        const { data: clientRecord, error: clientError } = await supabase
+          .from('clients')
+          .select('stripe_customer_id, stripe_portal_url')
+          .eq('contact_email', impersonatedClient.contact_email)
+          .single();
+          
+        if (clientError) {
+          console.error('Error fetching impersonated client data:', clientError);
+          toast.error('Failed to find client billing information');
+          return;
+        }
+        
+        // Use the impersonated client's stripe info
+        if (clientRecord?.stripe_portal_url) {
+          toast.success('Opening billing portal...');
+          window.open(clientRecord.stripe_portal_url, '_blank');
+          return;
+        }
+        
+        stripeCustomerId = clientRecord?.stripe_customer_id;
+      }
+      
       if (!stripeCustomerId) {
         toast.error('No billing information found. Please contact your administrator.');
         return;
       }
 
-      // Show loading indicator
+      // Fallback to creating a new portal session
       toast.loading('Opening billing portal...');
       const {
         data,
@@ -242,7 +271,6 @@ export const SinglePagePortal = () => {
       });
       if (error) throw error;
       if (data?.url) {
-        // Use window.location.href to avoid popup blockers
         window.location.href = data.url;
       }
     } catch (error) {
