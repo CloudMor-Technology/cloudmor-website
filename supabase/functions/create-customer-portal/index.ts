@@ -18,6 +18,10 @@ serve(async (req) => {
   try {
     console.log('Starting customer portal request...');
 
+    // Get request body
+    const requestBody = await req.json();
+    const { stripe_customer_id, return_url } = requestBody;
+
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
     const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
@@ -60,24 +64,28 @@ serve(async (req) => {
       apiVersion: "2023-10-16",
     });
 
-    // Look up customer by email instead of using hardcoded ID
-    console.log('Looking up Stripe customer for:', user.email);
+    // Use the provided stripe_customer_id directly for authenticated portal access
+    let customerId = stripe_customer_id;
     
-    const customers = await stripe.customers.list({
-      email: user.email,
-      limit: 1
-    });
+    if (!customerId) {
+      // Fallback: Look up customer by email if no customer ID provided
+      console.log('No customer ID provided, looking up by email:', user.email);
+      const customers = await stripe.customers.list({
+        email: user.email,
+        limit: 1
+      });
 
-    if (customers.data.length === 0) {
-      throw new Error("No Stripe customer found for this user. Please make a purchase first.");
+      if (customers.data.length === 0) {
+        throw new Error("No Stripe customer found for this user. Please make a purchase first.");
+      }
+      customerId = customers.data[0].id;
     }
-
-    const customerId = customers.data[0].id;
+    
     console.log('Found customer ID:', customerId);
 
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
-      return_url: `${req.headers.get("origin")}/portal?tab=billing`,
+      return_url: return_url || `${req.headers.get("origin")}/portal?tab=billing`,
     });
 
     console.log('Customer portal session created:', session.id);
