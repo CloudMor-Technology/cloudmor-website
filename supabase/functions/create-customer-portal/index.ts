@@ -113,24 +113,10 @@ serve(async (req) => {
       throw new Error(`Invalid customer ID: ${customerId}`);
     }
 
-    // Create the billing portal session with enhanced configuration
+    // Create the billing portal session with basic configuration
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
       return_url: return_url || `${req.headers.get("origin")}/portal?tab=billing`,
-      configuration: {
-        business_profile: {
-          privacy_policy_url: `${req.headers.get("origin")}/privacy-policy`,
-          terms_of_service_url: `${req.headers.get("origin")}/terms-of-service`,
-        },
-        features: {
-          payment_method_update: {
-            enabled: true,
-          },
-          invoice_history: {
-            enabled: true,
-          },
-        },
-      },
     });
 
     console.log('Customer portal session created:', session.id);
