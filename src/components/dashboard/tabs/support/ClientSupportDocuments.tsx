@@ -46,20 +46,59 @@ export const ClientSupportDocuments = () => {
 
       if (clientError || !clientData) {
         console.log('No client found for email:', clientEmail);
-        setDocuments([]);
+        // Still fetch global documents even if no client found
+        const { data: globalDocs, error: globalError } = await supabase
+          .from('support_documents')
+          .select('*')
+          .is('client_id', null)
+          .order('created_at', { ascending: false });
+
+        if (!globalError) {
+          setDocuments(globalDocs || []);
+        }
         return;
       }
 
-      // Then get their support documents
-      const { data: documentsData, error: documentsError } = await supabase
+      // Get documents assigned to this client
+      const { data: assignments, error: assignedError } = await supabase
+        .from('client_support_document_assignments')
+        .select('document_id')
+        .eq('client_id', clientData.id);
+
+      if (assignedError) throw assignedError;
+
+      const assignedDocumentIds = assignments?.map(a => a.document_id) || [];
+
+      // Get assigned documents
+      let assignedDocuments: SupportDocument[] = [];
+      if (assignedDocumentIds.length > 0) {
+        const { data: assignedDocs, error: assignedDocsError } = await supabase
+          .from('support_documents')
+          .select('*')
+          .in('id', assignedDocumentIds);
+
+        if (assignedDocsError) throw assignedDocsError;
+        assignedDocuments = assignedDocs || [];
+      }
+
+      // Get global documents (not assigned to any specific client)
+      const { data: globalDocs, error: globalError } = await supabase
         .from('support_documents')
         .select('*')
-        .eq('client_id', clientData.id)
+        .is('client_id', null)
         .order('created_at', { ascending: false });
 
-      if (documentsError) throw documentsError;
+      if (globalError) throw globalError;
 
-      setDocuments(documentsData || []);
+      // Combine assigned and global documents
+      const allDocuments = [...assignedDocuments, ...(globalDocs || [])];
+      
+      // Remove duplicates by ID and sort by created_at
+      const uniqueDocuments = allDocuments.filter((doc, index, self) => 
+        index === self.findIndex(d => d.id === doc.id)
+      ).sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+      setDocuments(uniqueDocuments);
     } catch (error) {
       console.error('Error fetching support documents:', error);
     } finally {

@@ -25,6 +25,12 @@ interface ClientSupportDocument {
   url: string | null;
   client_id: string | null;
   created_at: string;
+  client_support_document_assignments?: Array<{
+    client_id: string;
+    clients: {
+      company_name: string;
+    } | null;
+  }>;
 }
 
 export const ClientSupportDocuments = () => {
@@ -62,13 +68,34 @@ export const ClientSupportDocuments = () => {
 
   const fetchDocuments = async () => {
     try {
+      // Get all documents
       const { data: docs, error: docsError } = await supabase
         .from('support_documents')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (docsError) throw docsError;
-      setDocuments(docs || []);
+
+      // Get all assignments with client info
+      const { data: assignments, error: assignError } = await supabase
+        .from('client_support_document_assignments')
+        .select(`
+          document_id,
+          client_id,
+          clients(company_name)
+        `);
+
+      if (assignError) throw assignError;
+
+      // Combine documents with their assignments
+      const documentsWithAssignments = docs.map(doc => ({
+        ...doc,
+        client_support_document_assignments: assignments.filter(
+          assignment => assignment.document_id === doc.id
+        )
+      }));
+
+      setDocuments(documentsWithAssignments || []);
     } catch (error) {
       console.error('Error fetching documents:', error);
       toast.error('Failed to fetch documents');
@@ -77,35 +104,36 @@ export const ClientSupportDocuments = () => {
 
   const handleCreateDocument = async () => {
     try {
-      if (selectedClients.length === 0) {
-        // Create global document (available to all clients)
-        const { error: docError } = await supabase
-          .from('support_documents')
-          .insert({
-            title: formData.title,
-            description: formData.description,
-            url: formData.url,
-            client_id: null
-          });
-
-        if (docError) throw docError;
-      } else {
-        // Create document for each selected client
-        const documents = selectedClients.map(clientId => ({
+      // Create the document once
+      const { data: newDoc, error: docError } = await supabase
+        .from('support_documents')
+        .insert({
           title: formData.title,
           description: formData.description,
           url: formData.url,
+          client_id: null // Always null, we use assignments for client access
+        })
+        .select()
+        .single();
+
+      if (docError) throw docError;
+
+      // Create assignments if specific clients are selected
+      if (selectedClients.length > 0) {
+        const assignments = selectedClients.map(clientId => ({
+          document_id: newDoc.id,
           client_id: clientId
         }));
 
-        const { error: docError } = await supabase
-          .from('support_documents')
-          .insert(documents);
+        const { error: assignError } = await supabase
+          .from('client_support_document_assignments')
+          .insert(assignments);
 
-        if (docError) throw docError;
+        if (assignError) throw assignError;
       }
+      // If no clients selected, document is global (no assignments needed)
 
-      toast.success('Client support document(s) created successfully');
+      toast.success('Client support document created successfully');
       fetchDocuments();
       resetForm();
     } catch (error) {
@@ -118,42 +146,40 @@ export const ClientSupportDocuments = () => {
     if (!editingDocument) return;
 
     try {
-      // Delete existing document
-      const { error: deleteError } = await supabase
+      // Update the document details
+      const { error: updateError } = await supabase
         .from('support_documents')
-        .delete()
-        .eq('id', editingDocument.id);
-
-      if (deleteError) throw deleteError;
-
-      // Create new document(s) with updated assignments
-      if (selectedClients.length === 0) {
-        // Create global document (available to all clients)
-        const { error: docError } = await supabase
-          .from('support_documents')
-          .insert({
-            title: formData.title,
-            description: formData.description,
-            url: formData.url,
-            client_id: null
-          });
-
-        if (docError) throw docError;
-      } else {
-        // Create document for each selected client
-        const documents = selectedClients.map(clientId => ({
+        .update({
           title: formData.title,
           description: formData.description,
-          url: formData.url,
+          url: formData.url
+        })
+        .eq('id', editingDocument.id);
+
+      if (updateError) throw updateError;
+
+      // Delete existing assignments
+      const { error: deleteAssignError } = await supabase
+        .from('client_support_document_assignments')
+        .delete()
+        .eq('document_id', editingDocument.id);
+
+      if (deleteAssignError) throw deleteAssignError;
+
+      // Create new assignments if specific clients are selected
+      if (selectedClients.length > 0) {
+        const assignments = selectedClients.map(clientId => ({
+          document_id: editingDocument.id,
           client_id: clientId
         }));
 
-        const { error: docError } = await supabase
-          .from('support_documents')
-          .insert(documents);
+        const { error: assignError } = await supabase
+          .from('client_support_document_assignments')
+          .insert(assignments);
 
-        if (docError) throw docError;
+        if (assignError) throw assignError;
       }
+      // If no clients selected, document becomes global (no assignments)
 
       toast.success('Client support document updated successfully');
       fetchDocuments();
@@ -195,34 +221,29 @@ export const ClientSupportDocuments = () => {
     setEditingDocument(null);
   };
 
-  const startEdit = async (document: ClientSupportDocument) => {
+  const startEdit = async (document: any) => {
     setEditingDocument(document);
     setFormData({
       title: document.title,
       description: document.description || '',
       url: document.url || '',
-      client_id: document.client_id || ''
+      client_id: ''
     });
 
-    // Find all documents with the same title, description, and URL to show which clients have this document
+    // Get assigned clients for this document
     try {
-      const { data: relatedDocs, error } = await supabase
-        .from('support_documents')
+      const { data: assignments, error } = await supabase
+        .from('client_support_document_assignments')
         .select('client_id')
-        .eq('title', document.title)
-        .eq('description', document.description || '')
-        .eq('url', document.url || '');
+        .eq('document_id', document.id);
 
       if (error) throw error;
 
-      const assignedClientIds = relatedDocs
-        .filter(doc => doc.client_id)
-        .map(doc => doc.client_id);
-
+      const assignedClientIds = assignments.map(assignment => assignment.client_id);
       setSelectedClients(assignedClientIds);
     } catch (error) {
-      console.error('Error fetching related documents:', error);
-      setSelectedClients(document.client_id ? [document.client_id] : []);
+      console.error('Error fetching document assignments:', error);
+      setSelectedClients([]);
     }
 
     setShowForm(true);
@@ -361,10 +382,24 @@ export const ClientSupportDocuments = () => {
                           <div className="flex items-center gap-1">
                             <Users className="w-4 h-4" />
                             <span>
-                              {document.client_id ? 'Assigned to specific client' : 'Available to all clients'}
+                              {document.client_support_document_assignments?.length > 0 
+                                ? `Assigned to ${document.client_support_document_assignments.length} client(s)` 
+                                : 'Available to all clients'}
                             </span>
                           </div>
                         </div>
+                        
+                        {document.client_support_document_assignments?.length > 0 && (
+                          <div className="text-sm text-portal-text-muted">
+                            <span className="font-medium">Clients: </span>
+                            {document.client_support_document_assignments.map((assignment: any, index: number) => (
+                              <span key={assignment.client_id}>
+                                {assignment.clients?.company_name || 'Unknown'}
+                                {index < document.client_support_document_assignments.length - 1 ? ', ' : ''}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                         
                         {document.description && (
                           <p className="text-portal-text-muted text-sm">{document.description}</p>
