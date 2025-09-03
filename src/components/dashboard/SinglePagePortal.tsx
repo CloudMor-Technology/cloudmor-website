@@ -214,6 +214,8 @@ export const SinglePagePortal = () => {
 
   // Enhanced Stripe portal functions to avoid popup blockers
   const handleViewInvoices = async () => {
+    const loadingToast = toast.loading('Opening billing portal...');
+    
     try {
       let stripeCustomerId = profile?.stripe_customer_id;
       let clientEmail = profile?.email;
@@ -227,50 +229,75 @@ export const SinglePagePortal = () => {
         // Try to get the client record to find their stripe info
         const { data: clientRecord, error: clientError } = await supabase
           .from('clients')
-          .select('stripe_customer_id, stripe_portal_url')
+          .select('stripe_customer_id, stripe_portal_url, company_name')
           .eq('contact_email', impersonatedClient.contact_email)
           .maybeSingle();
           
         if (clientError) {
           console.error('Error fetching impersonated client data:', clientError);
-          toast.error('Failed to find client billing information');
-          return;
+          throw new Error('Failed to find client billing information');
         }
         
-        if (clientRecord) {
-          stripeCustomerId = clientRecord.stripe_customer_id;
+        if (!clientRecord?.stripe_customer_id) {
+          throw new Error('No billing information found for this client. Please contact administrator to set up billing.');
         }
+        
+        stripeCustomerId = clientRecord.stripe_customer_id;
+        console.log('Using impersonated client billing:', {
+          company: clientRecord.company_name,
+          email: clientEmail,
+          customerId: stripeCustomerId
+        });
       }
       
       if (!stripeCustomerId) {
-        toast.error('No billing information found. Please contact your administrator.');
-        return;
+        throw new Error('No billing information found. Please contact your administrator to set up billing.');
       }
 
       // Always create a new authenticated portal session for seamless access
-      toast.loading('Opening billing portal...');
-      const {
-        data,
-        error
-      } = await supabase.functions.invoke('create-customer-portal', {
+      console.log('Creating portal session for customer:', stripeCustomerId);
+      const { data, error } = await supabase.functions.invoke('create-customer-portal', {
         body: {
-          return_url: window.location.origin,
+          return_url: `${window.location.origin}/portal?tab=billing`,
           stripe_customer_id: stripeCustomerId
         }
       });
       
-      if (error) throw error;
-      
-      if (data?.url) {
-        // Open in new tab for better user experience
-        window.open(data.url, '_blank');
-        toast.success('Billing portal opened!');
-      } else {
-        throw new Error('No portal URL received');
+      if (error) {
+        console.error('Portal creation error:', error);
+        throw new Error(error.message || 'Failed to create billing portal session');
       }
-    } catch (error) {
+      
+      if (!data?.url) {
+        throw new Error('No portal URL received from Stripe');
+      }
+
+      // Open in new tab with popup blocker handling
+      const newWindow = window.open(data.url, '_blank');
+      if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+        // Fallback: show URL if popup is blocked
+        console.warn('Popup blocked, showing URL to user');
+        toast.dismiss(loadingToast);
+        toast.error('Popup blocked. Please allow popups and try again, or copy this URL: ' + data.url);
+        return;
+      }
+      
+      toast.dismiss(loadingToast);
+      toast.success('Billing portal opened! Check the new tab.');
+      
+    } catch (error: any) {
       console.error('Error creating customer portal session:', error);
-      toast.error('Failed to open billing portal: ' + error.message);
+      toast.dismiss(loadingToast);
+      
+      // Provide more specific error messages
+      let errorMessage = error.message || 'Unknown error occurred';
+      if (errorMessage.includes('No Stripe customer found')) {
+        errorMessage = 'No billing account found. Please make a purchase first or contact support.';
+      } else if (errorMessage.includes('Invalid customer')) {
+        errorMessage = 'Invalid billing information. Please contact administrator.';
+      }
+      
+      toast.error('Failed to open billing portal: ' + errorMessage);
     }
   };
   const handleManagePayment = async () => {

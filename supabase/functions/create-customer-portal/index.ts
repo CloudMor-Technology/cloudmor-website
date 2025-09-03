@@ -83,9 +83,54 @@ serve(async (req) => {
     
     console.log('Found customer ID:', customerId);
 
+    // Validate customer exists and get their details
+    try {
+      const customer = await stripe.customers.retrieve(customerId);
+      console.log('Customer details retrieved:', {
+        id: customer.id,
+        email: customer.email,
+        created: customer.created
+      });
+      
+      // Check if customer has any payment methods or subscriptions
+      const paymentMethods = await stripe.paymentMethods.list({
+        customer: customerId,
+        limit: 1
+      });
+      
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customerId,
+        limit: 1
+      });
+      
+      console.log('Customer status:', {
+        hasPaymentMethods: paymentMethods.data.length > 0,
+        hasSubscriptions: subscriptions.data.length > 0
+      });
+      
+    } catch (customerError) {
+      console.error('Error retrieving customer:', customerError);
+      throw new Error(`Invalid customer ID: ${customerId}`);
+    }
+
+    // Create the billing portal session with enhanced configuration
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
       return_url: return_url || `${req.headers.get("origin")}/portal?tab=billing`,
+      configuration: {
+        business_profile: {
+          privacy_policy_url: `${req.headers.get("origin")}/privacy-policy`,
+          terms_of_service_url: `${req.headers.get("origin")}/terms-of-service`,
+        },
+        features: {
+          payment_method_update: {
+            enabled: true,
+          },
+          invoice_history: {
+            enabled: true,
+          },
+        },
+      },
     });
 
     console.log('Customer portal session created:', session.id);
