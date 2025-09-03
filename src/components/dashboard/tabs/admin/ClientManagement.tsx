@@ -136,6 +136,8 @@ export const ClientManagement = () => {
       return;
     }
 
+    let authResult: any = null;
+
     try {
       console.log('Creating client with data:', {
         action: 'create_user',
@@ -146,7 +148,7 @@ export const ClientManagement = () => {
       });
 
       // Create user using admin edge function
-      const { data: authResult, error: authError } = await supabase.functions.invoke('admin-user-management', {
+      const { data, error: authError } = await supabase.functions.invoke('admin-user-management', {
         body: {
           action: 'create_user',
           email: formData.contact_email,
@@ -156,6 +158,7 @@ export const ClientManagement = () => {
         }
       });
 
+      authResult = data;
       console.log('Edge function response:', { authResult, authError });
 
       if (authError) {
@@ -210,7 +213,22 @@ export const ClientManagement = () => {
       resetForm();
     } catch (error) {
       console.error('Error creating client:', error);
-      toast.error('Failed to create client: ' + (error as any).message);
+      
+      // Handle edge function errors with proper message extraction
+      let errorMessage = 'Failed to create client';
+      
+      if ((error as any)?.message?.includes('Edge Function returned')) {
+        // This is likely an edge function error, but we need to check if we have the actual error
+        if (authResult?.error) {
+          errorMessage = authResult.error;
+        } else {
+          errorMessage = 'Edge Function returned an error. Please check the console for details.';
+        }
+      } else {
+        errorMessage += ': ' + (error as any).message;
+      }
+      
+      toast.error(errorMessage);
     }
   };
 
@@ -238,9 +256,11 @@ export const ClientManagement = () => {
       return;
     }
 
+    let resetResult: any = null;
+
     try {
       // Reset password using admin edge function
-      const { data: resetResult, error: resetError } = await supabase.functions.invoke('admin-user-management', {
+      const { data, error: resetError } = await supabase.functions.invoke('admin-user-management', {
         body: {
           action: 'reset_password',
           email: selectedClient.contact_email,
@@ -250,9 +270,11 @@ export const ClientManagement = () => {
         }
       });
 
+      resetResult = data;
+
       if (resetError) throw resetError;
-      if (!resetResult.success) {
-        const errorMessage = resetResult.error || 'Failed to reset password';
+      if (!resetResult || !resetResult.success) {
+        const errorMessage = resetResult?.error || 'Failed to reset password';
         throw new Error(errorMessage);
       }
 
@@ -262,7 +284,22 @@ export const ClientManagement = () => {
       setSelectedClient(null);
     } catch (error) {
       console.error('Error resetting password:', error);
-      toast.error('Failed to reset password: ' + (error as any).message);
+      
+      // Handle edge function errors with proper message extraction
+      let errorMessage = 'Failed to reset password';
+      
+      if ((error as any)?.message?.includes('Edge Function returned')) {
+        // This is likely an edge function error, but we need to check if we have the actual error
+        if (resetResult?.error) {
+          errorMessage = resetResult.error;
+        } else {
+          errorMessage = 'Edge Function returned an error. Please check the console for details.';
+        }
+      } else {
+        errorMessage += ': ' + (error as any).message;
+      }
+      
+      toast.error(errorMessage);
     }
   };
 
