@@ -127,7 +127,8 @@ export const UserManagement = () => {
             role: formData.role,
             stripe_customer_id: formData.stripe_customer_id,
             jira_email: formData.jira_email,
-            access_permissions: formData.access_permissions
+            access_permissions: formData.access_permissions,
+            support_options: formData.support_options
           })
           .eq('id', authData.user.id);
 
@@ -204,7 +205,8 @@ export const UserManagement = () => {
           role: formData.role,
           stripe_customer_id: formData.stripe_customer_id,
           jira_email: formData.jira_email,
-          access_permissions: formData.access_permissions
+          access_permissions: formData.access_permissions,
+          support_options: formData.support_options
         })
         .eq('id', editingUser.id);
 

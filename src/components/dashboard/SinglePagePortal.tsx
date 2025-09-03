@@ -324,6 +324,10 @@ export const SinglePagePortal = () => {
                   ...passwordForm,
                   newPassword: e.target.value
                 })} className="bg-white/10 border-white/20 text-white placeholder:text-white/50 w-40" />
+                    <Input type="password" placeholder="Confirm Password" value={passwordForm.confirmPassword} onChange={e => setPasswordForm({
+                  ...passwordForm,
+                  confirmPassword: e.target.value
+                })} className="bg-white/10 border-white/20 text-white placeholder:text-white/50 w-40" />
                     <Button onClick={handlePasswordChange} size="sm" className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700">
                       Update
                     </Button>

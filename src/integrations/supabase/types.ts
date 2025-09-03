@@ -346,6 +346,7 @@ export type Database = {
           reset_token_used_at: string | null
           role: string
           stripe_customer_id: string | null
+          support_options: Json | null
           updated_at: string
         }
         Insert: {
@@ -364,6 +365,7 @@ export type Database = {
           reset_token_used_at?: string | null
           role?: string
           stripe_customer_id?: string | null
+          support_options?: Json | null
           updated_at?: string
         }
         Update: {
@@ -382,6 +384,7 @@ export type Database = {
           reset_token_used_at?: string | null
           role?: string
           stripe_customer_id?: string | null
+          support_options?: Json | null
           updated_at?: string
         }
         Relationships: [
