@@ -21,9 +21,14 @@ import { cn } from '@/lib/utils';
 const formatDateForDatabase = (date: Date) => {
   console.log('Original date object:', date);
   console.log('Date ISO string:', date.toISOString());
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
+  
+  // Create a new date in the user's timezone to avoid timezone conversion issues
+  const safeDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0);
+  console.log('Safe date created:', safeDate);
+  
+  const year = safeDate.getFullYear();
+  const month = String(safeDate.getMonth() + 1).padStart(2, '0');
+  const day = String(safeDate.getDate()).padStart(2, '0');
   const formatted = `${year}-${month}-${day}`;
   console.log('Formatted date for database:', formatted);
   return formatted;

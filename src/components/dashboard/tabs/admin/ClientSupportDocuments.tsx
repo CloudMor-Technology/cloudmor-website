@@ -77,21 +77,35 @@ export const ClientSupportDocuments = () => {
 
   const handleCreateDocument = async () => {
     try {
-      // Insert the document with client assignment
-      const { data: docData, error: docError } = await supabase
-        .from('support_documents')
-        .insert({
+      if (selectedClients.length === 0) {
+        // Create global document (available to all clients)
+        const { error: docError } = await supabase
+          .from('support_documents')
+          .insert({
+            title: formData.title,
+            description: formData.description,
+            url: formData.url,
+            client_id: null
+          });
+
+        if (docError) throw docError;
+      } else {
+        // Create document for each selected client
+        const documents = selectedClients.map(clientId => ({
           title: formData.title,
           description: formData.description,
           url: formData.url,
-          client_id: selectedClients.length > 0 ? selectedClients[0] : null
-        })
-        .select()
-        .single();
+          client_id: clientId
+        }));
 
-      if (docError) throw docError;
+        const { error: docError } = await supabase
+          .from('support_documents')
+          .insert(documents);
 
-      toast.success('Client support document created successfully');
+        if (docError) throw docError;
+      }
+
+      toast.success('Client support document(s) created successfully');
       fetchDocuments();
       resetForm();
     } catch (error) {
@@ -104,18 +118,42 @@ export const ClientSupportDocuments = () => {
     if (!editingDocument) return;
 
     try {
-      // Update the document
-      const { error: docError } = await supabase
+      // Delete existing document
+      const { error: deleteError } = await supabase
         .from('support_documents')
-        .update({
+        .delete()
+        .eq('id', editingDocument.id);
+
+      if (deleteError) throw deleteError;
+
+      // Create new document(s) with updated assignments
+      if (selectedClients.length === 0) {
+        // Create global document (available to all clients)
+        const { error: docError } = await supabase
+          .from('support_documents')
+          .insert({
+            title: formData.title,
+            description: formData.description,
+            url: formData.url,
+            client_id: null
+          });
+
+        if (docError) throw docError;
+      } else {
+        // Create document for each selected client
+        const documents = selectedClients.map(clientId => ({
           title: formData.title,
           description: formData.description,
           url: formData.url,
-          client_id: selectedClients.length > 0 ? selectedClients[0] : null
-        })
-        .eq('id', editingDocument.id);
+          client_id: clientId
+        }));
 
-      if (docError) throw docError;
+        const { error: docError } = await supabase
+          .from('support_documents')
+          .insert(documents);
+
+        if (docError) throw docError;
+      }
 
       toast.success('Client support document updated successfully');
       fetchDocuments();
@@ -157,7 +195,7 @@ export const ClientSupportDocuments = () => {
     setEditingDocument(null);
   };
 
-  const startEdit = (document: ClientSupportDocument) => {
+  const startEdit = async (document: ClientSupportDocument) => {
     setEditingDocument(document);
     setFormData({
       title: document.title,
@@ -165,7 +203,28 @@ export const ClientSupportDocuments = () => {
       url: document.url || '',
       client_id: document.client_id || ''
     });
-    setSelectedClients(document.client_id ? [document.client_id] : []);
+
+    // Find all documents with the same title, description, and URL to show which clients have this document
+    try {
+      const { data: relatedDocs, error } = await supabase
+        .from('support_documents')
+        .select('client_id')
+        .eq('title', document.title)
+        .eq('description', document.description || '')
+        .eq('url', document.url || '');
+
+      if (error) throw error;
+
+      const assignedClientIds = relatedDocs
+        .filter(doc => doc.client_id)
+        .map(doc => doc.client_id);
+
+      setSelectedClients(assignedClientIds);
+    } catch (error) {
+      console.error('Error fetching related documents:', error);
+      setSelectedClients(document.client_id ? [document.client_id] : []);
+    }
+
     setShowForm(true);
   };
 
