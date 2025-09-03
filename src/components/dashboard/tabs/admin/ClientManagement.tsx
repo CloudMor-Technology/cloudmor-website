@@ -491,13 +491,48 @@ export const ClientManagement = () => {
           </h3>
           <p className="text-gray-600">Manage your clients and their services</p>
         </div>
-        <Button 
-          onClick={() => setShowForm(true)}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add New Client
-        </Button>
+        <div className="flex space-x-3">
+          <Button 
+            onClick={async () => {
+              if (!confirm('This will remove any orphaned authentication users (like arahimi@chargetrux.com). Continue?')) {
+                return;
+              }
+              
+              try {
+                toast.info('Cleaning up orphaned auth users...');
+                
+                const { data, error } = await supabase.functions.invoke('cleanup-client-users');
+                
+                if (error) throw error;
+                
+                const { deletedCount, errors } = data;
+                
+                if (errors && errors.length > 0) {
+                  toast.warning(`Cleanup completed with warnings: ${deletedCount} users deleted. Check console for details.`);
+                  console.warn('Cleanup warnings:', errors);
+                } else {
+                  toast.success(`Cleanup completed: ${deletedCount} orphaned auth users removed.`);
+                }
+                
+                console.log('Auth cleanup results:', data);
+              } catch (error) {
+                console.error('Error during auth cleanup:', error);
+                toast.error('Failed to cleanup auth users: ' + (error as any).message);
+              }
+            }}
+            variant="outline"
+            className="text-red-600 hover:text-red-700"
+          >
+            Clean Auth Users
+          </Button>
+          <Button 
+            onClick={() => setShowForm(true)}
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add New Client
+          </Button>
+        </div>
       </div>
 
       {showForm && (
