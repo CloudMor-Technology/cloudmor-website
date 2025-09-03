@@ -398,7 +398,7 @@ export const SinglePagePortal = () => {
                   </Button>
                   <Button onClick={openJiraPortal} className="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white">
                     <Headphones className="w-4 h-4 mr-2" />
-                    Contact Support
+                    Open Support Portal
                   </Button>
                 </CardContent>
               </Card>
@@ -577,11 +577,7 @@ export const SinglePagePortal = () => {
                       </Button>
                       <Button onClick={() => window.open('mailto:support@cloudmor.com', '_blank')} className="bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white font-medium">
                         <Mail className="w-4 h-4 mr-2" />
-                        Send Email
-                      </Button>
-                      <Button onClick={() => window.open('tel:888-554-6597', '_self')} className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium">
-                        <Phone className="w-3 h-3 mr-2" />
-                        <span className="text-sm">Call: 888-554-6597</span>
+                        Email: support@cloudmor.com
                       </Button>
                     </div>
                   </CardContent>

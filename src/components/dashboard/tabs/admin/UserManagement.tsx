@@ -31,6 +31,11 @@ export const UserManagement = () => {
       support: false,
       services: false,
       account: true
+    },
+    support_options: {
+      support_portal: true,
+      email_support: true,
+      phone_support: false
     }
   });
 
@@ -233,6 +238,11 @@ export const UserManagement = () => {
         support: false,
         services: false,
         account: true
+      },
+      support_options: {
+        support_portal: true,
+        email_support: true,
+        phone_support: false
       }
     });
   };
@@ -255,6 +265,11 @@ export const UserManagement = () => {
         support: false,
         services: false,
         account: true
+      },
+      support_options: user.support_options || {
+        support_portal: true,
+        email_support: true,
+        phone_support: false
       }
     });
     setShowCreateForm(true);
@@ -474,6 +489,38 @@ export const UserManagement = () => {
                         })
                       }
                     />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Support Options */}
+            <div>
+              <Label className="text-lg font-medium">Support Options</Label>
+              <p className="text-sm text-gray-600 mb-2">Select which support options are available to this user</p>
+              <div className="grid grid-cols-3 gap-4 mt-2">
+                {[
+                  { key: 'support_portal', label: 'Support Portal', description: 'Access to Jira Service Management portal' },
+                  { key: 'email_support', label: 'Email Support', description: 'Email support@cloudmor.com' },
+                  { key: 'phone_support', label: 'Phone Support', description: 'Access to emergency hotline' }
+                ].map((option) => (
+                  <div key={option.key} className="flex flex-col p-3 bg-gray-50 rounded">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-medium">{option.label}</span>
+                      <Switch
+                        checked={formData.support_options?.[option.key] || false}
+                        onCheckedChange={(checked) => 
+                          setFormData({
+                            ...formData,
+                            support_options: {
+                              ...formData.support_options,
+                              [option.key]: checked
+                            }
+                          })
+                        }
+                      />
+                    </div>
+                    <p className="text-xs text-gray-500">{option.description}</p>
                   </div>
                 ))}
               </div>

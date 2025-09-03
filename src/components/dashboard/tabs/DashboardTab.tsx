@@ -111,7 +111,7 @@ export const DashboardTab = () => {
               <p className="text-sm text-gray-500">Quick Actions</p>
               <div className="flex space-x-2 mt-2">
                 <button className="px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm">
-                  Submit Support Ticket
+                  Open Support Portal
                 </button>
                 <button className="px-3 py-1 bg-green-100 text-green-700 rounded text-sm">
                   Download Latest Invoice
