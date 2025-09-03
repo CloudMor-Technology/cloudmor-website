@@ -149,7 +149,10 @@ export const ClientManagement = () => {
       });
 
       if (authError) throw authError;
-      if (!authResult.success) throw new Error('Failed to create user account');
+      if (!authResult.success) {
+        const errorMessage = authResult.error || 'Failed to create user account';
+        throw new Error(errorMessage);
+      }
 
       // Then create the client record
       const { data: clientData, error: clientError } = await supabase
@@ -233,7 +236,10 @@ export const ClientManagement = () => {
       });
 
       if (resetError) throw resetError;
-      if (!resetResult.success) throw new Error('Failed to reset password');
+      if (!resetResult.success) {
+        const errorMessage = resetResult.error || 'Failed to reset password';
+        throw new Error(errorMessage);
+      }
 
       toast.success('Password reset successfully and confirmation email sent!');
       setShowPasswordDialog(false);

@@ -118,7 +118,35 @@ async function createUserWithEmail(data: any) {
       }
     });
 
-    if (authError) throw authError;
+    if (authError) {
+      console.error('Auth error:', authError);
+      
+      // Handle specific error cases
+      if (authError.message?.includes('already been registered') || authError.code === 'email_exists') {
+        return new Response(
+          JSON.stringify({ 
+            error: `A user account with email "${email}" already exists. Please use a different email address or reset the existing user's password instead.`,
+            code: 'email_exists'
+          }),
+          {
+            status: 400,
+            headers: { 'Content-Type': 'application/json', ...corsHeaders },
+          }
+        );
+      }
+      
+      // Handle other auth errors
+      return new Response(
+        JSON.stringify({ 
+          error: `Failed to create user account: ${authError.message}`,
+          code: authError.code || 'auth_error'
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        }
+      );
+    }
 
     // Send welcome email
     const emailResponse = await resend.emails.send({
@@ -143,7 +171,16 @@ async function createUserWithEmail(data: any) {
     );
   } catch (error: any) {
     console.error('Error creating user:', error);
-    throw error;
+    return new Response(
+      JSON.stringify({ 
+        error: `Unexpected error while creating user: ${error.message}`,
+        code: 'unexpected_error'
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      }
+    );
   }
 }
 
@@ -238,6 +275,15 @@ async function resetUserPassword(data: any) {
     );
   } catch (error: any) {
     console.error('Error resetting password:', error);
-    throw error;
+    return new Response(
+      JSON.stringify({ 
+        error: `Unexpected error while resetting password: ${error.message}`,
+        code: 'unexpected_error'
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      }
+    );
   }
 }
