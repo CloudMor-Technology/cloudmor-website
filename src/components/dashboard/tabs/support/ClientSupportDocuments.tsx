@@ -28,24 +28,64 @@ export const ClientSupportDocuments = () => {
     try {
       setLoading(true);
       
-      // Check if user is impersonating a client
-      const impersonationData = localStorage.getItem('impersonating_client');
-      let clientEmail = profile.email;
+      let clientData = null;
       
+      // Check if user is impersonating a client (admin only)
+      const impersonationData = localStorage.getItem('impersonating_client');
       if (impersonationData && profile.role === 'admin') {
         const impersonatedClient = JSON.parse(impersonationData);
-        clientEmail = impersonatedClient.contact_email;
+        const { data, error } = await supabase
+          .from('clients')
+          .select('id')
+          .eq('contact_email', impersonatedClient.contact_email)
+          .single();
+        if (!error) clientData = data;
+      } else {
+        // For direct client login, find client by matching user profile
+        // First try to find client by the user's email directly
+        let { data, error } = await supabase
+          .from('clients')
+          .select('id')
+          .eq('contact_email', profile.email)
+          .single();
+          
+        // If not found by profile email, try to find by any related email pattern
+        if (error || !data) {
+          // Check if there's a profile mapping in the database
+          const { data: profileData, error: profileError } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', profile.id)
+            .single();
+            
+          if (!profileError && profileData) {
+            // Try to find client by different email patterns
+            const emailVariants = [
+              profile.email,
+              profileData.email,
+              // Add more email patterns if needed
+            ].filter(Boolean);
+            
+            for (const email of emailVariants) {
+              const { data: clientFound, error: clientError } = await supabase
+                .from('clients')
+                .select('id')
+                .eq('contact_email', email)
+                .single();
+                
+              if (!clientError && clientFound) {
+                clientData = clientFound;
+                break;
+              }
+            }
+          }
+        } else {
+          clientData = data;
+        }
       }
 
-      // First get the client ID
-      const { data: clientData, error: clientError } = await supabase
-        .from('clients')
-        .select('id')
-        .eq('contact_email', clientEmail)
-        .single();
-
-      if (clientError || !clientData) {
-        console.log('No client found for email:', clientEmail);
+      if (!clientData) {
+        console.log('No client found for user:', profile.email);
         // Still fetch global documents even if no client found
         const { data: globalDocs, error: globalError } = await supabase
           .from('support_documents')
