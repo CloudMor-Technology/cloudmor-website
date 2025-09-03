@@ -44,6 +44,7 @@ interface Client {
   phone: string;
   address: string;
   stripe_customer_id: string;
+  stripe_portal_url?: string;
   created_at: string;
 }
 
@@ -75,6 +76,7 @@ export const ClientManagement = () => {
     phone: '',
     address: '',
     stripe_customer_id: '',
+    stripe_portal_url: '',
     password: '',
     services: [] as string[],
     serviceNotes: ''
@@ -181,7 +183,8 @@ export const ClientManagement = () => {
           contact_name: formData.contact_name,
           phone: formData.phone,
           address: formData.address,
-          stripe_customer_id: formData.stripe_customer_id
+          stripe_customer_id: formData.stripe_customer_id,
+          stripe_portal_url: formData.stripe_portal_url
         })
         .select()
         .single();
@@ -316,7 +319,8 @@ export const ClientManagement = () => {
           contact_name: formData.contact_name,
           phone: formData.phone,
           address: formData.address,
-          stripe_customer_id: formData.stripe_customer_id
+          stripe_customer_id: formData.stripe_customer_id,
+          stripe_portal_url: formData.stripe_portal_url
         })
         .eq('id', editingClient.id);
 
@@ -398,6 +402,7 @@ export const ClientManagement = () => {
       phone: '',
       address: '',
       stripe_customer_id: '',
+      stripe_portal_url: '',
       password: '',
       services: [],
       serviceNotes: ''
@@ -440,6 +445,7 @@ export const ClientManagement = () => {
         phone: client.phone || '',
         address: client.address || '',
         stripe_customer_id: client.stripe_customer_id || '',
+        stripe_portal_url: client.stripe_portal_url || '',
         password: '',
         services: existingServices,
         serviceNotes: ''
@@ -615,6 +621,17 @@ export const ClientManagement = () => {
                   className="border-blue-300 focus:border-blue-500"
                 />
               </div>
+            </div>
+
+            <div>
+              <Label htmlFor="stripe_portal_url">Stripe Portal URL</Label>
+              <Input
+                id="stripe_portal_url"
+                value={formData.stripe_portal_url}
+                onChange={(e) => setFormData({...formData, stripe_portal_url: e.target.value})}
+                className="border-blue-300 focus:border-blue-500"
+                placeholder="https://billing.stripe.com/p/session/..."
+              />
             </div>
 
             <div>

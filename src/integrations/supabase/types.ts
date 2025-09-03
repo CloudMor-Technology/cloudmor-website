@@ -107,6 +107,7 @@ export type Database = {
           phone: string | null
           stripe_customer_id: string | null
           stripe_email: string | null
+          stripe_portal_url: string | null
           updated_at: string
         }
         Insert: {
@@ -125,6 +126,7 @@ export type Database = {
           phone?: string | null
           stripe_customer_id?: string | null
           stripe_email?: string | null
+          stripe_portal_url?: string | null
           updated_at?: string
         }
         Update: {
@@ -143,6 +145,7 @@ export type Database = {
           phone?: string | null
           stripe_customer_id?: string | null
           stripe_email?: string | null
+          stripe_portal_url?: string | null
           updated_at?: string
         }
         Relationships: []

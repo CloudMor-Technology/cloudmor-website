@@ -51,6 +51,7 @@ export const SinglePagePortal = () => {
   const [phoneExtensions, setPhoneExtensions] = useState<PhoneExtension[]>([]);
   const [clientSupportDocs, setClientSupportDocs] = useState<ClientSupportDocument[]>([]);
   const [servicesLoading, setServicesLoading] = useState(true);
+  const [clientData, setClientData] = useState<{stripe_portal_url?: string} | null>(null);
 
   // Check for impersonation
   const impersonationData = localStorage.getItem('impersonating_client');
@@ -60,9 +61,35 @@ export const SinglePagePortal = () => {
     if ((!isAdmin || isImpersonating) && profile?.email) {
       fetchClientServices();
       fetchPhoneExtensions();
+      fetchClientData();
     }
     fetchClientSupportDocs();
   }, [profile, isAdmin, isImpersonating]);
+  const fetchClientData = async () => {
+    if (!profile?.email) return;
+    
+    try {
+      // Check if user is impersonating a client
+      const impersonationData = localStorage.getItem('impersonating_client');
+      let clientEmail = profile.email;
+      if (impersonationData && profile.role === 'admin') {
+        const impersonatedClient = JSON.parse(impersonationData);
+        clientEmail = impersonatedClient.contact_email;
+      }
+
+      const { data, error } = await supabase
+        .from('clients')
+        .select('stripe_portal_url')
+        .eq('contact_email', clientEmail)
+        .single();
+
+      if (error) throw error;
+      setClientData(data);
+    } catch (error) {
+      console.error('Error fetching client data:', error);
+    }
+  };
+
   const fetchClientServices = async () => {
     if (!profile?.email) return;
     try {
@@ -188,6 +215,14 @@ export const SinglePagePortal = () => {
   // Enhanced Stripe portal functions to avoid popup blockers
   const handleViewInvoices = async () => {
     try {
+      // First, check if we have a stored portal URL
+      if (clientData?.stripe_portal_url) {
+        toast.success('Opening billing portal...');
+        window.open(clientData.stripe_portal_url, '_blank');
+        return;
+      }
+
+      // Fallback to creating a new portal session
       let stripeCustomerId = profile?.stripe_customer_id;
       if (!stripeCustomerId) {
         toast.error('No billing information found. Please contact your administrator.');
