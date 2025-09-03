@@ -9,11 +9,22 @@ const corsHeaders = {
 
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-const resendApiKey = Deno.env.get('RESEND_API_KEY')!;
+const resendApiKey = Deno.env.get('RESEND_API_KEY');
 
 // Create Supabase client with service role key for admin operations
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
-const resend = new Resend(resendApiKey);
+
+// Only initialize Resend if API key is available
+let resend: any = null;
+if (resendApiKey) {
+  try {
+    resend = new Resend(resendApiKey);
+  } catch (error) {
+    console.error('Failed to initialize Resend client:', error);
+  }
+} else {
+  console.warn('RESEND_API_KEY not found in environment variables. Email functionality will be disabled.');
+}
 
 const welcomeEmailTemplate = (clientName: string, email: string, password: string, companyName: string) => `
 <!DOCTYPE html>
@@ -148,21 +159,33 @@ async function createUserWithEmail(data: any) {
       );
     }
 
-    // Send welcome email
-    const emailResponse = await resend.emails.send({
-      from: "CloudMor Support <support@cloudmor.com>",
-      to: [email],
-      subject: "Welcome to CloudMor Client Portal - Account Created",
-      html: welcomeEmailTemplate(full_name || company_name, email, password, company_name),
-    });
+    // Send welcome email if Resend is available
+    let emailSent = false;
+    if (resend) {
+      try {
+        const emailResponse = await resend.emails.send({
+          from: "CloudMor Support <support@cloudmor.com>",
+          to: [email],
+          subject: "Welcome to CloudMor Client Portal - Account Created",
+          html: welcomeEmailTemplate(full_name || company_name, email, password, company_name),
+        });
 
-    console.log('Welcome email sent:', emailResponse);
+        console.log('Welcome email sent:', emailResponse);
+        emailSent = true;
+      } catch (emailError) {
+        console.error('Failed to send welcome email:', emailError);
+        // Don't fail the user creation if email fails
+      }
+    } else {
+      console.warn('Skipping welcome email - Resend not configured');
+    }
 
     return new Response(
       JSON.stringify({ 
         success: true, 
         user: authData.user,
-        email_sent: true 
+        email_sent: emailSent,
+        message: emailSent ? 'User created and welcome email sent' : 'User created successfully (email not configured)'
       }),
       {
         status: 200,
@@ -215,58 +238,70 @@ async function resetUserPassword(data: any) {
 
     if (updateError) throw updateError;
 
-    // Send password reset confirmation email
-    const emailResponse = await resend.emails.send({
-      from: "CloudMor Support <support@cloudmor.com>",
-      to: [email],
-      subject: "CloudMor Portal - Password Reset Confirmation",
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: #f8fafc; padding: 30px; border-radius: 0 0 10px 10px; }
-            .credentials { background: #e0e7ff; padding: 20px; border-radius: 8px; margin: 20px 0; }
-            .button { display: inline-block; background: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 20px 0; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>Password Reset Confirmation</h1>
-            </div>
-            <div class="content">
-              <h2>Hello ${full_name || company_name},</h2>
-              <p>Your CloudMor Client Portal password has been successfully reset by an administrator.</p>
-              
-              <div class="credentials">
-                <h3>Your New Login Credentials:</h3>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>New Password:</strong> ${new_password}</p>
-                <p><em>Please change your password after logging in for security.</em></p>
+    // Send password reset confirmation email if Resend is available
+    let emailSent = false;
+    if (resend) {
+      try {
+        const emailResponse = await resend.emails.send({
+          from: "CloudMor Support <support@cloudmor.com>",
+          to: [email],
+          subject: "CloudMor Portal - Password Reset Confirmation",
+          html: `
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                .content { background: #f8fafc; padding: 30px; border-radius: 0 0 10px 10px; }
+                .credentials { background: #e0e7ff; padding: 20px; border-radius: 8px; margin: 20px 0; }
+                .button { display: inline-block; background: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 20px 0; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <h1>Password Reset Confirmation</h1>
+                </div>
+                <div class="content">
+                  <h2>Hello ${full_name || company_name},</h2>
+                  <p>Your CloudMor Client Portal password has been successfully reset by an administrator.</p>
+                  
+                  <div class="credentials">
+                    <h3>Your New Login Credentials:</h3>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>New Password:</strong> ${new_password}</p>
+                    <p><em>Please change your password after logging in for security.</em></p>
+                  </div>
+
+                  <a href="https://cloudmor.com/portal" class="button">Access Your Portal</a>
+
+                  <p>If you did not request this password reset or have any concerns, please contact our support team immediately.</p>
+                  
+                  <p>Best regards,<br>The CloudMor Team</p>
+                </div>
               </div>
+            </body>
+            </html>
+          `,
+        });
 
-              <a href="https://cloudmor.com/portal" class="button">Access Your Portal</a>
-
-              <p>If you did not request this password reset or have any concerns, please contact our support team immediately.</p>
-              
-              <p>Best regards,<br>The CloudMor Team</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    });
-
-    console.log('Password reset email sent:', emailResponse);
+        console.log('Password reset email sent:', emailResponse);
+        emailSent = true;
+      } catch (emailError) {
+        console.error('Failed to send password reset email:', emailError);
+        // Don't fail the password reset if email fails
+      }
+    } else {
+      console.warn('Skipping password reset email - Resend not configured');
+    }
 
     return new Response(
       JSON.stringify({ 
         success: true,
-        email_sent: true 
+        email_sent: emailSent,
+        message: emailSent ? 'Password reset and confirmation email sent' : 'Password reset successfully (email not configured)'
       }),
       {
         status: 200,
