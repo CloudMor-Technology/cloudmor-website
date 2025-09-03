@@ -137,6 +137,14 @@ export const ClientManagement = () => {
     }
 
     try {
+      console.log('Creating client with data:', {
+        action: 'create_user',
+        email: formData.contact_email,
+        password: '[HIDDEN]',
+        full_name: formData.contact_name,
+        company_name: formData.company_name
+      });
+
       // Create user using admin edge function
       const { data: authResult, error: authError } = await supabase.functions.invoke('admin-user-management', {
         body: {
@@ -148,9 +156,16 @@ export const ClientManagement = () => {
         }
       });
 
-      if (authError) throw authError;
-      if (!authResult.success) {
-        const errorMessage = authResult.error || 'Failed to create user account';
+      console.log('Edge function response:', { authResult, authError });
+
+      if (authError) {
+        console.error('Edge function error:', authError);
+        throw authError;
+      }
+      
+      if (!authResult || !authResult.success) {
+        const errorMessage = authResult?.error || 'Failed to create user account';
+        console.error('User creation failed:', errorMessage);
         throw new Error(errorMessage);
       }
 
