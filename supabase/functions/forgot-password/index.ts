@@ -101,8 +101,8 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error('Failed to generate reset token');
     }
 
-    // Build reset URL
-    const baseUrl = Deno.env.get('APP_BASE_URL') || 'http://localhost:3000';
+    // Build reset URL - use the origin from the request header for dynamic environments
+    const baseUrl = req.headers.get('origin') || Deno.env.get('APP_BASE_URL') || 'http://localhost:3000';
     const resetUrl = `${baseUrl}/reset-password?token=${token}`;
 
     // Email template
