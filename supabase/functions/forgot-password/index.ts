@@ -16,7 +16,13 @@ const supabase = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 );
 
-const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+// Initialize Resend with proper error handling
+const resendApiKey = Deno.env.get('RESEND_API_KEY');
+if (!resendApiKey) {
+  throw new Error('RESEND_API_KEY environment variable is not set');
+}
+
+const resend = new Resend(resendApiKey);
 
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === 'OPTIONS') {
