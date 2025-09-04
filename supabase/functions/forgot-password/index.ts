@@ -23,11 +23,19 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     // Initialize Resend inside the handler to catch errors properly
-    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    const resendApiKey = Deno.env.get('RESEND_API_KEY') || Deno.env.get('Resend API Key');
+    
+    console.log('Environment check:', {
+      hasResendApiKey: !!Deno.env.get('RESEND_API_KEY'),
+      hasResendApiKeySpaces: !!Deno.env.get('Resend API Key'),
+      allEnvKeys: Object.keys(Deno.env.toObject()).filter(key => key.toLowerCase().includes('resend'))
+    });
+    
     if (!resendApiKey) {
       console.error('RESEND_API_KEY environment variable is not set');
+      console.error('Available env vars containing "resend":', Object.keys(Deno.env.toObject()).filter(key => key.toLowerCase().includes('resend')));
       return new Response(JSON.stringify({ 
-        error: 'Email service not configured' 
+        error: 'Email service not configured - API key not found' 
       }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
