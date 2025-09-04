@@ -140,7 +140,7 @@ CloudMor Support`;
 
     // Send email via Resend
     const emailResponse = await resend.emails.send({
-      from: 'No Reply <no-reply@updates.cloudmor.com>',
+      from: 'No Reply <no-reply@update.cloudmor.com>',
       to: [normalizedEmail],
       subject: 'Reset your CloudMor password',
       html: emailHtml,
