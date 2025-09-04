@@ -1,8 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { LoginForm } from './LoginForm';
 import { ForgotPasswordForm } from './ForgotPasswordForm';
+import { ResetPasswordForm } from './ResetPasswordForm';
 export const AuthPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
+  
+  const resetToken = searchParams.get('reset-token');
+  
+  useEffect(() => {
+    if (resetToken) {
+      setShowResetPassword(true);
+      setShowForgotPassword(false);
+    }
+  }, [resetToken]);
   return <div className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat relative" style={{
     backgroundImage: 'url(/lovable-uploads/20cd0b55-8167-4f6a-acfc-85fe6cab38a2.png)'
   }}>
@@ -23,7 +36,23 @@ export const AuthPage = () => {
 
         {/* Login form - Center */}
         <div className="w-full max-w-lg">
-          {showForgotPassword ? <ForgotPasswordForm onBackToLogin={() => setShowForgotPassword(false)} /> : <LoginForm onForgotPassword={() => setShowForgotPassword(true)} />}
+          {showResetPassword && resetToken ? (
+            <ResetPasswordForm 
+              token={resetToken} 
+              onBackToLogin={() => {
+                setShowResetPassword(false);
+                setSearchParams({});
+              }}
+              onSuccess={() => {
+                setShowResetPassword(false);
+                setSearchParams({});
+              }}
+            />
+          ) : showForgotPassword ? (
+            <ForgotPasswordForm onBackToLogin={() => setShowForgotPassword(false)} />
+          ) : (
+            <LoginForm onForgotPassword={() => setShowForgotPassword(true)} />
+          )}
         </div>
 
         {/* Description Text - Bottom */}

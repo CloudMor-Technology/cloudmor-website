@@ -103,7 +103,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Build reset URL
     const baseUrl = Deno.env.get('APP_BASE_URL') || 'http://localhost:3000';
-    const resetUrl = `${baseUrl}/reset-password?token=${token}`;
+    const resetUrl = `${baseUrl}/portal?reset-token=${token}`;
 
     // Email template
     const emailHtml = `
