@@ -203,13 +203,34 @@ export const SinglePagePortal = () => {
       toast.error('New passwords do not match');
       return;
     }
-    toast.success('Password updated successfully');
-    setIsChangingPassword(false);
-    setPasswordForm({
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: ''
-    });
+
+    if (passwordForm.newPassword.length < 8) {
+      toast.error('Password must be at least 8 characters long');
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: passwordForm.newPassword
+      });
+
+      if (error) {
+        console.error('Password update error:', error);
+        toast.error('Failed to update password: ' + error.message);
+        return;
+      }
+
+      toast.success('Password updated successfully');
+      setIsChangingPassword(false);
+      setPasswordForm({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      });
+    } catch (error: any) {
+      console.error('Error updating password:', error);
+      toast.error('Failed to update password. Please try again.');
+    }
   };
 
   // Enhanced Stripe portal functions to avoid popup blockers
