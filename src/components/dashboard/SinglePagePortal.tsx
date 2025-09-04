@@ -257,24 +257,27 @@ export const SinglePagePortal = () => {
           
           if (syncError) {
             console.error('Sync error:', syncError);
-            throw new Error('Failed to set up billing profile. Please try again.');
+            throw new Error(`Failed to set up billing profile: ${syncError.message || 'Please try again.'}`);
           }
           
-          if (syncData?.stripe_customer_id) {
-            stripeCustomerId = syncData.stripe_customer_id;
+          if (syncData?.success && syncData?.customer?.stripe_customer_id) {
+            stripeCustomerId = syncData.customer.stripe_customer_id;
             console.log('Successfully synced Stripe customer:', stripeCustomerId);
             
-            // Refresh profile to get updated stripe_customer_id
-            window.location.reload();
-            return;
+            // Update local profile state immediately instead of reloading
+            if (profile) {
+              profile.stripe_customer_id = stripeCustomerId;
+            }
+            toast.dismiss(syncingToast);
+            // Continue to create portal session instead of reloading
           } else {
+            console.error('Sync response invalid:', syncData);
             throw new Error('Failed to create billing profile. Please contact support.');
           }
-        } catch (syncError) {
+        } catch (syncError: any) {
           toast.dismiss(syncingToast);
-          throw syncError;
-        } finally {
-          toast.dismiss(syncingToast);
+          console.error('Billing sync error:', syncError);
+          throw new Error(`Billing setup failed: ${syncError.message || 'Please contact support.'}`);
         }
       }
 
