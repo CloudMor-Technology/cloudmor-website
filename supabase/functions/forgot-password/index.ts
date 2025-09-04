@@ -16,20 +16,26 @@ const supabase = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 );
 
-// Initialize Resend with proper error handling
-const resendApiKey = Deno.env.get('RESEND_API_KEY');
-if (!resendApiKey) {
-  throw new Error('RESEND_API_KEY environment variable is not set');
-}
-
-const resend = new Resend(resendApiKey);
-
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Initialize Resend inside the handler to catch errors properly
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    if (!resendApiKey) {
+      console.error('RESEND_API_KEY environment variable is not set');
+      return new Response(JSON.stringify({ 
+        error: 'Email service not configured' 
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const resend = new Resend(resendApiKey);
+    
     const { email }: ForgotPasswordRequest = await req.json();
     
     // Normalize email
